@@ -24,21 +24,15 @@ Visit: [resumemaker.42-it.com](https://resumemaker.42-it.com)
 
 ## 🛠️ Tech Stack
 
-- **Framework:** Next.js 15.4.5
-- **Language:** TypeScript 5.0
-- **UI Library:** React 19.1.0
-- **Styling:** Tailwind CSS 4.0
-- **Icons:** Lucide React
-- **PDF Generation:** jsPDF
-- **Deployment:** Cloudflare Pages
+- **Frontend**: Next.js 15.4.5, React 19.1.0, TypeScript 5.0
+- **Styling**: Tailwind CSS 4.0
+- **Icons**: Lucide React
+- **PDF Generation**: jsPDF (client-side)
+- **Deployment**: Cloudflare Pages
+- **Version Control**: Git & GitHub
 
 ## 📦 Installation
 
-### Prerequisites
-- Node.js 18+ 
-- npm or yarn
-
-### Setup
 ```bash
 # Clone the repository
 git clone https://github.com/jimmcguffinus/resumaker-next.git
@@ -51,7 +45,7 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to view the application.
+Open [http://localhost:3000](http://localhost:3000) to view the app.
 
 ## 🏗️ Project Structure
 
@@ -59,104 +53,83 @@ Open [http://localhost:3000](http://localhost:3000) to view the application.
 resumaker-next/
 ├── src/
 │   ├── app/
-│   │   ├── page.tsx          # Main page
-│   │   ├── layout.tsx        # App layout
-│   │   └── globals.css       # Global styles
+│   │   ├── layout.tsx          # Root layout
+│   │   ├── page.tsx            # Home page
+│   │   └── globals.css         # Global styles
 │   └── components/
-│       └── ResumeGenerator.tsx # Main resume component
-├── public/                   # Static assets
-├── package.json              # Dependencies
-├── next.config.ts           # Next.js config
-└── README.md               # This file
+│       └── ResumeGenerator.tsx  # Main resume component
+├── public/                     # Static assets
+├── package.json                # Dependencies
+├── next.config.ts             # Next.js config
+└── README.md                  # This file
 ```
 
 ## 🎯 Usage
 
-### Creating Your Resume
-
-1. **Personal Information** - Fill in your name, title, contact details
-2. **Experience** - Add work experience with job titles and descriptions
-3. **Education** - Include your degrees and institutions
-4. **Skills** - List your technical and soft skills
-5. **Additional Information** - Add certifications, awards, projects
-
-### Templates
-
-- **Modern** - Clean, professional design with blue accents
-- **Classic** - Traditional resume layout
-- **Minimal** - Simple, clean design
-
-### Export Options
-
-- **PDF Export** - Download as professional PDF
-- **JSON Export** - Save resume data for later editing
-- **Local Storage** - Automatically saves your progress
-
-## 🔧 Development
-
-### Available Scripts
-
-```bash
-# Development server
-npm run dev
-
-# Build for production
-npm run build
-
-# Start production server
-npm start
-
-# Lint code
-npm run lint
-```
-
-### Key Components
-
-- **ResumeGenerator.tsx** - Main component with form and preview
-- **TypeScript Interfaces** - Type-safe resume data model
-- **PDF Generation** - Client-side PDF creation with jsPDF
-- **Local Storage** - Browser-based data persistence
-
-## 🚀 Deployment
-
-### Cloudflare Pages
-
-This project is deployed on Cloudflare Pages:
-
-1. **Build Command:** `npm run build`
-2. **Build Output Directory:** `.next`
-3. **Framework Preset:** Next.js
-
-### Custom Domain
-
-- **Production URL:** [resumemaker.42-it.com](https://resumemaker.42-it.com)
-- **Auto-deployment** on push to main branch
+1. **Fill in your information** - Add personal details, experience, education
+2. **Real-time preview** - See changes instantly as you type
+3. **Export options**:
+   - **PDF**: Download as professional PDF
+   - **JSON**: Save data for later editing
+4. **Load sample data** - Try the demo with pre-filled content
 
 ## 📋 Resume Data Model
 
+The app uses a structured data model for resumes:
+
 ```typescript
-interface Resume {
-  header: {
+interface ResumeData {
+  personalInfo: {
     name: string;
-    tagline: string;
-    contact: ContactInfo;
-    location: Location;
+    email: string;
+    phone: string;
+    location: string;
+    summary: string;
   };
-  experience: Workplace[];
-  education: EducationRecord[];
+  experience: Array<{
+    company: string;
+    position: string;
+    startDate: string;
+    endDate: string;
+    description: string;
+  }>;
+  education: Array<{
+    institution: string;
+    degree: string;
+    field: string;
+    startDate: string;
+    endDate: string;
+  }>;
   skills: string[];
-  extras: string[];
 }
 ```
 
 ## 🔄 Migration from Scala
 
-This project was converted from a Scala-based resume generator that used LaTeX for PDF generation. The Next.js version provides:
+This project was converted from a Scala-based resume generator that used LaTeX for PDF generation. The migration involved:
 
-- **Better UX** - Real-time preview and instant feedback
-- **No Dependencies** - No LaTeX installation required
-- **Web Accessible** - Works in any browser
-- **Modern Stack** - TypeScript, React 19, Next.js 15
+- **Frontend**: Scala → Next.js/React
+- **PDF Generation**: LaTeX → jsPDF (client-side)
+- **Deployment**: Local build → Cloudflare Pages
+- **UI**: Command-line → Modern web interface
+
+## 🚀 Deployment
+
+### Cloudflare Pages
+
+The app is deployed on Cloudflare Pages with automatic builds from GitHub:
+
+1. **Connected to GitHub**: Automatic deployments on push
+2. **Build settings**: Next.js framework preset
+3. **Custom domain**: resumemaker.42-it.com
+
+### Local Development
+
+```bash
+npm run dev      # Development server
+npm run build    # Production build
+npm run start    # Start production server
+```
 
 ## 🤝 Contributing
 
@@ -168,7 +141,7 @@ This project was converted from a Scala-based resume generator that used LaTeX f
 
 ## 📄 License
 
-This project is open source and available under the [MIT License](LICENSE).
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 👨‍💻 Author
 
@@ -176,11 +149,7 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ## 🙏 Acknowledgments
 
-- **Original Scala Version** - Inspired by functional programming principles
-- **Next.js Team** - For the amazing framework
-- **Tailwind CSS** - For the beautiful styling system
-- **Lucide React** - For the beautiful icons
-
----
-
-⭐ **Star this repository if you find it helpful!**
+- **Next.js team** for the amazing framework
+- **Tailwind CSS** for the utility-first CSS framework
+- **Cloudflare** for the excellent hosting platform
+- **Original Scala version** that inspired this conversion
