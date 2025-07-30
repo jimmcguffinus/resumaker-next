@@ -94,13 +94,13 @@ const styles = StyleSheet.create({
     fontSize: 26,
     fontWeight: 'bold',
     color: '#1e293b', // slate-800
+    marginBottom: 8,
   },
   tagline: {
     fontSize: 12,
     fontStyle: 'italic',
     color: '#64748b', // slate-500
-    marginTop: 4,
-    marginBottom: 8,
+    marginBottom: 12,
   },
   contactInfo: {
     flexDirection: 'row',
