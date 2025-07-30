@@ -3,7 +3,7 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { Download, Plus, Trash2, Moon, Sun, FileText, User, Briefcase, GraduationCap, Code, Award } from 'lucide-react';
 
-// Dynamically import PDFDownloadButton to avoid SSG issues
+// Use React.lazy for the button component that contains the client-side only PDFDownloadLink
 const PDFDownloadButton = lazy(() => import('./PDFDownloadButton').then(module => ({ default: module.PDFDownloadButton })));
 
 // TypeScript interfaces
@@ -112,8 +112,12 @@ const ResumeGenerator = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [activeTemplate, setActiveTemplate] = useState('modern');
   const [resumeData, setResumeData] = useState<Resume>(sampleResume);
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
+    // Mark as client-side after mounting
+    setIsClient(true);
+    
     const saved = localStorage.getItem('resume-data');
     if (saved) {
       try {
@@ -658,14 +662,16 @@ const ResumeGenerator = () => {
               >
                 Debug Data
               </button>
-                              <Suspense fallback={
-                                <button className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
-                                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                                  <span>Loading PDF...</span>
-                                </button>
-                              }>
-                                <PDFDownloadButton resumeData={resumeData} />
-                              </Suspense>
+                              {isClient && (
+                                <Suspense fallback={
+                                  <button className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
+                                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                                    <span>Loading PDF...</span>
+                                  </button>
+                                }>
+                                  <PDFDownloadButton resumeData={resumeData} />
+                                </Suspense>
+                              )}
               <button
                 onClick={() => setDarkMode(!darkMode)}
                 className={`p-2 rounded-md transition-colors ${
