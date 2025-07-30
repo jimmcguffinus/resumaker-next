@@ -1,30 +1,27 @@
 import { jsPDF } from "jspdf";
+import type { Options } from "html2canvas";   // dev‑only type
 
-/* --------------------------------------------------------------- */
-/* 1️⃣  ONE‑LINER OKLCH → rgb helper                                */
-const cssOkLchToRgb = (c: string) => {
+/* helper: oklch → rgb() */
+const ok2rgb = (c: string) => {
   const ctx = document.createElement("canvas").getContext("2d")!;
   ctx.fillStyle = c;
-  return ctx.fillStyle as string;              // returns "rgb(r g b)"
+  return ctx.fillStyle as string;
 };
 
-/* --------------------------------------------------------------- */
-/* 2️⃣  Patch html2canvas's colour parser ONCE per page‑load        */
-function patchHtml2canvasColor() {
-  // jspdf pulls in its own bundled copy of html2canvas on demand
-  const h2c: any = (window as any).html2canvas;
+/* patch the *given* html2canvas module */
+function patchH2C(h2c: any) {
   if (!h2c?.Color || h2c.Color.__oklchPatched) return;
 
   const orig = h2c.Color.parseColor;
-  h2c.Color.parseColor = (value: any, ...rest: any[]) => {
-    if (typeof value === "string" && value.trim().startsWith("oklch(")) {
-      console.debug("[h2c‑patch] converting", value);
-      value = cssOkLchToRgb(value);
+  h2c.Color.parseColor = (v: any, ...rest: any[]) => {
+    if (typeof v === "string" && v.trim().startsWith("oklch(")) {
+      console.debug("[h2c‑patch] converting", v);
+      v = ok2rgb(v);
     }
-    return orig(value, ...rest);
+    return orig(v, ...rest);
   };
   h2c.Color.__oklchPatched = true;
-  console.debug("[h2c‑patch] html2canvas colour parser patched");
+  console.debug("[h2c‑patch] parser patched ✔");
 }
 
 /* --------------------------------------------------------------- */
@@ -79,23 +76,28 @@ function oklchToRgb(c: string): string {
   return ctx.fillStyle as string;
 }
 
-/* --------------------------------------------------------------- */
-/* 4️⃣  Public API                                                 */
-export async function exportResumePdf(filename = "resume.pdf") {
+/* public API */
+export async function exportResumePdf(file = "resume.pdf") {
   const src = document.querySelector<HTMLElement>("#resume-preview");
   if (!src) throw new Error("#resume-preview not found");
 
-  scrub(src);                    // pass #1  – live node
-  patchHtml2canvasColor();       // <--- NEW
+  /* 1️⃣  scrub live node */
+  scrub(src);
 
+  /* 2️⃣  dynamically load html2canvas, patch it, and remember it */
+  const h2cMod = await import(/* webpackChunkName: "html2canvas" */"html2canvas");
+  patchH2C(h2cMod.default);
+
+  /* 3️⃣  feed *our* patched copy to jspdf */
   const pdf = new jsPDF({ unit: "pt", format: "a4" });
   await pdf.html(src, {
     margin: 24,
     autoPaging: "text",
     html2canvas: {
+      ...(h2cMod.default as Options),
       scale: 2,
-      onclone: (win: any) => scrub(win.document ?? win),  // pass #2
+      onclone: (w: any) => scrub(w.document ?? w),
     },
-    callback: doc => doc.save(filename),
+    callback: d => d.save(file),
   });
 } 
