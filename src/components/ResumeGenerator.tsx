@@ -220,6 +220,18 @@ const ResumeGenerator = () => {
 
   const exportToPDF = async () => {
     try {
+      // Check if resume preview exists
+      const previewElement = document.querySelector<HTMLElement>("#resume-preview");
+      if (!previewElement) {
+        console.error("Resume preview element not found");
+        alert("Resume preview not found. Please ensure the page is loaded correctly.");
+        return;
+      }
+
+      console.log("Resume preview element found:", previewElement);
+      console.log("Preview content length:", previewElement.innerHTML.length);
+      console.log("Preview text content:", previewElement.textContent?.substring(0, 200));
+
       await exportResumePdf('resume.pdf');
     } catch (error) {
       console.error('Failed to export PDF:', error);
