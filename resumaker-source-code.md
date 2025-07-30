@@ -1,6 +1,6 @@
 # 🔍 Resume Maker Source Code Dump
 
-Generated: 2025-07-29 23:47:27
+Generated: 2025-07-30 11:32:18
 
 ## Project: Next.js Resume Generator with PDF Export
 
@@ -12,6 +12,7 @@ Generated: 2025-07-29 23:47:27
   "name": "resumaker-next",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
@@ -42,13 +43,2815 @@ Generated: 2025-07-29 23:47:27
 
 ```n
 
+## File: package-lock.json
+
+```json
+{
+  "name": "resumaker-next",
+  "version": "0.1.0",
+  "lockfileVersion": 3,
+  "requires": true,
+  "packages": {
+    "": {
+      "name": "resumaker-next",
+      "version": "0.1.0",
+      "dependencies": {
+        "@hookform/resolvers": "^5.2.1",
+        "@types/jspdf": "^1.3.3",
+        "autoprefixer": "10.4.16",
+        "html2canvas": "1.4.1",
+        "jspdf": "^3.0.1",
+        "lucide-react": "^0.534.0",
+        "next": "15.4.5",
+        "react": "19.1.0",
+        "react-dom": "19.1.0",
+        "react-hook-form": "^7.61.1",
+        "tailwindcss": "3.4.5",
+        "twemoji": "^14.0.2",
+        "zod": "^4.0.13"
+      },
+      "devDependencies": {
+        "@types/node": "^20",
+        "@types/react": "^19",
+        "@types/react-dom": "^19",
+        "typescript": "^5"
+      }
+    },
+    "node_modules/@alloc/quick-lru": {
+      "version": "5.2.0",
+      "resolved": "https://registry.npmjs.org/@alloc/quick-lru/-/quick-lru-5.2.0.tgz",
+      "integrity": "sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==",
+      "license": "MIT",
+      "engines": {
+        "node": ">=10"
+      },
+      "funding": {
+        "url": "https://github.com/sponsors/sindresorhus"
+      }
+    },
+    "node_modules/@babel/runtime": {
+      "version": "7.28.2",
+      "resolved": "https://registry.npmjs.org/@babel/runtime/-/runtime-7.28.2.tgz",
+      "integrity": "sha512-KHp2IflsnGywDjBWDkR9iEqiWSpc8GIi0lgTT3mOElT0PP1tG26P4tmFI2YvAdzgq9RGyoHZQEIEdZy6Ec5xCA==",
+      "license": "MIT",
+      "engines": {
+        "node": ">=6.9.0"
+      }
+    },
+    "node_modules/@emnapi/runtime": {
+      "version": "1.4.5",
+      "resolved": "https://registry.npmjs.org/@emnapi/runtime/-/runtime-1.4.5.tgz",
+      "integrity": "sha512-++LApOtY0pEEz1zrd9vy1/zXVaVJJ/EbAF3u0fXIzPJEDtnITsBGbbK0EkM72amhl/R5b+5xx0Y/QhcVOpuulg==",
+      "license": "MIT",
+      "optional": true,
+      "dependencies": {
+        "tslib": "^2.4.0"
+      }
+    },
+    "node_modules/@hookform/resolvers": {
+      "version": "5.2.1",
+      "resolved": "https://registry.npmjs.org/@hookform/resolvers/-/resolvers-5.2.1.tgz",
+      "integrity": "sha512-u0+6X58gkjMcxur1wRWokA7XsiiBJ6aK17aPZxhkoYiK5J+HcTx0Vhu9ovXe6H+dVpO6cjrn2FkJTryXEMlryQ==",
+      "license": "MIT",
+      "dependencies": {
+        "@standard-schema/utils": "^0.3.0"
+      },
+      "peerDependencies": {
+        "react-hook-form": "^7.55.0"
+      }
+    },
+    "node_modules/@img/sharp-darwin-arm64": {
+      "version": "0.34.3",
+      "resolved": "https://registry.npmjs.org/@img/sharp-darwin-arm64/-/sharp-darwin-arm64-0.34.3.tgz",
+      "integrity": "sha512-ryFMfvxxpQRsgZJqBd4wsttYQbCxsJksrv9Lw/v798JcQ8+w84mBWuXwl+TT0WJ/WrYOLaYpwQXi3sA9nTIaIg==",
+      "cpu": [
+        "arm64"
+      ],
+      "license": "Apache-2.0",
+      "optional": true,
+      "os": [
+        "darwin"
+      ],
+      "engines": {
+        "node": "^18.17.0 || ^20.3.0 || >=21.0.0"
+      },
+      "funding": {
+        "url": "https://opencollective.com/libvips"
+      },
+      "optionalDependencies": {
+        "@img/sharp-libvips-darwin-arm64": "1.2.0"
+      }
+    },
+    "node_modules/@img/sharp-darwin-x64": {
+      "version": "0.34.3",
+      "resolved": "https://registry.npmjs.org/@img/sharp-darwin-x64/-/sharp-darwin-x64-0.34.3.tgz",
+      "integrity": "sha512-yHpJYynROAj12TA6qil58hmPmAwxKKC7reUqtGLzsOHfP7/rniNGTL8tjWX6L3CTV4+5P4ypcS7Pp+7OB+8ihA==",
+      "cpu": [
+        "x64"
+      ],
+      "license": "Apache-2.0",
+      "optional": true,
+      "os": [
+        "darwin"
+      ],
+      "engines": {
+        "node": "^18.17.0 || ^20.3.0 || >=21.0.0"
+      },
+      "funding": {
+        "url": "https://opencollective.com/libvips"
+      },
+      "optionalDependencies": {
+        "@img/sharp-libvips-darwin-x64": "1.2.0"
+      }
+    },
+    "node_modules/@img/sharp-libvips-darwin-arm64": {
+      "version": "1.2.0",
+      "resolved": "https://registry.npmjs.org/@img/sharp-libvips-darwin-arm64/-/sharp-libvips-darwin-arm64-1.2.0.tgz",
+      "integrity": "sha512-sBZmpwmxqwlqG9ueWFXtockhsxefaV6O84BMOrhtg/YqbTaRdqDE7hxraVE3y6gVM4eExmfzW4a8el9ArLeEiQ==",
+      "cpu": [
+        "arm64"
+      ],
+      "license": "LGPL-3.0-or-later",
+      "optional": true,
+      "os": [
+        "darwin"
+      ],
+      "funding": {
+        "url": "https://opencollective.com/libvips"
+      }
+    },
+    "node_modules/@img/sharp-libvips-darwin-x64": {
+      "version": "1.2.0",
+      "resolved": "https://registry.npmjs.org/@img/sharp-libvips-darwin-x64/-/sharp-libvips-darwin-x64-1.2.0.tgz",
+      "integrity": "sha512-M64XVuL94OgiNHa5/m2YvEQI5q2cl9d/wk0qFTDVXcYzi43lxuiFTftMR1tOnFQovVXNZJ5TURSDK2pNe9Yzqg==",
+      "cpu": [
+        "x64"
+      ],
+      "license": "LGPL-3.0-or-later",
+      "optional": true,
+      "os": [
+        "darwin"
+      ],
+      "funding": {
+        "url": "https://opencollective.com/libvips"
+      }
+    },
+    "node_modules/@img/sharp-libvips-linux-arm": {
+      "version": "1.2.0",
+      "resolved": "https://registry.npmjs.org/@img/sharp-libvips-linux-arm/-/sharp-libvips-linux-arm-1.2.0.tgz",
+      "integrity": "sha512-mWd2uWvDtL/nvIzThLq3fr2nnGfyr/XMXlq8ZJ9WMR6PXijHlC3ksp0IpuhK6bougvQrchUAfzRLnbsen0Cqvw==",
+      "cpu": [
+        "arm"
+      ],
+      "license": "LGPL-3.0-or-later",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "funding": {
+        "url": "https://opencollective.com/libvips"
+      }
+    },
+    "node_modules/@img/sharp-libvips-linux-arm64": {
+      "version": "1.2.0",
+      "resolved": "https://registry.npmjs.org/@img/sharp-libvips-linux-arm64/-/sharp-libvips-linux-arm64-1.2.0.tgz",
+      "integrity": "sha512-RXwd0CgG+uPRX5YYrkzKyalt2OJYRiJQ8ED/fi1tq9WQW2jsQIn0tqrlR5l5dr/rjqq6AHAxURhj2DVjyQWSOA==",
+      "cpu": [
+        "arm64"
+      ],
+      "license": "LGPL-3.0-or-later",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "funding": {
+        "url": "https://opencollective.com/libvips"
+      }
+    },
+    "node_modules/@img/sharp-libvips-linux-ppc64": {
+      "version": "1.2.0",
+      "resolved": "https://registry.npmjs.org/@img/sharp-libvips-linux-ppc64/-/sharp-libvips-linux-ppc64-1.2.0.tgz",
+      "integrity": "sha512-Xod/7KaDDHkYu2phxxfeEPXfVXFKx70EAFZ0qyUdOjCcxbjqyJOEUpDe6RIyaunGxT34Anf9ue/wuWOqBW2WcQ==",
+      "cpu": [
+        "ppc64"
+      ],
+      "license": "LGPL-3.0-or-later",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "funding": {
+        "url": "https://opencollective.com/libvips"
+      }
+    },
+    "node_modules/@img/sharp-libvips-linux-s390x": {
+      "version": "1.2.0",
+      "resolved": "https://registry.npmjs.org/@img/sharp-libvips-linux-s390x/-/sharp-libvips-linux-s390x-1.2.0.tgz",
+      "integrity": "sha512-eMKfzDxLGT8mnmPJTNMcjfO33fLiTDsrMlUVcp6b96ETbnJmd4uvZxVJSKPQfS+odwfVaGifhsB07J1LynFehw==",
+      "cpu": [
+        "s390x"
+      ],
+      "license": "LGPL-3.0-or-later",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "funding": {
+        "url": "https://opencollective.com/libvips"
+      }
+    },
+    "node_modules/@img/sharp-libvips-linux-x64": {
+      "version": "1.2.0",
+      "resolved": "https://registry.npmjs.org/@img/sharp-libvips-linux-x64/-/sharp-libvips-linux-x64-1.2.0.tgz",
+      "integrity": "sha512-ZW3FPWIc7K1sH9E3nxIGB3y3dZkpJlMnkk7z5tu1nSkBoCgw2nSRTFHI5pB/3CQaJM0pdzMF3paf9ckKMSE9Tg==",
+      "cpu": [
+        "x64"
+      ],
+      "license": "LGPL-3.0-or-later",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "funding": {
+        "url": "https://opencollective.com/libvips"
+      }
+    },
+    "node_modules/@img/sharp-libvips-linuxmusl-arm64": {
+      "version": "1.2.0",
+      "resolved": "https://registry.npmjs.org/@img/sharp-libvips-linuxmusl-arm64/-/sharp-libvips-linuxmusl-arm64-1.2.0.tgz",
+      "integrity": "sha512-UG+LqQJbf5VJ8NWJ5Z3tdIe/HXjuIdo4JeVNADXBFuG7z9zjoegpzzGIyV5zQKi4zaJjnAd2+g2nna8TZvuW9Q==",
+      "cpu": [
+        "arm64"
+      ],
+      "license": "LGPL-3.0-or-later",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "funding": {
+        "url": "https://opencollective.com/libvips"
+      }
+    },
+    "node_modules/@img/sharp-libvips-linuxmusl-x64": {
+      "version": "1.2.0",
+      "resolved": "https://registry.npmjs.org/@img/sharp-libvips-linuxmusl-x64/-/sharp-libvips-linuxmusl-x64-1.2.0.tgz",
+      "integrity": "sha512-SRYOLR7CXPgNze8akZwjoGBoN1ThNZoqpOgfnOxmWsklTGVfJiGJoC/Lod7aNMGA1jSsKWM1+HRX43OP6p9+6Q==",
+      "cpu": [
+        "x64"
+      ],
+      "license": "LGPL-3.0-or-later",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "funding": {
+        "url": "https://opencollective.com/libvips"
+      }
+    },
+    "node_modules/@img/sharp-linux-arm": {
+      "version": "0.34.3",
+      "resolved": "https://registry.npmjs.org/@img/sharp-linux-arm/-/sharp-linux-arm-0.34.3.tgz",
+      "integrity": "sha512-oBK9l+h6KBN0i3dC8rYntLiVfW8D8wH+NPNT3O/WBHeW0OQWCjfWksLUaPidsrDKpJgXp3G3/hkmhptAW0I3+A==",
+      "cpu": [
+        "arm"
+      ],
+      "license": "Apache-2.0",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "engines": {
+        "node": "^18.17.0 || ^20.3.0 || >=21.0.0"
+      },
+      "funding": {
+        "url": "https://opencollective.com/libvips"
+      },
+      "optionalDependencies": {
+        "@img/sharp-libvips-linux-arm": "1.2.0"
+      }
+    },
+    "node_modules/@img/sharp-linux-arm64": {
+      "version": "0.34.3",
+      "resolved": "https://registry.npmjs.org/@img/sharp-linux-arm64/-/sharp-linux-arm64-0.34.3.tgz",
+      "integrity": "sha512-QdrKe3EvQrqwkDrtuTIjI0bu6YEJHTgEeqdzI3uWJOH6G1O8Nl1iEeVYRGdj1h5I21CqxSvQp1Yv7xeU3ZewbA==",
+      "cpu": [
+        "arm64"
+      ],
+      "license": "Apache-2.0",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "engines": {
+        "node": "^18.17.0 || ^20.3.0 || >=21.0.0"
+      },
+      "funding": {
+        "url": "https://opencollective.com/libvips"
+      },
+      "optionalDependencies": {
+        "@img/sharp-libvips-linux-arm64": "1.2.0"
+      }
+    },
+    "node_modules/@img/sharp-linux-ppc64": {
+      "version": "0.34.3",
+      "resolved": "https://registry.npmjs.org/@img/sharp-linux-ppc64/-/sharp-linux-ppc64-0.34.3.tgz",
+      "integrity": "sha512-GLtbLQMCNC5nxuImPR2+RgrviwKwVql28FWZIW1zWruy6zLgA5/x2ZXk3mxj58X/tszVF69KK0Is83V8YgWhLA==",
+      "cpu": [
+        "ppc64"
+      ],
+      "license": "Apache-2.0",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "engines": {
+        "node": "^18.17.0 || ^20.3.0 || >=21.0.0"
+      },
+      "funding": {
+        "url": "https://opencollective.com/libvips"
+      },
+      "optionalDependencies": {
+        "@img/sharp-libvips-linux-ppc64": "1.2.0"
+      }
+    },
+    "node_modules/@img/sharp-linux-s390x": {
+      "version": "0.34.3",
+      "resolved": "https://registry.npmjs.org/@img/sharp-linux-s390x/-/sharp-linux-s390x-0.34.3.tgz",
+      "integrity": "sha512-3gahT+A6c4cdc2edhsLHmIOXMb17ltffJlxR0aC2VPZfwKoTGZec6u5GrFgdR7ciJSsHT27BD3TIuGcuRT0KmQ==",
+      "cpu": [
+        "s390x"
+      ],
+      "license": "Apache-2.0",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "engines": {
+        "node": "^18.17.0 || ^20.3.0 || >=21.0.0"
+      },
+      "funding": {
+        "url": "https://opencollective.com/libvips"
+      },
+      "optionalDependencies": {
+        "@img/sharp-libvips-linux-s390x": "1.2.0"
+      }
+    },
+    "node_modules/@img/sharp-linux-x64": {
+      "version": "0.34.3",
+      "resolved": "https://registry.npmjs.org/@img/sharp-linux-x64/-/sharp-linux-x64-0.34.3.tgz",
+      "integrity": "sha512-8kYso8d806ypnSq3/Ly0QEw90V5ZoHh10yH0HnrzOCr6DKAPI6QVHvwleqMkVQ0m+fc7EH8ah0BB0QPuWY6zJQ==",
+      "cpu": [
+        "x64"
+      ],
+      "license": "Apache-2.0",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "engines": {
+        "node": "^18.17.0 || ^20.3.0 || >=21.0.0"
+      },
+      "funding": {
+        "url": "https://opencollective.com/libvips"
+      },
+      "optionalDependencies": {
+        "@img/sharp-libvips-linux-x64": "1.2.0"
+      }
+    },
+    "node_modules/@img/sharp-linuxmusl-arm64": {
+      "version": "0.34.3",
+      "resolved": "https://registry.npmjs.org/@img/sharp-linuxmusl-arm64/-/sharp-linuxmusl-arm64-0.34.3.tgz",
+      "integrity": "sha512-vAjbHDlr4izEiXM1OTggpCcPg9tn4YriK5vAjowJsHwdBIdx0fYRsURkxLG2RLm9gyBq66gwtWI8Gx0/ov+JKQ==",
+      "cpu": [
+        "arm64"
+      ],
+      "license": "Apache-2.0",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "engines": {
+        "node": "^18.17.0 || ^20.3.0 || >=21.0.0"
+      },
+      "funding": {
+        "url": "https://opencollective.com/libvips"
+      },
+      "optionalDependencies": {
+        "@img/sharp-libvips-linuxmusl-arm64": "1.2.0"
+      }
+    },
+    "node_modules/@img/sharp-linuxmusl-x64": {
+      "version": "0.34.3",
+      "resolved": "https://registry.npmjs.org/@img/sharp-linuxmusl-x64/-/sharp-linuxmusl-x64-0.34.3.tgz",
+      "integrity": "sha512-gCWUn9547K5bwvOn9l5XGAEjVTTRji4aPTqLzGXHvIr6bIDZKNTA34seMPgM0WmSf+RYBH411VavCejp3PkOeQ==",
+      "cpu": [
+        "x64"
+      ],
+      "license": "Apache-2.0",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "engines": {
+        "node": "^18.17.0 || ^20.3.0 || >=21.0.0"
+      },
+      "funding": {
+        "url": "https://opencollective.com/libvips"
+      },
+      "optionalDependencies": {
+        "@img/sharp-libvips-linuxmusl-x64": "1.2.0"
+      }
+    },
+    "node_modules/@img/sharp-wasm32": {
+      "version": "0.34.3",
+      "resolved": "https://registry.npmjs.org/@img/sharp-wasm32/-/sharp-wasm32-0.34.3.tgz",
+      "integrity": "sha512-+CyRcpagHMGteySaWos8IbnXcHgfDn7pO2fiC2slJxvNq9gDipYBN42/RagzctVRKgxATmfqOSulgZv5e1RdMg==",
+      "cpu": [
+        "wasm32"
+      ],
+      "license": "Apache-2.0 AND LGPL-3.0-or-later AND MIT",
+      "optional": true,
+      "dependencies": {
+        "@emnapi/runtime": "^1.4.4"
+      },
+      "engines": {
+        "node": "^18.17.0 || ^20.3.0 || >=21.0.0"
+      },
+      "funding": {
+        "url": "https://opencollective.com/libvips"
+      }
+    },
+    "node_modules/@img/sharp-win32-arm64": {
+      "version": "0.34.3",
+      "resolved": "https://registry.npmjs.org/@img/sharp-win32-arm64/-/sharp-win32-arm64-0.34.3.tgz",
+      "integrity": "sha512-MjnHPnbqMXNC2UgeLJtX4XqoVHHlZNd+nPt1kRPmj63wURegwBhZlApELdtxM2OIZDRv/DFtLcNhVbd1z8GYXQ==",
+      "cpu": [
+        "arm64"
+      ],
+      "license": "Apache-2.0 AND LGPL-3.0-or-later",
+      "optional": true,
+      "os": [
+        "win32"
+      ],
+      "engines": {
+        "node": "^18.17.0 || ^20.3.0 || >=21.0.0"
+      },
+      "funding": {
+        "url": "https://opencollective.com/libvips"
+      }
+    },
+    "node_modules/@img/sharp-win32-ia32": {
+      "version": "0.34.3",
+      "resolved": "https://registry.npmjs.org/@img/sharp-win32-ia32/-/sharp-win32-ia32-0.34.3.tgz",
+      "integrity": "sha512-xuCdhH44WxuXgOM714hn4amodJMZl3OEvf0GVTm0BEyMeA2to+8HEdRPShH0SLYptJY1uBw+SCFP9WVQi1Q/cw==",
+      "cpu": [
+        "ia32"
+      ],
+      "license": "Apache-2.0 AND LGPL-3.0-or-later",
+      "optional": true,
+      "os": [
+        "win32"
+      ],
+      "engines": {
+        "node": "^18.17.0 || ^20.3.0 || >=21.0.0"
+      },
+      "funding": {
+        "url": "https://opencollective.com/libvips"
+      }
+    },
+    "node_modules/@img/sharp-win32-x64": {
+      "version": "0.34.3",
+      "resolved": "https://registry.npmjs.org/@img/sharp-win32-x64/-/sharp-win32-x64-0.34.3.tgz",
+      "integrity": "sha512-OWwz05d++TxzLEv4VnsTz5CmZ6mI6S05sfQGEMrNrQcOEERbX46332IvE7pO/EUiw7jUrrS40z/M7kPyjfl04g==",
+      "cpu": [
+        "x64"
+      ],
+      "license": "Apache-2.0 AND LGPL-3.0-or-later",
+      "optional": true,
+      "os": [
+        "win32"
+      ],
+      "engines": {
+        "node": "^18.17.0 || ^20.3.0 || >=21.0.0"
+      },
+      "funding": {
+        "url": "https://opencollective.com/libvips"
+      }
+    },
+    "node_modules/@isaacs/cliui": {
+      "version": "8.0.2",
+      "resolved": "https://registry.npmjs.org/@isaacs/cliui/-/cliui-8.0.2.tgz",
+      "integrity": "sha512-O8jcjabXaleOG9DQ0+ARXWZBTfnP4WNAqzuiJK7ll44AmxGKv/J2M4TPjxjY3znBCfvBXFzucm1twdyFybFqEA==",
+      "license": "ISC",
+      "dependencies": {
+        "string-width": "^5.1.2",
+        "string-width-cjs": "npm:string-width@^4.2.0",
+        "strip-ansi": "^7.0.1",
+        "strip-ansi-cjs": "npm:strip-ansi@^6.0.1",
+        "wrap-ansi": "^8.1.0",
+        "wrap-ansi-cjs": "npm:wrap-ansi@^7.0.0"
+      },
+      "engines": {
+        "node": ">=12"
+      }
+    },
+    "node_modules/@jridgewell/gen-mapping": {
+      "version": "0.3.12",
+      "resolved": "https://registry.npmjs.org/@jridgewell/gen-mapping/-/gen-mapping-0.3.12.tgz",
+      "integrity": "sha512-OuLGC46TjB5BbN1dH8JULVVZY4WTdkF7tV9Ys6wLL1rubZnCMstOhNHueU5bLCrnRuDhKPDM4g6sw4Bel5Gzqg==",
+      "license": "MIT",
+      "dependencies": {
+        "@jridgewell/sourcemap-codec": "^1.5.0",
+        "@jridgewell/trace-mapping": "^0.3.24"
+      }
+    },
+    "node_modules/@jridgewell/resolve-uri": {
+      "version": "3.1.2",
+      "resolved": "https://registry.npmjs.org/@jridgewell/resolve-uri/-/resolve-uri-3.1.2.tgz",
+      "integrity": "sha512-bRISgCIjP20/tbWSPWMEi54QVPRZExkuD9lJL+UIxUKtwVJA8wW1Trb1jMs1RFXo1CBTNZ/5hpC9QvmKWdopKw==",
+      "license": "MIT",
+      "engines": {
+        "node": ">=6.0.0"
+      }
+    },
+    "node_modules/@jridgewell/sourcemap-codec": {
+      "version": "1.5.4",
+      "resolved": "https://registry.npmjs.org/@jridgewell/sourcemap-codec/-/sourcemap-codec-1.5.4.tgz",
+      "integrity": "sha512-VT2+G1VQs/9oz078bLrYbecdZKs912zQlkelYpuf+SXF+QvZDYJlbx/LSx+meSAwdDFnF8FVXW92AVjjkVmgFw==",
+      "license": "MIT"
+    },
+    "node_modules/@jridgewell/trace-mapping": {
+      "version": "0.3.29",
+      "resolved": "https://registry.npmjs.org/@jridgewell/trace-mapping/-/trace-mapping-0.3.29.tgz",
+      "integrity": "sha512-uw6guiW/gcAGPDhLmd77/6lW8QLeiV5RUTsAX46Db6oLhGaVj4lhnPwb184s1bkc8kdVg/+h988dro8GRDpmYQ==",
+      "license": "MIT",
+      "dependencies": {
+        "@jridgewell/resolve-uri": "^3.1.0",
+        "@jridgewell/sourcemap-codec": "^1.4.14"
+      }
+    },
+    "node_modules/@next/env": {
+      "version": "15.4.5",
+      "resolved": "https://registry.npmjs.org/@next/env/-/env-15.4.5.tgz",
+      "integrity": "sha512-ruM+q2SCOVCepUiERoxOmZY9ZVoecR3gcXNwCYZRvQQWRjhOiPJGmQ2fAiLR6YKWXcSAh7G79KEFxN3rwhs4LQ==",
+      "license": "MIT"
+    },
+    "node_modules/@next/swc-darwin-arm64": {
+      "version": "15.4.5",
+      "resolved": "https://registry.npmjs.org/@next/swc-darwin-arm64/-/swc-darwin-arm64-15.4.5.tgz",
+      "integrity": "sha512-84dAN4fkfdC7nX6udDLz9GzQlMUwEMKD7zsseXrl7FTeIItF8vpk1lhLEnsotiiDt+QFu3O1FVWnqwcRD2U3KA==",
+      "cpu": [
+        "arm64"
+      ],
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "darwin"
+      ],
+      "engines": {
+        "node": ">= 10"
+      }
+    },
+    "node_modules/@next/swc-darwin-x64": {
+      "version": "15.4.5",
+      "resolved": "https://registry.npmjs.org/@next/swc-darwin-x64/-/swc-darwin-x64-15.4.5.tgz",
+      "integrity": "sha512-CL6mfGsKuFSyQjx36p2ftwMNSb8PQog8y0HO/ONLdQqDql7x3aJb/wB+LA651r4we2pp/Ck+qoRVUeZZEvSurA==",
+      "cpu": [
+        "x64"
+      ],
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "darwin"
+      ],
+      "engines": {
+        "node": ">= 10"
+      }
+    },
+    "node_modules/@next/swc-linux-arm64-gnu": {
+      "version": "15.4.5",
+      "resolved": "https://registry.npmjs.org/@next/swc-linux-arm64-gnu/-/swc-linux-arm64-gnu-15.4.5.tgz",
+      "integrity": "sha512-1hTVd9n6jpM/thnDc5kYHD1OjjWYpUJrJxY4DlEacT7L5SEOXIifIdTye6SQNNn8JDZrcN+n8AWOmeJ8u3KlvQ==",
+      "cpu": [
+        "arm64"
+      ],
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "engines": {
+        "node": ">= 10"
+      }
+    },
+    "node_modules/@next/swc-linux-arm64-musl": {
+      "version": "15.4.5",
+      "resolved": "https://registry.npmjs.org/@next/swc-linux-arm64-musl/-/swc-linux-arm64-musl-15.4.5.tgz",
+      "integrity": "sha512-4W+D/nw3RpIwGrqpFi7greZ0hjrCaioGErI7XHgkcTeWdZd146NNu1s4HnaHonLeNTguKnL2Urqvj28UJj6Gqw==",
+      "cpu": [
+        "arm64"
+      ],
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "engines": {
+        "node": ">= 10"
+      }
+    },
+    "node_modules/@next/swc-linux-x64-gnu": {
+      "version": "15.4.5",
+      "resolved": "https://registry.npmjs.org/@next/swc-linux-x64-gnu/-/swc-linux-x64-gnu-15.4.5.tgz",
+      "integrity": "sha512-N6Mgdxe/Cn2K1yMHge6pclffkxzbSGOydXVKYOjYqQXZYjLCfN/CuFkaYDeDHY2VBwSHyM2fUjYBiQCIlxIKDA==",
+      "cpu": [
+        "x64"
+      ],
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "engines": {
+        "node": ">= 10"
+      }
+    },
+    "node_modules/@next/swc-linux-x64-musl": {
+      "version": "15.4.5",
+      "resolved": "https://registry.npmjs.org/@next/swc-linux-x64-musl/-/swc-linux-x64-musl-15.4.5.tgz",
+      "integrity": "sha512-YZ3bNDrS8v5KiqgWE0xZQgtXgCTUacgFtnEgI4ccotAASwSvcMPDLua7BWLuTfucoRv6mPidXkITJLd8IdJplQ==",
+      "cpu": [
+        "x64"
+      ],
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "engines": {
+        "node": ">= 10"
+      }
+    },
+    "node_modules/@next/swc-win32-arm64-msvc": {
+      "version": "15.4.5",
+      "resolved": "https://registry.npmjs.org/@next/swc-win32-arm64-msvc/-/swc-win32-arm64-msvc-15.4.5.tgz",
+      "integrity": "sha512-9Wr4t9GkZmMNcTVvSloFtjzbH4vtT4a8+UHqDoVnxA5QyfWe6c5flTH1BIWPGNWSUlofc8dVJAE7j84FQgskvQ==",
+      "cpu": [
+        "arm64"
+      ],
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "win32"
+      ],
+      "engines": {
+        "node": ">= 10"
+      }
+    },
+    "node_modules/@next/swc-win32-x64-msvc": {
+      "version": "15.4.5",
+      "resolved": "https://registry.npmjs.org/@next/swc-win32-x64-msvc/-/swc-win32-x64-msvc-15.4.5.tgz",
+      "integrity": "sha512-voWk7XtGvlsP+w8VBz7lqp8Y+dYw/MTI4KeS0gTVtfdhdJ5QwhXLmNrndFOin/MDoCvUaLWMkYKATaCoUkt2/A==",
+      "cpu": [
+        "x64"
+      ],
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "win32"
+      ],
+      "engines": {
+        "node": ">= 10"
+      }
+    },
+    "node_modules/@nodelib/fs.scandir": {
+      "version": "2.1.5",
+      "resolved": "https://registry.npmjs.org/@nodelib/fs.scandir/-/fs.scandir-2.1.5.tgz",
+      "integrity": "sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==",
+      "license": "MIT",
+      "dependencies": {
+        "@nodelib/fs.stat": "2.0.5",
+        "run-parallel": "^1.1.9"
+      },
+      "engines": {
+        "node": ">= 8"
+      }
+    },
+    "node_modules/@nodelib/fs.stat": {
+      "version": "2.0.5",
+      "resolved": "https://registry.npmjs.org/@nodelib/fs.stat/-/fs.stat-2.0.5.tgz",
+      "integrity": "sha512-RkhPPp2zrqDAQA/2jNhnztcPAlv64XdhIp7a7454A5ovI7Bukxgt7MX7udwAu3zg1DcpPU0rz3VV1SeaqvY4+A==",
+      "license": "MIT",
+      "engines": {
+        "node": ">= 8"
+      }
+    },
+    "node_modules/@nodelib/fs.walk": {
+      "version": "1.2.8",
+      "resolved": "https://registry.npmjs.org/@nodelib/fs.walk/-/fs.walk-1.2.8.tgz",
+      "integrity": "sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==",
+      "license": "MIT",
+      "dependencies": {
+        "@nodelib/fs.scandir": "2.1.5",
+        "fastq": "^1.6.0"
+      },
+      "engines": {
+        "node": ">= 8"
+      }
+    },
+    "node_modules/@pkgjs/parseargs": {
+      "version": "0.11.0",
+      "resolved": "https://registry.npmjs.org/@pkgjs/parseargs/-/parseargs-0.11.0.tgz",
+      "integrity": "sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==",
+      "license": "MIT",
+      "optional": true,
+      "engines": {
+        "node": ">=14"
+      }
+    },
+    "node_modules/@standard-schema/utils": {
+      "version": "0.3.0",
+      "resolved": "https://registry.npmjs.org/@standard-schema/utils/-/utils-0.3.0.tgz",
+      "integrity": "sha512-e7Mew686owMaPJVNNLs55PUvgz371nKgwsc4vxE49zsODpJEnxgxRo2y/OKrqueavXgZNMDVj3DdHFlaSAeU8g==",
+      "license": "MIT"
+    },
+    "node_modules/@swc/helpers": {
+      "version": "0.5.15",
+      "resolved": "https://registry.npmjs.org/@swc/helpers/-/helpers-0.5.15.tgz",
+      "integrity": "sha512-JQ5TuMi45Owi4/BIMAJBoSQoOJu12oOk/gADqlcUL9JEdHB8vyjUSsxqeNXnmXHjYKMi2WcYtezGEEhqUI/E2g==",
+      "license": "Apache-2.0",
+      "dependencies": {
+        "tslib": "^2.8.0"
+      }
+    },
+    "node_modules/@types/jspdf": {
+      "version": "1.3.3",
+      "resolved": "https://registry.npmjs.org/@types/jspdf/-/jspdf-1.3.3.tgz",
+      "integrity": "sha512-DqwyAKpVuv+7DniCp2Deq1xGvfdnKSNgl9Agun2w6dFvR5UKamiv4VfYUgcypd8S9ojUyARFIlZqBrYrBMQlew==",
+      "license": "MIT"
+    },
+    "node_modules/@types/node": {
+      "version": "20.19.9",
+      "resolved": "https://registry.npmjs.org/@types/node/-/node-20.19.9.tgz",
+      "integrity": "sha512-cuVNgarYWZqxRJDQHEB58GEONhOK79QVR/qYx4S7kcUObQvUwvFnYxJuuHUKm2aieN9X3yZB4LZsuYNU1Qphsw==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "undici-types": "~6.21.0"
+      }
+    },
+    "node_modules/@types/raf": {
+      "version": "3.4.3",
+      "resolved": "https://registry.npmjs.org/@types/raf/-/raf-3.4.3.tgz",
+      "integrity": "sha512-c4YAvMedbPZ5tEyxzQdMoOhhJ4RD3rngZIdwC2/qDN3d7JpEhB6fiBRKVY1lg5B7Wk+uPBjn5f39j1/2MY1oOw==",
+      "license": "MIT",
+      "optional": true
+    },
+    "node_modules/@types/react": {
+      "version": "19.1.9",
+      "resolved": "https://registry.npmjs.org/@types/react/-/react-19.1.9.tgz",
+      "integrity": "sha512-WmdoynAX8Stew/36uTSVMcLJJ1KRh6L3IZRx1PZ7qJtBqT3dYTgyDTx8H1qoRghErydW7xw9mSJ3wS//tCRpFA==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "csstype": "^3.0.2"
+      }
+    },
+    "node_modules/@types/react-dom": {
+      "version": "19.1.7",
+      "resolved": "https://registry.npmjs.org/@types/react-dom/-/react-dom-19.1.7.tgz",
+      "integrity": "sha512-i5ZzwYpqjmrKenzkoLM2Ibzt6mAsM7pxB6BCIouEVVmgiqaMj1TjaK7hnA36hbW5aZv20kx7Lw6hWzPWg0Rurw==",
+      "dev": true,
+      "license": "MIT",
+      "peerDependencies": {
+        "@types/react": "^19.0.0"
+      }
+    },
+    "node_modules/@types/trusted-types": {
+      "version": "2.0.7",
+      "resolved": "https://registry.npmjs.org/@types/trusted-types/-/trusted-types-2.0.7.tgz",
+      "integrity": "sha512-ScaPdn1dQczgbl0QFTeTOmVHFULt394XJgOQNoyVhZ6r2vLnMLJfBPd53SB52T/3G36VI1/g2MZaX0cwDuXsfw==",
+      "license": "MIT",
+      "optional": true
+    },
+    "node_modules/ansi-regex": {
+      "version": "6.1.0",
+      "resolved": "https://registry.npmjs.org/ansi-regex/-/ansi-regex-6.1.0.tgz",
+      "integrity": "sha512-7HSX4QQb4CspciLpVFwyRe79O3xsIZDDLER21kERQ71oaPodF8jL725AgJMFAYbooIqolJoRLuM81SpeUkpkvA==",
+      "license": "MIT",
+      "engines": {
+        "node": ">=12"
+      },
+      "funding": {
+        "url": "https://github.com/chalk/ansi-regex?sponsor=1"
+      }
+    },
+    "node_modules/ansi-styles": {
+      "version": "6.2.1",
+      "resolved": "https://registry.npmjs.org/ansi-styles/-/ansi-styles-6.2.1.tgz",
+      "integrity": "sha512-bN798gFfQX+viw3R7yrGWRqnrN2oRkEkUjjl4JNn4E8GxxbjtG3FbrEIIY3l8/hrwUwIeCZvi4QuOTP4MErVug==",
+      "license": "MIT",
+      "engines": {
+        "node": ">=12"
+      },
+      "funding": {
+        "url": "https://github.com/chalk/ansi-styles?sponsor=1"
+      }
+    },
+    "node_modules/any-promise": {
+      "version": "1.3.0",
+      "resolved": "https://registry.npmjs.org/any-promise/-/any-promise-1.3.0.tgz",
+      "integrity": "sha512-7UvmKalWRt1wgjL1RrGxoSJW/0QZFIegpeGvZG9kjp8vrRu55XTHbwnqq2GpXm9uLbcuhxm3IqX9OB4MZR1b2A==",
+      "license": "MIT"
+    },
+    "node_modules/anymatch": {
+      "version": "3.1.3",
+      "resolved": "https://registry.npmjs.org/anymatch/-/anymatch-3.1.3.tgz",
+      "integrity": "sha512-KMReFUr0B4t+D+OBkjR3KYqvocp2XaSzO55UcB6mgQMd3KbcE+mWTyvVV7D/zsdEbNnV6acZUutkiHQXvTr1Rw==",
+      "license": "ISC",
+      "dependencies": {
+        "normalize-path": "^3.0.0",
+        "picomatch": "^2.0.4"
+      },
+      "engines": {
+        "node": ">= 8"
+      }
+    },
+    "node_modules/arg": {
+      "version": "5.0.2",
+      "resolved": "https://registry.npmjs.org/arg/-/arg-5.0.2.tgz",
+      "integrity": "sha512-PYjyFOLKQ9y57JvQ6QLo8dAgNqswh8M1RMJYdQduT6xbWSgK36P/Z/v+p888pM69jMMfS8Xd8F6I1kQ/I9HUGg==",
+      "license": "MIT"
+    },
+    "node_modules/atob": {
+      "version": "2.1.2",
+      "resolved": "https://registry.npmjs.org/atob/-/atob-2.1.2.tgz",
+      "integrity": "sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==",
+      "license": "(MIT OR Apache-2.0)",
+      "bin": {
+        "atob": "bin/atob.js"
+      },
+      "engines": {
+        "node": ">= 4.5.0"
+      }
+    },
+    "node_modules/autoprefixer": {
+      "version": "10.4.16",
+      "resolved": "https://registry.npmjs.org/autoprefixer/-/autoprefixer-10.4.16.tgz",
+      "integrity": "sha512-7vd3UC6xKp0HLfua5IjZlcXvGAGy7cBAXTg2lyQ/8WpNhd6SiZ8Be+xm3FyBSYJx5GKcpRCzBh7RH4/0dnY+uQ==",
+      "funding": [
+        {
+          "type": "opencollective",
+          "url": "https://opencollective.com/postcss/"
+        },
+        {
+          "type": "tidelift",
+          "url": "https://tidelift.com/funding/github/npm/autoprefixer"
+        },
+        {
+          "type": "github",
+          "url": "https://github.com/sponsors/ai"
+        }
+      ],
+      "license": "MIT",
+      "dependencies": {
+        "browserslist": "^4.21.10",
+        "caniuse-lite": "^1.0.30001538",
+        "fraction.js": "^4.3.6",
+        "normalize-range": "^0.1.2",
+        "picocolors": "^1.0.0",
+        "postcss-value-parser": "^4.2.0"
+      },
+      "bin": {
+        "autoprefixer": "bin/autoprefixer"
+      },
+      "engines": {
+        "node": "^10 || ^12 || >=14"
+      },
+      "peerDependencies": {
+        "postcss": "^8.1.0"
+      }
+    },
+    "node_modules/balanced-match": {
+      "version": "1.0.2",
+      "resolved": "https://registry.npmjs.org/balanced-match/-/balanced-match-1.0.2.tgz",
+      "integrity": "sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==",
+      "license": "MIT"
+    },
+    "node_modules/base64-arraybuffer": {
+      "version": "1.0.2",
+      "resolved": "https://registry.npmjs.org/base64-arraybuffer/-/base64-arraybuffer-1.0.2.tgz",
+      "integrity": "sha512-I3yl4r9QB5ZRY3XuJVEPfc2XhZO6YweFPI+UovAzn+8/hb3oJ6lnysaFcjVpkCPfVWFUDvoZ8kmVDP7WyRtYtQ==",
+      "license": "MIT",
+      "engines": {
+        "node": ">= 0.6.0"
+      }
+    },
+    "node_modules/binary-extensions": {
+      "version": "2.3.0",
+      "resolved": "https://registry.npmjs.org/binary-extensions/-/binary-extensions-2.3.0.tgz",
+      "integrity": "sha512-Ceh+7ox5qe7LJuLHoY0feh3pHuUDHAcRUeyL2VYghZwfpkNIy/+8Ocg0a3UuSoYzavmylwuLWQOf3hl0jjMMIw==",
+      "license": "MIT",
+      "engines": {
+        "node": ">=8"
+      },
+      "funding": {
+        "url": "https://github.com/sponsors/sindresorhus"
+      }
+    },
+    "node_modules/brace-expansion": {
+      "version": "2.0.2",
+      "resolved": "https://registry.npmjs.org/brace-expansion/-/brace-expansion-2.0.2.tgz",
+      "integrity": "sha512-Jt0vHyM+jmUBqojB7E1NIYadt0vI0Qxjxd2TErW94wDz+E2LAm5vKMXXwg6ZZBTHPuUlDgQHKXvjGBdfcF1ZDQ==",
+      "license": "MIT",
+      "dependencies": {
+        "balanced-match": "^1.0.0"
+      }
+    },
+    "node_modules/braces": {
+      "version": "3.0.3",
+      "resolved": "https://registry.npmjs.org/braces/-/braces-3.0.3.tgz",
+      "integrity": "sha512-yQbXgO/OSZVD2IsiLlro+7Hf6Q18EJrKSEsdoMzKePKXct3gvD8oLcOQdIzGupr5Fj+EDe8gO/lxc1BzfMpxvA==",
+      "license": "MIT",
+      "dependencies": {
+        "fill-range": "^7.1.1"
+      },
+      "engines": {
+        "node": ">=8"
+      }
+    },
+    "node_modules/browserslist": {
+      "version": "4.25.1",
+      "resolved": "https://registry.npmjs.org/browserslist/-/browserslist-4.25.1.tgz",
+      "integrity": "sha512-KGj0KoOMXLpSNkkEI6Z6mShmQy0bc1I+T7K9N81k4WWMrfz+6fQ6es80B/YLAeRoKvjYE1YSHHOW1qe9xIVzHw==",
+      "funding": [
+        {
+          "type": "opencollective",
+          "url": "https://opencollective.com/browserslist"
+        },
+        {
+          "type": "tidelift",
+          "url": "https://tidelift.com/funding/github/npm/browserslist"
+        },
+        {
+          "type": "github",
+          "url": "https://github.com/sponsors/ai"
+        }
+      ],
+      "license": "MIT",
+      "dependencies": {
+        "caniuse-lite": "^1.0.30001726",
+        "electron-to-chromium": "^1.5.173",
+        "node-releases": "^2.0.19",
+        "update-browserslist-db": "^1.1.3"
+      },
+      "bin": {
+        "browserslist": "cli.js"
+      },
+      "engines": {
+        "node": "^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7"
+      }
+    },
+    "node_modules/btoa": {
+      "version": "1.2.1",
+      "resolved": "https://registry.npmjs.org/btoa/-/btoa-1.2.1.tgz",
+      "integrity": "sha512-SB4/MIGlsiVkMcHmT+pSmIPoNDoHg+7cMzmt3Uxt628MTz2487DKSqK/fuhFBrkuqrYv5UCEnACpF4dTFNKc/g==",
+      "license": "(MIT OR Apache-2.0)",
+      "bin": {
+        "btoa": "bin/btoa.js"
+      },
+      "engines": {
+        "node": ">= 0.4.0"
+      }
+    },
+    "node_modules/camelcase-css": {
+      "version": "2.0.1",
+      "resolved": "https://registry.npmjs.org/camelcase-css/-/camelcase-css-2.0.1.tgz",
+      "integrity": "sha512-QOSvevhslijgYwRx6Rv7zKdMF8lbRmx+uQGx2+vDc+KI/eBnsy9kit5aj23AgGu3pa4t9AgwbnXWqS+iOY+2aA==",
+      "license": "MIT",
+      "engines": {
+        "node": ">= 6"
+      }
+    },
+    "node_modules/caniuse-lite": {
+      "version": "1.0.30001731",
+      "resolved": "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001731.tgz",
+      "integrity": "sha512-lDdp2/wrOmTRWuoB5DpfNkC0rJDU8DqRa6nYL6HK6sytw70QMopt/NIc/9SM7ylItlBWfACXk0tEn37UWM/+mg==",
+      "funding": [
+        {
+          "type": "opencollective",
+          "url": "https://opencollective.com/browserslist"
+        },
+        {
+          "type": "tidelift",
+          "url": "https://tidelift.com/funding/github/npm/caniuse-lite"
+        },
+        {
+          "type": "github",
+          "url": "https://github.com/sponsors/ai"
+        }
+      ],
+      "license": "CC-BY-4.0"
+    },
+    "node_modules/canvg": {
+      "version": "3.0.11",
+      "resolved": "https://registry.npmjs.org/canvg/-/canvg-3.0.11.tgz",
+      "integrity": "sha512-5ON+q7jCTgMp9cjpu4Jo6XbvfYwSB2Ow3kzHKfIyJfaCAOHLbdKPQqGKgfED/R5B+3TFFfe8pegYA+b423SRyA==",
+      "license": "MIT",
+      "optional": true,
+      "dependencies": {
+        "@babel/runtime": "^7.12.5",
+        "@types/raf": "^3.4.0",
+        "core-js": "^3.8.3",
+        "raf": "^3.4.1",
+        "regenerator-runtime": "^0.13.7",
+        "rgbcolor": "^1.0.1",
+        "stackblur-canvas": "^2.0.0",
+        "svg-pathdata": "^6.0.3"
+      },
+      "engines": {
+        "node": ">=10.0.0"
+      }
+    },
+    "node_modules/chokidar": {
+      "version": "3.6.0",
+      "resolved": "https://registry.npmjs.org/chokidar/-/chokidar-3.6.0.tgz",
+      "integrity": "sha512-7VT13fmjotKpGipCW9JEQAusEPE+Ei8nl6/g4FBAmIm0GOOLMua9NDDo/DWp0ZAxCr3cPq5ZpBqmPAQgDda2Pw==",
+      "license": "MIT",
+      "dependencies": {
+        "anymatch": "~3.1.2",
+        "braces": "~3.0.2",
+        "glob-parent": "~5.1.2",
+        "is-binary-path": "~2.1.0",
+        "is-glob": "~4.0.1",
+        "normalize-path": "~3.0.0",
+        "readdirp": "~3.6.0"
+      },
+      "engines": {
+        "node": ">= 8.10.0"
+      },
+      "funding": {
+        "url": "https://paulmillr.com/funding/"
+      },
+      "optionalDependencies": {
+        "fsevents": "~2.3.2"
+      }
+    },
+    "node_modules/chokidar/node_modules/glob-parent": {
+      "version": "5.1.2",
+      "resolved": "https://registry.npmjs.org/glob-parent/-/glob-parent-5.1.2.tgz",
+      "integrity": "sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow==",
+      "license": "ISC",
+      "dependencies": {
+        "is-glob": "^4.0.1"
+      },
+      "engines": {
+        "node": ">= 6"
+      }
+    },
+    "node_modules/client-only": {
+      "version": "0.0.1",
+      "resolved": "https://registry.npmjs.org/client-only/-/client-only-0.0.1.tgz",
+      "integrity": "sha512-IV3Ou0jSMzZrd3pZ48nLkT9DA7Ag1pnPzaiQhpW7c3RbcqqzvzzVu+L8gfqMp/8IM2MQtSiqaCxrrcfu8I8rMA==",
+      "license": "MIT"
+    },
+    "node_modules/color": {
+      "version": "4.2.3",
+      "resolved": "https://registry.npmjs.org/color/-/color-4.2.3.tgz",
+      "integrity": "sha512-1rXeuUUiGGrykh+CeBdu5Ie7OJwinCgQY0bc7GCRxy5xVHy+moaqkpL/jqQq0MtQOeYcrqEz4abc5f0KtU7W4A==",
+      "license": "MIT",
+      "optional": true,
+      "dependencies": {
+        "color-convert": "^2.0.1",
+        "color-string": "^1.9.0"
+      },
+      "engines": {
+        "node": ">=12.5.0"
+      }
+    },
+    "node_modules/color-convert": {
+      "version": "2.0.1",
+      "resolved": "https://registry.npmjs.org/color-convert/-/color-convert-2.0.1.tgz",
+      "integrity": "sha512-RRECPsj7iu/xb5oKYcsFHSppFNnsj/52OVTRKb4zP5onXwVF3zVmmToNcOfGC+CRDpfK/U584fMg38ZHCaElKQ==",
+      "license": "MIT",
+      "dependencies": {
+        "color-name": "~1.1.4"
+      },
+      "engines": {
+        "node": ">=7.0.0"
+      }
+    },
+    "node_modules/color-name": {
+      "version": "1.1.4",
+      "resolved": "https://registry.npmjs.org/color-name/-/color-name-1.1.4.tgz",
+      "integrity": "sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==",
+      "license": "MIT"
+    },
+    "node_modules/color-string": {
+      "version": "1.9.1",
+      "resolved": "https://registry.npmjs.org/color-string/-/color-string-1.9.1.tgz",
+      "integrity": "sha512-shrVawQFojnZv6xM40anx4CkoDP+fZsw/ZerEMsW/pyzsRbElpsL/DBVW7q3ExxwusdNXI3lXpuhEZkzs8p5Eg==",
+      "license": "MIT",
+      "optional": true,
+      "dependencies": {
+        "color-name": "^1.0.0",
+        "simple-swizzle": "^0.2.2"
+      }
+    },
+    "node_modules/commander": {
+      "version": "4.1.1",
+      "resolved": "https://registry.npmjs.org/commander/-/commander-4.1.1.tgz",
+      "integrity": "sha512-NOKm8xhkzAjzFx8B2v5OAHT+u5pRQc2UCa2Vq9jYL/31o2wi9mxBA7LIFs3sV5VSC49z6pEhfbMULvShKj26WA==",
+      "license": "MIT",
+      "engines": {
+        "node": ">= 6"
+      }
+    },
+    "node_modules/core-js": {
+      "version": "3.44.0",
+      "resolved": "https://registry.npmjs.org/core-js/-/core-js-3.44.0.tgz",
+      "integrity": "sha512-aFCtd4l6GvAXwVEh3XbbVqJGHDJt0OZRa+5ePGx3LLwi12WfexqQxcsohb2wgsa/92xtl19Hd66G/L+TaAxDMw==",
+      "hasInstallScript": true,
+      "license": "MIT",
+      "optional": true,
+      "funding": {
+        "type": "opencollective",
+        "url": "https://opencollective.com/core-js"
+      }
+    },
+    "node_modules/cross-spawn": {
+      "version": "7.0.6",
+      "resolved": "https://registry.npmjs.org/cross-spawn/-/cross-spawn-7.0.6.tgz",
+      "integrity": "sha512-uV2QOWP2nWzsy2aMp8aRibhi9dlzF5Hgh5SHaB9OiTGEyDTiJJyx0uy51QXdyWbtAHNua4XJzUKca3OzKUd3vA==",
+      "license": "MIT",
+      "dependencies": {
+        "path-key": "^3.1.0",
+        "shebang-command": "^2.0.0",
+        "which": "^2.0.1"
+      },
+      "engines": {
+        "node": ">= 8"
+      }
+    },
+    "node_modules/css-line-break": {
+      "version": "2.1.0",
+      "resolved": "https://registry.npmjs.org/css-line-break/-/css-line-break-2.1.0.tgz",
+      "integrity": "sha512-FHcKFCZcAha3LwfVBhCQbW2nCNbkZXn7KVUJcsT5/P8YmfsVja0FMPJr0B903j/E69HUphKiV9iQArX8SDYA4w==",
+      "license": "MIT",
+      "dependencies": {
+        "utrie": "^1.0.2"
+      }
+    },
+    "node_modules/cssesc": {
+      "version": "3.0.0",
+      "resolved": "https://registry.npmjs.org/cssesc/-/cssesc-3.0.0.tgz",
+      "integrity": "sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg==",
+      "license": "MIT",
+      "bin": {
+        "cssesc": "bin/cssesc"
+      },
+      "engines": {
+        "node": ">=4"
+      }
+    },
+    "node_modules/csstype": {
+      "version": "3.1.3",
+      "resolved": "https://registry.npmjs.org/csstype/-/csstype-3.1.3.tgz",
+      "integrity": "sha512-M1uQkMl8rQK/szD0LNhtqxIPLpimGm8sOBwU7lLnCpSbTyY3yeU1Vc7l4KT5zT4s/yOxHH5O7tIuuLOCnLADRw==",
+      "dev": true,
+      "license": "MIT"
+    },
+    "node_modules/detect-libc": {
+      "version": "2.0.4",
+      "resolved": "https://registry.npmjs.org/detect-libc/-/detect-libc-2.0.4.tgz",
+      "integrity": "sha512-3UDv+G9CsCKO1WKMGw9fwq/SWJYbI0c5Y7LU1AXYoDdbhE2AHQ6N6Nb34sG8Fj7T5APy8qXDCKuuIHd1BR0tVA==",
+      "license": "Apache-2.0",
+      "optional": true,
+      "engines": {
+        "node": ">=8"
+      }
+    },
+    "node_modules/didyoumean": {
+      "version": "1.2.2",
+      "resolved": "https://registry.npmjs.org/didyoumean/-/didyoumean-1.2.2.tgz",
+      "integrity": "sha512-gxtyfqMg7GKyhQmb056K7M3xszy/myH8w+B4RT+QXBQsvAOdc3XymqDDPHx1BgPgsdAA5SIifona89YtRATDzw==",
+      "license": "Apache-2.0"
+    },
+    "node_modules/dlv": {
+      "version": "1.1.3",
+      "resolved": "https://registry.npmjs.org/dlv/-/dlv-1.1.3.tgz",
+      "integrity": "sha512-+HlytyjlPKnIG8XuRG8WvmBP8xs8P71y+SKKS6ZXWoEgLuePxtDoUEiH7WkdePWrQ5JBpE6aoVqfZfJUQkjXwA==",
+      "license": "MIT"
+    },
+    "node_modules/dompurify": {
+      "version": "3.2.6",
+      "resolved": "https://registry.npmjs.org/dompurify/-/dompurify-3.2.6.tgz",
+      "integrity": "sha512-/2GogDQlohXPZe6D6NOgQvXLPSYBqIWMnZ8zzOhn09REE4eyAzb+Hed3jhoM9OkuaJ8P6ZGTTVWQKAi8ieIzfQ==",
+      "license": "(MPL-2.0 OR Apache-2.0)",
+      "optional": true,
+      "optionalDependencies": {
+        "@types/trusted-types": "^2.0.7"
+      }
+    },
+    "node_modules/eastasianwidth": {
+      "version": "0.2.0",
+      "resolved": "https://registry.npmjs.org/eastasianwidth/-/eastasianwidth-0.2.0.tgz",
+      "integrity": "sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==",
+      "license": "MIT"
+    },
+    "node_modules/electron-to-chromium": {
+      "version": "1.5.192",
+      "resolved": "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.5.192.tgz",
+      "integrity": "sha512-rP8Ez0w7UNw/9j5eSXCe10o1g/8B1P5SM90PCCMVkIRQn2R0LEHWz4Eh9RnxkniuDe1W0cTSOB3MLlkTGDcuCg==",
+      "license": "ISC"
+    },
+    "node_modules/emoji-regex": {
+      "version": "9.2.2",
+      "resolved": "https://registry.npmjs.org/emoji-regex/-/emoji-regex-9.2.2.tgz",
+      "integrity": "sha512-L18DaJsXSUk2+42pv8mLs5jJT2hqFkFE4j21wOmgbUqsZ2hL72NsUU785g9RXgo3s0ZNgVl42TiHp3ZtOv/Vyg==",
+      "license": "MIT"
+    },
+    "node_modules/escalade": {
+      "version": "3.2.0",
+      "resolved": "https://registry.npmjs.org/escalade/-/escalade-3.2.0.tgz",
+      "integrity": "sha512-WUj2qlxaQtO4g6Pq5c29GTcWGDyd8itL8zTlipgECz3JesAiiOKotd8JU6otB3PACgG6xkJUyVhboMS+bje/jA==",
+      "license": "MIT",
+      "engines": {
+        "node": ">=6"
+      }
+    },
+    "node_modules/fast-glob": {
+      "version": "3.3.3",
+      "resolved": "https://registry.npmjs.org/fast-glob/-/fast-glob-3.3.3.tgz",
+      "integrity": "sha512-7MptL8U0cqcFdzIzwOTHoilX9x5BrNqye7Z/LuC7kCMRio1EMSyqRK3BEAUD7sXRq4iT4AzTVuZdhgQ2TCvYLg==",
+      "license": "MIT",
+      "dependencies": {
+        "@nodelib/fs.stat": "^2.0.2",
+        "@nodelib/fs.walk": "^1.2.3",
+        "glob-parent": "^5.1.2",
+        "merge2": "^1.3.0",
+        "micromatch": "^4.0.8"
+      },
+      "engines": {
+        "node": ">=8.6.0"
+      }
+    },
+    "node_modules/fast-glob/node_modules/glob-parent": {
+      "version": "5.1.2",
+      "resolved": "https://registry.npmjs.org/glob-parent/-/glob-parent-5.1.2.tgz",
+      "integrity": "sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow==",
+      "license": "ISC",
+      "dependencies": {
+        "is-glob": "^4.0.1"
+      },
+      "engines": {
+        "node": ">= 6"
+      }
+    },
+    "node_modules/fastq": {
+      "version": "1.19.1",
+      "resolved": "https://registry.npmjs.org/fastq/-/fastq-1.19.1.tgz",
+      "integrity": "sha512-GwLTyxkCXjXbxqIhTsMI2Nui8huMPtnxg7krajPJAjnEG/iiOS7i+zCtWGZR9G0NBKbXKh6X9m9UIsYX/N6vvQ==",
+      "license": "ISC",
+      "dependencies": {
+        "reusify": "^1.0.4"
+      }
+    },
+    "node_modules/fflate": {
+      "version": "0.8.2",
+      "resolved": "https://registry.npmjs.org/fflate/-/fflate-0.8.2.tgz",
+      "integrity": "sha512-cPJU47OaAoCbg0pBvzsgpTPhmhqI5eJjh/JIu8tPj5q+T7iLvW/JAYUqmE7KOB4R1ZyEhzBaIQpQpardBF5z8A==",
+      "license": "MIT"
+    },
+    "node_modules/fill-range": {
+      "version": "7.1.1",
+      "resolved": "https://registry.npmjs.org/fill-range/-/fill-range-7.1.1.tgz",
+      "integrity": "sha512-YsGpe3WHLK8ZYi4tWDg2Jy3ebRz2rXowDxnld4bkQB00cc/1Zw9AWnC0i9ztDJitivtQvaI9KaLyKrc+hBW0yg==",
+      "license": "MIT",
+      "dependencies": {
+        "to-regex-range": "^5.0.1"
+      },
+      "engines": {
+        "node": ">=8"
+      }
+    },
+    "node_modules/foreground-child": {
+      "version": "3.3.1",
+      "resolved": "https://registry.npmjs.org/foreground-child/-/foreground-child-3.3.1.tgz",
+      "integrity": "sha512-gIXjKqtFuWEgzFRJA9WCQeSJLZDjgJUOMCMzxtvFq/37KojM1BFGufqsCy0r4qSQmYLsZYMeyRqzIWOMup03sw==",
+      "license": "ISC",
+      "dependencies": {
+        "cross-spawn": "^7.0.6",
+        "signal-exit": "^4.0.1"
+      },
+      "engines": {
+        "node": ">=14"
+      },
+      "funding": {
+        "url": "https://github.com/sponsors/isaacs"
+      }
+    },
+    "node_modules/fraction.js": {
+      "version": "4.3.7",
+      "resolved": "https://registry.npmjs.org/fraction.js/-/fraction.js-4.3.7.tgz",
+      "integrity": "sha512-ZsDfxO51wGAXREY55a7la9LScWpwv9RxIrYABrlvOFBlH/ShPnrtsXeuUIfXKKOVicNxQ+o8JTbJvjS4M89yew==",
+      "license": "MIT",
+      "engines": {
+        "node": "*"
+      },
+      "funding": {
+        "type": "patreon",
+        "url": "https://github.com/sponsors/rawify"
+      }
+    },
+    "node_modules/fs-extra": {
+      "version": "8.1.0",
+      "resolved": "https://registry.npmjs.org/fs-extra/-/fs-extra-8.1.0.tgz",
+      "integrity": "sha512-yhlQgA6mnOJUKOsRUFsgJdQCvkKhcz8tlZG5HBQfReYZy46OwLcY+Zia0mtdHsOo9y/hP+CxMN0TU9QxoOtG4g==",
+      "license": "MIT",
+      "dependencies": {
+        "graceful-fs": "^4.2.0",
+        "jsonfile": "^4.0.0",
+        "universalify": "^0.1.0"
+      },
+      "engines": {
+        "node": ">=6 <7 || >=8"
+      }
+    },
+    "node_modules/fs-extra/node_modules/jsonfile": {
+      "version": "4.0.0",
+      "resolved": "https://registry.npmjs.org/jsonfile/-/jsonfile-4.0.0.tgz",
+      "integrity": "sha512-m6F1R3z8jjlf2imQHS2Qez5sjKWQzbuuhuJ/FKYFRZvPE3PuHcSMVZzfsLhGVOkfd20obL5SWEBew5ShlquNxg==",
+      "license": "MIT",
+      "optionalDependencies": {
+        "graceful-fs": "^4.1.6"
+      }
+    },
+    "node_modules/fsevents": {
+      "version": "2.3.3",
+      "resolved": "https://registry.npmjs.org/fsevents/-/fsevents-2.3.3.tgz",
+      "integrity": "sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==",
+      "hasInstallScript": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "darwin"
+      ],
+      "engines": {
+        "node": "^8.16.0 || ^10.6.0 || >=11.0.0"
+      }
+    },
+    "node_modules/function-bind": {
+      "version": "1.1.2",
+      "resolved": "https://registry.npmjs.org/function-bind/-/function-bind-1.1.2.tgz",
+      "integrity": "sha512-7XHNxH7qX9xG5mIwxkhumTox/MIRNcOgDrxWsMt2pAr23WHp6MrRlN7FBSFpCpr+oVO0F744iUgR82nJMfG2SA==",
+      "license": "MIT",
+      "funding": {
+        "url": "https://github.com/sponsors/ljharb"
+      }
+    },
+    "node_modules/glob": {
+      "version": "10.4.5",
+      "resolved": "https://registry.npmjs.org/glob/-/glob-10.4.5.tgz",
+      "integrity": "sha512-7Bv8RF0k6xjo7d4A/PxYLbUCfb6c+Vpd2/mB2yRDlew7Jb5hEXiCD9ibfO7wpk8i4sevK6DFny9h7EYbM3/sHg==",
+      "license": "ISC",
+      "dependencies": {
+        "foreground-child": "^3.1.0",
+        "jackspeak": "^3.1.2",
+        "minimatch": "^9.0.4",
+        "minipass": "^7.1.2",
+        "package-json-from-dist": "^1.0.0",
+        "path-scurry": "^1.11.1"
+      },
+      "bin": {
+        "glob": "dist/esm/bin.mjs"
+      },
+      "funding": {
+        "url": "https://github.com/sponsors/isaacs"
+      }
+    },
+    "node_modules/glob-parent": {
+      "version": "6.0.2",
+      "resolved": "https://registry.npmjs.org/glob-parent/-/glob-parent-6.0.2.tgz",
+      "integrity": "sha512-XxwI8EOhVQgWp6iDL+3b0r86f4d6AX6zSU55HfB4ydCEuXLXc5FcYeOu+nnGftS4TEju/11rt4KJPTMgbfmv4A==",
+      "license": "ISC",
+      "dependencies": {
+        "is-glob": "^4.0.3"
+      },
+      "engines": {
+        "node": ">=10.13.0"
+      }
+    },
+    "node_modules/graceful-fs": {
+      "version": "4.2.11",
+      "resolved": "https://registry.npmjs.org/graceful-fs/-/graceful-fs-4.2.11.tgz",
+      "integrity": "sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==",
+      "license": "ISC"
+    },
+    "node_modules/hasown": {
+      "version": "2.0.2",
+      "resolved": "https://registry.npmjs.org/hasown/-/hasown-2.0.2.tgz",
+      "integrity": "sha512-0hJU9SCPvmMzIBdZFqNPXWa6dqh7WdH0cII9y+CyS8rG3nL48Bclra9HmKhVVUHyPWNH5Y7xDwAB7bfgSjkUMQ==",
+      "license": "MIT",
+      "dependencies": {
+        "function-bind": "^1.1.2"
+      },
+      "engines": {
+        "node": ">= 0.4"
+      }
+    },
+    "node_modules/html2canvas": {
+      "version": "1.4.1",
+      "resolved": "https://registry.npmjs.org/html2canvas/-/html2canvas-1.4.1.tgz",
+      "integrity": "sha512-fPU6BHNpsyIhr8yyMpTLLxAbkaK8ArIBcmZIRiBLiDhjeqvXolaEmDGmELFuX9I4xDcaKKcJl+TKZLqruBbmWA==",
+      "license": "MIT",
+      "dependencies": {
+        "css-line-break": "^2.1.0",
+        "text-segmentation": "^1.0.3"
+      },
+      "engines": {
+        "node": ">=8.0.0"
+      }
+    },
+    "node_modules/is-arrayish": {
+      "version": "0.3.2",
+      "resolved": "https://registry.npmjs.org/is-arrayish/-/is-arrayish-0.3.2.tgz",
+      "integrity": "sha512-eVRqCvVlZbuw3GrM63ovNSNAeA1K16kaR/LRY/92w0zxQ5/1YzwblUX652i4Xs9RwAGjW9d9y6X88t8OaAJfWQ==",
+      "license": "MIT",
+      "optional": true
+    },
+    "node_modules/is-binary-path": {
+      "version": "2.1.0",
+      "resolved": "https://registry.npmjs.org/is-binary-path/-/is-binary-path-2.1.0.tgz",
+      "integrity": "sha512-ZMERYes6pDydyuGidse7OsHxtbI7WVeUEozgR/g7rd0xUimYNlvZRE/K2MgZTjWy725IfelLeVcEM97mmtRGXw==",
+      "license": "MIT",
+      "dependencies": {
+        "binary-extensions": "^2.0.0"
+      },
+      "engines": {
+        "node": ">=8"
+      }
+    },
+    "node_modules/is-core-module": {
+      "version": "2.16.1",
+      "resolved": "https://registry.npmjs.org/is-core-module/-/is-core-module-2.16.1.tgz",
+      "integrity": "sha512-UfoeMA6fIJ8wTYFEUjelnaGI67v6+N7qXJEvQuIGa99l4xsCruSYOVSQ0uPANn4dAzm8lkYPaKLrrijLq7x23w==",
+      "license": "MIT",
+      "dependencies": {
+        "hasown": "^2.0.2"
+      },
+      "engines": {
+        "node": ">= 0.4"
+      },
+      "funding": {
+        "url": "https://github.com/sponsors/ljharb"
+      }
+    },
+    "node_modules/is-extglob": {
+      "version": "2.1.1",
+      "resolved": "https://registry.npmjs.org/is-extglob/-/is-extglob-2.1.1.tgz",
+      "integrity": "sha512-SbKbANkN603Vi4jEZv49LeVJMn4yGwsbzZworEoyEiutsN3nJYdbO36zfhGJ6QEDpOZIFkDtnq5JRxmvl3jsoQ==",
+      "license": "MIT",
+      "engines": {
+        "node": ">=0.10.0"
+      }
+    },
+    "node_modules/is-fullwidth-code-point": {
+      "version": "3.0.0",
+      "resolved": "https://registry.npmjs.org/is-fullwidth-code-point/-/is-fullwidth-code-point-3.0.0.tgz",
+      "integrity": "sha512-zymm5+u+sCsSWyD9qNaejV3DFvhCKclKdizYaJUuHA83RLjb7nSuGnddCHGv0hk+KY7BMAlsWeK4Ueg6EV6XQg==",
+      "license": "MIT",
+      "engines": {
+        "node": ">=8"
+      }
+    },
+    "node_modules/is-glob": {
+      "version": "4.0.3",
+      "resolved": "https://registry.npmjs.org/is-glob/-/is-glob-4.0.3.tgz",
+      "integrity": "sha512-xelSayHH36ZgE7ZWhli7pW34hNbNl8Ojv5KVmkJD4hBdD3th8Tfk9vYasLM+mXWOZhFkgZfxhLSnrwRr4elSSg==",
+      "license": "MIT",
+      "dependencies": {
+        "is-extglob": "^2.1.1"
+      },
+      "engines": {
+        "node": ">=0.10.0"
+      }
+    },
+    "node_modules/is-number": {
+      "version": "7.0.0",
+      "resolved": "https://registry.npmjs.org/is-number/-/is-number-7.0.0.tgz",
+      "integrity": "sha512-41Cifkg6e8TylSpdtTpeLVMqvSBEVzTttHvERD741+pnZ8ANv0004MRL43QKPDlK9cGvNp6NZWZUBlbGXYxxng==",
+      "license": "MIT",
+      "engines": {
+        "node": ">=0.12.0"
+      }
+    },
+    "node_modules/isexe": {
+      "version": "2.0.0",
+      "resolved": "https://registry.npmjs.org/isexe/-/isexe-2.0.0.tgz",
+      "integrity": "sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==",
+      "license": "ISC"
+    },
+    "node_modules/jackspeak": {
+      "version": "3.4.3",
+      "resolved": "https://registry.npmjs.org/jackspeak/-/jackspeak-3.4.3.tgz",
+      "integrity": "sha512-OGlZQpz2yfahA/Rd1Y8Cd9SIEsqvXkLVoSw/cgwhnhFMDbsQFeZYoJJ7bIZBS9BcamUW96asq/npPWugM+RQBw==",
+      "license": "BlueOak-1.0.0",
+      "dependencies": {
+        "@isaacs/cliui": "^8.0.2"
+      },
+      "funding": {
+        "url": "https://github.com/sponsors/isaacs"
+      },
+      "optionalDependencies": {
+        "@pkgjs/parseargs": "^0.11.0"
+      }
+    },
+    "node_modules/jiti": {
+      "version": "1.21.7",
+      "resolved": "https://registry.npmjs.org/jiti/-/jiti-1.21.7.tgz",
+      "integrity": "sha512-/imKNG4EbWNrVjoNC/1H5/9GFy+tqjGBHCaSsN+P2RnPqjsLmv6UD3Ej+Kj8nBWaRAwyk7kK5ZUc+OEatnTR3A==",
+      "license": "MIT",
+      "bin": {
+        "jiti": "bin/jiti.js"
+      }
+    },
+    "node_modules/jsonfile": {
+      "version": "5.0.0",
+      "resolved": "https://registry.npmjs.org/jsonfile/-/jsonfile-5.0.0.tgz",
+      "integrity": "sha512-NQRZ5CRo74MhMMC3/3r5g2k4fjodJ/wh8MxjFbCViWKFjxrnudWSY5vomh+23ZaXzAS7J3fBZIR2dV6WbmfM0w==",
+      "license": "MIT",
+      "dependencies": {
+        "universalify": "^0.1.2"
+      },
+      "optionalDependencies": {
+        "graceful-fs": "^4.1.6"
+      }
+    },
+    "node_modules/jspdf": {
+      "version": "3.0.1",
+      "resolved": "https://registry.npmjs.org/jspdf/-/jspdf-3.0.1.tgz",
+      "integrity": "sha512-qaGIxqxetdoNnFQQXxTKUD9/Z7AloLaw94fFsOiJMxbfYdBbrBuhWmbzI8TVjrw7s3jBY1PFHofBKMV/wZPapg==",
+      "license": "MIT",
+      "dependencies": {
+        "@babel/runtime": "^7.26.7",
+        "atob": "^2.1.2",
+        "btoa": "^1.2.1",
+        "fflate": "^0.8.1"
+      },
+      "optionalDependencies": {
+        "canvg": "^3.0.11",
+        "core-js": "^3.6.0",
+        "dompurify": "^3.2.4",
+        "html2canvas": "^1.0.0-rc.5"
+      }
+    },
+    "node_modules/lilconfig": {
+      "version": "2.1.0",
+      "resolved": "https://registry.npmjs.org/lilconfig/-/lilconfig-2.1.0.tgz",
+      "integrity": "sha512-utWOt/GHzuUxnLKxB6dk81RoOeoNeHgbrXiuGk4yyF5qlRz+iIVWu56E2fqGHFrXz0QNUhLB/8nKqvRH66JKGQ==",
+      "license": "MIT",
+      "engines": {
+        "node": ">=10"
+      }
+    },
+    "node_modules/lines-and-columns": {
+      "version": "1.2.4",
+      "resolved": "https://registry.npmjs.org/lines-and-columns/-/lines-and-columns-1.2.4.tgz",
+      "integrity": "sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==",
+      "license": "MIT"
+    },
+    "node_modules/lru-cache": {
+      "version": "10.4.3",
+      "resolved": "https://registry.npmjs.org/lru-cache/-/lru-cache-10.4.3.tgz",
+      "integrity": "sha512-JNAzZcXrCt42VGLuYz0zfAzDfAvJWW6AfYlDBQyDV5DClI2m5sAmK+OIO7s59XfsRsWHp02jAJrRadPRGTt6SQ==",
+      "license": "ISC"
+    },
+    "node_modules/lucide-react": {
+      "version": "0.534.0",
+      "resolved": "https://registry.npmjs.org/lucide-react/-/lucide-react-0.534.0.tgz",
+      "integrity": "sha512-4Bz7rujQ/mXHqCwjx09ih/Q9SCizz9CjBV5repw9YSHZZZaop9/Oj0RgCDt6WdEaeAPfbcZ8l2b4jzApStqgNw==",
+      "license": "ISC",
+      "peerDependencies": {
+        "react": "^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0"
+      }
+    },
+    "node_modules/merge2": {
+      "version": "1.4.1",
+      "resolved": "https://registry.npmjs.org/merge2/-/merge2-1.4.1.tgz",
+      "integrity": "sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==",
+      "license": "MIT",
+      "engines": {
+        "node": ">= 8"
+      }
+    },
+    "node_modules/micromatch": {
+      "version": "4.0.8",
+      "resolved": "https://registry.npmjs.org/micromatch/-/micromatch-4.0.8.tgz",
+      "integrity": "sha512-PXwfBhYu0hBCPw8Dn0E+WDYb7af3dSLVWKi3HGv84IdF4TyFoC0ysxFd0Goxw7nSv4T/PzEJQxsYsEiFCKo2BA==",
+      "license": "MIT",
+      "dependencies": {
+        "braces": "^3.0.3",
+        "picomatch": "^2.3.1"
+      },
+      "engines": {
+        "node": ">=8.6"
+      }
+    },
+    "node_modules/minimatch": {
+      "version": "9.0.5",
+      "resolved": "https://registry.npmjs.org/minimatch/-/minimatch-9.0.5.tgz",
+      "integrity": "sha512-G6T0ZX48xgozx7587koeX9Ys2NYy6Gmv//P89sEte9V9whIapMNF4idKxnW2QtCcLiTWlb/wfCabAtAFWhhBow==",
+      "license": "ISC",
+      "dependencies": {
+        "brace-expansion": "^2.0.1"
+      },
+      "engines": {
+        "node": ">=16 || 14 >=14.17"
+      },
+      "funding": {
+        "url": "https://github.com/sponsors/isaacs"
+      }
+    },
+    "node_modules/minipass": {
+      "version": "7.1.2",
+      "resolved": "https://registry.npmjs.org/minipass/-/minipass-7.1.2.tgz",
+      "integrity": "sha512-qOOzS1cBTWYF4BH8fVePDBOO9iptMnGUEZwNc/cMWnTV2nVLZ7VoNWEPHkYczZA0pdoA7dl6e7FL659nX9S2aw==",
+      "license": "ISC",
+      "engines": {
+        "node": ">=16 || 14 >=14.17"
+      }
+    },
+    "node_modules/mz": {
+      "version": "2.7.0",
+      "resolved": "https://registry.npmjs.org/mz/-/mz-2.7.0.tgz",
+      "integrity": "sha512-z81GNO7nnYMEhrGh9LeymoE4+Yr0Wn5McHIZMK5cfQCl+NDX08sCZgUc9/6MHni9IWuFLm1Z3HTCXu2z9fN62Q==",
+      "license": "MIT",
+      "dependencies": {
+        "any-promise": "^1.0.0",
+        "object-assign": "^4.0.1",
+        "thenify-all": "^1.0.0"
+      }
+    },
+    "node_modules/nanoid": {
+      "version": "3.3.11",
+      "resolved": "https://registry.npmjs.org/nanoid/-/nanoid-3.3.11.tgz",
+      "integrity": "sha512-N8SpfPUnUp1bK+PMYW8qSWdl9U+wwNWI4QKxOYDy9JAro3WMX7p2OeVRF9v+347pnakNevPmiHhNmZ2HbFA76w==",
+      "funding": [
+        {
+          "type": "github",
+          "url": "https://github.com/sponsors/ai"
+        }
+      ],
+      "license": "MIT",
+      "bin": {
+        "nanoid": "bin/nanoid.cjs"
+      },
+      "engines": {
+        "node": "^10 || ^12 || ^13.7 || ^14 || >=15.0.1"
+      }
+    },
+    "node_modules/next": {
+      "version": "15.4.5",
+      "resolved": "https://registry.npmjs.org/next/-/next-15.4.5.tgz",
+      "integrity": "sha512-nJ4v+IO9CPmbmcvsPebIoX3Q+S7f6Fu08/dEWu0Ttfa+wVwQRh9epcmsyCPjmL2b8MxC+CkBR97jgDhUUztI3g==",
+      "license": "MIT",
+      "dependencies": {
+        "@next/env": "15.4.5",
+        "@swc/helpers": "0.5.15",
+        "caniuse-lite": "^1.0.30001579",
+        "postcss": "8.4.31",
+        "styled-jsx": "5.1.6"
+      },
+      "bin": {
+        "next": "dist/bin/next"
+      },
+      "engines": {
+        "node": "^18.18.0 || ^19.8.0 || >= 20.0.0"
+      },
+      "optionalDependencies": {
+        "@next/swc-darwin-arm64": "15.4.5",
+        "@next/swc-darwin-x64": "15.4.5",
+        "@next/swc-linux-arm64-gnu": "15.4.5",
+        "@next/swc-linux-arm64-musl": "15.4.5",
+        "@next/swc-linux-x64-gnu": "15.4.5",
+        "@next/swc-linux-x64-musl": "15.4.5",
+        "@next/swc-win32-arm64-msvc": "15.4.5",
+        "@next/swc-win32-x64-msvc": "15.4.5",
+        "sharp": "^0.34.3"
+      },
+      "peerDependencies": {
+        "@opentelemetry/api": "^1.1.0",
+        "@playwright/test": "^1.51.1",
+        "babel-plugin-react-compiler": "*",
+        "react": "^18.2.0 || 19.0.0-rc-de68d2f4-20241204 || ^19.0.0",
+        "react-dom": "^18.2.0 || 19.0.0-rc-de68d2f4-20241204 || ^19.0.0",
+        "sass": "^1.3.0"
+      },
+      "peerDependenciesMeta": {
+        "@opentelemetry/api": {
+          "optional": true
+        },
+        "@playwright/test": {
+          "optional": true
+        },
+        "babel-plugin-react-compiler": {
+          "optional": true
+        },
+        "sass": {
+          "optional": true
+        }
+      }
+    },
+    "node_modules/next/node_modules/postcss": {
+      "version": "8.4.31",
+      "resolved": "https://registry.npmjs.org/postcss/-/postcss-8.4.31.tgz",
+      "integrity": "sha512-PS08Iboia9mts/2ygV3eLpY5ghnUcfLV/EXTOW1E2qYxJKGGBUtNjN76FYHnMs36RmARn41bC0AZmn+rR0OVpQ==",
+      "funding": [
+        {
+          "type": "opencollective",
+          "url": "https://opencollective.com/postcss/"
+        },
+        {
+          "type": "tidelift",
+          "url": "https://tidelift.com/funding/github/npm/postcss"
+        },
+        {
+          "type": "github",
+          "url": "https://github.com/sponsors/ai"
+        }
+      ],
+      "license": "MIT",
+      "dependencies": {
+        "nanoid": "^3.3.6",
+        "picocolors": "^1.0.0",
+        "source-map-js": "^1.0.2"
+      },
+      "engines": {
+        "node": "^10 || ^12 || >=14"
+      }
+    },
+    "node_modules/node-releases": {
+      "version": "2.0.19",
+      "resolved": "https://registry.npmjs.org/node-releases/-/node-releases-2.0.19.tgz",
+      "integrity": "sha512-xxOWJsBKtzAq7DY0J+DTzuz58K8e7sJbdgwkbMWQe8UYB6ekmsQ45q0M/tJDsGaZmbC+l7n57UV8Hl5tHxO9uw==",
+      "license": "MIT"
+    },
+    "node_modules/normalize-path": {
+      "version": "3.0.0",
+      "resolved": "https://registry.npmjs.org/normalize-path/-/normalize-path-3.0.0.tgz",
+      "integrity": "sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==",
+      "license": "MIT",
+      "engines": {
+        "node": ">=0.10.0"
+      }
+    },
+    "node_modules/normalize-range": {
+      "version": "0.1.2",
+      "resolved": "https://registry.npmjs.org/normalize-range/-/normalize-range-0.1.2.tgz",
+      "integrity": "sha512-bdok/XvKII3nUpklnV6P2hxtMNrCboOjAcyBuQnWEhO665FwrSNRxU+AqpsyvO6LgGYPspN+lu5CLtw4jPRKNA==",
+      "license": "MIT",
+      "engines": {
+        "node": ">=0.10.0"
+      }
+    },
+    "node_modules/object-assign": {
+      "version": "4.1.1",
+      "resolved": "https://registry.npmjs.org/object-assign/-/object-assign-4.1.1.tgz",
+      "integrity": "sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg==",
+      "license": "MIT",
+      "engines": {
+        "node": ">=0.10.0"
+      }
+    },
+    "node_modules/object-hash": {
+      "version": "3.0.0",
+      "resolved": "https://registry.npmjs.org/object-hash/-/object-hash-3.0.0.tgz",
+      "integrity": "sha512-RSn9F68PjH9HqtltsSnqYC1XXoWe9Bju5+213R98cNGttag9q9yAOTzdbsqvIa7aNm5WffBZFpWYr2aWrklWAw==",
+      "license": "MIT",
+      "engines": {
+        "node": ">= 6"
+      }
+    },
+    "node_modules/package-json-from-dist": {
+      "version": "1.0.1",
+      "resolved": "https://registry.npmjs.org/package-json-from-dist/-/package-json-from-dist-1.0.1.tgz",
+      "integrity": "sha512-UEZIS3/by4OC8vL3P2dTXRETpebLI2NiI5vIrjaD/5UtrkFX/tNbwjTSRAGC/+7CAo2pIcBaRgWmcBBHcsaCIw==",
+      "license": "BlueOak-1.0.0"
+    },
+    "node_modules/path-key": {
+      "version": "3.1.1",
+      "resolved": "https://registry.npmjs.org/path-key/-/path-key-3.1.1.tgz",
+      "integrity": "sha512-ojmeN0qd+y0jszEtoY48r0Peq5dwMEkIlCOu6Q5f41lfkswXuKtYrhgoTpLnyIcHm24Uhqx+5Tqm2InSwLhE6Q==",
+      "license": "MIT",
+      "engines": {
+        "node": ">=8"
+      }
+    },
+    "node_modules/path-parse": {
+      "version": "1.0.7",
+      "resolved": "https://registry.npmjs.org/path-parse/-/path-parse-1.0.7.tgz",
+      "integrity": "sha512-LDJzPVEEEPR+y48z93A0Ed0yXb8pAByGWo/k5YYdYgpY2/2EsOsksJrq7lOHxryrVOn1ejG6oAp8ahvOIQD8sw==",
+      "license": "MIT"
+    },
+    "node_modules/path-scurry": {
+      "version": "1.11.1",
+      "resolved": "https://registry.npmjs.org/path-scurry/-/path-scurry-1.11.1.tgz",
+      "integrity": "sha512-Xa4Nw17FS9ApQFJ9umLiJS4orGjm7ZzwUrwamcGQuHSzDyth9boKDaycYdDcZDuqYATXw4HFXgaqWTctW/v1HA==",
+      "license": "BlueOak-1.0.0",
+      "dependencies": {
+        "lru-cache": "^10.2.0",
+        "minipass": "^5.0.0 || ^6.0.2 || ^7.0.0"
+      },
+      "engines": {
+        "node": ">=16 || 14 >=14.18"
+      },
+      "funding": {
+        "url": "https://github.com/sponsors/isaacs"
+      }
+    },
+    "node_modules/performance-now": {
+      "version": "2.1.0",
+      "resolved": "https://registry.npmjs.org/performance-now/-/performance-now-2.1.0.tgz",
+      "integrity": "sha512-7EAHlyLHI56VEIdK57uwHdHKIaAGbnXPiw0yWbarQZOKaKpvUIgW0jWRVLiatnM+XXlSwsanIBH/hzGMJulMow==",
+      "license": "MIT",
+      "optional": true
+    },
+    "node_modules/picocolors": {
+      "version": "1.1.1",
+      "resolved": "https://registry.npmjs.org/picocolors/-/picocolors-1.1.1.tgz",
+      "integrity": "sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA==",
+      "license": "ISC"
+    },
+    "node_modules/picomatch": {
+      "version": "2.3.1",
+      "resolved": "https://registry.npmjs.org/picomatch/-/picomatch-2.3.1.tgz",
+      "integrity": "sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==",
+      "license": "MIT",
+      "engines": {
+        "node": ">=8.6"
+      },
+      "funding": {
+        "url": "https://github.com/sponsors/jonschlinkert"
+      }
+    },
+    "node_modules/pify": {
+      "version": "2.3.0",
+      "resolved": "https://registry.npmjs.org/pify/-/pify-2.3.0.tgz",
+      "integrity": "sha512-udgsAY+fTnvv7kI7aaxbqwWNb0AHiB0qBO89PZKPkoTmGOgdbrHDKD+0B2X4uTfJ/FT1R09r9gTsjUjNJotuog==",
+      "license": "MIT",
+      "engines": {
+        "node": ">=0.10.0"
+      }
+    },
+    "node_modules/pirates": {
+      "version": "4.0.7",
+      "resolved": "https://registry.npmjs.org/pirates/-/pirates-4.0.7.tgz",
+      "integrity": "sha512-TfySrs/5nm8fQJDcBDuUng3VOUKsd7S+zqvbOTiGXHfxX4wK31ard+hoNuvkicM/2YFzlpDgABOevKSsB4G/FA==",
+      "license": "MIT",
+      "engines": {
+        "node": ">= 6"
+      }
+    },
+    "node_modules/postcss": {
+      "version": "8.5.6",
+      "resolved": "https://registry.npmjs.org/postcss/-/postcss-8.5.6.tgz",
+      "integrity": "sha512-3Ybi1tAuwAP9s0r1UQ2J4n5Y0G05bJkpUIO0/bI9MhwmD70S5aTWbXGBwxHrelT+XM1k6dM0pk+SwNkpTRN7Pg==",
+      "funding": [
+        {
+          "type": "opencollective",
+          "url": "https://opencollective.com/postcss/"
+        },
+        {
+          "type": "tidelift",
+          "url": "https://tidelift.com/funding/github/npm/postcss"
+        },
+        {
+          "type": "github",
+          "url": "https://github.com/sponsors/ai"
+        }
+      ],
+      "license": "MIT",
+      "dependencies": {
+        "nanoid": "^3.3.11",
+        "picocolors": "^1.1.1",
+        "source-map-js": "^1.2.1"
+      },
+      "engines": {
+        "node": "^10 || ^12 || >=14"
+      }
+    },
+    "node_modules/postcss-import": {
+      "version": "15.1.0",
+      "resolved": "https://registry.npmjs.org/postcss-import/-/postcss-import-15.1.0.tgz",
+      "integrity": "sha512-hpr+J05B2FVYUAXHeK1YyI267J/dDDhMU6B6civm8hSY1jYJnBXxzKDKDswzJmtLHryrjhnDjqqp/49t8FALew==",
+      "license": "MIT",
+      "dependencies": {
+        "postcss-value-parser": "^4.0.0",
+        "read-cache": "^1.0.0",
+        "resolve": "^1.1.7"
+      },
+      "engines": {
+        "node": ">=14.0.0"
+      },
+      "peerDependencies": {
+        "postcss": "^8.0.0"
+      }
+    },
+    "node_modules/postcss-js": {
+      "version": "4.0.1",
+      "resolved": "https://registry.npmjs.org/postcss-js/-/postcss-js-4.0.1.tgz",
+      "integrity": "sha512-dDLF8pEO191hJMtlHFPRa8xsizHaM82MLfNkUHdUtVEV3tgTp5oj+8qbEqYM57SLfc74KSbw//4SeJma2LRVIw==",
+      "license": "MIT",
+      "dependencies": {
+        "camelcase-css": "^2.0.1"
+      },
+      "engines": {
+        "node": "^12 || ^14 || >= 16"
+      },
+      "funding": {
+        "type": "opencollective",
+        "url": "https://opencollective.com/postcss/"
+      },
+      "peerDependencies": {
+        "postcss": "^8.4.21"
+      }
+    },
+    "node_modules/postcss-nested": {
+      "version": "6.2.0",
+      "resolved": "https://registry.npmjs.org/postcss-nested/-/postcss-nested-6.2.0.tgz",
+      "integrity": "sha512-HQbt28KulC5AJzG+cZtj9kvKB93CFCdLvog1WFLf1D+xmMvPGlBstkpTEZfK5+AN9hfJocyBFCNiqyS48bpgzQ==",
+      "funding": [
+        {
+          "type": "opencollective",
+          "url": "https://opencollective.com/postcss/"
+        },
+        {
+          "type": "github",
+          "url": "https://github.com/sponsors/ai"
+        }
+      ],
+      "license": "MIT",
+      "dependencies": {
+        "postcss-selector-parser": "^6.1.1"
+      },
+      "engines": {
+        "node": ">=12.0"
+      },
+      "peerDependencies": {
+        "postcss": "^8.2.14"
+      }
+    },
+    "node_modules/postcss-selector-parser": {
+      "version": "6.1.2",
+      "resolved": "https://registry.npmjs.org/postcss-selector-parser/-/postcss-selector-parser-6.1.2.tgz",
+      "integrity": "sha512-Q8qQfPiZ+THO/3ZrOrO0cJJKfpYCagtMUkXbnEfmgUjwXg6z/WBeOyS9APBBPCTSiDV+s4SwQGu8yFsiMRIudg==",
+      "license": "MIT",
+      "dependencies": {
+        "cssesc": "^3.0.0",
+        "util-deprecate": "^1.0.2"
+      },
+      "engines": {
+        "node": ">=4"
+      }
+    },
+    "node_modules/postcss-value-parser": {
+      "version": "4.2.0",
+      "resolved": "https://registry.npmjs.org/postcss-value-parser/-/postcss-value-parser-4.2.0.tgz",
+      "integrity": "sha512-1NNCs6uurfkVbeXG4S8JFT9t19m45ICnif8zWLd5oPSZ50QnwMfK+H3jv408d4jw/7Bttv5axS5IiHoLaVNHeQ==",
+      "license": "MIT"
+    },
+    "node_modules/queue-microtask": {
+      "version": "1.2.3",
+      "resolved": "https://registry.npmjs.org/queue-microtask/-/queue-microtask-1.2.3.tgz",
+      "integrity": "sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==",
+      "funding": [
+        {
+          "type": "github",
+          "url": "https://github.com/sponsors/feross"
+        },
+        {
+          "type": "patreon",
+          "url": "https://www.patreon.com/feross"
+        },
+        {
+          "type": "consulting",
+          "url": "https://feross.org/support"
+        }
+      ],
+      "license": "MIT"
+    },
+    "node_modules/raf": {
+      "version": "3.4.1",
+      "resolved": "https://registry.npmjs.org/raf/-/raf-3.4.1.tgz",
+      "integrity": "sha512-Sq4CW4QhwOHE8ucn6J34MqtZCeWFP2aQSmrlroYgqAV1PjStIhJXxYuTgUIfkEk7zTLjmIjLmU5q+fbD1NnOJA==",
+      "license": "MIT",
+      "optional": true,
+      "dependencies": {
+        "performance-now": "^2.1.0"
+      }
+    },
+    "node_modules/react": {
+      "version": "19.1.0",
+      "resolved": "https://registry.npmjs.org/react/-/react-19.1.0.tgz",
+      "integrity": "sha512-FS+XFBNvn3GTAWq26joslQgWNoFu08F4kl0J4CgdNKADkdSGXQyTCnKteIAJy96Br6YbpEU1LSzV5dYtjMkMDg==",
+      "license": "MIT",
+      "engines": {
+        "node": ">=0.10.0"
+      }
+    },
+    "node_modules/react-dom": {
+      "version": "19.1.0",
+      "resolved": "https://registry.npmjs.org/react-dom/-/react-dom-19.1.0.tgz",
+      "integrity": "sha512-Xs1hdnE+DyKgeHJeJznQmYMIBG3TKIHJJT95Q58nHLSrElKlGQqDTR2HQ9fx5CN/Gk6Vh/kupBTDLU11/nDk/g==",
+      "license": "MIT",
+      "dependencies": {
+        "scheduler": "^0.26.0"
+      },
+      "peerDependencies": {
+        "react": "^19.1.0"
+      }
+    },
+    "node_modules/react-hook-form": {
+      "version": "7.61.1",
+      "resolved": "https://registry.npmjs.org/react-hook-form/-/react-hook-form-7.61.1.tgz",
+      "integrity": "sha512-2vbXUFDYgqEgM2RcXcAT2PwDW/80QARi+PKmHy5q2KhuKvOlG8iIYgf7eIlIANR5trW9fJbP4r5aub3a4egsew==",
+      "license": "MIT",
+      "engines": {
+        "node": ">=18.0.0"
+      },
+      "funding": {
+        "type": "opencollective",
+        "url": "https://opencollective.com/react-hook-form"
+      },
+      "peerDependencies": {
+        "react": "^16.8.0 || ^17 || ^18 || ^19"
+      }
+    },
+    "node_modules/read-cache": {
+      "version": "1.0.0",
+      "resolved": "https://registry.npmjs.org/read-cache/-/read-cache-1.0.0.tgz",
+      "integrity": "sha512-Owdv/Ft7IjOgm/i0xvNDZ1LrRANRfew4b2prF3OWMQLxLfu3bS8FVhCsrSCMK4lR56Y9ya+AThoTpDCTxCmpRA==",
+      "license": "MIT",
+      "dependencies": {
+        "pify": "^2.3.0"
+      }
+    },
+    "node_modules/readdirp": {
+      "version": "3.6.0",
+      "resolved": "https://registry.npmjs.org/readdirp/-/readdirp-3.6.0.tgz",
+      "integrity": "sha512-hOS089on8RduqdbhvQ5Z37A0ESjsqz6qnRcffsMU3495FuTdqSm+7bhJ29JvIOsBDEEnan5DPu9t3To9VRlMzA==",
+      "license": "MIT",
+      "dependencies": {
+        "picomatch": "^2.2.1"
+      },
+      "engines": {
+        "node": ">=8.10.0"
+      }
+    },
+    "node_modules/regenerator-runtime": {
+      "version": "0.13.11",
+      "resolved": "https://registry.npmjs.org/regenerator-runtime/-/regenerator-runtime-0.13.11.tgz",
+      "integrity": "sha512-kY1AZVr2Ra+t+piVaJ4gxaFaReZVH40AKNo7UCX6W+dEwBo/2oZJzqfuN1qLq1oL45o56cPaTXELwrTh8Fpggg==",
+      "license": "MIT",
+      "optional": true
+    },
+    "node_modules/resolve": {
+      "version": "1.22.10",
+      "resolved": "https://registry.npmjs.org/resolve/-/resolve-1.22.10.tgz",
+      "integrity": "sha512-NPRy+/ncIMeDlTAsuqwKIiferiawhefFJtkNSW0qZJEqMEb+qBt/77B/jGeeek+F0uOeN05CDa6HXbbIgtVX4w==",
+      "license": "MIT",
+      "dependencies": {
+        "is-core-module": "^2.16.0",
+        "path-parse": "^1.0.7",
+        "supports-preserve-symlinks-flag": "^1.0.0"
+      },
+      "bin": {
+        "resolve": "bin/resolve"
+      },
+      "engines": {
+        "node": ">= 0.4"
+      },
+      "funding": {
+        "url": "https://github.com/sponsors/ljharb"
+      }
+    },
+    "node_modules/reusify": {
+      "version": "1.1.0",
+      "resolved": "https://registry.npmjs.org/reusify/-/reusify-1.1.0.tgz",
+      "integrity": "sha512-g6QUff04oZpHs0eG5p83rFLhHeV00ug/Yf9nZM6fLeUrPguBTkTQOdpAWWspMh55TZfVQDPaN3NQJfbVRAxdIw==",
+      "license": "MIT",
+      "engines": {
+        "iojs": ">=1.0.0",
+        "node": ">=0.10.0"
+      }
+    },
+    "node_modules/rgbcolor": {
+      "version": "1.0.1",
+      "resolved": "https://registry.npmjs.org/rgbcolor/-/rgbcolor-1.0.1.tgz",
+      "integrity": "sha512-9aZLIrhRaD97sgVhtJOW6ckOEh6/GnvQtdVNfdZ6s67+3/XwLS9lBcQYzEEhYVeUowN7pRzMLsyGhK2i/xvWbw==",
+      "license": "MIT OR SEE LICENSE IN FEEL-FREE.md",
+      "optional": true,
+      "engines": {
+        "node": ">= 0.8.15"
+      }
+    },
+    "node_modules/run-parallel": {
+      "version": "1.2.0",
+      "resolved": "https://registry.npmjs.org/run-parallel/-/run-parallel-1.2.0.tgz",
+      "integrity": "sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA==",
+      "funding": [
+        {
+          "type": "github",
+          "url": "https://github.com/sponsors/feross"
+        },
+        {
+          "type": "patreon",
+          "url": "https://www.patreon.com/feross"
+        },
+        {
+          "type": "consulting",
+          "url": "https://feross.org/support"
+        }
+      ],
+      "license": "MIT",
+      "dependencies": {
+        "queue-microtask": "^1.2.2"
+      }
+    },
+    "node_modules/scheduler": {
+      "version": "0.26.0",
+      "resolved": "https://registry.npmjs.org/scheduler/-/scheduler-0.26.0.tgz",
+      "integrity": "sha512-NlHwttCI/l5gCPR3D1nNXtWABUmBwvZpEQiD4IXSbIDq8BzLIK/7Ir5gTFSGZDUu37K5cMNp0hFtzO38sC7gWA==",
+      "license": "MIT"
+    },
+    "node_modules/semver": {
+      "version": "7.7.2",
+      "resolved": "https://registry.npmjs.org/semver/-/semver-7.7.2.tgz",
+      "integrity": "sha512-RF0Fw+rO5AMf9MAyaRXI4AV0Ulj5lMHqVxxdSgiVbixSCXoEmmX/jk0CuJw4+3SqroYO9VoUh+HcuJivvtJemA==",
+      "license": "ISC",
+      "optional": true,
+      "bin": {
+        "semver": "bin/semver.js"
+      },
+      "engines": {
+        "node": ">=10"
+      }
+    },
+    "node_modules/sharp": {
+      "version": "0.34.3",
+      "resolved": "https://registry.npmjs.org/sharp/-/sharp-0.34.3.tgz",
+      "integrity": "sha512-eX2IQ6nFohW4DbvHIOLRB3MHFpYqaqvXd3Tp5e/T/dSH83fxaNJQRvDMhASmkNTsNTVF2/OOopzRCt7xokgPfg==",
+      "hasInstallScript": true,
+      "license": "Apache-2.0",
+      "optional": true,
+      "dependencies": {
+        "color": "^4.2.3",
+        "detect-libc": "^2.0.4",
+        "semver": "^7.7.2"
+      },
+      "engines": {
+        "node": "^18.17.0 || ^20.3.0 || >=21.0.0"
+      },
+      "funding": {
+        "url": "https://opencollective.com/libvips"
+      },
+      "optionalDependencies": {
+        "@img/sharp-darwin-arm64": "0.34.3",
+        "@img/sharp-darwin-x64": "0.34.3",
+        "@img/sharp-libvips-darwin-arm64": "1.2.0",
+        "@img/sharp-libvips-darwin-x64": "1.2.0",
+        "@img/sharp-libvips-linux-arm": "1.2.0",
+        "@img/sharp-libvips-linux-arm64": "1.2.0",
+        "@img/sharp-libvips-linux-ppc64": "1.2.0",
+        "@img/sharp-libvips-linux-s390x": "1.2.0",
+        "@img/sharp-libvips-linux-x64": "1.2.0",
+        "@img/sharp-libvips-linuxmusl-arm64": "1.2.0",
+        "@img/sharp-libvips-linuxmusl-x64": "1.2.0",
+        "@img/sharp-linux-arm": "0.34.3",
+        "@img/sharp-linux-arm64": "0.34.3",
+        "@img/sharp-linux-ppc64": "0.34.3",
+        "@img/sharp-linux-s390x": "0.34.3",
+        "@img/sharp-linux-x64": "0.34.3",
+        "@img/sharp-linuxmusl-arm64": "0.34.3",
+        "@img/sharp-linuxmusl-x64": "0.34.3",
+        "@img/sharp-wasm32": "0.34.3",
+        "@img/sharp-win32-arm64": "0.34.3",
+        "@img/sharp-win32-ia32": "0.34.3",
+        "@img/sharp-win32-x64": "0.34.3"
+      }
+    },
+    "node_modules/shebang-command": {
+      "version": "2.0.0",
+      "resolved": "https://registry.npmjs.org/shebang-command/-/shebang-command-2.0.0.tgz",
+      "integrity": "sha512-kHxr2zZpYtdmrN1qDjrrX/Z1rR1kG8Dx+gkpK1G4eXmvXswmcE1hTWBWYUzlraYw1/yZp6YuDY77YtvbN0dmDA==",
+      "license": "MIT",
+      "dependencies": {
+        "shebang-regex": "^3.0.0"
+      },
+      "engines": {
+        "node": ">=8"
+      }
+    },
+    "node_modules/shebang-regex": {
+      "version": "3.0.0",
+      "resolved": "https://registry.npmjs.org/shebang-regex/-/shebang-regex-3.0.0.tgz",
+      "integrity": "sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==",
+      "license": "MIT",
+      "engines": {
+        "node": ">=8"
+      }
+    },
+    "node_modules/signal-exit": {
+      "version": "4.1.0",
+      "resolved": "https://registry.npmjs.org/signal-exit/-/signal-exit-4.1.0.tgz",
+      "integrity": "sha512-bzyZ1e88w9O1iNJbKnOlvYTrWPDl46O1bG0D3XInv+9tkPrxrN8jUUTiFlDkkmKWgn1M6CfIA13SuGqOa9Korw==",
+      "license": "ISC",
+      "engines": {
+        "node": ">=14"
+      },
+      "funding": {
+        "url": "https://github.com/sponsors/isaacs"
+      }
+    },
+    "node_modules/simple-swizzle": {
+      "version": "0.2.2",
+      "resolved": "https://registry.npmjs.org/simple-swizzle/-/simple-swizzle-0.2.2.tgz",
+      "integrity": "sha512-JA//kQgZtbuY83m+xT+tXJkmJncGMTFT+C+g2h2R9uxkYIrE2yy9sgmcLhCnw57/WSD+Eh3J97FPEDFnbXnDUg==",
+      "license": "MIT",
+      "optional": true,
+      "dependencies": {
+        "is-arrayish": "^0.3.1"
+      }
+    },
+    "node_modules/source-map-js": {
+      "version": "1.2.1",
+      "resolved": "https://registry.npmjs.org/source-map-js/-/source-map-js-1.2.1.tgz",
+      "integrity": "sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==",
+      "license": "BSD-3-Clause",
+      "engines": {
+        "node": ">=0.10.0"
+      }
+    },
+    "node_modules/stackblur-canvas": {
+      "version": "2.7.0",
+      "resolved": "https://registry.npmjs.org/stackblur-canvas/-/stackblur-canvas-2.7.0.tgz",
+      "integrity": "sha512-yf7OENo23AGJhBriGx0QivY5JP6Y1HbrrDI6WLt6C5auYZXlQrheoY8hD4ibekFKz1HOfE48Ww8kMWMnJD/zcQ==",
+      "license": "MIT",
+      "optional": true,
+      "engines": {
+        "node": ">=0.1.14"
+      }
+    },
+    "node_modules/string-width": {
+      "version": "5.1.2",
+      "resolved": "https://registry.npmjs.org/string-width/-/string-width-5.1.2.tgz",
+      "integrity": "sha512-HnLOCR3vjcY8beoNLtcjZ5/nxn2afmME6lhrDrebokqMap+XbeW8n9TXpPDOqdGK5qcI3oT0GKTW6wC7EMiVqA==",
+      "license": "MIT",
+      "dependencies": {
+        "eastasianwidth": "^0.2.0",
+        "emoji-regex": "^9.2.2",
+        "strip-ansi": "^7.0.1"
+      },
+      "engines": {
+        "node": ">=12"
+      },
+      "funding": {
+        "url": "https://github.com/sponsors/sindresorhus"
+      }
+    },
+    "node_modules/string-width-cjs": {
+      "name": "string-width",
+      "version": "4.2.3",
+      "resolved": "https://registry.npmjs.org/string-width/-/string-width-4.2.3.tgz",
+      "integrity": "sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==",
+      "license": "MIT",
+      "dependencies": {
+        "emoji-regex": "^8.0.0",
+        "is-fullwidth-code-point": "^3.0.0",
+        "strip-ansi": "^6.0.1"
+      },
+      "engines": {
+        "node": ">=8"
+      }
+    },
+    "node_modules/string-width-cjs/node_modules/ansi-regex": {
+      "version": "5.0.1",
+      "resolved": "https://registry.npmjs.org/ansi-regex/-/ansi-regex-5.0.1.tgz",
+      "integrity": "sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==",
+      "license": "MIT",
+      "engines": {
+        "node": ">=8"
+      }
+    },
+    "node_modules/string-width-cjs/node_modules/emoji-regex": {
+      "version": "8.0.0",
+      "resolved": "https://registry.npmjs.org/emoji-regex/-/emoji-regex-8.0.0.tgz",
+      "integrity": "sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==",
+      "license": "MIT"
+    },
+    "node_modules/string-width-cjs/node_modules/strip-ansi": {
+      "version": "6.0.1",
+      "resolved": "https://registry.npmjs.org/strip-ansi/-/strip-ansi-6.0.1.tgz",
+      "integrity": "sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==",
+      "license": "MIT",
+      "dependencies": {
+        "ansi-regex": "^5.0.1"
+      },
+      "engines": {
+        "node": ">=8"
+      }
+    },
+    "node_modules/strip-ansi": {
+      "version": "7.1.0",
+      "resolved": "https://registry.npmjs.org/strip-ansi/-/strip-ansi-7.1.0.tgz",
+      "integrity": "sha512-iq6eVVI64nQQTRYq2KtEg2d2uU7LElhTJwsH4YzIHZshxlgZms/wIc4VoDQTlG/IvVIrBKG06CrZnp0qv7hkcQ==",
+      "license": "MIT",
+      "dependencies": {
+        "ansi-regex": "^6.0.1"
+      },
+      "engines": {
+        "node": ">=12"
+      },
+      "funding": {
+        "url": "https://github.com/chalk/strip-ansi?sponsor=1"
+      }
+    },
+    "node_modules/strip-ansi-cjs": {
+      "name": "strip-ansi",
+      "version": "6.0.1",
+      "resolved": "https://registry.npmjs.org/strip-ansi/-/strip-ansi-6.0.1.tgz",
+      "integrity": "sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==",
+      "license": "MIT",
+      "dependencies": {
+        "ansi-regex": "^5.0.1"
+      },
+      "engines": {
+        "node": ">=8"
+      }
+    },
+    "node_modules/strip-ansi-cjs/node_modules/ansi-regex": {
+      "version": "5.0.1",
+      "resolved": "https://registry.npmjs.org/ansi-regex/-/ansi-regex-5.0.1.tgz",
+      "integrity": "sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==",
+      "license": "MIT",
+      "engines": {
+        "node": ">=8"
+      }
+    },
+    "node_modules/styled-jsx": {
+      "version": "5.1.6",
+      "resolved": "https://registry.npmjs.org/styled-jsx/-/styled-jsx-5.1.6.tgz",
+      "integrity": "sha512-qSVyDTeMotdvQYoHWLNGwRFJHC+i+ZvdBRYosOFgC+Wg1vx4frN2/RG/NA7SYqqvKNLf39P2LSRA2pu6n0XYZA==",
+      "license": "MIT",
+      "dependencies": {
+        "client-only": "0.0.1"
+      },
+      "engines": {
+        "node": ">= 12.0.0"
+      },
+      "peerDependencies": {
+        "react": ">= 16.8.0 || 17.x.x || ^18.0.0-0 || ^19.0.0-0"
+      },
+      "peerDependenciesMeta": {
+        "@babel/core": {
+          "optional": true
+        },
+        "babel-plugin-macros": {
+          "optional": true
+        }
+      }
+    },
+    "node_modules/sucrase": {
+      "version": "3.35.0",
+      "resolved": "https://registry.npmjs.org/sucrase/-/sucrase-3.35.0.tgz",
+      "integrity": "sha512-8EbVDiu9iN/nESwxeSxDKe0dunta1GOlHufmSSXxMD2z2/tMZpDMpvXQGsc+ajGo8y2uYUmixaSRUc/QPoQ0GA==",
+      "license": "MIT",
+      "dependencies": {
+        "@jridgewell/gen-mapping": "^0.3.2",
+        "commander": "^4.0.0",
+        "glob": "^10.3.10",
+        "lines-and-columns": "^1.1.6",
+        "mz": "^2.7.0",
+        "pirates": "^4.0.1",
+        "ts-interface-checker": "^0.1.9"
+      },
+      "bin": {
+        "sucrase": "bin/sucrase",
+        "sucrase-node": "bin/sucrase-node"
+      },
+      "engines": {
+        "node": ">=16 || 14 >=14.17"
+      }
+    },
+    "node_modules/supports-preserve-symlinks-flag": {
+      "version": "1.0.0",
+      "resolved": "https://registry.npmjs.org/supports-preserve-symlinks-flag/-/supports-preserve-symlinks-flag-1.0.0.tgz",
+      "integrity": "sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==",
+      "license": "MIT",
+      "engines": {
+        "node": ">= 0.4"
+      },
+      "funding": {
+        "url": "https://github.com/sponsors/ljharb"
+      }
+    },
+    "node_modules/svg-pathdata": {
+      "version": "6.0.3",
+      "resolved": "https://registry.npmjs.org/svg-pathdata/-/svg-pathdata-6.0.3.tgz",
+      "integrity": "sha512-qsjeeq5YjBZ5eMdFuUa4ZosMLxgr5RZ+F+Y1OrDhuOCEInRMA3x74XdBtggJcj9kOeInz0WE+LgCPDkZFlBYJw==",
+      "license": "MIT",
+      "optional": true,
+      "engines": {
+        "node": ">=12.0.0"
+      }
+    },
+    "node_modules/tailwindcss": {
+      "version": "3.4.5",
+      "resolved": "https://registry.npmjs.org/tailwindcss/-/tailwindcss-3.4.5.tgz",
+      "integrity": "sha512-DlTxttYcogpDfx3tf/8jfnma1nfAYi2cBUYV2YNoPPecwmO3YGiFlOX9D8tGAu+EDF38ryBzvrDKU/BLMsUwbw==",
+      "license": "MIT",
+      "dependencies": {
+        "@alloc/quick-lru": "^5.2.0",
+        "arg": "^5.0.2",
+        "chokidar": "^3.5.3",
+        "didyoumean": "^1.2.2",
+        "dlv": "^1.1.3",
+        "fast-glob": "^3.3.0",
+        "glob-parent": "^6.0.2",
+        "is-glob": "^4.0.3",
+        "jiti": "^1.21.0",
+        "lilconfig": "^2.1.0",
+        "micromatch": "^4.0.5",
+        "normalize-path": "^3.0.0",
+        "object-hash": "^3.0.0",
+        "picocolors": "^1.0.0",
+        "postcss": "^8.4.23",
+        "postcss-import": "^15.1.0",
+        "postcss-js": "^4.0.1",
+        "postcss-load-config": "^4.0.1",
+        "postcss-nested": "^6.0.1",
+        "postcss-selector-parser": "^6.0.11",
+        "resolve": "^1.22.2",
+        "sucrase": "^3.32.0"
+      },
+      "bin": {
+        "tailwind": "lib/cli.js",
+        "tailwindcss": "lib/cli.js"
+      },
+      "engines": {
+        "node": ">=14.0.0"
+      }
+    },
+    "node_modules/tailwindcss/node_modules/postcss-load-config": {
+      "version": "4.0.2",
+      "resolved": "https://registry.npmjs.org/postcss-load-config/-/postcss-load-config-4.0.2.tgz",
+      "integrity": "sha512-bSVhyJGL00wMVoPUzAVAnbEoWyqRxkjv64tUl427SKnPrENtq6hJwUojroMz2VB+Q1edmi4IfrAPpami5VVgMQ==",
+      "funding": [
+        {
+          "type": "opencollective",
+          "url": "https://opencollective.com/postcss/"
+        },
+        {
+          "type": "github",
+          "url": "https://github.com/sponsors/ai"
+        }
+      ],
+      "license": "MIT",
+      "dependencies": {
+        "lilconfig": "^3.0.0",
+        "yaml": "^2.3.4"
+      },
+      "engines": {
+        "node": ">= 14"
+      },
+      "peerDependencies": {
+        "postcss": ">=8.0.9",
+        "ts-node": ">=9.0.0"
+      },
+      "peerDependenciesMeta": {
+        "postcss": {
+          "optional": true
+        },
+        "ts-node": {
+          "optional": true
+        }
+      }
+    },
+    "node_modules/tailwindcss/node_modules/postcss-load-config/node_modules/lilconfig": {
+      "version": "3.1.3",
+      "resolved": "https://registry.npmjs.org/lilconfig/-/lilconfig-3.1.3.tgz",
+      "integrity": "sha512-/vlFKAoH5Cgt3Ie+JLhRbwOsCQePABiU3tJ1egGvyQ+33R/vcwM2Zl2QR/LzjsBeItPt3oSVXapn+m4nQDvpzw==",
+      "license": "MIT",
+      "engines": {
+        "node": ">=14"
+      },
+      "funding": {
+        "url": "https://github.com/sponsors/antonk52"
+      }
+    },
+    "node_modules/text-segmentation": {
+      "version": "1.0.3",
+      "resolved": "https://registry.npmjs.org/text-segmentation/-/text-segmentation-1.0.3.tgz",
+      "integrity": "sha512-iOiPUo/BGnZ6+54OsWxZidGCsdU8YbE4PSpdPinp7DeMtUJNJBoJ/ouUSTJjHkh1KntHaltHl/gDs2FC4i5+Nw==",
+      "license": "MIT",
+      "dependencies": {
+        "utrie": "^1.0.2"
+      }
+    },
+    "node_modules/thenify": {
+      "version": "3.3.1",
+      "resolved": "https://registry.npmjs.org/thenify/-/thenify-3.3.1.tgz",
+      "integrity": "sha512-RVZSIV5IG10Hk3enotrhvz0T9em6cyHBLkH/YAZuKqd8hRkKhSfCGIcP2KUY0EPxndzANBmNllzWPwak+bheSw==",
+      "license": "MIT",
+      "dependencies": {
+        "any-promise": "^1.0.0"
+      }
+    },
+    "node_modules/thenify-all": {
+      "version": "1.6.0",
+      "resolved": "https://registry.npmjs.org/thenify-all/-/thenify-all-1.6.0.tgz",
+      "integrity": "sha512-RNxQH/qI8/t3thXJDwcstUO4zeqo64+Uy/+sNVRBx4Xn2OX+OZ9oP+iJnNFqplFra2ZUVeKCSa2oVWi3T4uVmA==",
+      "license": "MIT",
+      "dependencies": {
+        "thenify": ">= 3.1.0 < 4"
+      },
+      "engines": {
+        "node": ">=0.8"
+      }
+    },
+    "node_modules/to-regex-range": {
+      "version": "5.0.1",
+      "resolved": "https://registry.npmjs.org/to-regex-range/-/to-regex-range-5.0.1.tgz",
+      "integrity": "sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==",
+      "license": "MIT",
+      "dependencies": {
+        "is-number": "^7.0.0"
+      },
+      "engines": {
+        "node": ">=8.0"
+      }
+    },
+    "node_modules/ts-interface-checker": {
+      "version": "0.1.13",
+      "resolved": "https://registry.npmjs.org/ts-interface-checker/-/ts-interface-checker-0.1.13.tgz",
+      "integrity": "sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==",
+      "license": "Apache-2.0"
+    },
+    "node_modules/tslib": {
+      "version": "2.8.1",
+      "resolved": "https://registry.npmjs.org/tslib/-/tslib-2.8.1.tgz",
+      "integrity": "sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==",
+      "license": "0BSD"
+    },
+    "node_modules/twemoji": {
+      "version": "14.0.2",
+      "resolved": "https://registry.npmjs.org/twemoji/-/twemoji-14.0.2.tgz",
+      "integrity": "sha512-BzOoXIe1QVdmsUmZ54xbEH+8AgtOKUiG53zO5vVP2iUu6h5u9lN15NcuS6te4OY96qx0H7JK9vjjl9WQbkTRuA==",
+      "license": "MIT",
+      "dependencies": {
+        "fs-extra": "^8.0.1",
+        "jsonfile": "^5.0.0",
+        "twemoji-parser": "14.0.0",
+        "universalify": "^0.1.2"
+      }
+    },
+    "node_modules/twemoji-parser": {
+      "version": "14.0.0",
+      "resolved": "https://registry.npmjs.org/twemoji-parser/-/twemoji-parser-14.0.0.tgz",
+      "integrity": "sha512-9DUOTGLOWs0pFWnh1p6NF+C3CkQ96PWmEFwhOVmT3WbecRC+68AIqpsnJXygfkFcp4aXbOp8Dwbhh/HQgvoRxA==",
+      "license": "MIT"
+    },
+    "node_modules/typescript": {
+      "version": "5.8.3",
+      "resolved": "https://registry.npmjs.org/typescript/-/typescript-5.8.3.tgz",
+      "integrity": "sha512-p1diW6TqL9L07nNxvRMM7hMMw4c5XOo/1ibL4aAIGmSAt9slTE1Xgw5KWuof2uTOvCg9BY7ZRi+GaF+7sfgPeQ==",
+      "dev": true,
+      "license": "Apache-2.0",
+      "bin": {
+        "tsc": "bin/tsc",
+        "tsserver": "bin/tsserver"
+      },
+      "engines": {
+        "node": ">=14.17"
+      }
+    },
+    "node_modules/undici-types": {
+      "version": "6.21.0",
+      "resolved": "https://registry.npmjs.org/undici-types/-/undici-types-6.21.0.tgz",
+      "integrity": "sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ==",
+      "dev": true,
+      "license": "MIT"
+    },
+    "node_modules/universalify": {
+      "version": "0.1.2",
+      "resolved": "https://registry.npmjs.org/universalify/-/universalify-0.1.2.tgz",
+      "integrity": "sha512-rBJeI5CXAlmy1pV+617WB9J63U6XcazHHF2f2dbJix4XzpUF0RS3Zbj0FGIOCAva5P/d/GBOYaACQ1w+0azUkg==",
+      "license": "MIT",
+      "engines": {
+        "node": ">= 4.0.0"
+      }
+    },
+    "node_modules/update-browserslist-db": {
+      "version": "1.1.3",
+      "resolved": "https://registry.npmjs.org/update-browserslist-db/-/update-browserslist-db-1.1.3.tgz",
+      "integrity": "sha512-UxhIZQ+QInVdunkDAaiazvvT/+fXL5Osr0JZlJulepYu6Jd7qJtDZjlur0emRlT71EN3ScPoE7gvsuIKKNavKw==",
+      "funding": [
+        {
+          "type": "opencollective",
+          "url": "https://opencollective.com/browserslist"
+        },
+        {
+          "type": "tidelift",
+          "url": "https://tidelift.com/funding/github/npm/browserslist"
+        },
+        {
+          "type": "github",
+          "url": "https://github.com/sponsors/ai"
+        }
+      ],
+      "license": "MIT",
+      "dependencies": {
+        "escalade": "^3.2.0",
+        "picocolors": "^1.1.1"
+      },
+      "bin": {
+        "update-browserslist-db": "cli.js"
+      },
+      "peerDependencies": {
+        "browserslist": ">= 4.21.0"
+      }
+    },
+    "node_modules/util-deprecate": {
+      "version": "1.0.2",
+      "resolved": "https://registry.npmjs.org/util-deprecate/-/util-deprecate-1.0.2.tgz",
+      "integrity": "sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==",
+      "license": "MIT"
+    },
+    "node_modules/utrie": {
+      "version": "1.0.2",
+      "resolved": "https://registry.npmjs.org/utrie/-/utrie-1.0.2.tgz",
+      "integrity": "sha512-1MLa5ouZiOmQzUbjbu9VmjLzn1QLXBhwpUa7kdLUQK+KQ5KA9I1vk5U4YHe/X2Ch7PYnJfWuWT+VbuxbGwljhw==",
+      "license": "MIT",
+      "dependencies": {
+        "base64-arraybuffer": "^1.0.2"
+      }
+    },
+    "node_modules/which": {
+      "version": "2.0.2",
+      "resolved": "https://registry.npmjs.org/which/-/which-2.0.2.tgz",
+      "integrity": "sha512-BLI3Tl1TW3Pvl70l3yq3Y64i+awpwXqsGBYWkkqMtnbXgrMD+yj7rhW0kuEDxzJaYXGjEW5ogapKNMEKNMjibA==",
+      "license": "ISC",
+      "dependencies": {
+        "isexe": "^2.0.0"
+      },
+      "bin": {
+        "node-which": "bin/node-which"
+      },
+      "engines": {
+        "node": ">= 8"
+      }
+    },
+    "node_modules/wrap-ansi": {
+      "version": "8.1.0",
+      "resolved": "https://registry.npmjs.org/wrap-ansi/-/wrap-ansi-8.1.0.tgz",
+      "integrity": "sha512-si7QWI6zUMq56bESFvagtmzMdGOtoxfR+Sez11Mobfc7tm+VkUckk9bW2UeffTGVUbOksxmSw0AA2gs8g71NCQ==",
+      "license": "MIT",
+      "dependencies": {
+        "ansi-styles": "^6.1.0",
+        "string-width": "^5.0.1",
+        "strip-ansi": "^7.0.1"
+      },
+      "engines": {
+        "node": ">=12"
+      },
+      "funding": {
+        "url": "https://github.com/chalk/wrap-ansi?sponsor=1"
+      }
+    },
+    "node_modules/wrap-ansi-cjs": {
+      "name": "wrap-ansi",
+      "version": "7.0.0",
+      "resolved": "https://registry.npmjs.org/wrap-ansi/-/wrap-ansi-7.0.0.tgz",
+      "integrity": "sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==",
+      "license": "MIT",
+      "dependencies": {
+        "ansi-styles": "^4.0.0",
+        "string-width": "^4.1.0",
+        "strip-ansi": "^6.0.0"
+      },
+      "engines": {
+        "node": ">=10"
+      },
+      "funding": {
+        "url": "https://github.com/chalk/wrap-ansi?sponsor=1"
+      }
+    },
+    "node_modules/wrap-ansi-cjs/node_modules/ansi-regex": {
+      "version": "5.0.1",
+      "resolved": "https://registry.npmjs.org/ansi-regex/-/ansi-regex-5.0.1.tgz",
+      "integrity": "sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==",
+      "license": "MIT",
+      "engines": {
+        "node": ">=8"
+      }
+    },
+    "node_modules/wrap-ansi-cjs/node_modules/ansi-styles": {
+      "version": "4.3.0",
+      "resolved": "https://registry.npmjs.org/ansi-styles/-/ansi-styles-4.3.0.tgz",
+      "integrity": "sha512-zbB9rCJAT1rbjiVDb2hqKFHNYLxgtk8NURxZ3IZwD3F6NtxbXZQCnnSi1Lkx+IDohdPlFp222wVALIheZJQSEg==",
+      "license": "MIT",
+      "dependencies": {
+        "color-convert": "^2.0.1"
+      },
+      "engines": {
+        "node": ">=8"
+      },
+      "funding": {
+        "url": "https://github.com/chalk/ansi-styles?sponsor=1"
+      }
+    },
+    "node_modules/wrap-ansi-cjs/node_modules/emoji-regex": {
+      "version": "8.0.0",
+      "resolved": "https://registry.npmjs.org/emoji-regex/-/emoji-regex-8.0.0.tgz",
+      "integrity": "sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==",
+      "license": "MIT"
+    },
+    "node_modules/wrap-ansi-cjs/node_modules/string-width": {
+      "version": "4.2.3",
+      "resolved": "https://registry.npmjs.org/string-width/-/string-width-4.2.3.tgz",
+      "integrity": "sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==",
+      "license": "MIT",
+      "dependencies": {
+        "emoji-regex": "^8.0.0",
+        "is-fullwidth-code-point": "^3.0.0",
+        "strip-ansi": "^6.0.1"
+      },
+      "engines": {
+        "node": ">=8"
+      }
+    },
+    "node_modules/wrap-ansi-cjs/node_modules/strip-ansi": {
+      "version": "6.0.1",
+      "resolved": "https://registry.npmjs.org/strip-ansi/-/strip-ansi-6.0.1.tgz",
+      "integrity": "sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==",
+      "license": "MIT",
+      "dependencies": {
+        "ansi-regex": "^5.0.1"
+      },
+      "engines": {
+        "node": ">=8"
+      }
+    },
+    "node_modules/yaml": {
+      "version": "2.8.0",
+      "resolved": "https://registry.npmjs.org/yaml/-/yaml-2.8.0.tgz",
+      "integrity": "sha512-4lLa/EcQCB0cJkyts+FpIRx5G/llPxfP6VQU5KByHEhLxY3IJCH0f0Hy1MHI8sClTvsIb8qwRJ6R/ZdlDJ/leQ==",
+      "license": "ISC",
+      "bin": {
+        "yaml": "bin.mjs"
+      },
+      "engines": {
+        "node": ">= 14.6"
+      }
+    },
+    "node_modules/zod": {
+      "version": "4.0.13",
+      "resolved": "https://registry.npmjs.org/zod/-/zod-4.0.13.tgz",
+      "integrity": "sha512-jv+zRxuZQxTrFHzxZ46ezL2FtnE+M4HIJHJEwLsZ7UjrXHltdG6HrxvqM0twoVCWxJiYf8WqKjAcjztegpkB+Q==",
+      "license": "MIT",
+      "funding": {
+        "url": "https://github.com/sponsors/colinhacks"
+      }
+    }
+  }
+}
+
+```n
+
 ## File: next.config.ts
 
 ```typescript
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  output: 'export',
+  trailingSlash: true,
+  images: {
+    unoptimized: true
+  }
+};
+
+export default nextConfig;
+
+```n
+
+## File: next.config.js
+
+```javascript
+/** @type {import("next").NextConfig} */
+const nextConfig = {
+  output: "export" // enables static HTML export mode in Next 15+
 };
 
 export default nextConfig;
@@ -86,6 +2889,30 @@ export default nextConfig;
   "exclude": ["node_modules"]
 }
 
+```n
+
+## File: tailwind.config.ts
+
+```typescript
+import type { Config } from 'tailwindcss'
+
+export default <Config>{
+  /* scan *every* source file that can contain Tailwind classes */
+  content: [
+    './src/**/*.{ts,tsx,js,jsx}',
+    './src/app/**/*.{ts,tsx,js,jsx}',
+    './src/components/**/*.{ts,tsx,js,jsx}',
+    './src/lib/**/*.{ts,tsx,js,jsx}',
+  ],
+
+  theme: {
+    extend: {
+      /* (optional) put any custom colours / fonts back here */
+    },
+  },
+
+  plugins: [],            // add typography/forms later if you like
+} 
 ```n
 
 ## File: postcss.config.mjs
@@ -814,6 +3641,741 @@ To provide job seekers with a modern, accessible, and user-friendly tool for cre
 **Status:** ✅ Complete and Ready for Launch 
 ```n
 
+## File: scala.readme.md
+
+```markdown
+![logo](resumaker_icon.png)
+
+# Resu-Maker
+
+A **Scala-based resume generator** that creates professional PDF resumes using LaTeX. Built with functional programming principles and type-safe domain modeling.
+
+## Features
+
+- **Type-Safe Resume Data**: Strongly typed domain model prevents data inconsistencies
+- **Professional PDF Output**: Clean, professional formatting with clickable links
+- **Hot Reloading**: Live preview with automatic recompilation during development
+- **Functional Programming**: Built with Cats Effect for pure functional programming
+- **Rich Resume Model**: Supports multiple jobs per workplace, skills tracking, and various education types
+
+## Architecture
+
+The project is structured around three main components:
+
+- **`Entities.scala`**: Domain model with case classes for resume data
+- **`Latex.scala`**: LaTeX generation and PDF compilation
+- **`Main.scala`**: Application entry point with resume data
+
+## Prerequisites
+
+### LaTeX Installation
+```shell
+# Ubuntu/Debian
+sudo apt install texlive-latex-extra
+
+# macOS (using Homebrew)
+brew install --cask mactex
+
+# Windows
+# Download and install MiKTeX from https://miktex.org/
+```
+
+### Scala/SBT
+Ensure you have SBT installed. The project uses Scala 3.6.4.
+
+## Quick Start
+
+1. **Clone the repository**
+   ```shell
+   git clone https://github.com/kadenjtaylor/resumaker.git
+   cd resumaker
+   ```
+
+2. **Run the application**
+   ```shell
+   sbt run
+   ```
+
+3. **Check the output**
+   Look in the `latex/` directory for your generated PDF resume!
+
+## Development Workflow
+
+### Live Development
+For real-time updates during development:
+
+```shell
+sbt ~run
+```
+
+This will watch for file changes and automatically recompile your resume.
+
+### Customizing Your Resume
+
+1. **Edit the resume data** in `src/main/scala/dev/kaden/Main.scala`
+2. **Modify the LaTeX template** in `src/main/scala/dev/kaden/Latex.scala` if needed
+3. **Run the application** to see your changes
+
+## Project Structure
+
+```
+resumaker/
+├── src/main/scala/dev/kaden/
+│   ├── Entities.scala      # Domain model and data structures
+│   ├── Latex.scala         # LaTeX generation and compilation
+│   └── Main.scala          # Application entry point
+├── latex/                  # Generated LaTeX files and PDF output
+├── build.sbt              # SBT build configuration
+└── README.md              # This file
+```
+
+## Resume Data Model
+
+The project uses a rich, type-safe domain model:
+
+- **Contact Information**: Phone numbers, email addresses, location
+- **Experience**: Workplaces with multiple jobs, skills, and technologies
+- **Education**: Degrees, diplomas, and certifications
+- **Extras**: Additional information and achievements
+
+### Example Resume Structure
+
+```scala
+val myResume = Resume(
+  Header(
+    name = "Your Name",
+    tagline = "Your professional tagline",
+    contactInfo = ContactInfo(phone, email),
+    location = Location(city, state)
+  ),
+  Experience(
+    Workplace(
+      name = "Company Name",
+      link = "https://company.com",
+      blurb = "Company description",
+      tenure = Past(startDate, endDate),
+      SoftwareJob(
+        title = "Software Engineer",
+        description = "Job description",
+        skillsAndTools = List("Kafka", "Docker"),
+        langsAndLibs = Map("Scala" -> List("Cats-Effect", "Http4s"))
+      )
+    )
+  ),
+  Education(
+    EducationRecord(
+      institution = "University Name",
+      link = "https://university.edu",
+      awarded = 2020,
+      proof = Degree("Computer Science")
+    )
+  ),
+  Extras(
+    Element("Additional achievements and interests")
+  ),
+  Footer("https://github.com/yourusername/resumaker", LocalDate.now())
+)
+```
+
+## Technical Stack
+
+- **Scala 3.6.4**: Modern Scala with latest language features
+- **Cats Effect 3.3.12**: Functional programming library for effects
+- **SBT**: Build tool and dependency management
+- **LaTeX**: PDF generation and formatting
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test with `sbt run`
+5. Submit a pull request
+
+## License
+
+This project is open source. Feel free to use it for your own resume generation needs.
+
+## Author
+
+Created by [Kaden Taylor](https://github.com/kadenjtaylor) - a software engineer passionate about functional programming and clean code.
+
+---
+
+*Generated with ❤️ using Scala and LaTeX*
+
+```n
+
+## File: resume.md
+
+```markdown
+# Kaden Taylor
+
+*I like building things, solving problems, and building things that solve problems.*
+
+📧 kadenjtaylor@gmail.com
+📱 (480) 734-8791
+📍 Tucson, Arizona
+
+## 💼 Experience
+
+### Crunchbase
+**Platform Engineer**
+*2022 - 2025*
+
+Discovery Team
+
+**Skills:** Kafka, Docker, Kubernetes, Debezium
+
+### Axoni
+**Software Engineer**
+*2021 - 2022*
+
+Platform Team
+
+**Skills:** Kubernetes, Docker, Debezium
+
+### Academia.edu
+**Full-Stack Software Engineer**
+*2020 - 2021*
+
+Short-form academic publishing: `Academia Letters`
+
+### Google
+**Software Engineer**
+*2019 - 2020*
+
+Android Messages App
+
+**Skills:** Blaze, Piper
+
+### Usercare Inc
+**Fly.me - Software Engineer**
+*2017 - 2019*
+
+Online Travel Agency
+
+### Amadeus Revenue Integrity
+**Software Engineer**
+*2016 - 2017*
+
+Domin Modeling, Optimization
+
+**Skills:** RabbitMQ
+
+## 🎓 Education
+
+### University of Arizona
+**B.S. Computer Science**
+*2016*
+
+### Gilbert High School
+**General Studies**
+*2012*
+
+## ⚡ Skills
+
+Kafka, Docker, Kubernetes, Debezium, Scala, Ruby, Javascript, Blaze, Piper, Java, Clojure, Neo4j, RabbitMQ, Ansible, Consul, Fabio, APL
+
+## 🏆 Additional Information
+
+• Runner-up on The FOX network gameshow,SuperHuman
+• Received 'Startup Tucson Award' at UA Hackathon '15 for Pebble Smartwatch app design
+• Passionate about domain modeling andimproving program understandability
+
+```n
+
+## File: kaden-scala-data.json
+
+```json
+{
+  "header": {
+    "name": "Kaden Taylor",
+    "tagline": "I like building things, solving problems, and building things that solve problems.",
+    "contactInfo": {
+      "phoneNumber": {
+        "areaCode": 480,
+        "prefix": 734,
+        "suffix": 8791
+      },
+      "email": {
+        "host": "kadenjtaylor",
+        "domain": "gmail.com"
+      }
+    },
+    "location": {
+      "city": "Tucson",
+      "state": {
+        "name": "Arizona",
+        "abbrev": "AZ"
+      }
+    }
+  },
+  "experience": {
+    "workplaces": [
+      {
+        "name": "Crunchbase",
+        "link": "https://crunchbase.com",
+        "blurb": "Data and Predictions on Private Companies",
+        "tenure": {
+          "type": "Past",
+          "start": "2022-09-26",
+          "end": "2025-02-24"
+        },
+        "jobs": [
+          {
+            "title": "Platform Engineer",
+            "description": "Discovery Team",
+            "skillsAndTools": ["Kafka", "Docker", "Kubernetes", "Debezium"],
+            "langsAndLibs": {
+              "Scala": ["Cats-Effect", "Http4s"]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Axoni",
+        "link": "https://axoni.com",
+        "blurb": "Fin-tech startup specializing in 'Distributed Ledger Technology'",
+        "tenure": {
+          "type": "Past",
+          "start": "2021-06-01",
+          "end": "2022-07-01"
+        },
+        "jobs": [
+          {
+            "title": "Software Engineer",
+            "description": "Platform Team",
+            "skillsAndTools": ["Kubernetes", "Docker", "Debezium"],
+            "langsAndLibs": {
+              "Scala": ["Cats-Effect", "ZIO", "Http4s", "Doobie"]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Academia.edu",
+        "link": "https://academia.edu",
+        "blurb": "Making research available",
+        "tenure": {
+          "type": "Past",
+          "start": "2021-01-01",
+          "end": "2021-06-01"
+        },
+        "jobs": [
+          {
+            "title": "Full-Stack Software Engineer",
+            "description": "Short-form academic publishing: `Academia Letters`",
+            "skillsAndTools": [],
+            "langsAndLibs": {
+              "Ruby": ["Rails"],
+              "Javascript": ["React"]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Google",
+        "link": "https://google.com",
+        "blurb": "Android Messages Team",
+        "tenure": {
+          "type": "Past",
+          "start": "2019-10-01",
+          "end": "2020-11-01"
+        },
+        "jobs": [
+          {
+            "title": "Software Engineer",
+            "description": "Android Messages App",
+            "skillsAndTools": ["Blaze", "Piper"],
+            "langsAndLibs": {
+              "Java": ["Dagger"]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Usercare Inc",
+        "link": "https://www.crunchbase.com/organization/usercare",
+        "blurb": "Startup in Tucson, Arizona",
+        "tenure": {
+          "type": "Past",
+          "start": "2017-08-01",
+          "end": "2019-07-01"
+        },
+        "jobs": [
+          {
+            "title": "Fly.me - Software Engineer",
+            "description": "Online Travel Agency",
+            "skillsAndTools": [],
+            "langsAndLibs": {
+              "Clojure": []
+            }
+          },
+          {
+            "title": "Agent.AI - Software Engineer",
+            "description": "Chatbots as a Service",
+            "skillsAndTools": ["Neo4j"],
+            "langsAndLibs": {
+              "Java": ["Dropwizard", "Guice"]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Amadeus Revenue Integrity",
+        "link": "https://amadeus.com/en/portfolio/airlines/revenue-integrity",
+        "blurb": "Various Flight-Firming Products",
+        "tenure": {
+          "type": "Past",
+          "start": "2016-03-01",
+          "end": "2017-08-01"
+        },
+        "jobs": [
+          {
+            "title": "Software Engineer",
+            "description": "Domin Modeling, Optimization",
+            "skillsAndTools": ["RabbitMQ"],
+            "langsAndLibs": {
+              "Java": ["Dropwizard", "Guice"]
+            }
+          },
+          {
+            "title": "Software R+D Intern",
+            "description": "Fun research stuff",
+            "skillsAndTools": ["Ansible", "Consul", "Fabio"],
+            "langsAndLibs": {
+              "APL": [],
+              "Java": []
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "education": {
+    "certifcations": [
+      {
+        "instituion": "University of Arizona",
+        "link": "https://www.cs.arizona.edu/",
+        "awarded": 2016,
+        "proof": {
+          "type": "Degree",
+          "areaOfStudy": "B.S. Computer Science"
+        }
+      },
+      {
+        "instituion": "Gilbert High School",
+        "link": "https://www.gilbertschools.net/gilberthigh",
+        "awarded": 2012,
+        "proof": {
+          "type": "Diploma",
+          "areaOfStudy": "General Studies"
+        }
+      }
+    ]
+  },
+  "extras": {
+    "elements": [
+      {
+        "contentChunks": [
+          "Runner-up on The FOX network gameshow,",
+          {
+            "text": "SuperHuman",
+            "link": "https://www.youtube.com/watch?v=t65mzlOCDF8"
+          }
+        ]
+      },
+      {
+        "contentChunks": [
+          "Received 'Startup Tucson Award' at UA Hackathon '15 for Pebble Smartwatch app design"
+        ]
+      },
+      {
+        "contentChunks": [
+          "Passionate about domain modeling and",
+          {
+            "text": "improving program understandability",
+            "link": "https://www.kaden.dev/pages/musings/software_doesnt_have_clay.html"
+          }
+        ]
+      }
+    ]
+  },
+  "metadata": {
+    "createdByLink": "https://github.com/kadenjtaylor/resumaker",
+    "creationDate": "2024-01-01"
+  }
+} 
+```n
+
+## File: write-blah.ps1
+
+```powershell
+param (
+    [string]$OutputFile = "resumaker-source-code.md"
+)
+
+Clear-Host
+Write-Host "Gathering Resume Maker source code files..." -ForegroundColor Yellow
+
+# Define source directories and file extensions
+$SourceDirs = @(
+    "src",
+    "lib"
+)
+$FileExtensions = @("*.tsx", "*.ts", "*.js", "*.jsx", "*.css", "*.mjs", "*.json", "*.md", "*.txt", "*.ps1", "*.yml", "*.yaml", "*.config", "*.env*")
+
+# Define specific root files to include - EXPANDED LIST
+$RootFiles = @(
+    "package.json",
+    "package-lock.json",
+    "next.config.ts",
+    "next.config.js",
+    "tsconfig.json",
+    "tailwind.config.ts",
+    "tailwind.config.js",
+    "postcss.config.mjs",
+    "README.md",
+    "PRD.md",
+    "MVP.md",
+    "scala.readme.md",
+    "resume.md",
+    "kaden-scala-data.json",
+    "cala_resumemaker submodule to fix build",
+    "write-blah.ps1",
+    "next-env.d.ts",
+    ".gitignore"
+)
+
+# Dynamic File Discovery
+$FilesToInclude = @()
+$FilesToInclude += $RootFiles | ForEach-Object { Get-Item -Path $_ -ErrorAction SilentlyContinue }
+foreach ($dir in $SourceDirs) {
+    if (Test-Path $dir) {
+        $FilesToInclude += Get-ChildItem -Path $dir -Recurse -Include $FileExtensions -ErrorAction SilentlyContinue
+    }
+}
+
+# Also scan for any additional files in root that might be relevant
+$AdditionalRootFiles = Get-ChildItem -Path "." -File -Include "*.md", "*.json", "*.ts", "*.js", "*.ps1", "*.txt", "*.config*" | Where-Object { 
+    $_.Name -notin $RootFiles -and 
+    $_.Name -notlike "*.lock" -and 
+    $_.Name -notlike "node_modules*" -and
+    $_.Name -notlike ".git*" -and
+    $_.Name -notlike ".next*" -and
+    $_.Name -notlike "out*"
+}
+$FilesToInclude += $AdditionalRootFiles
+
+$MarkdownContent = "# 🔍 Resume Maker Source Code Dump`n`n"
+$MarkdownContent += "Generated: $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')`n`n"
+$MarkdownContent += "## Project: Next.js Resume Generator with PDF Export`n`n"
+
+foreach ($file in $FilesToInclude) {
+    if ($file -and (Test-Path $file.FullName)) {
+        $RelativeFilePath = $file.FullName.Substring($PSScriptRoot.Length + 1)
+        
+        # Skip binary files and non-text files
+        $FileExtension = $file.Extension.TrimStart('.').ToLower()
+        if ($FileExtension -in @('png', 'jpg', 'jpeg', 'gif', 'svg', 'ico', 'woff', 'woff2', 'ttf', 'eot', 'pdf', 'zip', 'exe', 'dll', 'so', 'dylib')) {
+            continue
+        }
+        
+        $MarkdownContent += "`n## File: $RelativeFilePath`n`n"
+
+        try {
+            Write-Host "Processing: $RelativeFilePath" -ForegroundColor Green
+            
+            $FileContent = Get-Content -Path $file.FullName -Raw -ErrorAction Stop
+
+            if ([string]::IsNullOrWhiteSpace($FileContent)) {
+                $MarkdownContent += "*File is empty*`n"
+                continue
+            }
+
+            # Check if content looks like text (not binary)
+            if ($FileContent -match '[^\x00-\x08\x0B\x0C\x0E-\x1F\x7F]') {
+                $LanguageSyntax = switch ($FileExtension) {
+                    { $_ -in @('ts', 'tsx') } { 'typescript' }
+                    'js'   { 'javascript' }
+                    'mjs'  { 'javascript' }
+                    'json' { 'json' }
+                    'md'   { 'markdown' }
+                    'css'  { 'css' }
+                    'ps1'  { 'powershell' }
+                    'yml'  { 'yaml' }
+                    'yaml' { 'yaml' }
+                    default { '' }
+                }
+
+                $MarkdownContent += "``````$LanguageSyntax`n"
+                $MarkdownContent += $FileContent
+                $MarkdownContent += "`n``````n`n"
+            } else {
+                $MarkdownContent += "*Binary file - skipped*`n`n"
+            }
+        }
+        catch {
+            Write-Warning "Could not read file: '$RelativeFilePath'. Error: $($_.Exception.Message)"
+            $MarkdownContent += "*Could not read file: $($_.Exception.Message)*`n`n"
+        }
+    }
+}
+
+# Add footer
+$MarkdownContent += "`n---`n"
+$MarkdownContent += "*Generated by Write-blah.ps1 for Resume Maker (Next.js + jsPDF)*`n"
+
+try {
+    $MarkdownContent | Out-File -FilePath $OutputFile -Encoding UTF8 -Force
+    Write-Host "`n✅ Success! Source code written to '$OutputFile'" -ForegroundColor Green
+    Write-Host "📦 File size: $((Get-Item $OutputFile).Length) bytes" -ForegroundColor Cyan
+    Write-Host "`n📋 Ready to share with LLM for debugging PDF export issues" -ForegroundColor Yellow
+}
+catch {
+    Write-Error "❌ Failed to write output file '$OutputFile': $($_.Exception.Message)"
+    exit 1
+}
+
+```n
+
+## File: next-env.d.ts
+
+```typescript
+/// <reference types="next" />
+/// <reference types="next/image-types/global" />
+
+// NOTE: This file should not be edited
+// see https://nextjs.org/docs/app/api-reference/config/typescript for more information.
+
+```n
+
+## File: .gitignore
+
+```
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files (can opt-in for committing if needed)
+.env*
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Logs
+logs
+*.log
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# parcel-bundler cache (https://parceljs.org/)
+.cache
+.parcel-cache
+
+# next.js build output
+.next
+
+# nuxt.js build output
+.nuxt
+
+# vuepress build output
+.vuepress/dist
+
+# Serverless directories
+.serverless/
+
+# FuseBox cache
+.fusebox/
+
+# DynamoDB Local files
+.dynamodb/
+
+# TernJS port file
+.tern-port
+
+# Stores VSCode versions used for testing VSCode extensions
+.vscode-test
+
+# Temporary folders
+tmp/
+temp/
+
+# Scala project files (local reference only)
+scala_resumemaker/
+
+```n
+
 ## File: src\app\globals.css
 
 ```css
@@ -893,8 +4455,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <!-- colour‑emoji font -->
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        {/* colour‑emoji font */}
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap" rel="stylesheet" />
       </head>
       <body
@@ -927,6 +4489,7 @@ export default function Home() {
 import React, { useState, useEffect } from 'react';
 import { Download, Plus, Trash2, Moon, Sun, FileText, User, Briefcase, GraduationCap, Code, Award } from 'lucide-react';
 import jsPDF from 'jspdf';
+import 'jspdf/dist/polyfills.es.js';
 import { exportResumePdf } from '../../lib/pdf/exportResume';
 
 // TypeScript interfaces
@@ -1040,15 +4603,28 @@ const ResumeGenerator = () => {
     const saved = localStorage.getItem('resume-data');
     if (saved) {
       try {
-        setResumeData(JSON.parse(saved));
+        const parsedData = JSON.parse(saved);
+        // Only load if the data has the expected structure
+        if (parsedData && parsedData.header && parsedData.experience && parsedData.education) {
+          setResumeData(parsedData);
+        }
       } catch (e) {
         console.error('Failed to load saved data:', e);
+        // If parsing fails, keep the sample data
       }
     }
+    // If no saved data or invalid data, keep the sample data
   }, []);
 
   useEffect(() => {
     localStorage.setItem('resume-data', JSON.stringify(resumeData));
+  }, [resumeData]);
+
+  // Debug: Log when resumeData changes
+  useEffect(() => {
+    console.log('resumeData changed:', resumeData);
+    console.log('Experience count:', resumeData.experience?.length || 0);
+    console.log('Education count:', resumeData.education?.length || 0);
   }, [resumeData]);
 
   const updateResumeData = (path: string, value: any) => {
@@ -1131,10 +4707,49 @@ const ResumeGenerator = () => {
 
   const exportToPDF = async () => {
     try {
+      // Check if resume preview exists
+      const previewElement = document.querySelector<HTMLElement>("#resume-preview");
+      if (!previewElement) {
+        console.error("Resume preview element not found");
+        alert("Resume preview not found. Please ensure the page is loaded correctly.");
+        return;
+      }
+
+      console.log("Resume preview element found:", previewElement);
+      console.log("Preview content length:", previewElement.innerHTML.length);
+      console.log("Preview text content:", previewElement.textContent?.substring(0, 200));
+      
+      // Check if there's actual content
+      if (!previewElement.textContent || previewElement.textContent.trim().length === 0) {
+        console.error("Resume preview has no content");
+        alert("Resume preview has no content. Please add some information to your resume first.");
+        return;
+      }
+
+      // Show loading indicator
+      const exportButton = document.querySelector('[data-export-pdf]') as HTMLButtonElement;
+      if (exportButton) {
+        exportButton.disabled = true;
+        exportButton.textContent = 'Generating PDF...';
+      }
+
       await exportResumePdf('resume.pdf');
+      
+      // Reset button
+      if (exportButton) {
+        exportButton.disabled = false;
+        exportButton.textContent = 'Export PDF';
+      }
     } catch (error) {
       console.error('Failed to export PDF:', error);
       alert('Failed to export PDF. Please try again.');
+      
+      // Reset button on error
+      const exportButton = document.querySelector('[data-export-pdf]') as HTMLButtonElement;
+      if (exportButton) {
+        exportButton.disabled = false;
+        exportButton.textContent = 'Export PDF';
+      }
     }
   };
 
@@ -1148,13 +4763,487 @@ const ResumeGenerator = () => {
     link.click();
   };
 
+  const exportToMarkdown = () => {
+    let markdown = `# ${resumeData.header?.name || 'Your Name'}\n\n`;
+    markdown += `*${resumeData.header?.tagline || 'Your Professional Title'}*\n\n`;
+    
+    // Contact Information with emojis
+    markdown += `📧 ${resumeData.header?.contact?.email || ''}\n`;
+    markdown += `📱 ${resumeData.header?.contact?.phone || ''}\n`;
+    markdown += `📍 ${resumeData.header?.location?.city || ''}, ${resumeData.header?.location?.state || ''}\n\n`;
+    
+    // Experience
+    if (resumeData.experience && resumeData.experience.length > 0) {
+      markdown += `## 💼 Experience\n\n`;
+      resumeData.experience.forEach((exp) => {
+        markdown += `### ${exp.name}\n`;
+        if (exp.jobs?.[0]?.title) {
+          markdown += `**${exp.jobs[0].title}**\n`;
+        }
+        if (exp.tenure) {
+          markdown += `*${exp.tenure}*\n\n`;
+        }
+        if (exp.jobs?.[0]?.description) {
+          markdown += `${exp.jobs[0].description}\n\n`;
+        }
+        if (exp.jobs?.[0]?.skills && exp.jobs[0].skills.length > 0) {
+          markdown += `**Skills:** ${exp.jobs[0].skills.join(', ')}\n\n`;
+        }
+      });
+    }
+    
+    // Education
+    if (resumeData.education && resumeData.education.length > 0) {
+      markdown += `## 🎓 Education\n\n`;
+      resumeData.education.forEach((edu) => {
+        markdown += `### ${edu.institution}\n`;
+        markdown += `**${edu.degree}**\n`;
+        markdown += `*${edu.year}*\n\n`;
+      });
+    }
+    
+    // Skills
+    if (resumeData.skills && resumeData.skills.length > 0) {
+      markdown += `## ⚡ Skills\n\n`;
+      markdown += `${resumeData.skills.join(', ')}\n\n`;
+    }
+    
+    // Additional Information
+    if (resumeData.extras && resumeData.extras.length > 0) {
+      markdown += `## 🏆 Additional Information\n\n`;
+      resumeData.extras.forEach((extra) => {
+        markdown += `• ${extra}\n`;
+      });
+    }
+    
+    const dataBlob = new Blob([markdown], { type: 'text/markdown' });
+    const url = URL.createObjectURL(dataBlob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'resume.md';
+    link.click();
+  };
+
+  const exportMarkdownToPDF = () => {
+    // Generate the same markdown content with emojis
+    let markdown = `# ${resumeData.header?.name || 'Your Name'}\n\n`;
+    markdown += `*${resumeData.header?.tagline || 'Your Professional Title'}*\n\n`;
+    
+    // Contact Information with emojis
+    markdown += `📧 ${resumeData.header?.contact?.email || ''}\n`;
+    markdown += `📱 ${resumeData.header?.contact?.phone || ''}\n`;
+    markdown += `📍 ${resumeData.header?.location?.city || ''}, ${resumeData.header?.location?.state || ''}\n\n`;
+    
+    // Experience
+    if (resumeData.experience && resumeData.experience.length > 0) {
+      markdown += `## 💼 Experience\n\n`;
+      resumeData.experience.forEach((exp) => {
+        markdown += `### ${exp.name}\n`;
+        if (exp.jobs?.[0]?.title) {
+          markdown += `**${exp.jobs[0].title}**\n`;
+        }
+        if (exp.tenure) {
+          markdown += `*${exp.tenure}*\n\n`;
+        }
+        if (exp.jobs?.[0]?.description) {
+          markdown += `${exp.jobs[0].description}\n\n`;
+        }
+        if (exp.jobs?.[0]?.skills && exp.jobs[0].skills.length > 0) {
+          markdown += `**Skills:** ${exp.jobs[0].skills.join(', ')}\n\n`;
+        }
+      });
+    }
+    
+    // Education
+    if (resumeData.education && resumeData.education.length > 0) {
+      markdown += `## 🎓 Education\n\n`;
+      resumeData.education.forEach((edu) => {
+        markdown += `### ${edu.institution}\n`;
+        markdown += `**${edu.degree}**\n`;
+        markdown += `*${edu.year}*\n\n`;
+      });
+    }
+    
+    // Skills
+    if (resumeData.skills && resumeData.skills.length > 0) {
+      markdown += `## ⚡ Skills\n\n`;
+      markdown += `${resumeData.skills.join(', ')}\n\n`;
+    }
+    
+    // Additional Information
+    if (resumeData.extras && resumeData.extras.length > 0) {
+      markdown += `## 🏆 Additional Information\n\n`;
+      resumeData.extras.forEach((extra) => {
+        markdown += `• ${extra}\n`;
+      });
+    }
+
+    // Convert markdown to HTML with styling
+    const htmlContent = convertMarkdownToStyledHTML(markdown);
+    
+    // Create a temporary div with proper sizing and positioning for 8.5x11
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = htmlContent;
+    tempDiv.style.position = 'absolute';
+    tempDiv.style.left = '0';
+    tempDiv.style.top = '0';
+    tempDiv.style.width = '612px'; // 8.5 inches at 72 DPI
+    tempDiv.style.minHeight = '792px'; // 11 inches at 72 DPI
+    tempDiv.style.backgroundColor = 'white';
+    tempDiv.style.color = 'black';
+    tempDiv.style.fontFamily = 'Inter, Segoe UI Emoji, Apple Color Emoji, Noto Color Emoji, Arial, Helvetica, sans-serif';
+    tempDiv.style.fontSize = '12px';
+    tempDiv.style.lineHeight = '1.4';
+    tempDiv.style.padding = '40px';
+    tempDiv.style.boxSizing = 'border-box';
+    tempDiv.style.overflow = 'visible';
+    
+    // Add to body temporarily
+    document.body.appendChild(tempDiv);
+    
+    // Wait for content to render
+    setTimeout(async () => {
+      try {
+        // Convert HTML to PDF with 8.5x11 format
+        const pdf = new jsPDF({ unit: 'pt', format: [612, 792] }); // 8.5x11 inches
+        
+        await (pdf as any).html(tempDiv, {
+          margin: [30, 30, 30, 30],
+          autoPaging: "text",
+          html2canvas: {
+            scale: 2,
+            useCORS: true,
+            allowTaint: true,
+            backgroundColor: "#ffffff",
+            logging: true, // Enable logging for debugging
+            removeContainer: true,
+            foreignObjectRendering: false,
+            imageTimeout: 0,
+            onclone: (clonedDoc: Document) => {
+              // Ensure proper styling in cloned document with emoji support
+              const style = clonedDoc.createElement('style');
+              style.textContent = `
+                @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+                * { 
+                  font-family: 'Inter', 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', Arial, Helvetica, sans-serif !important; 
+                  color: #000000 !important;
+                  background-color: #ffffff !important;
+                }
+                body { 
+                  margin: 0; 
+                  padding: 30px; 
+                  font-size: 12px;
+                  line-height: 1.4;
+                  max-width: 552px; /* 8.5 inches minus margins */
+                }
+                h1, h2, h3 { 
+                  color: #000000 !important; 
+                  font-weight: bold;
+                }
+                p, span, div { 
+                  color: #000000 !important; 
+                }
+                .contact-info {
+                  margin: 15px 0;
+                }
+                .contact-item {
+                  margin: 5px 0;
+                }
+                .emoji {
+                  font-family: 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif !important;
+                  font-size: 14px;
+                  vertical-align: middle;
+                }
+                .skill-tags {
+                  margin: 10px 0;
+                }
+                .skill-tag {
+                  background-color: #f0f0f0;
+                  color: #000000;
+                  padding: 4px 8px;
+                  margin: 2px;
+                  border-radius: 4px;
+                  display: inline-block;
+                  font-size: 10px;
+                }
+                .job-title {
+                  color: #000000;
+                  font-weight: bold;
+                  margin: 5px 0;
+                }
+                .job-duration {
+                  color: #666666;
+                  font-style: italic;
+                  margin: 5px 0;
+                }
+                .job-description {
+                  margin: 10px 0;
+                  color: #000000;
+                }
+              `;
+              clonedDoc.head.appendChild(style);
+            }
+          },
+          callback: (pdf: jsPDF) => {
+            console.log("PDF generated successfully");
+            pdf.save('resume.pdf');
+          },
+        });
+      } catch (error) {
+        console.error("PDF generation failed:", error);
+        
+        // Fallback: create simple text PDF
+        const pdf = new jsPDF({ unit: 'pt', format: 'a4' });
+        const textContent = tempDiv.textContent || "No content available";
+        const lines = textContent.split('\n').filter(line => line.trim());
+        
+        let yPosition = 40;
+        const lineHeight = 14;
+        
+        pdf.setFontSize(16);
+        pdf.setFont('helvetica', 'bold');
+        pdf.text('Resume', 40, yPosition);
+        yPosition += 30;
+        
+        pdf.setFontSize(12);
+        pdf.setFont('helvetica', 'normal');
+        
+        lines.forEach(line => {
+          if (yPosition > 750) {
+            pdf.addPage();
+            yPosition = 40;
+          }
+          pdf.text(line.trim(), 40, yPosition);
+          yPosition += lineHeight;
+        });
+        
+        pdf.save('resume.pdf');
+      } finally {
+        // Clean up
+        document.body.removeChild(tempDiv);
+      }
+    }, 500); // Wait 500ms for content to render
+  };
+
+  const convertMarkdownToStyledHTML = (markdown: string) => {
+    let html = `
+      <html>
+        <head>
+          <style>
+            @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+            body {
+              font-family: 'Inter', 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', 'Helvetica', 'Arial', sans-serif;
+              line-height: 1.6;
+              color: #333;
+              max-width: 612px; /* 8.5 inches at 72 DPI */
+              margin: 0 auto;
+              padding: 40px;
+              font-size: 12px;
+              background-color: white;
+            }
+            h1 {
+              color: #2563eb;
+              font-size: 24px;
+              margin-bottom: 10px;
+              border-bottom: 2px solid #dbeafe;
+              padding-bottom: 10px;
+              font-weight: 700;
+            }
+            h2 {
+              color: #2563eb;
+              font-size: 18px;
+              margin-top: 20px;
+              margin-bottom: 12px;
+              border-bottom: 1px solid #dbeafe;
+              padding-bottom: 5px;
+              font-weight: 600;
+            }
+            h3 {
+              color: #1f2937;
+              font-size: 14px;
+              margin-top: 12px;
+              margin-bottom: 4px;
+              font-weight: 600;
+            }
+            p {
+              margin: 6px 0;
+              font-size: 12px;
+            }
+            .contact-info {
+              display: flex;
+              flex-wrap: wrap;
+              gap: 15px;
+              margin: 12px 0;
+              font-size: 12px;
+              color: #6b7280;
+            }
+            .contact-item {
+              display: flex;
+              align-items: center;
+              gap: 4px;
+              font-size: 12px;
+            }
+            .skill-tags {
+              display: flex;
+              flex-wrap: wrap;
+              gap: 6px;
+              margin: 8px 0;
+            }
+            .skill-tag {
+              background-color: #dbeafe;
+              color: #1e40af;
+              border-radius: 12px;
+              padding: 4px 8px;
+              font-size: 10px;
+              font-weight: 500;
+              display: inline-block;
+            }
+            .job-title {
+              color: #2563eb;
+              font-weight: 600;
+              margin: 4px 0;
+              font-size: 12px;
+            }
+            .job-duration {
+              color: #6b7280;
+              font-style: italic;
+              margin: 4px 0;
+              font-size: 11px;
+            }
+            .job-description {
+              margin: 8px 0;
+              color: #374151;
+              font-size: 12px;
+            }
+            .education-item {
+              margin: 12px 0;
+              padding: 8px;
+              background-color: #f9fafb;
+              border-radius: 6px;
+            }
+            .education-degree {
+              color: #2563eb;
+              font-weight: 500;
+              font-size: 12px;
+            }
+            .education-year {
+              color: #6b7280;
+              font-size: 11px;
+            }
+            ul {
+              margin: 8px 0;
+              padding-left: 16px;
+            }
+            li {
+              margin: 4px 0;
+              font-size: 12px;
+            }
+            /* Emoji support */
+            .emoji {
+              font-family: 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif;
+              font-size: 14px;
+              vertical-align: middle;
+            }
+          </style>
+        </head>
+        <body>
+    `;
+
+    // Convert markdown to HTML with custom styling
+    let lines = markdown.split('\n');
+    let inSkillsSection = false;
+    let inExperienceSection = false;
+
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i].trim();
+      
+      if (!line) {
+        html += '<br>';
+        continue;
+      }
+
+      // Handle headers
+      if (line.startsWith('# ')) {
+        html += `<h1>${line.substring(2)}</h1>`;
+      } else if (line.startsWith('## ')) {
+        const section = line.substring(3);
+        html += `<h2>${section}</h2>`;
+        inSkillsSection = section.includes('Skills');
+        inExperienceSection = section.includes('Experience');
+      } else if (line.startsWith('### ')) {
+        html += `<h3>${line.substring(4)}</h3>`;
+      } else if (line.startsWith('**') && line.endsWith('**')) {
+        // Job title
+        const title = line.substring(2, line.length - 2);
+        html += `<div class="job-title">${title}</div>`;
+      } else if (line.startsWith('*') && line.endsWith('*') && !line.startsWith('**')) {
+        // Job duration
+        const duration = line.substring(1, line.length - 1);
+        html += `<div class="job-duration">${duration}</div>`;
+      } else if (line.startsWith('📧') || line.startsWith('📱') || line.startsWith('📍')) {
+        // Contact info with emojis
+        if (i === lines.findIndex(l => l.startsWith('📧'))) {
+          html += '<div class="contact-info">';
+        }
+        const emoji = line.substring(0, 2);
+        const text = line.substring(2).trim();
+        html += `<div class="contact-item"><span class="emoji">${emoji}</span>${text}</div>`;
+        if (i === lines.findIndex(l => l.startsWith('📍')) || i === lines.length - 1) {
+          html += '</div>';
+        }
+      } else if (line.startsWith('**Skills:**')) {
+        // Skills section with oval tags
+        const skillsText = line.substring(11).trim();
+        const skills = skillsText.split(',').map(s => s.trim());
+        html += '<div class="skill-tags">';
+        skills.forEach(skill => {
+          html += `<span class="skill-tag">${skill}</span>`;
+        });
+        html += '</div>';
+      } else if (inSkillsSection && line.includes(',')) {
+        // Skills list with oval tags
+        const skills = line.split(',').map(s => s.trim());
+        html += '<div class="skill-tags">';
+        skills.forEach(skill => {
+          html += `<span class="skill-tag">${skill}</span>`;
+        });
+        html += '</div>';
+      } else if (line.startsWith('• ')) {
+        // List items
+        html += `<li>${line.substring(2)}</li>`;
+      } else {
+        // Regular paragraph
+        html += `<p>${line}</p>`;
+      }
+    }
+
+    html += `
+        </body>
+      </html>
+    `;
+
+    return html;
+  };
+
   const loadSampleData = () => {
+    console.log('Loading sample data:', sampleResume);
     setResumeData(sampleResume);
+  };
+
+  // Debug function to check current state
+  const debugCurrentData = () => {
+    console.log('Current resumeData:', resumeData);
+    console.log('Experience length:', resumeData.experience?.length);
+    console.log('Education length:', resumeData.education?.length);
+    console.log('Skills length:', resumeData.skills?.length);
+    console.log('Extras length:', resumeData.extras?.length);
   };
 
   // Convert Scala format to Next.js format
   const importScalaData = (scalaData: any) => {
     try {
+      console.log('Importing Scala data:', scalaData);
+      
       // Helper function to format phone number
       const formatPhone = (phoneObj: any) => {
         if (phoneObj && phoneObj.areaCode && phoneObj.prefix && phoneObj.suffix) {
@@ -1191,51 +5280,52 @@ const ResumeGenerator = () => {
 
       const converted: Resume = {
         header: {
-          name: scalaData.header.name,
-          tagline: scalaData.header.tagline,
+          name: scalaData.header?.name || 'Your Name',
+          tagline: scalaData.header?.tagline || 'Your Professional Title',
           contact: {
-            phone: formatPhone(scalaData.header.contactInfo.phoneNumber),
-            email: formatEmail(scalaData.header.contactInfo.email)
+            phone: formatPhone(scalaData.header?.contactInfo?.phoneNumber),
+            email: formatEmail(scalaData.header?.contactInfo?.email)
           },
           location: {
-            city: scalaData.header.location.city,
-            state: scalaData.header.location.state.name
+            city: scalaData.header?.location?.city || '',
+            state: scalaData.header?.location?.state?.name || ''
           }
         },
-        experience: scalaData.experience.workplaces.map((workplace: any) => ({
-          name: workplace.name,
-          link: workplace.link,
-          blurb: workplace.blurb,
+        experience: (scalaData.experience?.workplaces || []).map((workplace: any) => ({
+          name: workplace.name || '',
+          link: workplace.link || '',
+          blurb: workplace.blurb || '',
           tenure: formatTenure(workplace.tenure),
-          jobs: workplace.jobs.map((job: any) => ({
-            title: job.title,
-            description: job.description,
+          jobs: (workplace.jobs || []).map((job: any) => ({
+            title: job.title || '',
+            description: job.description || '',
             skills: job.skillsAndTools || [],
             languages: Object.keys(job.langsAndLibs || {}).flatMap(lang => 
               job.langsAndLibs[lang] || [lang]
             )
           }))
         })),
-        education: scalaData.education.certifcations.map((edu: any) => ({
-          institution: edu.instituion,
-          link: edu.link,
-          year: edu.awarded.toString(),
+        education: (scalaData.education?.certifcations || []).map((edu: any) => ({
+          institution: edu.instituion || '',
+          link: edu.link || '',
+          year: edu.awarded?.toString() || '',
           degree: formatEducationProof(edu.proof)
         })),
-        skills: scalaData.experience.workplaces.flatMap((workplace: any) =>
-          workplace.jobs.flatMap((job: any) => 
+        skills: (scalaData.experience?.workplaces || []).flatMap((workplace: any) =>
+          (workplace.jobs || []).flatMap((job: any) => 
             [...(job.skillsAndTools || []), ...Object.keys(job.langsAndLibs || {})]
           )
         ).filter((skill: string, index: number, arr: string[]) => 
           arr.indexOf(skill) === index
         ),
-        extras: scalaData.extras.elements.map((element: any) => 
-          element.contentChunks.map((chunk: any) => 
+        extras: (scalaData.extras?.elements || []).map((element: any) => 
+          (element.contentChunks || []).map((chunk: any) => 
             typeof chunk === 'string' ? chunk : chunk.text
           ).join('')
         )
       };
       
+      console.log('Converted data:', converted);
       setResumeData(converted);
       alert('Scala data imported successfully!');
     } catch (error) {
@@ -1311,7 +5401,31 @@ const ResumeGenerator = () => {
                 Export JSON
               </button>
               <button
+                onClick={exportToMarkdown}
+                className="px-4 py-2 text-sm font-medium text-yellow-600 hover:text-yellow-700 transition-colors"
+              >
+                Export Markdown
+              </button>
+              <button
+                onClick={exportMarkdownToPDF}
+                className="px-4 py-2 text-sm font-medium text-red-600 hover:text-red-700 transition-colors"
+                title="Export Markdown as PDF"
+              >
+                Export PDF (Markdown)
+              </button>
+              <button
+                onClick={() => {
+                  debugCurrentData();
+                  alert('Check console for current data');
+                }}
+                className="px-4 py-2 text-sm font-medium text-orange-600 hover:text-orange-700 transition-colors"
+                title="Debug: Show current data in console"
+              >
+                Debug Data
+              </button>
+              <button
                 onClick={exportToPDF}
+                data-export-pdf
                 className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
               >
                 <Download className="h-4 w-4" />
@@ -1612,7 +5726,11 @@ const ResumeGenerator = () => {
             }`}>
               <div className="flex items-center space-x-2 mb-4">
                 <Code className="h-5 w-5 text-blue-500" />
-                <h2 className="text-xl font-semibold">Skills</h2>
+                <h2 className={`text-xl font-semibold mb-4 ${
+                  darkMode ? 'text-white' : 'text-gray-900'
+                }`}>
+                  ⚡ Skills
+                </h2>
               </div>
               
               <textarea
@@ -1634,7 +5752,11 @@ const ResumeGenerator = () => {
             }`}>
               <div className="flex items-center space-x-2 mb-4">
                 <Award className="h-5 w-5 text-blue-500" />
-                <h2 className="text-xl font-semibold">Additional Information</h2>
+                <h2 className={`text-xl font-semibold mb-4 ${
+                  darkMode ? 'text-white' : 'text-gray-900'
+                }`}>
+                  🏆 Additional Information
+                </h2>
               </div>
               
               <textarea
@@ -1665,167 +5787,164 @@ const ResumeGenerator = () => {
                 </div>
               </div>
               
-                             {/* Resume Preview */}
-               <div id="resume-preview" className={`bg-white text-gray-900 p-8 rounded-lg shadow-lg min-h-[800px] ${
-                 activeTemplate === 'modern' ? 'border-l-4 border-blue-500' :
-                 activeTemplate === 'classic' ? 'border border-gray-300' :
-                 'shadow-none border border-gray-200'
-               }`}>
-                 {/* Header */}
-                 <div className={`pb-6 mb-6 ${
-                   activeTemplate === 'modern' ? 'border-b-2 border-blue-100' :
-                   activeTemplate === 'classic' ? 'border-b border-gray-400' :
-                   'border-b border-gray-200'
-                 }`}>
-                   <h1 className={`text-3xl font-bold mb-3 ${
-                     activeTemplate === 'modern' ? 'text-blue-600' :
-                     activeTemplate === 'classic' ? 'text-gray-800' :
-                     'text-gray-900'
-                   }`}>
-                     {resumeData.header?.name || 'Your Name'}
-                   </h1>
-                   <p className={`text-lg mb-4 italic ${
-                     activeTemplate === 'modern' ? 'text-gray-600' :
-                     'text-gray-700'
-                   }`}>
-                     {resumeData.header?.tagline || 'Your Professional Title'}
-                   </p>
-                   <div className="flex flex-wrap gap-6 text-sm text-gray-600">
-                     <span className="flex items-center">
-                       <span className="mr-1">📧</span>
-                       {resumeData.header?.contact?.email}
-                     </span>
-                     <span className="flex items-center">
-                       <span className="mr-1">📱</span>
-                       {resumeData.header?.contact?.phone}
-                     </span>
-                     <span className="flex items-center">
-                       <span className="mr-1">📍</span>
-                       {resumeData.header?.location?.city}, {resumeData.header?.location?.state}
-                     </span>
-                   </div>
-                 </div>
+              {/* Resume Preview */}
+              <div id="resume-preview" className={`bg-white text-gray-900 p-8 rounded-lg shadow-lg min-h-[800px] ${
+                activeTemplate === 'modern' ? 'border-l-4 border-blue-500' :
+                activeTemplate === 'classic' ? 'border border-gray-300' :
+                'shadow-none border border-gray-200'
+              }`}>
+                {/* Header */}
+                <div className={`pb-6 mb-6 ${
+                  activeTemplate === 'modern' ? 'border-b-2 border-blue-100' :
+                  activeTemplate === 'classic' ? 'border-b border-gray-400' :
+                  'border-b border-gray-200'
+                }`}>
+                  <h1 className={`text-3xl font-bold mb-3 ${
+                    activeTemplate === 'modern' ? 'text-blue-600' :
+                    activeTemplate === 'classic' ? 'text-gray-800' :
+                    'text-gray-900'
+                  }`}>
+                    {resumeData.header?.name || 'Your Name'}
+                  </h1>
+                  <p className={`text-lg mb-4 italic ${
+                    activeTemplate === 'modern' ? 'text-gray-600' :
+                    'text-gray-700'
+                  }`}>
+                    {resumeData.header?.tagline || 'Your Professional Title'}
+                  </p>
+                  <div className="flex flex-wrap gap-6 text-sm text-gray-600">
+                    <span className="flex items-center">
+                      <span className="mr-1">📧</span>
+                      {resumeData.header?.contact?.email}
+                    </span>
+                    <span className="flex items-center">
+                      <span className="mr-1">📱</span>
+                      {resumeData.header?.contact?.phone}
+                    </span>
+                    <span className="flex items-center">
+                      <span className="mr-1">📍</span>
+                      {resumeData.header?.location?.city}, {resumeData.header?.location?.state}
+                    </span>
+                  </div>
+                </div>
 
-                                 {/* Experience */}
-                 {resumeData.experience && resumeData.experience.length > 0 && (
-                   <div className="mb-6">
-                     <h2 className={`text-xl font-semibold mb-4 ${
-                       activeTemplate === 'modern' ? 'text-blue-600 border-b border-blue-200 pb-1' :
-                       activeTemplate === 'classic' ? 'text-gray-800 border-b border-gray-300 pb-1' :
-                       'text-gray-900'
-                     }`}>
-                       💼 Experience
-                     </h2>
-                     {resumeData.experience.map((exp, index) => (
-                       <div key={index} className="mb-6 p-4 border-l-4 border-gray-200 bg-gray-50 rounded-r-lg">
-                         <div className="flex justify-between items-start mb-3">
-                           <div className="flex-1">
-                             <h3 className="font-bold text-lg text-gray-900 mb-1">{exp.name}</h3>
-                             {exp.jobs?.[0] && (
-                               <p className="text-blue-600 font-semibold">{exp.jobs[0].title}</p>
-                             )}
-                           </div>
-                           <span className="text-sm text-gray-500 font-medium bg-white px-2 py-1 rounded">
-                             {exp.tenure}
-                           </span>
-                         </div>
-                         {exp.jobs?.[0]?.description && (
-                           <p className="text-gray-700 text-sm mb-3 leading-relaxed">{exp.jobs[0].description}</p>
-                         )}
-                         {exp.jobs?.[0]?.skills && exp.jobs[0].skills.length > 0 && (
-                           <div className="flex flex-wrap gap-2">
-                             {exp.jobs[0].skills.map((skill, skillIndex) => (
-                               <span
-                                 key={skillIndex}
-                                 className={`px-3 py-1 text-xs font-medium rounded-full ${
-                                   activeTemplate === 'modern' ? 'bg-blue-100 text-blue-800' :
-                                   activeTemplate === 'classic' ? 'bg-gray-200 text-gray-800' :
-                                   'bg-gray-100 text-gray-700'
-                                 }`}
-                               >
-                                 {skill}
-                               </span>
-                             ))}
-                           </div>
-                         )}
-                       </div>
-                     ))}
-                   </div>
-                 )}
+                {/* Experience */}
+                {resumeData.experience && resumeData.experience.length > 0 && (
+                  <div className="mb-6">
+                    <h2 className={`text-xl font-semibold mb-4 ${
+                      activeTemplate === 'modern' ? 'text-blue-600 border-b border-blue-200 pb-1' :
+                      activeTemplate === 'classic' ? 'text-gray-800 border-b border-gray-300 pb-1' :
+                      'text-gray-900'
+                    }`}>
+                      💼 Experience
+                    </h2>
+                    {resumeData.experience.map((exp, index) => (
+                      <div key={index} className="mb-6 p-4 border-l-4 border-gray-200 bg-gray-50 rounded-r-lg">
+                        <div className="flex justify-between items-start mb-3">
+                          <div className="flex-1">
+                            <h3 className="font-bold text-lg text-gray-900 mb-1">{exp.name}</h3>
+                            {exp.jobs?.[0] && (
+                              <p className="text-blue-600 font-semibold">{exp.jobs[0].title}</p>
+                            )}
+                          </div>
+                          <span className="text-sm text-gray-500 font-medium bg-white px-2 py-1 rounded">
+                            {exp.tenure}
+                          </span>
+                        </div>
+                        {exp.jobs?.[0]?.description && (
+                          <p className="text-gray-700 text-sm mb-3 leading-relaxed">{exp.jobs[0].description}</p>
+                        )}
+                        {exp.jobs?.[0]?.skills && exp.jobs[0].skills.length > 0 && (
+                          <div className="flex flex-wrap gap-2">
+                            {exp.jobs[0].skills.map((skill, skillIndex) => (
+                              <span
+                                key={skillIndex}
+                                className={`px-3 py-1 text-xs font-medium rounded-full ${
+                                  activeTemplate === 'modern' ? 'bg-blue-100 text-blue-800' :
+                                  activeTemplate === 'classic' ? 'bg-gray-200 text-gray-800' :
+                                  'bg-gray-100 text-gray-700'
+                                }`}
+                              >
+                                {skill}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
 
-                                 {/* Education */}
-                 {resumeData.education && resumeData.education.length > 0 && (
-                   <div className="mb-6">
-                     <h2 className={`text-xl font-semibold mb-4 ${
-                       activeTemplate === 'modern' ? 'text-blue-600 border-b border-blue-200 pb-1' :
-                       activeTemplate === 'classic' ? 'text-gray-800 border-b border-gray-300 pb-1' :
-                       'text-gray-900'
-                     }`}>
-                       🎓 Education
-                     </h2>
-                     {resumeData.education.map((edu, index) => (
-                       <div key={index} className="mb-4 p-3 bg-gray-50 rounded-lg">
-                         <div className="flex justify-between items-start">
-                           <div className="flex-1">
-                             <h3 className="font-bold text-gray-900 mb-1">{edu.institution}</h3>
-                             <p className="text-blue-600 font-medium">{edu.degree}</p>
-                           </div>
-                           <span className="text-sm text-gray-500 font-medium bg-white px-3 py-1 rounded-full">
-                             {edu.year}
-                           </span>
-                         </div>
-                       </div>
-                     ))}
-                   </div>
-                 )}
+                {/* Education */}
+                {resumeData.education && resumeData.education.length > 0 && (
+                  <div className="mb-6">
+                    <h2 className={`text-xl font-semibold mb-4 ${
+                      activeTemplate === 'modern' ? 'text-blue-600 border-b border-blue-200 pb-1' :
+                      activeTemplate === 'classic' ? 'text-gray-800 border-b border-gray-300 pb-1' :
+                      'text-gray-900'
+                    }`}>
+                      🎓 Education
+                    </h2>
+                    {resumeData.education.map((edu, index) => (
+                      <div key={index} className="mb-4 p-3 bg-gray-50 rounded-lg">
+                        <div className="flex justify-between items-start">
+                          <div className="flex-1">
+                            <h3 className="font-bold text-gray-900 mb-1">{edu.institution}</h3>
+                            <p className="text-blue-600 font-medium">{edu.degree}</p>
+                          </div>
+                          <span className="text-sm text-gray-500 font-medium bg-white px-3 py-1 rounded-full">
+                            {edu.year}
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
 
-                                 {/* Skills */}
-                 {resumeData.skills && resumeData.skills.length > 0 && (
-                   <div className="mb-6">
-                     <h2 className={`text-xl font-semibold mb-4 ${
-                       activeTemplate === 'modern' ? 'text-blue-600 border-b border-blue-200 pb-1' :
-                       activeTemplate === 'classic' ? 'text-gray-800 border-b border-gray-300 pb-1' :
-                       'text-gray-900'
-                     }`}>
-                       ⚡ Skills
-                     </h2>
-                     <div className="flex flex-wrap gap-3">
-                       {resumeData.skills.map((skill, index) => (
-                         <span
-                           key={index}
-                           className={`px-4 py-2 text-sm font-medium rounded-full shadow-sm ${
-                             activeTemplate === 'modern' ? 'bg-blue-100 text-blue-800 border border-blue-200' :
-                             activeTemplate === 'classic' ? 'bg-gray-200 text-gray-800 border border-gray-300' :
-                             'bg-gray-100 text-gray-700 border border-gray-200'
-                           }`}
-                         >
-                           {skill}
-                         </span>
-                       ))}
-                     </div>
-                   </div>
-                 )}
+                {/* Skills */}
+                {resumeData.skills && resumeData.skills.length > 0 && (
+                  <div className="mb-6">
+                    <h2 className={`text-xl font-semibold mb-4 ${
+                      activeTemplate === 'modern' ? 'text-blue-600 border-b border-blue-200 pb-1' :
+                      activeTemplate === 'classic' ? 'text-gray-800 border-b border-gray-300 pb-1' :
+                      'text-gray-900'
+                    }`}>
+                      ⚡ Skills
+                    </h2>
+                    <div className="flex flex-wrap gap-2">
+                      {resumeData.skills.map((skill, index) => (
+                        <span
+                          key={index}
+                          className={`px-3 py-1 text-sm font-medium rounded-full ${
+                            activeTemplate === 'modern' ? 'bg-blue-100 text-blue-800' :
+                            activeTemplate === 'classic' ? 'bg-gray-200 text-gray-800' :
+                            'bg-gray-100 text-gray-700'
+                          }`}
+                        >
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
 
-                                 {/* Extras */}
-                 {resumeData.extras && resumeData.extras.length > 0 && (
-                   <div className="mb-6">
-                     <h2 className={`text-xl font-semibold mb-4 ${
-                       activeTemplate === 'modern' ? 'text-blue-600 border-b border-blue-200 pb-1' :
-                       activeTemplate === 'classic' ? 'text-gray-800 border-b border-gray-300 pb-1' :
-                       'text-gray-900'
-                     }`}>
-                       🏆 Additional Information
-                     </h2>
-                     <div className="space-y-3">
-                       {resumeData.extras.map((extra, index) => (
-                         <div key={index} className="flex items-start p-3 bg-gray-50 rounded-lg">
-                           <span className="mr-3 mt-1 text-blue-500">🏅</span>
-                           <span className="text-gray-700 text-sm leading-relaxed">{extra}</span>
-                         </div>
-                       ))}
-                     </div>
-                   </div>
-                 )}
+                {/* Additional Information */}
+                {resumeData.extras && resumeData.extras.length > 0 && (
+                  <div>
+                    <h2 className={`text-xl font-semibold mb-4 ${
+                      activeTemplate === 'modern' ? 'text-blue-600 border-b border-blue-200 pb-1' :
+                      activeTemplate === 'classic' ? 'text-gray-800 border-b border-gray-300 pb-1' :
+                      'text-gray-900'
+                    }`}>
+                      🏆 Additional Information
+                    </h2>
+                    <ul className="list-disc list-inside text-gray-700 space-y-1">
+                      {resumeData.extras.map((extra, index) => (
+                        <li key={index} className="text-sm">{extra}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -1842,96 +5961,124 @@ export default ResumeGenerator;
 
 ```typescript
 import { jsPDF } from "jspdf";
-
-/* --------------------------------------------------------------- */
-/* DOM scrubber (belt-and-suspenders) */
-function scrub(node: Window | Document | HTMLElement) {
-  const doc = toDoc(node);
-  if (!doc || !doc.documentElement) return;
-
-  // :root background
-  const root = doc.documentElement as HTMLElement;
-  const rootBg = getComputedStyle(root).backgroundColor;
-  if (rootBg.includes("oklch")) root.style.backgroundColor = oklchToRgb(rootBg);
-
-  // every descendant
-  doc.body.querySelectorAll<HTMLElement>("*").forEach(el => {
-    const cs = getComputedStyle(el);
-
-    const fix = (prop: string) => {
-      const val = (cs as any)[prop] as string | undefined;
-      if (val && val.includes("oklch"))
-        (el.style as any)[prop] = oklchToRgb(val);
-    };
-
-    fix("color");
-    fix("backgroundColor");
-    fix("outlineColor");
-    ["borderColor","borderTopColor","borderRightColor",
-     "borderBottomColor","borderLeftColor"].forEach(fix);
-
-    // shadows can contain multiple colours → regex replace
-    ["boxShadow","textShadow","WebkitBoxShadow"].forEach(prop => {
-      const val = (cs as any)[prop] as string | undefined;
-      if (val && val.includes("oklch"))
-        (el.style as any)[prop] = val.replace(/oklch\([^)]+\)/g, m => oklchToRgb(m));
-    });
-
-    // additional properties that might contain OKLCH
-    fix("background");  // catches linear-gradient, etc.
-    fix("filter");      // catches drop-shadow()
-    fix("borderImage");
-    fix("maskImage");
-    fix("clipPath");
-  });
-
-  // handle SVG elements specifically
-  doc.querySelectorAll("svg").forEach(svg => {
-    const fill = svg.getAttribute("fill");
-    if (fill && fill.includes("oklch")) {
-      svg.setAttribute("fill", oklchToRgb(fill));
-    }
-    const stroke = svg.getAttribute("stroke");
-    if (stroke && stroke.includes("oklch")) {
-      svg.setAttribute("stroke", oklchToRgb(stroke));
-    }
-  });
-}
-
-/** Accept Window | Document | HTMLElement and return its Document */
-function toDoc(node: Window | Document | HTMLElement): Document {
-  return node instanceof Window
-    ? node.document
-    : node instanceof Document
-      ? node
-      : node.ownerDocument!;
-}
-
-function oklchToRgb(c: string): string {
-  if (!c.startsWith("oklch")) return c;
-  const ctx = document.createElement("canvas").getContext("2d")!;
-  ctx.fillStyle = c;
-  return ctx.fillStyle as string;
-}
+import "jspdf/dist/polyfills.es.js";
 
 /* public API */
 export async function exportResumePdf(file = "resume.pdf") {
-  const src = document.querySelector<HTMLElement>("#resume-preview");
-  if (!src) throw new Error("#resume-preview not found");
+  try {
+    const src = document.querySelector<HTMLElement>("#resume-preview");
+    if (!src) {
+      console.error("Resume preview element not found");
+      throw new Error("#resume-preview not found");
+    }
 
-  /* scrub live node */
-  scrub(src);
+    console.log("Found resume preview element:", src);
+    console.log("Element content length:", src.innerHTML.length);
+    console.log("Element text content:", src.textContent?.substring(0, 200));
 
-  const pdf = new jsPDF({ unit: "pt", format: "a4" });
-  await pdf.html(src, {
-    margin: 24,
-    autoPaging: "text",
-    html2canvas: {
-      scale: 2,
-      onclone: (w: any) => scrub(w.document ?? w),
-    },
-    callback: d => d.save(file),
-  });
+    // Wait a bit to ensure content is fully rendered
+    await new Promise(resolve => setTimeout(resolve, 100));
+
+    // Create a temporary div to ensure proper styling
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = src.innerHTML;
+    tempDiv.style.position = 'absolute';
+    tempDiv.style.left = '-9999px';
+    tempDiv.style.top = '0';
+    tempDiv.style.width = '595px'; // A4 width in points
+    tempDiv.style.backgroundColor = 'white';
+    tempDiv.style.color = 'black';
+    tempDiv.style.fontFamily = 'Arial, sans-serif';
+    tempDiv.style.fontSize = '12px';
+    tempDiv.style.lineHeight = '1.4';
+    tempDiv.style.padding = '20px';
+    
+    // Copy computed styles
+    const computedStyle = window.getComputedStyle(src);
+    tempDiv.style.backgroundColor = computedStyle.backgroundColor;
+    tempDiv.style.color = computedStyle.color;
+    tempDiv.style.fontFamily = computedStyle.fontFamily;
+    tempDiv.style.fontSize = computedStyle.fontSize;
+    tempDiv.style.lineHeight = computedStyle.lineHeight;
+    
+    document.body.appendChild(tempDiv);
+
+    // Create PDF
+    const pdf = new jsPDF({ unit: "pt", format: "a4" });
+    
+    try {
+      // Use the html method with better options
+      await (pdf as any).html(tempDiv, {
+        margin: [20, 20, 20, 20],
+        autoPaging: "text",
+        html2canvas: {
+          scale: 2,
+          useCORS: true,
+          allowTaint: true,
+          backgroundColor: "#ffffff",
+          logging: true, // Enable logging for debugging
+          removeContainer: true,
+          foreignObjectRendering: false,
+          imageTimeout: 0,
+          onclone: (clonedDoc: Document) => {
+            // Ensure proper styling in cloned document
+            const style = clonedDoc.createElement('style');
+            style.textContent = `
+              * { 
+                font-family: Arial, sans-serif !important; 
+                color: #000000 !important;
+                background-color: #ffffff !important;
+              }
+              body { margin: 0; padding: 20px; }
+              h1, h2, h3 { color: #000000 !important; }
+              p, span, div { color: #000000 !important; }
+            `;
+            clonedDoc.head.appendChild(style);
+          }
+        },
+        callback: (pdf: jsPDF) => {
+          console.log("PDF generated successfully");
+          pdf.save(file);
+        },
+      });
+    } catch (htmlError) {
+      console.error("HTML to PDF conversion failed:", htmlError);
+      
+      // Fallback: try to add text content manually
+      console.log("Attempting fallback PDF generation...");
+      
+      const textContent = src.textContent || "No content available";
+      const lines = textContent.split('\n').filter(line => line.trim());
+      
+      let yPosition = 40;
+      const lineHeight = 14;
+      
+      pdf.setFontSize(16);
+      pdf.setFont('helvetica', 'bold');
+      pdf.text('Resume', 40, yPosition);
+      yPosition += 30;
+      
+      pdf.setFontSize(12);
+      pdf.setFont('helvetica', 'normal');
+      
+      lines.forEach(line => {
+        if (yPosition > 750) {
+          pdf.addPage();
+          yPosition = 40;
+        }
+        pdf.text(line.trim(), 40, yPosition);
+        yPosition += lineHeight;
+      });
+      
+      pdf.save(file);
+    } finally {
+      // Clean up
+      document.body.removeChild(tempDiv);
+    }
+  } catch (error) {
+    console.error("PDF export error:", error);
+    throw error;
+  }
 } 
 ```n
 

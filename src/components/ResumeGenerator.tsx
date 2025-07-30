@@ -2,9 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { Download, Plus, Trash2, Moon, Sun, FileText, User, Briefcase, GraduationCap, Code, Award } from 'lucide-react';
-import jsPDF from 'jspdf';
-import 'jspdf/dist/polyfills.es.js';
-import { exportResumePdf } from '../../lib/pdf/exportResume';
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import { ResumeDocument } from './ResumeDocument';
 
 // TypeScript interfaces
 interface ContactInfo {
@@ -219,53 +218,7 @@ const ResumeGenerator = () => {
     }));
   };
 
-  const exportToPDF = async () => {
-    try {
-      // Check if resume preview exists
-      const previewElement = document.querySelector<HTMLElement>("#resume-preview");
-      if (!previewElement) {
-        console.error("Resume preview element not found");
-        alert("Resume preview not found. Please ensure the page is loaded correctly.");
-        return;
-      }
-
-      console.log("Resume preview element found:", previewElement);
-      console.log("Preview content length:", previewElement.innerHTML.length);
-      console.log("Preview text content:", previewElement.textContent?.substring(0, 200));
-      
-      // Check if there's actual content
-      if (!previewElement.textContent || previewElement.textContent.trim().length === 0) {
-        console.error("Resume preview has no content");
-        alert("Resume preview has no content. Please add some information to your resume first.");
-        return;
-      }
-
-      // Show loading indicator
-      const exportButton = document.querySelector('[data-export-pdf]') as HTMLButtonElement;
-      if (exportButton) {
-        exportButton.disabled = true;
-        exportButton.textContent = 'Generating PDF...';
-      }
-
-      await exportResumePdf('resume.pdf');
-      
-      // Reset button
-      if (exportButton) {
-        exportButton.disabled = false;
-        exportButton.textContent = 'Export PDF';
-      }
-    } catch (error) {
-      console.error('Failed to export PDF:', error);
-      alert('Failed to export PDF. Please try again.');
-      
-      // Reset button on error
-      const exportButton = document.querySelector('[data-export-pdf]') as HTMLButtonElement;
-      if (exportButton) {
-        exportButton.disabled = false;
-        exportButton.textContent = 'Export PDF';
-      }
-    }
-  };
+  // React PDF export is handled by PDFDownloadLink component
 
   const exportToJSON = () => {
     const dataStr = JSON.stringify(resumeData, null, 2);
@@ -338,208 +291,9 @@ const ResumeGenerator = () => {
     link.click();
   };
 
-  const exportMarkdownToPDF = () => {
-    // Generate the same markdown content with emojis
-    let markdown = `# ${resumeData.header?.name || 'Your Name'}\n\n`;
-    markdown += `*${resumeData.header?.tagline || 'Your Professional Title'}*\n\n`;
-    
-    // Contact Information with emojis
-    markdown += `📧 ${resumeData.header?.contact?.email || ''}\n`;
-    markdown += `📱 ${resumeData.header?.contact?.phone || ''}\n`;
-    markdown += `📍 ${resumeData.header?.location?.city || ''}, ${resumeData.header?.location?.state || ''}\n\n`;
-    
-    // Experience
-    if (resumeData.experience && resumeData.experience.length > 0) {
-      markdown += `## 💼 Experience\n\n`;
-      resumeData.experience.forEach((exp) => {
-        markdown += `### ${exp.name}\n`;
-        if (exp.jobs?.[0]?.title) {
-          markdown += `**${exp.jobs[0].title}**\n`;
-        }
-        if (exp.tenure) {
-          markdown += `*${exp.tenure}*\n\n`;
-        }
-        if (exp.jobs?.[0]?.description) {
-          markdown += `${exp.jobs[0].description}\n\n`;
-        }
-        if (exp.jobs?.[0]?.skills && exp.jobs[0].skills.length > 0) {
-          markdown += `**Skills:** ${exp.jobs[0].skills.join(', ')}\n\n`;
-        }
-      });
-    }
-    
-    // Education
-    if (resumeData.education && resumeData.education.length > 0) {
-      markdown += `## 🎓 Education\n\n`;
-      resumeData.education.forEach((edu) => {
-        markdown += `### ${edu.institution}\n`;
-        markdown += `**${edu.degree}**\n`;
-        markdown += `*${edu.year}*\n\n`;
-      });
-    }
-    
-    // Skills
-    if (resumeData.skills && resumeData.skills.length > 0) {
-      markdown += `## ⚡ Skills\n\n`;
-      markdown += `${resumeData.skills.join(', ')}\n\n`;
-    }
-    
-    // Additional Information
-    if (resumeData.extras && resumeData.extras.length > 0) {
-      markdown += `## 🏆 Additional Information\n\n`;
-      resumeData.extras.forEach((extra) => {
-        markdown += `• ${extra}\n`;
-      });
-    }
+  
 
-    // Convert markdown to HTML with styling
-    const htmlContent = convertMarkdownToStyledHTML(markdown);
-    
-    // Create a temporary div with proper sizing and positioning for 8.5x11
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = htmlContent;
-    tempDiv.style.position = 'absolute';
-    tempDiv.style.left = '0';
-    tempDiv.style.top = '0';
-    tempDiv.style.width = '612px'; // 8.5 inches at 72 DPI
-    tempDiv.style.minHeight = '792px'; // 11 inches at 72 DPI
-    tempDiv.style.backgroundColor = 'white';
-    tempDiv.style.color = 'black';
-    tempDiv.style.fontFamily = 'Inter, Segoe UI Emoji, Apple Color Emoji, Noto Color Emoji, Arial, Helvetica, sans-serif';
-    tempDiv.style.fontSize = '12px';
-    tempDiv.style.lineHeight = '1.4';
-    tempDiv.style.padding = '40px';
-    tempDiv.style.boxSizing = 'border-box';
-    tempDiv.style.overflow = 'visible';
-    
-    // Add to body temporarily
-    document.body.appendChild(tempDiv);
-    
-    // Wait for content to render
-    setTimeout(async () => {
-      try {
-        // Convert HTML to PDF with 8.5x11 format
-        const pdf = new jsPDF({ unit: 'pt', format: [612, 792] }); // 8.5x11 inches
-        
-        await (pdf as any).html(tempDiv, {
-          margin: [30, 30, 30, 30],
-          autoPaging: "text",
-          html2canvas: {
-            scale: 2,
-            useCORS: true,
-            allowTaint: true,
-            backgroundColor: "#ffffff",
-            logging: true, // Enable logging for debugging
-            removeContainer: true,
-            foreignObjectRendering: false,
-            imageTimeout: 0,
-            onclone: (clonedDoc: Document) => {
-              // Ensure proper styling in cloned document with emoji support
-              const style = clonedDoc.createElement('style');
-              style.textContent = `
-                @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-                * { 
-                  font-family: 'Inter', 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', Arial, Helvetica, sans-serif !important; 
-                  color: #000000 !important;
-                  background-color: #ffffff !important;
-                }
-                body { 
-                  margin: 0; 
-                  padding: 30px; 
-                  font-size: 12px;
-                  line-height: 1.4;
-                  max-width: 552px; /* 8.5 inches minus margins */
-                }
-                h1, h2, h3 { 
-                  color: #000000 !important; 
-                  font-weight: bold;
-                }
-                p, span, div { 
-                  color: #000000 !important; 
-                }
-                .contact-info {
-                  margin: 15px 0;
-                }
-                .contact-item {
-                  margin: 5px 0;
-                }
-                .emoji {
-                  font-family: 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif !important;
-                  font-size: 14px;
-                  vertical-align: middle;
-                }
-                .skill-tags {
-                  margin: 10px 0;
-                }
-                .skill-tag {
-                  background-color: #f0f0f0;
-                  color: #000000;
-                  padding: 4px 8px;
-                  margin: 2px;
-                  border-radius: 4px;
-                  display: inline-block;
-                  font-size: 10px;
-                }
-                .job-title {
-                  color: #000000;
-                  font-weight: bold;
-                  margin: 5px 0;
-                }
-                .job-duration {
-                  color: #666666;
-                  font-style: italic;
-                  margin: 5px 0;
-                }
-                .job-description {
-                  margin: 10px 0;
-                  color: #000000;
-                }
-              `;
-              clonedDoc.head.appendChild(style);
-            }
-          },
-          callback: (pdf: jsPDF) => {
-            console.log("PDF generated successfully");
-            pdf.save('resume.pdf');
-          },
-        });
-      } catch (error) {
-        console.error("PDF generation failed:", error);
-        
-        // Fallback: create simple text PDF
-        const pdf = new jsPDF({ unit: 'pt', format: 'a4' });
-        const textContent = tempDiv.textContent || "No content available";
-        const lines = textContent.split('\n').filter(line => line.trim());
-        
-        let yPosition = 40;
-        const lineHeight = 14;
-        
-        pdf.setFontSize(16);
-        pdf.setFont('helvetica', 'bold');
-        pdf.text('Resume', 40, yPosition);
-        yPosition += 30;
-        
-        pdf.setFontSize(12);
-        pdf.setFont('helvetica', 'normal');
-        
-        lines.forEach(line => {
-          if (yPosition > 750) {
-            pdf.addPage();
-            yPosition = 40;
-          }
-          pdf.text(line.trim(), 40, yPosition);
-          yPosition += lineHeight;
-        });
-        
-        pdf.save('resume.pdf');
-      } finally {
-        // Clean up
-        document.body.removeChild(tempDiv);
-      }
-    }, 500); // Wait 500ms for content to render
-  };
 
-  const convertMarkdownToStyledHTML = (markdown: string) => {
     let html = `
       <html>
         <head>
@@ -921,13 +675,6 @@ const ResumeGenerator = () => {
                 Export Markdown
               </button>
               <button
-                onClick={exportMarkdownToPDF}
-                className="px-4 py-2 text-sm font-medium text-red-600 hover:text-red-700 transition-colors"
-                title="Export Markdown as PDF"
-              >
-                Export PDF (Markdown)
-              </button>
-              <button
                 onClick={() => {
                   debugCurrentData();
                   alert('Check console for current data');
@@ -937,14 +684,25 @@ const ResumeGenerator = () => {
               >
                 Debug Data
               </button>
-              <button
-                onClick={exportToPDF}
-                data-export-pdf
+              <PDFDownloadLink
+                document={<ResumeDocument data={resumeData} />}
+                fileName="resume.pdf"
                 className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
               >
-                <Download className="h-4 w-4" />
-                <span>Export PDF</span>
-              </button>
+                {({ blob, url, loading, error }) =>
+                  loading ? (
+                    <div className="flex items-center space-x-2">
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                      <span>Generating PDF...</span>
+                    </div>
+                  ) : (
+                    <div className="flex items-center space-x-2">
+                      <Download className="h-4 w-4" />
+                      <span>Export PDF</span>
+                    </div>
+                  )
+                }
+              </PDFDownloadLink>
               <button
                 onClick={() => setDarkMode(!darkMode)}
                 className={`p-2 rounded-md transition-colors ${

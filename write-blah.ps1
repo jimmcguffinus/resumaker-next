@@ -10,18 +10,28 @@ $SourceDirs = @(
     "src",
     "lib"
 )
-$FileExtensions = @("*.tsx", "*.ts", "*.js", "*.jsx", "*.css", "*.mjs", "*.json", "*.md")
+$FileExtensions = @("*.tsx", "*.ts", "*.js", "*.jsx", "*.css", "*.mjs", "*.json", "*.md", "*.txt", "*.ps1", "*.yml", "*.yaml", "*.config", "*.env*")
 
-# Define specific root files to include
+# Define specific root files to include - EXPANDED LIST
 $RootFiles = @(
     "package.json",
+    "package-lock.json",
     "next.config.ts",
+    "next.config.js",
     "tsconfig.json",
+    "tailwind.config.ts",
     "tailwind.config.js",
     "postcss.config.mjs",
     "README.md",
     "PRD.md",
-    "MVP.md"
+    "MVP.md",
+    "scala.readme.md",
+    "resume.md",
+    "kaden-scala-data.json",
+    "cala_resumemaker submodule to fix build",
+    "write-blah.ps1",
+    "next-env.d.ts",
+    ".gitignore"
 )
 
 # Dynamic File Discovery
@@ -32,6 +42,17 @@ foreach ($dir in $SourceDirs) {
         $FilesToInclude += Get-ChildItem -Path $dir -Recurse -Include $FileExtensions -ErrorAction SilentlyContinue
     }
 }
+
+# Also scan for any additional files in root that might be relevant
+$AdditionalRootFiles = Get-ChildItem -Path "." -File -Include "*.md", "*.json", "*.ts", "*.js", "*.ps1", "*.txt", "*.config*" | Where-Object { 
+    $_.Name -notin $RootFiles -and 
+    $_.Name -notlike "*.lock" -and 
+    $_.Name -notlike "node_modules*" -and
+    $_.Name -notlike ".git*" -and
+    $_.Name -notlike ".next*" -and
+    $_.Name -notlike "out*"
+}
+$FilesToInclude += $AdditionalRootFiles
 
 $MarkdownContent = "# 🔍 Resume Maker Source Code Dump`n`n"
 $MarkdownContent += "Generated: $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')`n`n"
@@ -68,6 +89,9 @@ foreach ($file in $FilesToInclude) {
                     'json' { 'json' }
                     'md'   { 'markdown' }
                     'css'  { 'css' }
+                    'ps1'  { 'powershell' }
+                    'yml'  { 'yaml' }
+                    'yaml' { 'yaml' }
                     default { '' }
                 }
 
