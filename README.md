@@ -10,13 +10,14 @@ A **Next.js-based resume generator** that creates professional PDF resumes with 
 ## 🌟 Features
 
 - **📝 Real-time Resume Builder** - Live preview as you type
-- **🎨 Multiple Templates** - Modern, Classic, and Minimal styles
+- **🎨 Modern Template** - Clean, professional design
 - **🌙 Dark/Light Mode** - Toggle between themes
-- **📄 PDF Export** - Generate professional PDF resumes
+- **📄 PDF Export** - Generate professional PDF resumes (HTML-to-PDF)
 - **💾 JSON Export** - Save and share resume data
 - **📱 Responsive Design** - Works on desktop, tablet, and mobile
 - **💾 Local Storage** - Auto-save your progress
 - **⚡ Fast & Modern** - Built with Next.js 15 and React 19
+- **🔄 Scala Data Import** - Import data from original Scala format
 
 ## 🚀 Live Demo
 
@@ -27,7 +28,7 @@ Visit: [resumemaker.42-it.com](https://resumemaker.42-it.com)
 - **Frontend**: Next.js 15.4.5, React 19.1.0, TypeScript 5.0
 - **Styling**: Tailwind CSS 4.0
 - **Icons**: Lucide React
-- **PDF Generation**: jsPDF (client-side)
+- **PDF Generation**: jsPDF with HTML-to-PDF rendering
 - **Deployment**: Cloudflare Pages
 - **Version Control**: Git & GitHub
 
@@ -58,7 +59,11 @@ resumaker-next/
 │   │   └── globals.css         # Global styles
 │   └── components/
 │       └── ResumeGenerator.tsx  # Main resume component
+├── lib/
+│   └── pdf/
+│       └── exportResume.ts     # PDF export functionality
 ├── public/                     # Static assets
+├── scala_resumemaker/          # Original Scala project
 ├── package.json                # Dependencies
 ├── next.config.ts             # Next.js config
 └── README.md                  # This file
@@ -69,38 +74,49 @@ resumaker-next/
 1. **Fill in your information** - Add personal details, experience, education
 2. **Real-time preview** - See changes instantly as you type
 3. **Export options**:
-   - **PDF**: Download as professional PDF
+   - **PDF**: Download as professional PDF (matches UI exactly)
    - **JSON**: Save data for later editing
 4. **Load sample data** - Try the demo with pre-filled content
+5. **Import Scala data** - Import from original Scala format
 
 ## 📋 Resume Data Model
 
 The app uses a structured data model for resumes:
 
 ```typescript
-interface ResumeData {
-  personalInfo: {
+interface Resume {
+  header: {
     name: string;
-    email: string;
-    phone: string;
-    location: string;
-    summary: string;
+    tagline: string;
+    contact: {
+      phone: string;
+      email: string;
+    };
+    location: {
+      city: string;
+      state: string;
+    };
   };
   experience: Array<{
-    company: string;
-    position: string;
-    startDate: string;
-    endDate: string;
-    description: string;
+    name: string;
+    link: string;
+    blurb: string;
+    tenure: string;
+    jobs: Array<{
+      title: string;
+      description: string;
+      skills: string[];
+      languages: string[];
+    }>;
   }>;
   education: Array<{
     institution: string;
+    link: string;
+    year: string;
     degree: string;
-    field: string;
-    startDate: string;
-    endDate: string;
   }>;
   skills: string[];
+  extras: string[];
 }
 ```
 
@@ -109,9 +125,18 @@ interface ResumeData {
 This project was converted from a Scala-based resume generator that used LaTeX for PDF generation. The migration involved:
 
 - **Frontend**: Scala → Next.js/React
-- **PDF Generation**: LaTeX → jsPDF (client-side)
+- **PDF Generation**: LaTeX → jsPDF (HTML-to-PDF)
 - **Deployment**: Local build → Cloudflare Pages
 - **UI**: Command-line → Modern web interface
+- **Data Import**: Scala format → JSON with conversion utilities
+
+### Key Improvements
+
+- **Real-time preview** instead of command-line editing
+- **Modern web UI** with responsive design
+- **Client-side PDF generation** using jsPDF
+- **Auto-save functionality** with local storage
+- **Scala data compatibility** for easy migration
 
 ## 🚀 Deployment
 
@@ -120,7 +145,7 @@ This project was converted from a Scala-based resume generator that used LaTeX f
 The app is deployed on Cloudflare Pages with automatic builds from GitHub:
 
 1. **Connected to GitHub**: Automatic deployments on push
-2. **Build settings**: Next.js framework preset
+2. **Build settings**: Next.js framework preset with static export
 3. **Custom domain**: resumemaker.42-it.com
 
 ### Local Development
@@ -130,6 +155,15 @@ npm run dev      # Development server
 npm run build    # Production build
 npm run start    # Start production server
 ```
+
+## 🔧 PDF Export
+
+The PDF export uses jsPDF's HTML-to-PDF functionality to capture the exact UI appearance:
+
+- **HTML-to-PDF**: Renders the live preview directly to PDF
+- **Color compatibility**: Handles Tailwind CSS 4.0 color formats
+- **Responsive layout**: Maintains design across different screen sizes
+- **Auto-pagination**: Automatically splits content across pages
 
 ## 🤝 Contributing
 
@@ -153,3 +187,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Tailwind CSS** for the utility-first CSS framework
 - **Cloudflare** for the excellent hosting platform
 - **Original Scala version** that inspired this conversion
+- **jsPDF** for client-side PDF generation capabilities
