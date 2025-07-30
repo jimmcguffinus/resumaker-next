@@ -1,6 +1,6 @@
 # 🔍 Resume Maker Source Code Dump
 
-Generated: 2025-07-29 21:21:14
+Generated: 2025-07-29 21:59:57
 
 ## Project: Next.js Resume Generator with PDF Export
 
@@ -1829,18 +1829,28 @@ const ok2rgb = (c: string) => {
 
 /* patch the *given* html2canvas module */
 function patchH2C(h2c: any) {
-  if (!h2c?.Color || h2c.Color.__oklchPatched) return;
+  const C = h2c?.Color;
+  if (!C || C.__oklchPatched) return;
 
-  const orig = h2c.Color.parseColor;
-  h2c.Color.parseColor = (v: any, ...rest: any[]) => {
-    if (typeof v === "string" && v.trim().startsWith("oklch(")) {
-      console.debug("[h2c‑patch] converting", v);
-      v = ok2rgb(v);
-    }
-    return orig(v, ...rest);
-  };
-  h2c.Color.__oklchPatched = true;
-  console.debug("[h2c‑patch] parser patched ✔");
+  // Initialize conversion counter
+  (window as any).__h2cConversions = 0;
+
+  for (const key of Object.keys(C)) {
+    const fn = C[key];
+    if (typeof fn !== 'function') continue;
+
+    C[key] = function patched(v: any, ...rest: any[]) {
+      if (typeof v === 'string' && v.trim().startsWith('oklch(')) {
+        console.debug('[h2c‑patch]', key, 'converting', v);
+        (window as any).__h2cConversions++;
+        v = ok2rgb(v);
+      }
+      return fn.call(this, v, ...rest);
+    };
+  }
+
+  C.__oklchPatched = true;
+  console.debug('[h2c‑patch] all Color fns wrapped ✔');
 }
 
 /* --------------------------------------------------------------- */
@@ -1876,6 +1886,25 @@ function scrub(node: Window | Document | HTMLElement) {
       if (val && val.includes("oklch"))
         (el.style as any)[prop] = val.replace(/oklch\([^)]+\)/g, m => oklchToRgb(m));
     });
+
+    // additional properties that might contain OKLCH
+    fix("background");  // catches linear-gradient, etc.
+    fix("filter");      // catches drop-shadow()
+    fix("borderImage");
+    fix("maskImage");
+    fix("clipPath");
+  });
+
+  // handle SVG elements specifically
+  doc.querySelectorAll("svg").forEach(svg => {
+    const fill = svg.getAttribute("fill");
+    if (fill && fill.includes("oklch")) {
+      svg.setAttribute("fill", oklchToRgb(fill));
+    }
+    const stroke = svg.getAttribute("stroke");
+    if (stroke && stroke.includes("oklch")) {
+      svg.setAttribute("stroke", oklchToRgb(stroke));
+    }
   });
 }
 
@@ -1897,22 +1926,35 @@ function oklchToRgb(c: string): string {
 
 /* public API */
 export async function exportResumePdf(file = "resume.pdf") {
+  console.log("exportResumePdf loaded"); // debug log
   const src = document.querySelector<HTMLElement>("#resume-preview");
   if (!src) throw new Error("#resume-preview not found");
 
   /* 1️⃣  scrub live node */
   scrub(src);
 
-  /* 2️⃣  dynamically load html2canvas, patch it, and remember it */
-  const h2cMod = await import(/* webpackChunkName: "html2canvas" */"html2canvas");
-  patchH2C(h2cMod.default);
+  /* 2️⃣  load + patch html2canvas */
+  const h2c = (await import("html2canvas")).default;
+  console.log("html2canvas loaded:", !!h2c); // debug log
+  patchH2C(h2c);
 
-  /* 3️⃣  feed *our* patched copy to jspdf */
+  /* 3️⃣  ***important*** — hand the *same* instance to jspdf */
+  (window as any).html2canvas = h2c;   // –> jspdf will reuse this
+  console.log("window.html2canvas set:", !!(window as any).html2canvas); // debug log
+
+  /* 4️⃣  extra belt-and-suspenders (rare but helpful) */
+  for (const k in window) {
+    const maybe = (window as any)[k];
+    if (maybe?.Color?.parseColor && !maybe.Color.__oklchPatched) {
+      patchH2C(maybe);            // patch *every* stray copy hanging around
+    }
+  }
+
   const pdf = new jsPDF({ unit: "pt", format: "a4" });
   await pdf.html(src, {
     margin: 24,
     autoPaging: "text",
-    html2canvas: {
+    html2canvas: {          // normal h2c options go here
       scale: 2,
       onclone: (w: any) => scrub(w.document ?? w),
     },
