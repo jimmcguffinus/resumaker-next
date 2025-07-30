@@ -84,16 +84,26 @@ export async function exportResumePdf(file = "resume.pdf") {
   /* 1️⃣  scrub live node */
   scrub(src);
 
-  /* 2️⃣  dynamically load html2canvas, patch it, and remember it */
-  const h2cMod = await import(/* webpackChunkName: "html2canvas" */"html2canvas");
-  patchH2C(h2cMod.default);
+  /* 2️⃣  load + patch html2canvas */
+  const h2c = (await import("html2canvas")).default;
+  patchH2C(h2c);
 
-  /* 3️⃣  feed *our* patched copy to jspdf */
+  /* 3️⃣  ***important*** — hand the *same* instance to jspdf */
+  (window as any).html2canvas = h2c;   // –> jspdf will reuse this
+
+  /* 4️⃣  extra belt-and-suspenders (rare but helpful) */
+  for (const k in window) {
+    const maybe = (window as any)[k];
+    if (maybe?.Color?.parseColor && !maybe.Color.__oklchPatched) {
+      patchH2C(maybe);            // patch *every* stray copy hanging around
+    }
+  }
+
   const pdf = new jsPDF({ unit: "pt", format: "a4" });
   await pdf.html(src, {
     margin: 24,
     autoPaging: "text",
-    html2canvas: {
+    html2canvas: {          // normal h2c options go here
       scale: 2,
       onclone: (w: any) => scrub(w.document ?? w),
     },
