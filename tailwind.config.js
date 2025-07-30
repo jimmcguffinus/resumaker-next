@@ -1,7 +1,9 @@
-/** @type {import("tailwindcss").Config} */
+/** Tailwind v4 – force legacy rgb() colours for html2canvas */
 module.exports = {
-  content: ["./src/**/*.{js,jsx,ts,tsx,html}"],
+  content: ['./src/**/*.{js,jsx,ts,tsx,html}'],
   experimental: {
-    colorFormat: "rgb"       // ⬅ Tailwind will output only rgb()/hex
-  }
+    colorFormat: 'rgb'       // << kill OKLCH at source
+  },
+  theme: { extend: {} },
+  plugins: []
 };
