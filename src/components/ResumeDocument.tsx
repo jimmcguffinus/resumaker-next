@@ -61,12 +61,13 @@ interface ResumeDocumentProps {
   data: Resume;
 }
 
-// Use system fonts instead of trying to load Inter fonts
-// This avoids 404 errors and ensures PDF generation works
+// Register Inter fonts from local files
 Font.register({
   family: 'Inter',
   fonts: [
-    { src: 'https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2' },
+    { src: '/fonts/Inter-Regular.ttf' },
+    { src: '/fonts/Inter-Bold.ttf', fontWeight: 'bold' },
+    { src: '/fonts/Inter-Italic.ttf', fontStyle: 'italic' },
   ],
 });
 
