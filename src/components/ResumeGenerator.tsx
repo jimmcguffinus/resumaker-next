@@ -355,13 +355,47 @@ const ResumeGenerator = () => {
   // Convert Scala format to Next.js format
   const importScalaData = (scalaData: any) => {
     try {
+      // Helper function to format phone number
+      const formatPhone = (phoneObj: any) => {
+        if (phoneObj && phoneObj.areaCode && phoneObj.prefix && phoneObj.suffix) {
+          return `(${phoneObj.areaCode}) ${phoneObj.prefix}-${phoneObj.suffix}`;
+        }
+        return phoneObj?.toString() || '';
+      };
+
+      // Helper function to format email
+      const formatEmail = (emailObj: any) => {
+        if (emailObj && emailObj.host && emailObj.domain) {
+          return `${emailObj.host}@${emailObj.domain}`;
+        }
+        return emailObj?.toString() || '';
+      };
+
+      // Helper function to format tenure
+      const formatTenure = (tenureObj: any) => {
+        if (tenureObj && tenureObj.start && tenureObj.end) {
+          const startYear = new Date(tenureObj.start).getFullYear();
+          const endYear = new Date(tenureObj.end).getFullYear();
+          return `${startYear} - ${endYear}`;
+        }
+        return tenureObj?.toString() || '';
+      };
+
+      // Helper function to format education proof
+      const formatEducationProof = (proofObj: any) => {
+        if (proofObj && proofObj.areaOfStudy) {
+          return proofObj.areaOfStudy;
+        }
+        return proofObj?.toString() || '';
+      };
+
       const converted: Resume = {
         header: {
           name: scalaData.header.name,
           tagline: scalaData.header.tagline,
           contact: {
-            phone: scalaData.header.contactInfo.phoneNumber.toString(),
-            email: scalaData.header.contactInfo.email.toString()
+            phone: formatPhone(scalaData.header.contactInfo.phoneNumber),
+            email: formatEmail(scalaData.header.contactInfo.email)
           },
           location: {
             city: scalaData.header.location.city,
@@ -372,12 +406,12 @@ const ResumeGenerator = () => {
           name: workplace.name,
           link: workplace.link,
           blurb: workplace.blurb,
-          tenure: workplace.tenure.toString(),
+          tenure: formatTenure(workplace.tenure),
           jobs: workplace.jobs.map((job: any) => ({
             title: job.title,
             description: job.description,
-            skills: job.skillsAndTools,
-            languages: Object.keys(job.langsAndLibs).flatMap(lang => 
+            skills: job.skillsAndTools || [],
+            languages: Object.keys(job.langsAndLibs || {}).flatMap(lang => 
               job.langsAndLibs[lang] || [lang]
             )
           }))
@@ -386,11 +420,11 @@ const ResumeGenerator = () => {
           institution: edu.instituion,
           link: edu.link,
           year: edu.awarded.toString(),
-          degree: edu.proof.toString()
+          degree: formatEducationProof(edu.proof)
         })),
         skills: scalaData.experience.workplaces.flatMap((workplace: any) =>
           workplace.jobs.flatMap((job: any) => 
-            [...job.skillsAndTools, ...Object.keys(job.langsAndLibs)]
+            [...(job.skillsAndTools || []), ...Object.keys(job.langsAndLibs || {})]
           )
         ).filter((skill: string, index: number, arr: string[]) => 
           arr.indexOf(skill) === index
