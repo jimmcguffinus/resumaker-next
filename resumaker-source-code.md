@@ -1,6 +1,6 @@
 # 🔍 Resume Maker Source Code Dump
 
-Generated: 2025-07-29 23:20:43
+Generated: 2025-07-29 23:24:11
 
 ## Project: Next.js Resume Generator with PDF Export
 
@@ -817,7 +817,9 @@ To provide job seekers with a modern, accessible, and user-friendly tool for cre
 ## File: src\app\globals.css
 
 ```css
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
   --background: #ffffff;
