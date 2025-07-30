@@ -207,28 +207,39 @@ const ResumeGenerator = () => {
 
   const exportToPDF = async () => {
     try {
+      // Add safety checks
+      if (!resumeData || !resumeData.header) {
+        throw new Error('Resume data is missing or incomplete');
+      }
+
       // Transform resume data to match the helper's expected format
       const resumeDataForExport = {
-        name: resumeData.header.name,
-        email: resumeData.header.contact.email,
-        phone: resumeData.header.contact.phone,
-        location: `${resumeData.header.location.city}, ${resumeData.header.location.state}`,
-        experience: resumeData.experience.map(exp => ({
-          company: exp.name,
-          title: exp.jobs[0]?.title || '',
-          startDate: exp.tenure.split(' - ')[0] || '',
-          endDate: exp.tenure.split(' - ')[1] || '',
-          skills: exp.jobs[0]?.skills || []
+        header: {
+          name: resumeData.header.name || '',
+          tagline: resumeData.header.tagline || '',
+          email: resumeData.header.contact?.email || '',
+          phone: resumeData.header.contact?.phone || '',
+          city: resumeData.header.location?.city || '',
+          state: resumeData.header.location?.state || ''
+        },
+        experience: (resumeData.experience || []).map(exp => ({
+          company: exp.name || '',
+          title: exp.jobs?.[0]?.title || '',
+          startYear: exp.tenure?.split(' - ')[0] || '',
+          endYear: exp.tenure?.split(' - ')[1] || '',
+          jobs: exp.jobs || []
         })),
-        education: resumeData.education.map(edu => ({
-          institution: edu.institution,
-          degree: edu.degree,
-          year: edu.year
+        education: (resumeData.education || []).map(edu => ({
+          institution: edu.institution || '',
+          degree: edu.degree || '',
+          startYear: edu.year || '',
+          endYear: edu.year || ''
         })),
-        skills: resumeData.skills,
-        additionalInfo: resumeData.extras
+        skills: resumeData.skills || [],
+        extras: resumeData.extras || []
       };
 
+      console.log('Exporting PDF with data:', resumeDataForExport);
       await exportResumePdf(resumeDataForExport);
     } catch (error) {
       console.error('Failed to export PDF:', error);

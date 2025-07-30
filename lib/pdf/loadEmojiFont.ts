@@ -17,6 +17,15 @@ export const createPdfWithEmojiSupport = async (): Promise<jsPDF> => {
  */
 export const exportResumePdf = async (resumeData: any): Promise<void> => {
   try {
+    // Add safety checks
+    if (!resumeData) {
+      throw new Error('Resume data is required');
+    }
+    
+    if (!resumeData.header) {
+      throw new Error('Resume header is required');
+    }
+
     const doc = await createPdfWithEmojiSupport();
     
     // Helper function to safely handle text
