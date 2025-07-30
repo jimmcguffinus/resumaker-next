@@ -10,30 +10,24 @@ const ok2rgb = (c: string) => {
 
 /* patch the *given* html2canvas module */
 function patchH2C(h2c: any) {
-  const C = h2c?.Color ?? {};                    // grab the class
-  if (C.__oklchPatched) return;                  // already done
+  const C = h2c?.Color;
+  if (!C || C.__oklchPatched) return;
 
-  // whichever of these three exists in this build:
-  const entry =
-        C.parseColor   // v1.5 and earlier
-     ?? C.parse        // v1.6 (→ renamed)
-     ?? C.fromString;  // some forks
+  for (const key of Object.keys(C)) {
+    const fn = C[key];
+    if (typeof fn !== 'function') continue;
 
-  if (typeof entry !== 'function') {
-    console.warn('[h2c‑patch] ✖ unable to locate parse fn – build mismatch');
-    return;
+    C[key] = function patched(v: any, ...rest: any[]) {
+      if (typeof v === 'string' && v.trim().startsWith('oklch(')) {
+        console.debug('[h2c‑patch]', key, 'converting', v);
+        v = ok2rgb(v);
+      }
+      return fn.call(this, v, ...rest);
+    };
   }
 
-  C[entry.name] = function patch(v: any, ...rest: any[]) {
-    if (typeof v === 'string' && v.trim().startsWith('oklch(')) {
-      console.debug('[h2c‑patch] converting', v);
-      v = ok2rgb(v);
-    }
-    return entry.call(this, v, ...rest);
-  };
-
   C.__oklchPatched = true;
-  console.debug('[h2c‑patch] parser patched ✔');
+  console.debug('[h2c‑patch] all Color fns wrapped ✔');
 }
 
 /* --------------------------------------------------------------- */
