@@ -116,15 +116,28 @@ const ResumeGenerator = () => {
     const saved = localStorage.getItem('resume-data');
     if (saved) {
       try {
-        setResumeData(JSON.parse(saved));
+        const parsedData = JSON.parse(saved);
+        // Only load if the data has the expected structure
+        if (parsedData && parsedData.header && parsedData.experience && parsedData.education) {
+          setResumeData(parsedData);
+        }
       } catch (e) {
         console.error('Failed to load saved data:', e);
+        // If parsing fails, keep the sample data
       }
     }
+    // If no saved data or invalid data, keep the sample data
   }, []);
 
   useEffect(() => {
     localStorage.setItem('resume-data', JSON.stringify(resumeData));
+  }, [resumeData]);
+
+  // Debug: Log when resumeData changes
+  useEffect(() => {
+    console.log('resumeData changed:', resumeData);
+    console.log('Experience count:', resumeData.experience?.length || 0);
+    console.log('Education count:', resumeData.education?.length || 0);
   }, [resumeData]);
 
   const updateResumeData = (path: string, value: any) => {
@@ -225,7 +238,17 @@ const ResumeGenerator = () => {
   };
 
   const loadSampleData = () => {
+    console.log('Loading sample data:', sampleResume);
     setResumeData(sampleResume);
+  };
+
+  // Debug function to check current state
+  const debugCurrentData = () => {
+    console.log('Current resumeData:', resumeData);
+    console.log('Experience length:', resumeData.experience?.length);
+    console.log('Education length:', resumeData.education?.length);
+    console.log('Skills length:', resumeData.skills?.length);
+    console.log('Extras length:', resumeData.extras?.length);
   };
 
   // Convert Scala format to Next.js format
@@ -391,7 +414,7 @@ const ResumeGenerator = () => {
               </button>
               <button
                 onClick={() => {
-                  console.log('Current resume data:', resumeData);
+                  debugCurrentData();
                   alert('Check console for current data');
                 }}
                 className="px-4 py-2 text-sm font-medium text-orange-600 hover:text-orange-700 transition-colors"
