@@ -21,6 +21,7 @@ function toDoc(node: Window | Document | HTMLElement): Document {
 /** Walk every element (+ :root) and re‑write any OKLCH colours to rgb. */
 function scrub(node: Window | Document | HTMLElement) {
   const doc = toDoc(node);
+  if (!doc || !doc.documentElement) return;     // <-- safeguard
 
   // :root background
   const root = doc.documentElement as HTMLElement;
@@ -69,7 +70,8 @@ export async function exportResumePdf(filename = "resume.pdf") {
     html2canvas: {
       scale: 2,
       /* 2️⃣  Scrub html2canvas's internal clone as well */
-      onclone: cloneWin => scrub(cloneWin),
+      onclone: cloneWin =>                    // new
+        scrub(cloneWin.document ?? cloneWin), // cope with null doc
     },
     callback: doc => doc.save(filename),
   });
