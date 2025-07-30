@@ -1,5 +1,15 @@
 import { jsPDF } from "jspdf";
 
+function normalizeCssColor(c: string): string {
+  // Skip if already rgb/rgba/hex
+  if (!c.startsWith("oklch")) return c;
+
+  // Let Chrome convert it for us
+  const ctx = document.createElement("canvas").getContext("2d")!;
+  ctx.fillStyle = c;                   // browser parses OKLCH
+  return ctx.fillStyle as string;      // comes back as rgb(r,g,b)
+}
+
 /**
  * Export the on-screen preview (#resume-preview) to a paginated PDF that
  * looks exactly like the UI.
@@ -7,63 +17,45 @@ import { jsPDF } from "jspdf";
  * @param filename name of the downloaded file (default: resume.pdf)
  */
 export async function exportResumePdf(filename = "resume.pdf") {
-  // 1) Find the preview element (adjust the selector if you rename it)
-  const source = document.querySelector("#resume-preview") as HTMLElement | null;
-  if (!source) throw new Error("Could not find resume preview in the DOM.");
+  const src = document.querySelector<HTMLElement>("#resume-preview");
+  if (!src) throw new Error("preview not found");
 
-  // 2) Create a clone for PDF export with standard colors
-  const pdfElement = source.cloneNode(true) as HTMLElement;
-  pdfElement.style.position = 'absolute';
-  pdfElement.style.left = '-9999px';
-  pdfElement.style.top = '0';
-  pdfElement.style.width = '800px';
-  pdfElement.style.backgroundColor = '#ffffff';
-  pdfElement.style.color = '#000000';
-  
-  // 3) Override all colors to standard hex values
-  const allElements = pdfElement.querySelectorAll('*');
-  allElements.forEach((el: Element) => {
-    const element = el as HTMLElement;
-    if (element.style.color) {
-      element.style.color = '#000000';
+  // Clone node; put it off‑screen
+  const clone = src.cloneNode(true) as HTMLElement;
+  clone.style.position = "fixed";
+  clone.style.left = "-9999px";
+  document.body.appendChild(clone);
+
+  /* ── NEW: walk the clone & canonicalise colours ─────────────── */
+  clone.querySelectorAll<HTMLElement>("*").forEach(el => {
+    const cs = getComputedStyle(el);
+
+    // text colour
+    const c = normalizeCssColor(cs.color);
+    el.style.color = c;
+
+    // bg colour (only if non‑transparent)
+    const bg = cs.backgroundColor;
+    if (bg && bg !== "rgba(0, 0, 0, 0)") {
+      el.style.backgroundColor = normalizeCssColor(bg);
     }
-    if (element.style.backgroundColor) {
-      element.style.backgroundColor = '#ffffff';
-    }
-    if (element.classList.contains('text-blue-600')) {
-      element.style.color = '#2563eb';
-    }
-    if (element.classList.contains('bg-blue-600')) {
-      element.style.backgroundColor = '#2563eb';
-    }
-    if (element.classList.contains('border-blue-600')) {
-      element.style.borderColor = '#2563eb';
-    }
+
+    // border colours
+    ["borderColor", "borderTopColor", "borderRightColor",
+     "borderBottomColor", "borderLeftColor"].forEach(prop => {
+       const v = (cs as any)[prop];
+       if (v) (el.style as any)[prop] = normalizeCssColor(v);
+     });
+  });
+  /* ───────────────────────────────────────────────────────────── */
+
+  const pdf = new jsPDF({ unit: "pt", format: "a4" });
+  await pdf.html(clone, {
+    html2canvas: { scale: 2 },
+    margin: 24,
+    autoPaging: "text",
+    callback: doc => doc.save(filename),
   });
 
-  // 4) Add to DOM temporarily
-  document.body.appendChild(pdfElement);
-
-  try {
-    // 5) Create the PDF – A4 portrait, points
-    const pdf = new jsPDF({
-      orientation: "p",
-      unit: "pt",
-      format: "a4",
-    });
-
-    // 6) Render HTML → PDF pages
-    await pdf.html(pdfElement, {
-      // Bigger scale = sharper text/images (2 ~= 300 DPI on most screens)
-      html2canvas: { scale: 2 },
-      margin: 24,
-      autoPaging: "text", // let jsPDF add pages as needed
-      callback: (doc) => {
-        doc.save(filename);
-      },
-    });
-  } finally {
-    // 7) Clean up
-    document.body.removeChild(pdfElement);
-  }
+  document.body.removeChild(clone);
 } 

@@ -1,6 +1,6 @@
 # 🔍 Resume Maker Source Code Dump
 
-Generated: 2025-07-29 19:52:03
+Generated: 2025-07-29 20:09:50
 
 ## Project: Next.js Resume Generator with PDF Export
 
@@ -113,13 +113,14 @@ A **Next.js-based resume generator** that creates professional PDF resumes with 
 ## 🌟 Features
 
 - **📝 Real-time Resume Builder** - Live preview as you type
-- **🎨 Multiple Templates** - Modern, Classic, and Minimal styles
+- **🎨 Modern Template** - Clean, professional design
 - **🌙 Dark/Light Mode** - Toggle between themes
-- **📄 PDF Export** - Generate professional PDF resumes
+- **📄 PDF Export** - Generate professional PDF resumes (HTML-to-PDF)
 - **💾 JSON Export** - Save and share resume data
 - **📱 Responsive Design** - Works on desktop, tablet, and mobile
 - **💾 Local Storage** - Auto-save your progress
 - **⚡ Fast & Modern** - Built with Next.js 15 and React 19
+- **🔄 Scala Data Import** - Import data from original Scala format
 
 ## 🚀 Live Demo
 
@@ -130,7 +131,7 @@ Visit: [resumemaker.42-it.com](https://resumemaker.42-it.com)
 - **Frontend**: Next.js 15.4.5, React 19.1.0, TypeScript 5.0
 - **Styling**: Tailwind CSS 4.0
 - **Icons**: Lucide React
-- **PDF Generation**: jsPDF (client-side)
+- **PDF Generation**: jsPDF with HTML-to-PDF rendering
 - **Deployment**: Cloudflare Pages
 - **Version Control**: Git & GitHub
 
@@ -161,7 +162,11 @@ resumaker-next/
 │   │   └── globals.css         # Global styles
 │   └── components/
 │       └── ResumeGenerator.tsx  # Main resume component
+├── lib/
+│   └── pdf/
+│       └── exportResume.ts     # PDF export functionality
 ├── public/                     # Static assets
+├── scala_resumemaker/          # Original Scala project
 ├── package.json                # Dependencies
 ├── next.config.ts             # Next.js config
 └── README.md                  # This file
@@ -172,38 +177,49 @@ resumaker-next/
 1. **Fill in your information** - Add personal details, experience, education
 2. **Real-time preview** - See changes instantly as you type
 3. **Export options**:
-   - **PDF**: Download as professional PDF
+   - **PDF**: Download as professional PDF (matches UI exactly)
    - **JSON**: Save data for later editing
 4. **Load sample data** - Try the demo with pre-filled content
+5. **Import Scala data** - Import from original Scala format
 
 ## 📋 Resume Data Model
 
 The app uses a structured data model for resumes:
 
 ```typescript
-interface ResumeData {
-  personalInfo: {
+interface Resume {
+  header: {
     name: string;
-    email: string;
-    phone: string;
-    location: string;
-    summary: string;
+    tagline: string;
+    contact: {
+      phone: string;
+      email: string;
+    };
+    location: {
+      city: string;
+      state: string;
+    };
   };
   experience: Array<{
-    company: string;
-    position: string;
-    startDate: string;
-    endDate: string;
-    description: string;
+    name: string;
+    link: string;
+    blurb: string;
+    tenure: string;
+    jobs: Array<{
+      title: string;
+      description: string;
+      skills: string[];
+      languages: string[];
+    }>;
   }>;
   education: Array<{
     institution: string;
+    link: string;
+    year: string;
     degree: string;
-    field: string;
-    startDate: string;
-    endDate: string;
   }>;
   skills: string[];
+  extras: string[];
 }
 ```
 
@@ -212,9 +228,18 @@ interface ResumeData {
 This project was converted from a Scala-based resume generator that used LaTeX for PDF generation. The migration involved:
 
 - **Frontend**: Scala → Next.js/React
-- **PDF Generation**: LaTeX → jsPDF (client-side)
+- **PDF Generation**: LaTeX → jsPDF (HTML-to-PDF)
 - **Deployment**: Local build → Cloudflare Pages
 - **UI**: Command-line → Modern web interface
+- **Data Import**: Scala format → JSON with conversion utilities
+
+### Key Improvements
+
+- **Real-time preview** instead of command-line editing
+- **Modern web UI** with responsive design
+- **Client-side PDF generation** using jsPDF
+- **Auto-save functionality** with local storage
+- **Scala data compatibility** for easy migration
 
 ## 🚀 Deployment
 
@@ -223,7 +248,7 @@ This project was converted from a Scala-based resume generator that used LaTeX f
 The app is deployed on Cloudflare Pages with automatic builds from GitHub:
 
 1. **Connected to GitHub**: Automatic deployments on push
-2. **Build settings**: Next.js framework preset
+2. **Build settings**: Next.js framework preset with static export
 3. **Custom domain**: resumemaker.42-it.com
 
 ### Local Development
@@ -233,6 +258,15 @@ npm run dev      # Development server
 npm run build    # Production build
 npm run start    # Start production server
 ```
+
+## 🔧 PDF Export
+
+The PDF export uses jsPDF's HTML-to-PDF functionality to capture the exact UI appearance:
+
+- **HTML-to-PDF**: Renders the live preview directly to PDF
+- **Color compatibility**: Handles Tailwind CSS 4.0 color formats
+- **Responsive layout**: Maintains design across different screen sizes
+- **Auto-pagination**: Automatically splits content across pages
 
 ## 🤝 Contributing
 
@@ -256,6 +290,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Tailwind CSS** for the utility-first CSS framework
 - **Cloudflare** for the excellent hosting platform
 - **Original Scala version** that inspired this conversion
+- **jsPDF** for client-side PDF generation capabilities
 
 ```n
 
@@ -868,7 +903,7 @@ export default function Home() {
 import React, { useState, useEffect } from 'react';
 import { Download, Plus, Trash2, Moon, Sun, FileText, User, Briefcase, GraduationCap, Code, Award } from 'lucide-react';
 import jsPDF from 'jspdf';
-import { exportResumePdf } from '../../lib/pdf/loadEmojiFont';
+import { exportResumePdf } from '../../lib/pdf/exportResume';
 
 // TypeScript interfaces
 interface ContactInfo {
@@ -1072,40 +1107,7 @@ const ResumeGenerator = () => {
 
   const exportToPDF = async () => {
     try {
-      // Add safety checks
-      if (!resumeData || !resumeData.header) {
-        throw new Error('Resume data is missing or incomplete');
-      }
-
-      // Transform resume data to match the helper's expected format
-      const resumeDataForExport = {
-        header: {
-          name: resumeData.header.name || '',
-          tagline: resumeData.header.tagline || '',
-          email: resumeData.header.contact?.email || '',
-          phone: resumeData.header.contact?.phone || '',
-          city: resumeData.header.location?.city || '',
-          state: resumeData.header.location?.state || ''
-        },
-        experience: (resumeData.experience || []).map(exp => ({
-          company: exp.name || '',
-          title: exp.jobs?.[0]?.title || '',
-          startYear: exp.tenure?.split(' - ')[0] || '',
-          endYear: exp.tenure?.split(' - ')[1] || '',
-          jobs: exp.jobs || []
-        })),
-        education: (resumeData.education || []).map(edu => ({
-          institution: edu.institution || '',
-          degree: edu.degree || '',
-          startYear: edu.year || '',
-          endYear: edu.year || ''
-        })),
-        skills: resumeData.skills || [],
-        extras: resumeData.extras || []
-      };
-
-      console.log('Exporting PDF with data:', resumeDataForExport);
-      await exportResumePdf(resumeDataForExport);
+      await exportResumePdf('resume.pdf');
     } catch (error) {
       console.error('Failed to export PDF:', error);
       alert('Failed to export PDF. Please try again.');
@@ -1640,7 +1642,7 @@ const ResumeGenerator = () => {
               </div>
               
                              {/* Resume Preview */}
-               <div className={`bg-white text-gray-900 p-8 rounded-lg shadow-lg min-h-[800px] ${
+               <div id="resume-preview" className={`bg-white text-gray-900 p-8 rounded-lg shadow-lg min-h-[800px] ${
                  activeTemplate === 'modern' ? 'border-l-4 border-blue-500' :
                  activeTemplate === 'classic' ? 'border border-gray-300' :
                  'shadow-none border border-gray-200'
@@ -1812,197 +1814,78 @@ const ResumeGenerator = () => {
 export default ResumeGenerator; 
 ```n
 
-## File: lib\pdf\loadEmojiFont.ts
+## File: lib\pdf\exportResume.ts
 
 ```typescript
-import jsPDF from 'jspdf';
+import { jsPDF } from "jspdf";
 
 /**
- * Creates a jsPDF instance with better font support
- * @returns Promise<jsPDF> - jsPDF instance
+ * Export the on-screen preview (#resume-preview) to a paginated PDF that
+ * looks exactly like the UI.
+ *
+ * @param filename name of the downloaded file (default: resume.pdf)
  */
-export const createPdfWithEmojiSupport = async (): Promise<jsPDF> => {
-  const doc = new jsPDF();
-  doc.setFont('helvetica');
-  return doc;
-};
+export async function exportResumePdf(filename = "resume.pdf") {
+  // 1) Find the preview element (adjust the selector if you rename it)
+  const source = document.querySelector("#resume-preview") as HTMLElement | null;
+  if (!source) throw new Error("Could not find resume preview in the DOM.");
 
-/**
- * Exports resume data to PDF matching the UI styling
- * @param resumeData - The resume data to export
- * @returns Promise<void>
- */
-export const exportResumePdf = async (resumeData: any): Promise<void> => {
+  // 2) Create a clone for PDF export with standard colors
+  const pdfElement = source.cloneNode(true) as HTMLElement;
+  pdfElement.style.position = 'absolute';
+  pdfElement.style.left = '-9999px';
+  pdfElement.style.top = '0';
+  pdfElement.style.width = '800px';
+  pdfElement.style.backgroundColor = '#ffffff';
+  pdfElement.style.color = '#000000';
+  
+  // 3) Override all colors to standard hex values
+  const allElements = pdfElement.querySelectorAll('*');
+  allElements.forEach((el: Element) => {
+    const element = el as HTMLElement;
+    if (element.style.color) {
+      element.style.color = '#000000';
+    }
+    if (element.style.backgroundColor) {
+      element.style.backgroundColor = '#ffffff';
+    }
+    if (element.classList.contains('text-blue-600')) {
+      element.style.color = '#2563eb';
+    }
+    if (element.classList.contains('bg-blue-600')) {
+      element.style.backgroundColor = '#2563eb';
+    }
+    if (element.classList.contains('border-blue-600')) {
+      element.style.borderColor = '#2563eb';
+    }
+  });
+
+  // 4) Add to DOM temporarily
+  document.body.appendChild(pdfElement);
+
   try {
-    // Add safety checks
-    if (!resumeData) {
-      throw new Error('Resume data is required');
-    }
-    
-    if (!resumeData.header) {
-      throw new Error('Resume header is required');
-    }
-
-    const doc = await createPdfWithEmojiSupport();
-    
-    // Helper function to safely handle text
-    const safeText = (text: string) => {
-      return text || '';
-    };
-    
-    // Helper function to clean text for PDF compatibility
-    const cleanText = (text: string) => {
-      return text.replace(/[^\x00-\x7F]/g, ''); // Remove non-ASCII characters
-    };
-    
-    // Header with UI-matching styling
-    doc.setFontSize(28);
-    doc.setFont('helvetica', 'bold');
-    doc.setTextColor(59, 130, 246); // Blue color matching UI
-    doc.text(safeText(resumeData.header.name || 'Your Name'), 20, 30);
-    
-    doc.setFontSize(16);
-    doc.setFont('helvetica', 'italic');
-    doc.setTextColor(107, 114, 128); // Gray color matching UI
-    doc.text(safeText(resumeData.header.tagline || 'Your Professional Title'), 20, 42);
-    
-    // Contact info with text-based icons (matching UI)
-    doc.setFontSize(12);
-    doc.setTextColor(107, 114, 128); // Gray color like UI
-    doc.setFont('helvetica', 'italic');
-    let yPos = 55;
-    
-    if (resumeData.header.email) {
-      doc.text(`[Email] ${cleanText(resumeData.header.email)}`, 20, yPos);
-      yPos += 8;
-    }
-    if (resumeData.header.phone) {
-      doc.text(`[Phone] ${cleanText(resumeData.header.phone)}`, 20, yPos);
-      yPos += 8;
-    }
-    if (resumeData.header.city && resumeData.header.state) {
-      doc.text(`[Location] ${cleanText(resumeData.header.city)}, ${cleanText(resumeData.header.state)}`, 20, yPos);
-      yPos += 15;
-    }
-    
-    // Experience section with text-based icon
-    yPos += 10;
-    doc.setFontSize(18);
-    doc.setFont('helvetica', 'bold');
-    doc.setTextColor(59, 130, 246);
-    doc.text('[Work] Experience', 20, yPos);
-    doc.line(20, yPos + 2, 190, yPos + 2);
-    yPos += 15;
-    
-    resumeData.experience.forEach((exp: any, index: number) => {
-      if (index > 0) yPos += 5;
-      
-      // Company name (bold black)
-      doc.setFontSize(14);
-      doc.setFont('helvetica', 'bold');
-      doc.setTextColor(0, 0, 0);
-      doc.text(safeText(exp.company), 20, yPos);
-      
-      // Job title (blue)
-      doc.setFontSize(12);
-      doc.setTextColor(59, 130, 246);
-      doc.text(safeText(exp.title), 20, yPos + 8);
-      
-      // Description if available (gray italic)
-      if (exp.jobs && exp.jobs[0] && exp.jobs[0].description) {
-        doc.setFontSize(10);
-        doc.setFont('helvetica', 'italic');
-        doc.setTextColor(107, 114, 128);
-        doc.text(safeText(exp.jobs[0].description), 20, yPos + 16);
-        yPos += 8;
-      }
-      
-      // Years (gray)
-      doc.setFontSize(10);
-      doc.setFont('helvetica', 'normal');
-      doc.setTextColor(107, 114, 128);
-      doc.text(`${safeText(exp.startYear)} - ${safeText(exp.endYear)}`, 20, yPos + 24);
-      
-      // Skills as simple text (matching UI)
-      if (exp.jobs && exp.jobs[0] && exp.jobs[0].skills) {
-        yPos += 8;
-        const skills = exp.jobs[0].skills.map((s: string) => cleanText(s));
-        doc.setFontSize(10);
-        doc.setTextColor(0, 0, 0);
-        doc.text(skills.join(' | '), 20, yPos + 8);
-        yPos += 20;
-      } else {
-        yPos += 20;
-      }
+    // 5) Create the PDF – A4 portrait, points
+    const pdf = new jsPDF({
+      orientation: "p",
+      unit: "pt",
+      format: "a4",
     });
-    
-    // Education section with text-based icon
-    if (resumeData.education && resumeData.education.length > 0) {
-      yPos += 10;
-      doc.setFontSize(18);
-      doc.setFont('helvetica', 'bold');
-      doc.setTextColor(59, 130, 246);
-      doc.text('[Education] Education', 20, yPos);
-      yPos += 15;
-      
-      resumeData.education.forEach((edu: any) => {
-        doc.setFontSize(12);
-        doc.setFont('helvetica', 'bold');
-        doc.setTextColor(0, 0, 0);
-        doc.text(safeText(edu.institution), 20, yPos);
-        
-        doc.setFontSize(10);
-        doc.setTextColor(59, 130, 246);
-        doc.text(safeText(edu.degree), 20, yPos + 8);
-        
-        doc.setTextColor(107, 114, 128);
-        doc.text(`${safeText(edu.startYear)} - ${safeText(edu.endYear)}`, 20, yPos + 16);
-        yPos += 25;
-      });
-    }
-    
-    // Skills section with text-based icon
-    if (resumeData.skills && resumeData.skills.length > 0) {
-      yPos += 10;
-      doc.setFontSize(18);
-      doc.setFont('helvetica', 'bold');
-      doc.setTextColor(59, 130, 246);
-      doc.text('[Skills] Skills', 20, yPos);
-      yPos += 15;
-      
-      doc.setFontSize(10);
-      doc.setTextColor(0, 0, 0);
-      const skillsText = resumeData.skills.map((s: string) => cleanText(s)).join(' | ');
-      doc.text(safeText(skillsText), 20, yPos);
-      yPos += 20;
-    }
-    
-    // Additional Information with text-based icon
-    if (resumeData.extras && resumeData.extras.length > 0) {
-      yPos += 10;
-      doc.setFontSize(18);
-      doc.setFont('helvetica', 'bold');
-      doc.setTextColor(59, 130, 246);
-      doc.text('[Info] Additional Information', 20, yPos);
-      yPos += 15;
-      
-      doc.setFontSize(10);
-      doc.setTextColor(0, 0, 0);
-      resumeData.extras.forEach((extra: string) => {
-        doc.text(`• ${cleanText(extra)}`, 20, yPos);
-        yPos += 8;
-      });
-    }
-    
-    // Save the PDF
-    doc.save('resume.pdf');
-    console.log('✅ PDF exported successfully with UI-matching styling');
-    
-  } catch (error) {
-    console.error('❌ Failed to export PDF:', error);
-    throw new Error('Failed to export PDF. Please try again.');
+
+    // 6) Render HTML → PDF pages
+    await pdf.html(pdfElement, {
+      // Bigger scale = sharper text/images (2 ~= 300 DPI on most screens)
+      html2canvas: { scale: 2 },
+      margin: 24,
+      autoPaging: "text", // let jsPDF add pages as needed
+      callback: (doc) => {
+        doc.save(filename);
+      },
+    });
+  } finally {
+    // 7) Clean up
+    document.body.removeChild(pdfElement);
   }
-}; 
+} 
 ```n
 
 ---
