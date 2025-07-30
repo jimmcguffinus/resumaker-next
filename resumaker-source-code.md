@@ -1,6 +1,6 @@
 # 🔍 Resume Maker Source Code Dump
 
-Generated: 2025-07-30 13:57:04
+Generated: 2025-07-30 14:04:30
 
 ## Project: Next.js Resume Generator with PDF Export
 
@@ -5077,7 +5077,7 @@ const styles = StyleSheet.create({
     fontSize: 26,
     fontWeight: 'bold',
     color: '#1e293b', // slate-800
-    marginBottom: 12,
+    marginBottom: 16,
   },
   tagline: {
     fontSize: 12,
