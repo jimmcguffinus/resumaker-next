@@ -1,10 +1,33 @@
 'use client';
 
-import React, { useState, useEffect, lazy, Suspense } from 'react';
+import React, { useState, useEffect, lazy, Suspense, Component, ReactNode } from 'react';
 import { Download, Plus, Trash2, Moon, Sun, FileText, User, Briefcase, GraduationCap, Code, Award } from 'lucide-react';
 
 // Use React.lazy for the button component that contains the client-side only PDFDownloadLink
 const PDFDownloadButton = lazy(() => import('./PDFDownloadButton').then(module => ({ default: module.PDFDownloadButton })));
+
+// Error boundary component to catch PDF generation errors
+class ErrorBoundary extends Component<{ children: ReactNode; fallback: ReactNode }, { hasError: boolean }> {
+  constructor(props: { children: ReactNode; fallback: ReactNode }) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(error: any) {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: any, errorInfo: any) {
+    console.error('PDF Error Boundary caught an error:', error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback;
+    }
+    return this.props.children;
+  }
+}
 
 // TypeScript interfaces
 interface ContactInfo {
@@ -497,8 +520,12 @@ const ResumeGenerator = () => {
   };
 
   const loadSampleData = () => {
-    console.log('Loading sample data:', sampleResume);
-    setResumeData(sampleResume);
+    try {
+      console.log('Loading sample data:', sampleResume);
+      setResumeData(sampleResume);
+    } catch (error) {
+      console.error('Error loading sample data:', error);
+    }
   };
 
   // Debug function to check current state
@@ -669,7 +696,13 @@ const ResumeGenerator = () => {
                                     <span>Loading PDF...</span>
                                   </button>
                                 }>
-                                  <PDFDownloadButton resumeData={resumeData} />
+                                  <ErrorBoundary fallback={
+                                    <button className="flex items-center space-x-2 px-4 py-2 bg-red-600 text-white rounded-md">
+                                      <span>PDF Error</span>
+                                    </button>
+                                  }>
+                                    <PDFDownloadButton resumeData={resumeData} />
+                                  </ErrorBoundary>
                                 </Suspense>
                               )}
               <button

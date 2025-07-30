@@ -1,6 +1,6 @@
 # 🔍 Resume Maker Source Code Dump
 
-Generated: 2025-07-30 14:04:30
+Generated: 2025-07-30 14:38:59
 
 ## Project: Next.js Resume Generator with PDF Export
 
@@ -5061,7 +5061,7 @@ Font.registerEmojiSource({
 
 const styles = StyleSheet.create({
   page: {
-    padding: 40,
+    padding: '0.5in',
     fontFamily: 'Inter',
     fontSize: 10,
     lineHeight: 1.4,
@@ -5069,46 +5069,50 @@ const styles = StyleSheet.create({
   },
   header: {
     textAlign: 'center',
-    marginBottom: 20,
-    borderBottom: '1px solid #e2e8f0', // slate-200
-    paddingBottom: 15,
+    marginBottom: 24,
   },
   name: {
-    fontSize: 26,
+    fontSize: 28,
     fontWeight: 'bold',
     color: '#1e293b', // slate-800
-    marginBottom: 16,
+    marginBottom: 24, // <-- INCREASED FROM 16 to 24
   },
   tagline: {
-    fontSize: 12,
+    fontSize: 11,
     fontStyle: 'italic',
-    color: '#64748b', // slate-500
-    marginBottom: 12,
+    color: '#475569', // slate-600
+    marginTop: 0,      // <-- REMOVED a marginTop to have one source of spacing
+    marginBottom: 20,  // <-- INCREASED FROM 16 to 20
   },
   contactInfo: {
     flexDirection: 'row',
     justifyContent: 'center',
     flexWrap: 'wrap',
-    gap: 10,
+    gap: 12,
     fontSize: 9,
+    color: '#475569',
   },
   sectionTitle: {
     fontSize: 14,
     fontWeight: 'bold',
     color: '#0f172a', // slate-900
-    marginBottom: 10,
-    borderBottom: '1px solid #cbd5e1', // slate-300
-    paddingBottom: 3,
+    marginBottom: 12,
+    paddingBottom: 4,
+    borderBottomWidth: 1.5,
+    borderColor: '#e2e8f0', // slate-200
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   section: {
-    marginBottom: 15,
+    marginBottom: 16,
   },
   experienceEntry: {
-    marginBottom: 15,
+    marginBottom: 16,
   },
   entryHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'flex-start',
     marginBottom: 2,
   },
   companyName: {
@@ -5117,34 +5121,41 @@ const styles = StyleSheet.create({
   },
   tenure: {
     fontSize: 10,
-    fontStyle: 'italic',
-    color: '#64748b',
+    color: '#64748b', // slate-500
+  },
+  jobEntry: {
+    marginTop: 4,
+    paddingLeft: 10,
   },
   jobTitle: {
     fontSize: 10,
     fontWeight: 'bold',
-    marginBottom: 4,
+    color: '#334155',
   },
   jobDescription: {
-    marginBottom: 6,
+    marginTop: 2,
+    color: '#475569',
   },
   skillsContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 4,
-    marginTop: 4,
+    gap: 5,
+    marginTop: 6,
   },
   skillTag: {
-    backgroundColor: '#e2e8f0',
-    paddingHorizontal: 6,
-    paddingVertical: 2,
-    borderRadius: 4,
+    backgroundColor: '#f1f5f9', // slate-100
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderRadius: 5,
     fontSize: 8,
+    fontWeight: 'bold',
+    color: '#475569',
   },
   educationEntry: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 5,
+    alignItems: 'center',
+    marginBottom: 6,
   },
   institution: {
     fontSize: 11,
@@ -5152,12 +5163,13 @@ const styles = StyleSheet.create({
   },
   degree: {
     fontSize: 10,
+    fontStyle: 'italic',
   },
   extrasList: {
-    paddingLeft: 10,
+    paddingLeft: 12,
   },
   extraItem: {
-    marginBottom: 3,
+    marginBottom: 4,
   },
 });
 
@@ -5188,19 +5200,19 @@ export const ResumeDocument: React.FC<ResumeDocumentProps> = ({ data }) => (
               <Text style={styles.companyName}>{exp.name}</Text>
               <Text style={styles.tenure}>{exp.tenure}</Text>
             </View>
-            {exp.jobs.map((job, j) => (
-              <View key={j} style={{ marginLeft: 10, marginTop: 5 }}>
-                <Text style={styles.jobTitle}>{job.title}</Text>
-                <Text style={styles.jobDescription}>{job.description}</Text>
-                {job.skills && job.skills.length > 0 && (
-                  <View style={styles.skillsContainer}>
-                    {job.skills.map((skill, k) => (
-                      <Text key={k} style={styles.skillTag}>{skill}</Text>
-                    ))}
-                  </View>
-                )}
-              </View>
-            ))}
+                         {exp.jobs.map((job, j) => (
+               <View key={j} style={styles.jobEntry}>
+                 <Text style={styles.jobTitle}>{job.title}</Text>
+                 <Text style={styles.jobDescription}>{job.description}</Text>
+                 {job.skills && job.skills.length > 0 && (
+                   <View style={styles.skillsContainer}>
+                     {job.skills.map((skill, k) => (
+                       <Text key={k} style={styles.skillTag}>{skill}</Text>
+                     ))}
+                   </View>
+                 )}
+               </View>
+             ))}
           </View>
         ))}
       </View>
