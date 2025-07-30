@@ -2,8 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Download, Plus, Trash2, Moon, Sun, FileText, User, Briefcase, GraduationCap, Code, Award } from 'lucide-react';
-import { PDFDownloadLink } from '@react-pdf/renderer';
-import { ResumeDocument } from './ResumeDocument';
+import { PDFDownloadButton } from './PDFDownloadButton';
 
 // TypeScript interfaces
 interface ContactInfo {
@@ -682,25 +681,7 @@ const ResumeGenerator = () => {
               >
                 Debug Data
               </button>
-              <PDFDownloadLink
-                document={<ResumeDocument data={resumeData} />}
-                fileName="resume.pdf"
-                className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
-              >
-                {({ blob, url, loading, error }) =>
-                  loading ? (
-                    <div className="flex items-center space-x-2">
-                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                      <span>Generating PDF...</span>
-                    </div>
-                  ) : (
-                    <div className="flex items-center space-x-2">
-                      <Download className="h-4 w-4" />
-                      <span>Export PDF</span>
-                    </div>
-                  )
-                }
-              </PDFDownloadLink>
+                              <PDFDownloadButton resumeData={resumeData} />
               <button
                 onClick={() => setDarkMode(!darkMode)}
                 className={`p-2 rounded-md transition-colors ${
