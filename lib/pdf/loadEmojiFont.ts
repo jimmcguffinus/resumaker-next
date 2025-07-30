@@ -6,7 +6,13 @@
  * jsPDF font-converter).
  */
 export async function registerEmojiFont() {
-  // Executes the UMD wrapper inside Symbola-normal.js, which calls
-  // jsPDF.addFileToVFS() + addFont().
-  await import("/fonts/Symbola-normal.js");
+  try {
+    // Executes the UMD wrapper inside Symbola-normal.js, which calls
+    // jsPDF.addFileToVFS() + addFont().
+    await import("/fonts/Symbola-normal.js");
+    console.log("✅ Symbola emoji font loaded successfully");
+  } catch (error) {
+    console.warn("⚠️ Symbola emoji font not found, using fallback fonts");
+    // Continue without the emoji font - jsPDF will use fallback fonts
+  }
 } 
