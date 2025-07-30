@@ -1,4 +1,15 @@
 import { jsPDF } from "jspdf";
+import twemoji from "twemoji";
+
+/* --------------------------------------------------------------- */
+/* Replace Unicode emoji with Twemoji <img> tags so html2canvas can render */
+function replaceEmojiWithImg(root: HTMLElement) {
+  twemoji.parse(root, {
+    folder: "svg",
+    ext: ".svg",
+    base: "https://cdnjs.cloudflare.com/ajax/libs/twemoji/15.1.0/",
+  });
+}
 
 /* --------------------------------------------------------------- */
 /* DOM scrubber (belt-and-suspenders) */
@@ -75,6 +86,9 @@ function oklchToRgb(c: string): string {
 export async function exportResumePdf(file = "resume.pdf") {
   const src = document.querySelector<HTMLElement>("#resume-preview");
   if (!src) throw new Error("#resume-preview not found");
+
+  // Replace emojis with images so the canvas always has drawable glyphs
+  replaceEmojiWithImg(src);
 
   /* scrub live node */
   scrub(src);

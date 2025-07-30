@@ -1,6 +1,6 @@
 # 🔍 Resume Maker Source Code Dump
 
-Generated: 2025-07-29 23:33:46
+Generated: 2025-07-29 23:47:27
 
 ## Project: Next.js Resume Generator with PDF Export
 
@@ -821,6 +821,21 @@ To provide job seekers with a modern, accessible, and user-friendly tool for cre
 @tailwind components;
 @tailwind utilities;
 
+/* ─── Emoji support & print‑export patch ─────────────── */
+html {
+  font-family: "Noto Color Emoji",
+               system-ui, -apple-system,
+               "Segoe UI", Roboto, sans-serif;
+}
+
+/* Ensure white pages when html2canvas/jsPDF rasterise */
+@media print {
+  body { background:#ffffff !important; color:#000000 !important; }
+}
+/* ────────────────────────────────────────────────────── */
+
+/* --- existing custom CSS continues below --- */
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -877,6 +892,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <!-- colour‑emoji font -->
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap" rel="stylesheet" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
