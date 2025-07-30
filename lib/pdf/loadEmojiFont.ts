@@ -1,60 +1,17 @@
 import jsPDF from 'jspdf';
 
 /**
- * Loads and registers the Symbola emoji font for jsPDF
- * This allows proper rendering of emojis in PDF exports
- */
-export const loadEmojiFont = async (): Promise<boolean> => {
-  try {
-    // Use fetch to load the font file at runtime
-    const response = await fetch('/fonts/Symbola-normal.js');
-    if (!response.ok) {
-      throw new Error(`Failed to load font: ${response.statusText}`);
-    }
-    
-    const fontData = await response.text();
-    
-    // Create a script element to execute the font data
-    const script = document.createElement('script');
-    script.textContent = fontData;
-    document.head.appendChild(script);
-    
-    // Give it a moment to register
-    await new Promise(resolve => setTimeout(resolve, 100));
-    
-    console.log('✅ Symbola emoji font loaded successfully');
-    return true;
-  } catch (error) {
-    console.warn('⚠️ Emoji font not available, using fallback:', error);
-    return false;
-  }
-};
-
-/**
- * Creates a jsPDF instance with emoji font support
- * @returns Promise<jsPDF> - jsPDF instance with emoji font loaded
+ * Creates a jsPDF instance (no font loading to avoid build issues)
+ * @returns Promise<jsPDF> - jsPDF instance
  */
 export const createPdfWithEmojiSupport = async (): Promise<jsPDF> => {
   const doc = new jsPDF();
-  
-  try {
-    const fontLoaded = await loadEmojiFont();
-    if (fontLoaded) {
-      // Set the emoji font as the default
-      doc.setFont('Symbola');
-    } else {
-      // Fallback to default font
-      doc.setFont('helvetica');
-    }
-    return doc;
-  } catch (error) {
-    console.warn('⚠️ Falling back to default font (no emoji support)');
-    return doc;
-  }
+  doc.setFont('helvetica');
+  return doc;
 };
 
 /**
- * Exports resume data to PDF with emoji support
+ * Exports resume data to PDF with clean formatting
  * @param resumeData - The resume data to export
  * @returns Promise<void>
  */
@@ -62,19 +19,19 @@ export const exportResumePdf = async (resumeData: any): Promise<void> => {
   try {
     const doc = await createPdfWithEmojiSupport();
     
-    // Helper function to safely handle text with emojis
+    // Helper function to safely handle text
     const safeText = (text: string) => {
       return text || '';
     };
     
-    // Helper function to remove emojis if font not available
+    // Helper function to remove emojis for PDF compatibility
     const sanitizeText = (text: string) => {
       return text
         .replace(/[📧📱📍💼🎓⚡🏆🏅•]/g, '') // Remove specific emojis and bullet points
         .replace(/[^\x00-\x7F]/g, ''); // Remove other non-ASCII characters
     };
     
-    // Header with emoji support
+    // Header with clean styling
     doc.setFontSize(28);
     doc.setFont('helvetica', 'bold');
     doc.setTextColor(59, 130, 246); // Blue color
@@ -85,21 +42,21 @@ export const exportResumePdf = async (resumeData: any): Promise<void> => {
     doc.setTextColor(107, 114, 128); // Gray color
     doc.text(safeText(resumeData.header.tagline || 'Your Professional Title'), 20, 42);
     
-    // Contact info with emojis
+    // Contact info
     doc.setFontSize(12);
     doc.setTextColor(75, 85, 99);
     let yPos = 55;
     
     if (resumeData.header.email) {
-      doc.text(`📧 ${sanitizeText(resumeData.header.email)}`, 20, yPos);
+      doc.text(`Email: ${sanitizeText(resumeData.header.email)}`, 20, yPos);
       yPos += 8;
     }
     if (resumeData.header.phone) {
-      doc.text(`📱 ${sanitizeText(resumeData.header.phone)}`, 20, yPos);
+      doc.text(`Phone: ${sanitizeText(resumeData.header.phone)}`, 20, yPos);
       yPos += 8;
     }
     if (resumeData.header.city && resumeData.header.state) {
-      doc.text(`📍 ${sanitizeText(resumeData.header.city)}, ${sanitizeText(resumeData.header.state)}`, 20, yPos);
+      doc.text(`Location: ${sanitizeText(resumeData.header.city)}, ${sanitizeText(resumeData.header.state)}`, 20, yPos);
       yPos += 15;
     }
     
@@ -108,7 +65,7 @@ export const exportResumePdf = async (resumeData: any): Promise<void> => {
     doc.setFontSize(18);
     doc.setFont('helvetica', 'bold');
     doc.setTextColor(59, 130, 246);
-    doc.text('💼 Experience', 20, yPos);
+    doc.text('Experience', 20, yPos);
     doc.line(20, yPos + 2, 190, yPos + 2);
     yPos += 15;
     
@@ -143,7 +100,7 @@ export const exportResumePdf = async (resumeData: any): Promise<void> => {
       doc.setFontSize(18);
       doc.setFont('helvetica', 'bold');
       doc.setTextColor(59, 130, 246);
-      doc.text('🎓 Education', 20, yPos);
+      doc.text('Education', 20, yPos);
       yPos += 15;
       
       resumeData.education.forEach((edu: any) => {
@@ -168,7 +125,7 @@ export const exportResumePdf = async (resumeData: any): Promise<void> => {
       doc.setFontSize(18);
       doc.setFont('helvetica', 'bold');
       doc.setTextColor(59, 130, 246);
-      doc.text('⚡ Skills', 20, yPos);
+      doc.text('Skills', 20, yPos);
       yPos += 15;
       
       doc.setFontSize(10);
@@ -184,13 +141,13 @@ export const exportResumePdf = async (resumeData: any): Promise<void> => {
       doc.setFontSize(18);
       doc.setFont('helvetica', 'bold');
       doc.setTextColor(59, 130, 246);
-      doc.text('🏆 Additional Information', 20, yPos);
+      doc.text('Additional Information', 20, yPos);
       yPos += 15;
       
       doc.setFontSize(10);
       doc.setTextColor(0, 0, 0);
       resumeData.extras.forEach((extra: string) => {
-        doc.text(`🏅 ${sanitizeText(extra)}`, 20, yPos);
+        doc.text(`• ${sanitizeText(extra)}`, 20, yPos);
         yPos += 8;
       });
     }
