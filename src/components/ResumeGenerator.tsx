@@ -736,7 +736,11 @@ const ResumeGenerator = () => {
             }`}>
               <div className="flex items-center space-x-2 mb-4">
                 <Code className="h-5 w-5 text-blue-500" />
-                <h2 className="text-xl font-semibold">Skills</h2>
+                <h2 className={`text-xl font-semibold mb-4 ${
+                  darkMode ? 'text-white' : 'text-gray-900'
+                }`}>
+                  ⚡ Skills
+                </h2>
               </div>
               
               <textarea
@@ -758,7 +762,11 @@ const ResumeGenerator = () => {
             }`}>
               <div className="flex items-center space-x-2 mb-4">
                 <Award className="h-5 w-5 text-blue-500" />
-                <h2 className="text-xl font-semibold">Additional Information</h2>
+                <h2 className={`text-xl font-semibold mb-4 ${
+                  darkMode ? 'text-white' : 'text-gray-900'
+                }`}>
+                  🏆 Additional Information
+                </h2>
               </div>
               
               <textarea
@@ -816,15 +824,15 @@ const ResumeGenerator = () => {
                   </p>
                   <div className="flex flex-wrap gap-6 text-sm text-gray-600">
                     <span className="flex items-center">
-                      <span className="mr-1 font-semibold">Email:</span>
+                      <span className="mr-1">📧</span>
                       {resumeData.header?.contact?.email}
                     </span>
                     <span className="flex items-center">
-                      <span className="mr-1 font-semibold">Phone:</span>
+                      <span className="mr-1">📱</span>
                       {resumeData.header?.contact?.phone}
                     </span>
                     <span className="flex items-center">
-                      <span className="mr-1 font-semibold">Location:</span>
+                      <span className="mr-1">📍</span>
                       {resumeData.header?.location?.city}, {resumeData.header?.location?.state}
                     </span>
                   </div>
@@ -838,7 +846,7 @@ const ResumeGenerator = () => {
                       activeTemplate === 'classic' ? 'text-gray-800 border-b border-gray-300 pb-1' :
                       'text-gray-900'
                     }`}>
-                      Experience
+                      💼 Experience
                     </h2>
                     {resumeData.experience.map((exp, index) => (
                       <div key={index} className="mb-6 p-4 border-l-4 border-gray-200 bg-gray-50 rounded-r-lg">
@@ -885,7 +893,7 @@ const ResumeGenerator = () => {
                       activeTemplate === 'classic' ? 'text-gray-800 border-b border-gray-300 pb-1' :
                       'text-gray-900'
                     }`}>
-                      Education
+                      🎓 Education
                     </h2>
                     {resumeData.education.map((edu, index) => (
                       <div key={index} className="mb-4 p-3 bg-gray-50 rounded-lg">
@@ -911,7 +919,7 @@ const ResumeGenerator = () => {
                       activeTemplate === 'classic' ? 'text-gray-800 border-b border-gray-300 pb-1' :
                       'text-gray-900'
                     }`}>
-                      Skills
+                      ⚡ Skills
                     </h2>
                     <div className="flex flex-wrap gap-2">
                       {resumeData.skills.map((skill, index) => (
@@ -938,7 +946,7 @@ const ResumeGenerator = () => {
                       activeTemplate === 'classic' ? 'text-gray-800 border-b border-gray-300 pb-1' :
                       'text-gray-900'
                     }`}>
-                      Additional Information
+                      🏆 Additional Information
                     </h2>
                     <ul className="list-disc list-inside text-gray-700 space-y-1">
                       {resumeData.extras.map((extra, index) => (
