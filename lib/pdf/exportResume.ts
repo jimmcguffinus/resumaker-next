@@ -1,44 +1,10 @@
 import { jsPDF } from "jspdf";
-import type { Options } from "html2canvas";   // dev‑only type
-
-/* helper: oklch → rgb() */
-const ok2rgb = (c: string) => {
-  const ctx = document.createElement("canvas").getContext("2d")!;
-  ctx.fillStyle = c;
-  return ctx.fillStyle as string;
-};
-
-/* patch the *given* html2canvas module */
-function patchH2C(h2c: any) {
-  const C = h2c?.Color;
-  if (!C || C.__oklchPatched) return;
-
-  // Initialize conversion counter
-  (window as any).__h2cConversions = 0;
-
-  for (const key of Object.keys(C)) {
-    const fn = C[key];
-    if (typeof fn !== 'function') continue;
-
-    C[key] = function patched(v: any, ...rest: any[]) {
-      if (typeof v === 'string' && v.trim().startsWith('oklch(')) {
-        console.debug('[h2c‑patch]', key, 'converting', v);
-        (window as any).__h2cConversions++;
-        v = ok2rgb(v);
-      }
-      return fn.call(this, v, ...rest);
-    };
-  }
-
-  C.__oklchPatched = true;
-  console.debug('[h2c‑patch] all Color fns wrapped ✔');
-}
 
 /* --------------------------------------------------------------- */
-/* 3️⃣  Your existing DOM scrubber (keep it – belt‑and‑suspenders)  */
+/* DOM scrubber (belt-and-suspenders) */
 function scrub(node: Window | Document | HTMLElement) {
   const doc = toDoc(node);
-  if (!doc || !doc.documentElement) return;     // <-- safeguard
+  if (!doc || !doc.documentElement) return;
 
   // :root background
   const root = doc.documentElement as HTMLElement;
@@ -107,35 +73,17 @@ function oklchToRgb(c: string): string {
 
 /* public API */
 export async function exportResumePdf(file = "resume.pdf") {
-  console.log("exportResumePdf loaded"); // debug log
   const src = document.querySelector<HTMLElement>("#resume-preview");
   if (!src) throw new Error("#resume-preview not found");
 
-  /* 1️⃣  scrub live node */
+  /* scrub live node */
   scrub(src);
-
-  /* 2️⃣  load + patch html2canvas */
-  const h2c = (await import("html2canvas")).default;
-  console.log("html2canvas loaded:", !!h2c); // debug log
-  patchH2C(h2c);
-
-  /* 3️⃣  ***important*** — hand the *same* instance to jspdf */
-  (window as any).html2canvas = h2c;   // –> jspdf will reuse this
-  console.log("window.html2canvas set:", !!(window as any).html2canvas); // debug log
-
-  /* 4️⃣  extra belt-and-suspenders (rare but helpful) */
-  for (const k in window) {
-    const maybe = (window as any)[k];
-    if (maybe?.Color?.parseColor && !maybe.Color.__oklchPatched) {
-      patchH2C(maybe);            // patch *every* stray copy hanging around
-    }
-  }
 
   const pdf = new jsPDF({ unit: "pt", format: "a4" });
   await pdf.html(src, {
     margin: 24,
     autoPaging: "text",
-    html2canvas: {          // normal h2c options go here
+    html2canvas: {
       scale: 2,
       onclone: (w: any) => scrub(w.document ?? w),
     },
