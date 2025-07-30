@@ -13,6 +13,9 @@ function patchH2C(h2c: any) {
   const C = h2c?.Color;
   if (!C || C.__oklchPatched) return;
 
+  // Initialize conversion counter
+  (window as any).__h2cConversions = 0;
+
   for (const key of Object.keys(C)) {
     const fn = C[key];
     if (typeof fn !== 'function') continue;
@@ -20,6 +23,7 @@ function patchH2C(h2c: any) {
     C[key] = function patched(v: any, ...rest: any[]) {
       if (typeof v === 'string' && v.trim().startsWith('oklch(')) {
         console.debug('[h2c‑patch]', key, 'converting', v);
+        (window as any).__h2cConversions++;
         v = ok2rgb(v);
       }
       return fn.call(this, v, ...rest);
