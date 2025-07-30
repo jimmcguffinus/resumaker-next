@@ -33,10 +33,9 @@ export const exportResumePdf = async (resumeData: any): Promise<void> => {
       return text || '';
     };
     
-    // Helper function to preserve icons but clean other problematic chars
+    // Helper function to clean text for PDF compatibility
     const cleanText = (text: string) => {
-      return text
-        .replace(/[^\x00-\x7F📧📱📍💼🎓⚡🏆🏅•]/g, ''); // Keep icons, remove other problematic chars
+      return text.replace(/[^\x00-\x7F]/g, ''); // Remove non-ASCII characters
     };
     
     // Header with UI-matching styling
@@ -50,30 +49,30 @@ export const exportResumePdf = async (resumeData: any): Promise<void> => {
     doc.setTextColor(107, 114, 128); // Gray color matching UI
     doc.text(safeText(resumeData.header.tagline || 'Your Professional Title'), 20, 42);
     
-    // Contact info with icons (matching UI)
+    // Contact info with text-based icons (matching UI)
     doc.setFontSize(12);
     doc.setTextColor(75, 85, 99);
     let yPos = 55;
     
     if (resumeData.header.email) {
-      doc.text(`📧 ${cleanText(resumeData.header.email)}`, 20, yPos);
+      doc.text(`[Email] ${cleanText(resumeData.header.email)}`, 20, yPos);
       yPos += 8;
     }
     if (resumeData.header.phone) {
-      doc.text(`📱 ${cleanText(resumeData.header.phone)}`, 20, yPos);
+      doc.text(`[Phone] ${cleanText(resumeData.header.phone)}`, 20, yPos);
       yPos += 8;
     }
     if (resumeData.header.city && resumeData.header.state) {
-      doc.text(`📍 ${cleanText(resumeData.header.city)}, ${cleanText(resumeData.header.state)}`, 20, yPos);
+      doc.text(`[Location] ${cleanText(resumeData.header.city)}, ${cleanText(resumeData.header.state)}`, 20, yPos);
       yPos += 15;
     }
     
-    // Experience section with icon
+    // Experience section with text-based icon
     yPos += 10;
     doc.setFontSize(18);
     doc.setFont('helvetica', 'bold');
     doc.setTextColor(59, 130, 246);
-    doc.text('💼 Experience', 20, yPos);
+    doc.text('[Work] Experience', 20, yPos);
     doc.line(20, yPos + 2, 190, yPos + 2);
     yPos += 15;
     
@@ -127,13 +126,13 @@ export const exportResumePdf = async (resumeData: any): Promise<void> => {
       }
     });
     
-    // Education section with icon
+    // Education section with text-based icon
     if (resumeData.education && resumeData.education.length > 0) {
       yPos += 10;
       doc.setFontSize(18);
       doc.setFont('helvetica', 'bold');
       doc.setTextColor(59, 130, 246);
-      doc.text('🎓 Education', 20, yPos);
+      doc.text('[Education] Education', 20, yPos);
       yPos += 15;
       
       resumeData.education.forEach((edu: any) => {
@@ -152,13 +151,13 @@ export const exportResumePdf = async (resumeData: any): Promise<void> => {
       });
     }
     
-    // Skills section with icon
+    // Skills section with text-based icon
     if (resumeData.skills && resumeData.skills.length > 0) {
       yPos += 10;
       doc.setFontSize(18);
       doc.setFont('helvetica', 'bold');
       doc.setTextColor(59, 130, 246);
-      doc.text('⚡ Skills', 20, yPos);
+      doc.text('[Skills] Skills', 20, yPos);
       yPos += 15;
       
       doc.setFontSize(10);
@@ -168,13 +167,13 @@ export const exportResumePdf = async (resumeData: any): Promise<void> => {
       yPos += 20;
     }
     
-    // Additional Information with icon
+    // Additional Information with text-based icon
     if (resumeData.extras && resumeData.extras.length > 0) {
       yPos += 10;
       doc.setFontSize(18);
       doc.setFont('helvetica', 'bold');
       doc.setTextColor(59, 130, 246);
-      doc.text('🏆 Additional Information', 20, yPos);
+      doc.text('[Info] Additional Information', 20, yPos);
       yPos += 15;
       
       doc.setFontSize(10);
