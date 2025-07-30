@@ -505,8 +505,8 @@ const ResumeGenerator = () => {
   };
 
   // Convert Scala format to Next.js format
-  // This function will now correctly parse the detailed Scala JSON
-  const importScalaData = (scalaData: any): Resume => {
+  // This function will now correctly parse the detailed JSON from the original CLI tool
+  const importJsonData = (jsonData: any): Resume => {
     const formatPhone = (p: any) => p ? `(${p.areaCode}) ${p.prefix}-${p.suffix}` : '';
     const formatEmail = (e: any) => e ? `${e.host}@${e.domain}` : '';
     const formatTenure = (t: any) => {
@@ -615,13 +615,13 @@ const ResumeGenerator = () => {
                       const reader = new FileReader();
                       reader.onload = (e) => {
                         try {
-                          const scalaData = JSON.parse(e.target?.result as string);
-                          const convertedData = importScalaData(scalaData);
+                          const jsonData = JSON.parse(e.target?.result as string);
+                          const convertedData = importJsonData(jsonData);
                           setResumeData(convertedData);
-                          alert('Scala data imported successfully!');
+                          alert('JSON data imported successfully!');
                         } catch (error) {
-                          console.error("Failed to parse or convert Scala JSON", error);
-                          alert('Error processing file. Please ensure it\'s a valid Scala resume JSON.');
+                          console.error("Failed to parse or convert JSON", error);
+                          alert('Error processing file. Please ensure it\'s a valid resume JSON.');
                         }
                       };
                       reader.readAsText(file);
@@ -630,9 +630,9 @@ const ResumeGenerator = () => {
                   input.click();
                 }}
                 className="px-4 py-2 text-sm font-medium text-purple-600 hover:text-purple-700 transition-colors"
-                title="Import Scala data from JSON file"
+                title="Import JSON data from original CLI format"
               >
-                Import Scala
+                Import JSON
               </button>
               <button
                 onClick={exportToJSON}

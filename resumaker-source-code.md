@@ -1,6 +1,6 @@
 # 🔍 Resume Maker Source Code Dump
 
-Generated: 2025-07-30 12:25:57
+Generated: 2025-07-30 12:41:23
 
 ## Project: Next.js Resume Generator with PDF Export
 
@@ -21,6 +21,7 @@ Generated: 2025-07-30 12:25:57
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.1",
+    "@react-pdf/renderer": "^4.3.0",
     "autoprefixer": "10.4.16",
     "lucide-react": "^0.534.0",
     "next": "15.4.5",
@@ -4932,162 +4933,253 @@ export default function Home() {
 ```typescript
 'use client';
 
-import React, { useRef } from 'react';
+import React from 'react';
 import { Download } from 'lucide-react';
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import { ResumeDocument } from './ResumeDocument';
 
 interface PDFDownloadButtonProps {
   resumeData: any;
 }
 
 export const PDFDownloadButton: React.FC<PDFDownloadButtonProps> = ({ resumeData }) => {
-  const printRef = useRef<HTMLDivElement>(null);
-
-  const handleDownload = () => {
-    if (!printRef.current) return;
-
-    // Create a new window for printing
-    const printWindow = window.open('', '_blank');
-    if (!printWindow) {
-      alert('Please allow popups to download PDF');
-      return;
-    }
-
-    // Generate the resume HTML
-    const resumeHTML = generateResumeHTML(resumeData);
-
-    // Write the HTML to the new window
-    printWindow.document.write(`
-      <!DOCTYPE html>
-      <html>
-        <head>
-          <title>Resume - ${resumeData.header?.name || 'Your Name'}</title>
-          <style>
-            @media print {
-              body { margin: 0; padding: 20px; }
-              .resume { max-width: 8.5in; margin: 0 auto; }
-            }
-            body { font-family: Arial, sans-serif; line-height: 1.6; }
-            .header { margin-bottom: 20px; border-bottom: 2px solid #333; padding-bottom: 10px; }
-            .name { font-size: 24px; font-weight: bold; margin-bottom: 5px; }
-            .tagline { font-size: 16px; color: #666; margin-bottom: 10px; }
-            .contact-info { margin-bottom: 15px; }
-            .contact-item { margin: 2px 0; }
-            .section { margin-bottom: 20px; }
-            .section-title { font-size: 18px; font-weight: bold; margin-bottom: 10px; border-bottom: 1px solid #ccc; }
-            .experience-item { margin-bottom: 15px; }
-            .job-header { display: flex; justify-content: space-between; margin-bottom: 5px; }
-            .job-title { font-weight: bold; }
-            .company-name { font-weight: bold; color: #333; }
-            .job-duration { color: #666; font-style: italic; }
-            .job-description { margin-top: 5px; }
-            .skills-container { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 5px; }
-            .skill-tag { background: #f0f0f0; padding: 2px 8px; border-radius: 3px; font-size: 12px; }
-            .education-item { margin-bottom: 10px; }
-            .education-header { display: flex; justify-content: space-between; margin-bottom: 3px; }
-            .institution-name { font-weight: bold; }
-            .education-year { color: #666; }
-            .degree-info { font-style: italic; }
-            .extras-item { margin: 2px 0; }
-          </style>
-        </head>
-        <body>
-          <div class="resume">
-            ${resumeHTML}
-          </div>
-        </body>
-      </html>
-    `);
-    printWindow.document.close();
-
-    // Wait for content to load, then print
-    printWindow.onload = () => {
-      printWindow.print();
-      printWindow.close();
-    };
-  };
-
-  const generateResumeHTML = (data: any) => {
-    return `
-      <div class="header">
-        <div class="name">${data.header?.name || 'Your Name'}</div>
-        <div class="tagline">${data.header?.tagline || 'Your Professional Title'}</div>
-        <div class="contact-info">
-          ${data.header?.contact?.email ? `<div class="contact-item">📧 ${data.header.contact.email}</div>` : ''}
-          ${data.header?.contact?.phone ? `<div class="contact-item">📱 ${data.header.contact.phone}</div>` : ''}
-          ${(data.header?.location?.city || data.header?.location?.state) ? 
-            `<div class="contact-item">📍 ${[data.header.location.city, data.header.location.state].filter(Boolean).join(', ')}</div>` : ''}
-        </div>
-      </div>
-
-      ${data.experience && data.experience.length > 0 ? `
-        <div class="section">
-          <div class="section-title">💼 Experience</div>
-          ${data.experience.map((exp: any) => `
-            <div class="experience-item">
-              <div class="job-header">
-                <div class="company-name">${exp.name}</div>
-                ${exp.tenure ? `<div class="job-duration">${exp.tenure}</div>` : ''}
-              </div>
-              ${exp.jobs ? exp.jobs.map((job: any) => `
-                <div>
-                  <div class="job-title">${job.title}</div>
-                  ${job.description ? `<div class="job-description">${job.description}</div>` : ''}
-                  ${(job.skills?.length > 0 || job.languages?.length > 0) ? `
-                    <div class="skills-container">
-                      ${job.skills?.map((skill: string) => `<span class="skill-tag">${skill}</span>`).join('') || ''}
-                      ${job.languages?.map((lang: string) => `<span class="skill-tag">${lang}</span>`).join('') || ''}
-                    </div>
-                  ` : ''}
-                </div>
-              `).join('') : ''}
-            </div>
-          `).join('')}
-        </div>
-      ` : ''}
-
-      ${data.education && data.education.length > 0 ? `
-        <div class="section">
-          <div class="section-title">🎓 Education</div>
-          ${data.education.map((edu: any) => `
-            <div class="education-item">
-              <div class="education-header">
-                <div class="institution-name">${edu.institution}</div>
-                ${edu.year ? `<div class="education-year">${edu.year}</div>` : ''}
-              </div>
-              ${edu.degree ? `<div class="degree-info">${edu.degree}</div>` : ''}
-            </div>
-          `).join('')}
-        </div>
-      ` : ''}
-
-      ${data.skills && data.skills.length > 0 ? `
-        <div class="section">
-          <div class="section-title">⚡ Skills</div>
-          <div class="skills-container">
-            ${data.skills.map((skill: string) => `<span class="skill-tag">${skill}</span>`).join('')}
-          </div>
-        </div>
-      ` : ''}
-
-      ${data.extras && data.extras.length > 0 ? `
-        <div class="section">
-          <div class="section-title">🏆 Additional Information</div>
-          ${data.extras.map((extra: string) => `<div class="extras-item">• ${extra}</div>`).join('')}
-        </div>
-      ` : ''}
-    `;
-  };
-
   return (
-    <button
-      onClick={handleDownload}
+    <PDFDownloadLink
+      document={<ResumeDocument data={resumeData} />}
+      fileName="resume.pdf"
       className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
     >
-      <Download className="h-4 w-4" />
-      <span>Export PDF</span>
-    </button>
+      {({ blob, url, loading, error }) =>
+        loading ? (
+          <div className="flex items-center space-x-2">
+            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+            <span>Generating PDF...</span>
+          </div>
+        ) : (
+          <div className="flex items-center space-x-2">
+            <Download className="h-4 w-4" />
+            <span>Export PDF</span>
+          </div>
+        )
+      }
+    </PDFDownloadLink>
   );
 }; 
+```n
+
+## File: src\components\ResumeDocument.tsx
+
+```typescript
+'use client';
+
+import React from 'react';
+import {
+  Page,
+  Text,
+  View,
+  Document,
+  StyleSheet,
+  Font,
+  Link,
+} from '@react-pdf/renderer';
+
+// Register fonts with fallback to system fonts if Inter is not available
+try {
+  Font.register({
+    family: 'Inter',
+    fonts: [
+      { src: '/fonts/Inter-Regular.ttf' },
+      { src: '/fonts/Inter-Bold.ttf', fontWeight: 'bold' },
+      { src: '/fonts/Inter-Italic.ttf', fontStyle: 'italic' },
+    ],
+  });
+} catch (error) {
+  console.warn('Inter fonts not found, using system fonts');
+}
+
+Font.registerEmojiSource({
+  format: 'png',
+  url: 'https://cdn.jsdelivr.net/npm/emoji-datasource-apple@15.0.1/img/apple/64/',
+});
+
+const styles = StyleSheet.create({
+  page: {
+    padding: 40,
+    fontFamily: 'Inter',
+    fontSize: 10,
+    lineHeight: 1.4,
+    color: '#334155', // slate-700
+  },
+  header: {
+    textAlign: 'center',
+    marginBottom: 20,
+    borderBottom: '1px solid #e2e8f0', // slate-200
+    paddingBottom: 15,
+  },
+  name: {
+    fontSize: 26,
+    fontWeight: 'bold',
+    color: '#1e293b', // slate-800
+  },
+  tagline: {
+    fontSize: 12,
+    fontStyle: 'italic',
+    color: '#64748b', // slate-500
+    marginTop: 4,
+    marginBottom: 8,
+  },
+  contactInfo: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    gap: 10,
+    fontSize: 9,
+  },
+  sectionTitle: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#0f172a', // slate-900
+    marginBottom: 10,
+    borderBottom: '1px solid #cbd5e1', // slate-300
+    paddingBottom: 3,
+  },
+  section: {
+    marginBottom: 15,
+  },
+  experienceEntry: {
+    marginBottom: 15,
+  },
+  entryHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 2,
+  },
+  companyName: {
+    fontSize: 11,
+    fontWeight: 'bold',
+  },
+  tenure: {
+    fontSize: 10,
+    fontStyle: 'italic',
+    color: '#64748b',
+  },
+  jobTitle: {
+    fontSize: 10,
+    fontWeight: 'bold',
+    marginBottom: 4,
+  },
+  jobDescription: {
+    marginBottom: 6,
+  },
+  skillsContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 4,
+    marginTop: 4,
+  },
+  skillTag: {
+    backgroundColor: '#e2e8f0',
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 4,
+    fontSize: 8,
+  },
+  educationEntry: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 5,
+  },
+  institution: {
+    fontSize: 11,
+    fontWeight: 'bold',
+  },
+  degree: {
+    fontSize: 10,
+  },
+  extrasList: {
+    paddingLeft: 10,
+  },
+  extraItem: {
+    marginBottom: 3,
+  },
+});
+
+export const ResumeDocument = ({ data }) => (
+  <Document author={data?.header?.name || 'User'} title={`Resume for ${data?.header?.name}`}>
+    <Page size="LETTER" style={styles.page}>
+      {/* Header */}
+      <View style={styles.header}>
+        <Text style={styles.name}>{data.header.name}</Text>
+        <Text style={styles.tagline}>{data.header.tagline}</Text>
+        <View style={styles.contactInfo}>
+          <Link src={`mailto:${data.header.contact.email}`}>
+            <Text>📧 {data.header.contact.email}</Text>
+          </Link>
+          <Link src={`tel:${data.header.contact.phone}`}>
+            <Text>📱 {data.header.contact.phone}</Text>
+          </Link>
+          <Text>📍 {data.header.location.city}, {data.header.location.state}</Text>
+        </View>
+      </View>
+
+      {/* Experience */}
+      <Text style={styles.sectionTitle}>💼 Experience</Text>
+      <View style={styles.section}>
+        {data.experience.map((exp, i) => (
+          <View key={i} style={styles.experienceEntry}>
+            <View style={styles.entryHeader}>
+              <Text style={styles.companyName}>{exp.name}</Text>
+              <Text style={styles.tenure}>{exp.tenure}</Text>
+            </View>
+            {exp.jobs.map((job, j) => (
+              <View key={j} style={{ marginLeft: 10, marginTop: 5 }}>
+                <Text style={styles.jobTitle}>{job.title}</Text>
+                <Text style={styles.jobDescription}>{job.description}</Text>
+                {job.skills && job.skills.length > 0 && (
+                  <View style={styles.skillsContainer}>
+                    {job.skills.map((skill, k) => (
+                      <Text key={k} style={styles.skillTag}>{skill}</Text>
+                    ))}
+                  </View>
+                )}
+              </View>
+            ))}
+          </View>
+        ))}
+      </View>
+
+      {/* Education */}
+      <Text style={styles.sectionTitle}>🎓 Education</Text>
+      <View style={styles.section}>
+        {data.education.map((edu, i) => (
+          <View key={i} style={styles.educationEntry}>
+            <View>
+              <Text style={styles.institution}>{edu.institution}</Text>
+              <Text style={styles.degree}>{edu.degree}</Text>
+            </View>
+            <Text style={styles.tenure}>{edu.year}</Text>
+          </View>
+        ))}
+      </View>
+
+      {/* Skills */}
+      <Text style={styles.sectionTitle}>⚡ Skills</Text>
+      <View style={[styles.section, styles.skillsContainer]}>
+        {data.skills.map((skill, i) => (
+          <Text key={i} style={styles.skillTag}>{skill}</Text>
+        ))}
+      </View>
+
+      {/* Extras */}
+      <Text style={styles.sectionTitle}>🏆 Additional Information</Text>
+      <View style={[styles.section, styles.extrasList]}>
+        {data.extras.map((extra, i) => (
+          <Text key={i} style={styles.extraItem}>• {extra}</Text>
+        ))}
+      </View>
+    </Page>
+  </Document>
+); 
 ```n
 
 ## File: src\components\ResumeGenerator.tsx
@@ -5145,60 +5237,60 @@ interface Resume {
   extras: string[];
 }
 
-// Sample data
+// Sample data - using Kaden's data as the default
 const sampleResume: Resume = {
   header: {
-    name: "Alex Johnson",
-    tagline: "Full Stack Software Engineer",
+    name: "Kaden Taylor",
+    tagline: "I like building things, solving problems, and building things that solve problems.",
     contact: {
-      phone: "(555) 123-4567",
-      email: "alex.johnson@email.com"
+      phone: "(480) 734-8791",
+      email: "kadenjtaylor@gmail.com"
     },
     location: {
-      city: "San Francisco",
-      state: "CA"
+      city: "Tucson",
+      state: "Arizona"
     }
   },
   experience: [
     {
-      name: "TechCorp Inc.",
-      link: "https://techcorp.com",
-      blurb: "Leading technology company focused on cloud solutions",
-      tenure: "2022 - Present",
+      name: "Crunchbase",
+      link: "",
+      blurb: "",
+      tenure: "2022 - 2025",
       jobs: [
         {
-          title: "Senior Software Engineer",
-          description: "Led development of microservices architecture serving 1M+ users daily",
-          skills: ["React", "Node.js", "AWS", "Docker"],
-          languages: ["TypeScript", "Python", "Go"]
+          title: "Platform Engineer",
+          description: "Discovery Team",
+          skills: ["Kafka", "Docker", "Kubernetes", "Debezium"],
+          languages: []
         }
       ]
     },
     {
-      name: "StartupXYZ",
-      link: "https://startupxyz.com",
-      blurb: "Early-stage fintech startup",
-      tenure: "2020 - 2022",
+      name: "Axoni",
+      link: "",
+      blurb: "",
+      tenure: "2021 - 2022",
       jobs: [
         {
-          title: "Full Stack Developer",
-          description: "Built and deployed scalable web applications from scratch",
-          skills: ["Vue.js", "Express", "PostgreSQL", "Redis"],
-          languages: ["JavaScript", "Python"]
+          title: "Software Engineer",
+          description: "Platform Team",
+          skills: ["Kubernetes", "Docker", "Debezium"],
+          languages: []
         }
       ]
     }
   ],
   education: [
     {
-      institution: "Stanford University",
-      link: "https://stanford.edu",
-      year: "2020",
+      institution: "University of Arizona",
+      link: "",
+      year: "2016",
       degree: "B.S. Computer Science"
     }
   ],
-  skills: ["JavaScript", "TypeScript", "React", "Node.js", "Python", "AWS", "Docker", "Kubernetes"],
-  extras: ["Open source contributor to React ecosystem", "Speaker at tech conferences", "AWS Certified Solutions Architect"]
+  skills: ["Kafka", "Docker", "Kubernetes", "Scala", "Java", "React"],
+  extras: ["Runner-up on The FOX network gameshow, SuperHuman"]
 };
 
 const ResumeGenerator = () => {
@@ -5600,98 +5692,70 @@ const ResumeGenerator = () => {
   };
 
   // Convert Scala format to Next.js format
-  const importScalaData = (scalaData: any) => {
-    try {
-      console.log('Importing Scala data:', scalaData);
-      
-      // Helper function to format phone number
-      const formatPhone = (phoneObj: any) => {
-        if (phoneObj && phoneObj.areaCode && phoneObj.prefix && phoneObj.suffix) {
-          return `(${phoneObj.areaCode}) ${phoneObj.prefix}-${phoneObj.suffix}`;
-        }
-        return phoneObj?.toString() || '';
-      };
+  // This function will now correctly parse the detailed Scala JSON
+  const importScalaData = (scalaData: any): Resume => {
+    const formatPhone = (p: any) => p ? `(${p.areaCode}) ${p.prefix}-${p.suffix}` : '';
+    const formatEmail = (e: any) => e ? `${e.host}@${e.domain}` : '';
+    const formatTenure = (t: any) => {
+      if (!t || !t.start || !t.end) return '';
+      const startYear = new Date(t.start).getFullYear();
+      const endYear = new Date(t.end).getFullYear();
+      return `${startYear} - ${endYear}`;
+    };
 
-      // Helper function to format email
-      const formatEmail = (emailObj: any) => {
-        if (emailObj && emailObj.host && emailObj.domain) {
-          return `${emailObj.host}@${emailObj.domain}`;
-        }
-        return emailObj?.toString() || '';
-      };
+    const experience = (scalaData.experience?.workplaces || []).map((workplace: any) => ({
+      name: workplace.name || '',
+      link: workplace.link || '',
+      blurb: workplace.blurb || '',
+      tenure: formatTenure(workplace.tenure),
+      jobs: (workplace.jobs || []).map((job: any) => ({
+        title: job.title || '',
+        description: job.description || '',
+        // Combine skills and languages into a single skills array for simplicity
+        skills: [...(job.skillsAndTools || []), ...Object.keys(job.langsAndLibs || {})],
+        languages: [], // This can be deprecated if skills now holds everything
+      })),
+    }));
 
-      // Helper function to format tenure
-      const formatTenure = (tenureObj: any) => {
-        if (tenureObj && tenureObj.start && tenureObj.end) {
-          const startYear = new Date(tenureObj.start).getFullYear();
-          const endYear = new Date(tenureObj.end).getFullYear();
-          return `${startYear} - ${endYear}`;
-        }
-        return tenureObj?.toString() || '';
-      };
+    const education = (scalaData.education?.certifcations || []).map((edu: any) => ({
+      institution: edu.instituion || '',
+      link: edu.link || '',
+      year: edu.awarded?.toString() || '',
+      degree: edu.proof?.areaOfStudy || '',
+    }));
 
-      // Helper function to format education proof
-      const formatEducationProof = (proofObj: any) => {
-        if (proofObj && proofObj.areaOfStudy) {
-          return proofObj.areaOfStudy;
-        }
-        return proofObj?.toString() || '';
-      };
+    // Create a comprehensive, unique list of skills from all job entries
+    const allSkills = new Set<string>();
+    experience.forEach(exp => {
+      exp.jobs.forEach(job => {
+        job.skills.forEach(skill => allSkills.add(skill));
+      });
+    });
 
-      const converted: Resume = {
-        header: {
-          name: scalaData.header?.name || 'Your Name',
-          tagline: scalaData.header?.tagline || 'Your Professional Title',
-          contact: {
-            phone: formatPhone(scalaData.header?.contactInfo?.phoneNumber),
-            email: formatEmail(scalaData.header?.contactInfo?.email)
-          },
-          location: {
-            city: scalaData.header?.location?.city || '',
-            state: scalaData.header?.location?.state?.name || ''
-          }
+    const extras = (scalaData.extras?.elements || []).map((el: any) =>
+      (el.contentChunks || []).map((chunk: any) =>
+        typeof chunk === 'string' ? chunk : chunk.text
+      ).join('')
+    );
+
+    return {
+      header: {
+        name: scalaData.header?.name || '',
+        tagline: scalaData.header?.tagline || '',
+        contact: {
+          phone: formatPhone(scalaData.header?.contactInfo?.phoneNumber),
+          email: formatEmail(scalaData.header?.contactInfo?.email),
         },
-        experience: (scalaData.experience?.workplaces || []).map((workplace: any) => ({
-          name: workplace.name || '',
-          link: workplace.link || '',
-          blurb: workplace.blurb || '',
-          tenure: formatTenure(workplace.tenure),
-          jobs: (workplace.jobs || []).map((job: any) => ({
-            title: job.title || '',
-            description: job.description || '',
-            skills: job.skillsAndTools || [],
-            languages: Object.keys(job.langsAndLibs || {}).flatMap(lang => 
-              job.langsAndLibs[lang] || [lang]
-            )
-          }))
-        })),
-        education: (scalaData.education?.certifcations || []).map((edu: any) => ({
-          institution: edu.instituion || '',
-          link: edu.link || '',
-          year: edu.awarded?.toString() || '',
-          degree: formatEducationProof(edu.proof)
-        })),
-        skills: (scalaData.experience?.workplaces || []).flatMap((workplace: any) =>
-          (workplace.jobs || []).flatMap((job: any) => 
-            [...(job.skillsAndTools || []), ...Object.keys(job.langsAndLibs || {})]
-          )
-        ).filter((skill: string, index: number, arr: string[]) => 
-          arr.indexOf(skill) === index
-        ),
-        extras: (scalaData.extras?.elements || []).map((element: any) => 
-          (element.contentChunks || []).map((chunk: any) => 
-            typeof chunk === 'string' ? chunk : chunk.text
-          ).join('')
-        )
-      };
-      
-      console.log('Converted data:', converted);
-      setResumeData(converted);
-      alert('Scala data imported successfully!');
-    } catch (error) {
-      console.error('Error importing Scala data:', error);
-      alert('Error importing Scala data. Please check the format.');
-    }
+        location: {
+          city: scalaData.header?.location?.city || '',
+          state: scalaData.header?.location?.state?.name || '',
+        },
+      },
+      experience,
+      education,
+      skills: Array.from(allSkills),
+      extras,
+    };
   };
 
   return (
@@ -5739,9 +5803,12 @@ const ResumeGenerator = () => {
                       reader.onload = (e) => {
                         try {
                           const scalaData = JSON.parse(e.target?.result as string);
-                          importScalaData(scalaData);
+                          const convertedData = importScalaData(scalaData);
+                          setResumeData(convertedData);
+                          alert('Scala data imported successfully!');
                         } catch (error) {
-                          alert('Error reading file. Please ensure it\'s a valid JSON file.');
+                          console.error("Failed to parse or convert Scala JSON", error);
+                          alert('Error processing file. Please ensure it\'s a valid Scala resume JSON.');
                         }
                       };
                       reader.readAsText(file);
