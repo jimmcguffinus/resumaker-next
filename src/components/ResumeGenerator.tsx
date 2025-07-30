@@ -352,6 +352,64 @@ const ResumeGenerator = () => {
     setResumeData(sampleResume);
   };
 
+  // Convert Scala format to Next.js format
+  const importScalaData = (scalaData: any) => {
+    try {
+      const converted: Resume = {
+        header: {
+          name: scalaData.header.name,
+          tagline: scalaData.header.tagline,
+          contact: {
+            phone: scalaData.header.contactInfo.phoneNumber.toString(),
+            email: scalaData.header.contactInfo.email.toString()
+          },
+          location: {
+            city: scalaData.header.location.city,
+            state: scalaData.header.location.state.name
+          }
+        },
+        experience: scalaData.experience.workplaces.map((workplace: any) => ({
+          name: workplace.name,
+          link: workplace.link,
+          blurb: workplace.blurb,
+          tenure: workplace.tenure.toString(),
+          jobs: workplace.jobs.map((job: any) => ({
+            title: job.title,
+            description: job.description,
+            skills: job.skillsAndTools,
+            languages: Object.keys(job.langsAndLibs).flatMap(lang => 
+              job.langsAndLibs[lang] || [lang]
+            )
+          }))
+        })),
+        education: scalaData.education.certifcations.map((edu: any) => ({
+          institution: edu.instituion,
+          link: edu.link,
+          year: edu.awarded.toString(),
+          degree: edu.proof.toString()
+        })),
+        skills: scalaData.experience.workplaces.flatMap((workplace: any) =>
+          workplace.jobs.flatMap((job: any) => 
+            [...job.skillsAndTools, ...Object.keys(job.langsAndLibs)]
+          )
+        ).filter((skill: string, index: number, arr: string[]) => 
+          arr.indexOf(skill) === index
+        ),
+        extras: scalaData.extras.elements.map((element: any) => 
+          element.contentChunks.map((chunk: any) => 
+            typeof chunk === 'string' ? chunk : chunk.text
+          ).join('')
+        )
+      };
+      
+      setResumeData(converted);
+      alert('Scala data imported successfully!');
+    } catch (error) {
+      console.error('Error importing Scala data:', error);
+      alert('Error importing Scala data. Please check the format.');
+    }
+  };
+
   return (
     <div className={`min-h-screen transition-colors duration-300 ${darkMode ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
       {/* Header */}
@@ -383,6 +441,34 @@ const ResumeGenerator = () => {
                 className="px-4 py-2 text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors"
               >
                 Load Sample
+              </button>
+              <button
+                onClick={() => {
+                  // Create a file input for importing Scala data
+                  const input = document.createElement('input');
+                  input.type = 'file';
+                  input.accept = '.json';
+                  input.onchange = (e) => {
+                    const file = (e.target as HTMLInputElement).files?.[0];
+                    if (file) {
+                      const reader = new FileReader();
+                      reader.onload = (e) => {
+                        try {
+                          const scalaData = JSON.parse(e.target?.result as string);
+                          importScalaData(scalaData);
+                        } catch (error) {
+                          alert('Error reading file. Please ensure it\'s a valid JSON file.');
+                        }
+                      };
+                      reader.readAsText(file);
+                    }
+                  };
+                  input.click();
+                }}
+                className="px-4 py-2 text-sm font-medium text-purple-600 hover:text-purple-700 transition-colors"
+                title="Import Scala data from JSON file"
+              >
+                Import Scala
               </button>
               <button
                 onClick={exportToJSON}

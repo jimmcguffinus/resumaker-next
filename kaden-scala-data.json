@@ -1,0 +1,219 @@
+{
+  "header": {
+    "name": "Kaden Taylor",
+    "tagline": "I like building things, solving problems, and building things that solve problems.",
+    "contactInfo": {
+      "phoneNumber": {
+        "areaCode": 480,
+        "prefix": 734,
+        "suffix": 8791
+      },
+      "email": {
+        "host": "kadenjtaylor",
+        "domain": "gmail.com"
+      }
+    },
+    "location": {
+      "city": "Tucson",
+      "state": {
+        "name": "Arizona",
+        "abbrev": "AZ"
+      }
+    }
+  },
+  "experience": {
+    "workplaces": [
+      {
+        "name": "Crunchbase",
+        "link": "https://crunchbase.com",
+        "blurb": "Data and Predictions on Private Companies",
+        "tenure": {
+          "type": "Past",
+          "start": "2022-09-26",
+          "end": "2025-02-24"
+        },
+        "jobs": [
+          {
+            "title": "Platform Engineer",
+            "description": "Discovery Team",
+            "skillsAndTools": ["Kafka", "Docker", "Kubernetes", "Debezium"],
+            "langsAndLibs": {
+              "Scala": ["Cats-Effect", "Http4s"]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Axoni",
+        "link": "https://axoni.com",
+        "blurb": "Fin-tech startup specializing in 'Distributed Ledger Technology'",
+        "tenure": {
+          "type": "Past",
+          "start": "2021-06-01",
+          "end": "2022-07-01"
+        },
+        "jobs": [
+          {
+            "title": "Software Engineer",
+            "description": "Platform Team",
+            "skillsAndTools": ["Kubernetes", "Docker", "Debezium"],
+            "langsAndLibs": {
+              "Scala": ["Cats-Effect", "ZIO", "Http4s", "Doobie"]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Academia.edu",
+        "link": "https://academia.edu",
+        "blurb": "Making research available",
+        "tenure": {
+          "type": "Past",
+          "start": "2021-01-01",
+          "end": "2021-06-01"
+        },
+        "jobs": [
+          {
+            "title": "Full-Stack Software Engineer",
+            "description": "Short-form academic publishing: `Academia Letters`",
+            "skillsAndTools": [],
+            "langsAndLibs": {
+              "Ruby": ["Rails"],
+              "Javascript": ["React"]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Google",
+        "link": "https://google.com",
+        "blurb": "Android Messages Team",
+        "tenure": {
+          "type": "Past",
+          "start": "2019-10-01",
+          "end": "2020-11-01"
+        },
+        "jobs": [
+          {
+            "title": "Software Engineer",
+            "description": "Android Messages App",
+            "skillsAndTools": ["Blaze", "Piper"],
+            "langsAndLibs": {
+              "Java": ["Dagger"]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Usercare Inc",
+        "link": "https://www.crunchbase.com/organization/usercare",
+        "blurb": "Startup in Tucson, Arizona",
+        "tenure": {
+          "type": "Past",
+          "start": "2017-08-01",
+          "end": "2019-07-01"
+        },
+        "jobs": [
+          {
+            "title": "Fly.me - Software Engineer",
+            "description": "Online Travel Agency",
+            "skillsAndTools": [],
+            "langsAndLibs": {
+              "Clojure": []
+            }
+          },
+          {
+            "title": "Agent.AI - Software Engineer",
+            "description": "Chatbots as a Service",
+            "skillsAndTools": ["Neo4j"],
+            "langsAndLibs": {
+              "Java": ["Dropwizard", "Guice"]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Amadeus Revenue Integrity",
+        "link": "https://amadeus.com/en/portfolio/airlines/revenue-integrity",
+        "blurb": "Various Flight-Firming Products",
+        "tenure": {
+          "type": "Past",
+          "start": "2016-03-01",
+          "end": "2017-08-01"
+        },
+        "jobs": [
+          {
+            "title": "Software Engineer",
+            "description": "Domin Modeling, Optimization",
+            "skillsAndTools": ["RabbitMQ"],
+            "langsAndLibs": {
+              "Java": ["Dropwizard", "Guice"]
+            }
+          },
+          {
+            "title": "Software R+D Intern",
+            "description": "Fun research stuff",
+            "skillsAndTools": ["Ansible", "Consul", "Fabio"],
+            "langsAndLibs": {
+              "APL": [],
+              "Java": []
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "education": {
+    "certifcations": [
+      {
+        "instituion": "University of Arizona",
+        "link": "https://www.cs.arizona.edu/",
+        "awarded": 2016,
+        "proof": {
+          "type": "Degree",
+          "areaOfStudy": "B.S. Computer Science"
+        }
+      },
+      {
+        "instituion": "Gilbert High School",
+        "link": "https://www.gilbertschools.net/gilberthigh",
+        "awarded": 2012,
+        "proof": {
+          "type": "Diploma",
+          "areaOfStudy": "General Studies"
+        }
+      }
+    ]
+  },
+  "extras": {
+    "elements": [
+      {
+        "contentChunks": [
+          "Runner-up on The FOX network gameshow,",
+          {
+            "text": "SuperHuman",
+            "link": "https://www.youtube.com/watch?v=t65mzlOCDF8"
+          }
+        ]
+      },
+      {
+        "contentChunks": [
+          "Received 'Startup Tucson Award' at UA Hackathon '15 for Pebble Smartwatch app design"
+        ]
+      },
+      {
+        "contentChunks": [
+          "Passionate about domain modeling and",
+          {
+            "text": "improving program understandability",
+            "link": "https://www.kaden.dev/pages/musings/software_doesnt_have_clay.html"
+          }
+        ]
+      }
+    ]
+  },
+  "metadata": {
+    "createdByLink": "https://github.com/kadenjtaylor/resumaker",
+    "creationDate": "2024-01-01"
+  }
+} 
