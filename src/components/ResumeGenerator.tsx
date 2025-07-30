@@ -75,66 +75,30 @@ interface Resume {
   extras: string[];
 }
 
-// Sample data - using Kaden's data as the default
-const sampleResume: Resume = {
+// Default resume data structure
+const defaultResume: Resume = {
   header: {
-    name: "Kaden Taylor",
-    tagline: "I like building things, solving problems, and building things that solve problems.",
+    name: "",
+    tagline: "",
     contact: {
-      phone: "(480) 734-8791",
-      email: "kadenjtaylor@gmail.com"
+      phone: "",
+      email: ""
     },
     location: {
-      city: "Tucson",
-      state: "Arizona"
+      city: "",
+      state: ""
     }
   },
-  experience: [
-    {
-      name: "Crunchbase",
-      link: "",
-      blurb: "",
-      tenure: "2022 - 2025",
-      jobs: [
-        {
-          title: "Platform Engineer",
-          description: "Discovery Team",
-          skills: ["Kafka", "Docker", "Kubernetes", "Debezium"],
-          languages: []
-        }
-      ]
-    },
-    {
-      name: "Axoni",
-      link: "",
-      blurb: "",
-      tenure: "2021 - 2022",
-      jobs: [
-        {
-          title: "Software Engineer",
-          description: "Platform Team",
-          skills: ["Kubernetes", "Docker", "Debezium"],
-          languages: []
-        }
-      ]
-    }
-  ],
-  education: [
-    {
-      institution: "University of Arizona",
-      link: "",
-      year: "2016",
-      degree: "B.S. Computer Science"
-    }
-  ],
-  skills: ["Kafka", "Docker", "Kubernetes", "Scala", "Java", "React"],
-  extras: ["Runner-up on The FOX network gameshow, SuperHuman"]
+  experience: [],
+  education: [],
+  skills: [],
+  extras: []
 };
 
 const ResumeGenerator = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [activeTemplate, setActiveTemplate] = useState('modern');
-  const [resumeData, setResumeData] = useState<Resume>(sampleResume);
+  const [resumeData, setResumeData] = useState<Resume>(defaultResume);
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
@@ -151,10 +115,10 @@ const ResumeGenerator = () => {
         }
       } catch (e) {
         console.error('Failed to load saved data:', e);
-        // If parsing fails, keep the sample data
+        // If parsing fails, keep the default data
       }
     }
-    // If no saved data or invalid data, keep the sample data
+    // If no saved data or invalid data, keep the default data
   }, []);
 
   useEffect(() => {
@@ -519,14 +483,7 @@ const ResumeGenerator = () => {
     return html;
   };
 
-  const loadSampleData = () => {
-    try {
-      console.log('Loading sample data:', sampleResume);
-      setResumeData(sampleResume);
-    } catch (error) {
-      console.error('Error loading sample data:', error);
-    }
-  };
+
 
   // Debug function to check current state
   const debugCurrentData = () => {
@@ -630,12 +587,7 @@ const ResumeGenerator = () => {
                 <option value="classic">Classic</option>
                 <option value="minimal">Minimal</option>
               </select>
-              <button
-                onClick={loadSampleData}
-                className="px-4 py-2 text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors"
-              >
-                Load Sample
-              </button>
+
               <button
                 onClick={() => {
                   // Create a file input for importing Scala data
