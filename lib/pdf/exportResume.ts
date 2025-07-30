@@ -24,29 +24,36 @@ function oklchToRgb(c: string): string {
   return ctx.fillStyle as string;    // → "rgb(r,g,b)"
 }
 
-function scrub(root: Document | HTMLElement) {
-  (root instanceof Document ? root.body : root)
-    .querySelectorAll<HTMLElement>("*")
-    .forEach(el => {
-      const cs = getComputedStyle(el);
-      COLOR_PROPS.forEach(prop => {
-        const val = (cs as any)[prop] as string | undefined;
-        if (val) {
-          const cleaned =
-            prop.endsWith("Shadow")           // shadows may embed multiple colours
-              ? val.replace(/oklch\([^)]+\)/g, m => oklchToRgb(m))
-              : oklchToRgb(val);
+function scrub(root: HTMLElement | Document | Window) {
+  /* NEW: normalise to a Document */
+  const doc =
+    root instanceof Window   ? root.document :
+    root instanceof Document ? root :
+    root.ownerDocument;
 
-          (el.style as any)[prop] = cleaned;
-        }
-      });
+  if (!doc) return; // should never happen
+
+  /* 1️⃣ iterate every element inside <body> */
+  doc.body.querySelectorAll<HTMLElement>("*").forEach(el => {
+    const cs = getComputedStyle(el);
+    COLOR_PROPS.forEach(prop => {
+      const val = (cs as any)[prop] as string | undefined;
+      if (val) {
+        const cleaned =
+          prop.endsWith("Shadow")           // shadows may embed multiple colours
+            ? val.replace(/oklch\([^)]+\)/g, m => oklchToRgb(m))
+            : oklchToRgb(val);
+
+        (el.style as any)[prop] = cleaned;
+      }
     });
+  });
 
-  /* Scrub the root/background colour as well */
-  const rootEl = root instanceof Document ? root.documentElement : root;
+  /* 2️⃣ scrub the root element (:root / <html>) */
+  const rootEl = doc.documentElement as HTMLElement;
   const bg = getComputedStyle(rootEl).backgroundColor;
   if (bg && bg.includes("oklch"))
-    (rootEl as HTMLElement).style.backgroundColor = oklchToRgb(bg);
+    rootEl.style.backgroundColor = oklchToRgb(bg);
 }
 
 /* ───────── export API ───────── */
