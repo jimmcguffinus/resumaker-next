@@ -1,6 +1,6 @@
 # 🔍 Resume Maker Source Code Dump
 
-Generated: 2025-07-30 11:32:18
+Generated: 2025-07-30 11:58:06
 
 ## Project: Next.js Resume Generator with PDF Export
 
@@ -21,10 +21,8 @@ Generated: 2025-07-30 11:32:18
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.1",
-    "@types/jspdf": "^1.3.3",
+    "@react-pdf/renderer": "^4.3.0",
     "autoprefixer": "10.4.16",
-    "html2canvas": "1.4.1",
-    "jspdf": "^3.0.1",
     "lucide-react": "^0.534.0",
     "next": "15.4.5",
     "react": "19.1.0",
@@ -57,6 +55,7 @@ Generated: 2025-07-30 11:32:18
       "version": "0.1.0",
       "dependencies": {
         "@hookform/resolvers": "^5.2.1",
+        "@react-pdf/renderer": "^4.3.0",
         "@types/jspdf": "^1.3.3",
         "autoprefixer": "10.4.16",
         "html2canvas": "1.4.1",
@@ -67,7 +66,6 @@ Generated: 2025-07-30 11:32:18
         "react-dom": "19.1.0",
         "react-hook-form": "^7.61.1",
         "tailwindcss": "3.4.5",
-        "twemoji": "^14.0.2",
         "zod": "^4.0.13"
       },
       "devDependencies": {
@@ -769,6 +767,186 @@ Generated: 2025-07-30 11:32:18
         "node": ">=14"
       }
     },
+    "node_modules/@react-pdf/fns": {
+      "version": "3.1.2",
+      "resolved": "https://registry.npmjs.org/@react-pdf/fns/-/fns-3.1.2.tgz",
+      "integrity": "sha512-qTKGUf0iAMGg2+OsUcp9ffKnKi41RukM/zYIWMDJ4hRVYSr89Q7e3wSDW/Koqx3ea3Uy/z3h2y3wPX6Bdfxk6g==",
+      "license": "MIT"
+    },
+    "node_modules/@react-pdf/font": {
+      "version": "4.0.2",
+      "resolved": "https://registry.npmjs.org/@react-pdf/font/-/font-4.0.2.tgz",
+      "integrity": "sha512-/dAWu7Y2RD1RxarDZ9SkYPHgBYOhmcDnet4W/qN/m8k+A2Hr3ja54GymSR7GGxWBtxjKtNauVKrTa9LS1n8WUw==",
+      "license": "MIT",
+      "dependencies": {
+        "@react-pdf/pdfkit": "^4.0.3",
+        "@react-pdf/types": "^2.9.0",
+        "fontkit": "^2.0.2",
+        "is-url": "^1.2.4"
+      }
+    },
+    "node_modules/@react-pdf/image": {
+      "version": "3.0.3",
+      "resolved": "https://registry.npmjs.org/@react-pdf/image/-/image-3.0.3.tgz",
+      "integrity": "sha512-lvP5ryzYM3wpbO9bvqLZYwEr5XBDX9jcaRICvtnoRqdJOo7PRrMnmB4MMScyb+Xw10mGeIubZAAomNAG5ONQZQ==",
+      "license": "MIT",
+      "dependencies": {
+        "@react-pdf/png-js": "^3.0.0",
+        "jay-peg": "^1.1.1"
+      }
+    },
+    "node_modules/@react-pdf/layout": {
+      "version": "4.4.0",
+      "resolved": "https://registry.npmjs.org/@react-pdf/layout/-/layout-4.4.0.tgz",
+      "integrity": "sha512-Aq+Cc6JYausWLoks2FvHe3PwK9cTuvksB2uJ0AnkKJEUtQbvCq8eCRb1bjbbwIji9OzFRTTzZij7LzkpKHjIeA==",
+      "license": "MIT",
+      "dependencies": {
+        "@react-pdf/fns": "3.1.2",
+        "@react-pdf/image": "^3.0.3",
+        "@react-pdf/primitives": "^4.1.1",
+        "@react-pdf/stylesheet": "^6.1.0",
+        "@react-pdf/textkit": "^6.0.0",
+        "@react-pdf/types": "^2.9.0",
+        "emoji-regex": "^10.3.0",
+        "queue": "^6.0.1",
+        "yoga-layout": "^3.2.1"
+      }
+    },
+    "node_modules/@react-pdf/layout/node_modules/emoji-regex": {
+      "version": "10.4.0",
+      "resolved": "https://registry.npmjs.org/emoji-regex/-/emoji-regex-10.4.0.tgz",
+      "integrity": "sha512-EC+0oUMY1Rqm4O6LLrgjtYDvcVYTy7chDnM4Q7030tP4Kwj3u/pR6gP9ygnp2CJMK5Gq+9Q2oqmrFJAz01DXjw==",
+      "license": "MIT"
+    },
+    "node_modules/@react-pdf/pdfkit": {
+      "version": "4.0.3",
+      "resolved": "https://registry.npmjs.org/@react-pdf/pdfkit/-/pdfkit-4.0.3.tgz",
+      "integrity": "sha512-k+Lsuq8vTwWsCqTp+CCB4+2N+sOTFrzwGA7aw3H9ix/PDWR9QksbmNg0YkzGbLAPI6CeawmiLHcf4trZ5ecLPQ==",
+      "license": "MIT",
+      "dependencies": {
+        "@babel/runtime": "^7.20.13",
+        "@react-pdf/png-js": "^3.0.0",
+        "browserify-zlib": "^0.2.0",
+        "crypto-js": "^4.2.0",
+        "fontkit": "^2.0.2",
+        "jay-peg": "^1.1.1",
+        "linebreak": "^1.1.0",
+        "vite-compatible-readable-stream": "^3.6.1"
+      }
+    },
+    "node_modules/@react-pdf/png-js": {
+      "version": "3.0.0",
+      "resolved": "https://registry.npmjs.org/@react-pdf/png-js/-/png-js-3.0.0.tgz",
+      "integrity": "sha512-eSJnEItZ37WPt6Qv5pncQDxLJRK15eaRwPT+gZoujP548CodenOVp49GST8XJvKMFt9YqIBzGBV/j9AgrOQzVA==",
+      "license": "MIT",
+      "dependencies": {
+        "browserify-zlib": "^0.2.0"
+      }
+    },
+    "node_modules/@react-pdf/primitives": {
+      "version": "4.1.1",
+      "resolved": "https://registry.npmjs.org/@react-pdf/primitives/-/primitives-4.1.1.tgz",
+      "integrity": "sha512-IuhxYls1luJb7NUWy6q5avb1XrNaVj9bTNI40U9qGRuS6n7Hje/8H8Qi99Z9UKFV74bBP3DOf3L1wV2qZVgVrQ==",
+      "license": "MIT"
+    },
+    "node_modules/@react-pdf/reconciler": {
+      "version": "1.1.4",
+      "resolved": "https://registry.npmjs.org/@react-pdf/reconciler/-/reconciler-1.1.4.tgz",
+      "integrity": "sha512-oTQDiR/t4Z/Guxac88IavpU2UgN7eR0RMI9DRKvKnvPz2DUasGjXfChAdMqDNmJJxxV26mMy9xQOUV2UU5/okg==",
+      "license": "MIT",
+      "dependencies": {
+        "object-assign": "^4.1.1",
+        "scheduler": "0.25.0-rc-603e6108-20241029"
+      },
+      "peerDependencies": {
+        "react": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0"
+      }
+    },
+    "node_modules/@react-pdf/reconciler/node_modules/scheduler": {
+      "version": "0.25.0-rc-603e6108-20241029",
+      "resolved": "https://registry.npmjs.org/scheduler/-/scheduler-0.25.0-rc-603e6108-20241029.tgz",
+      "integrity": "sha512-pFwF6H1XrSdYYNLfOcGlM28/j8CGLu8IvdrxqhjWULe2bPcKiKW4CV+OWqR/9fT52mywx65l7ysNkjLKBda7eA==",
+      "license": "MIT"
+    },
+    "node_modules/@react-pdf/render": {
+      "version": "4.3.0",
+      "resolved": "https://registry.npmjs.org/@react-pdf/render/-/render-4.3.0.tgz",
+      "integrity": "sha512-MdWfWaqO6d7SZD75TZ2z5L35V+cHpyA43YNRlJNG0RJ7/MeVGDQv12y/BXOJgonZKkeEGdzM3EpAt9/g4E22WA==",
+      "license": "MIT",
+      "dependencies": {
+        "@babel/runtime": "^7.20.13",
+        "@react-pdf/fns": "3.1.2",
+        "@react-pdf/primitives": "^4.1.1",
+        "@react-pdf/textkit": "^6.0.0",
+        "@react-pdf/types": "^2.9.0",
+        "abs-svg-path": "^0.1.1",
+        "color-string": "^1.9.1",
+        "normalize-svg-path": "^1.1.0",
+        "parse-svg-path": "^0.1.2",
+        "svg-arc-to-cubic-bezier": "^3.2.0"
+      }
+    },
+    "node_modules/@react-pdf/renderer": {
+      "version": "4.3.0",
+      "resolved": "https://registry.npmjs.org/@react-pdf/renderer/-/renderer-4.3.0.tgz",
+      "integrity": "sha512-28gpA69fU9ZQrDzmd5xMJa1bDf8t0PT3ApUKBl2PUpoE/x4JlvCB5X66nMXrfFrgF2EZrA72zWQAkvbg7TE8zw==",
+      "license": "MIT",
+      "dependencies": {
+        "@babel/runtime": "^7.20.13",
+        "@react-pdf/fns": "3.1.2",
+        "@react-pdf/font": "^4.0.2",
+        "@react-pdf/layout": "^4.4.0",
+        "@react-pdf/pdfkit": "^4.0.3",
+        "@react-pdf/primitives": "^4.1.1",
+        "@react-pdf/reconciler": "^1.1.4",
+        "@react-pdf/render": "^4.3.0",
+        "@react-pdf/types": "^2.9.0",
+        "events": "^3.3.0",
+        "object-assign": "^4.1.1",
+        "prop-types": "^15.6.2",
+        "queue": "^6.0.1"
+      },
+      "peerDependencies": {
+        "react": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0"
+      }
+    },
+    "node_modules/@react-pdf/stylesheet": {
+      "version": "6.1.0",
+      "resolved": "https://registry.npmjs.org/@react-pdf/stylesheet/-/stylesheet-6.1.0.tgz",
+      "integrity": "sha512-BGZ2sYNUp38VJUegjva/jsri3iiRGnVNjWI+G9dTwAvLNOmwFvSJzqaCsEnqQ/DW5mrTBk/577FhDY7pv6AidA==",
+      "license": "MIT",
+      "dependencies": {
+        "@react-pdf/fns": "3.1.2",
+        "@react-pdf/types": "^2.9.0",
+        "color-string": "^1.9.1",
+        "hsl-to-hex": "^1.0.0",
+        "media-engine": "^1.0.3",
+        "postcss-value-parser": "^4.1.0"
+      }
+    },
+    "node_modules/@react-pdf/textkit": {
+      "version": "6.0.0",
+      "resolved": "https://registry.npmjs.org/@react-pdf/textkit/-/textkit-6.0.0.tgz",
+      "integrity": "sha512-fDt19KWaJRK/n2AaFoVm31hgGmpygmTV7LsHGJNGZkgzXcFyLsx+XUl63DTDPH3iqxj3xUX128t104GtOz8tTw==",
+      "license": "MIT",
+      "dependencies": {
+        "@react-pdf/fns": "3.1.2",
+        "bidi-js": "^1.0.2",
+        "hyphen": "^1.6.4",
+        "unicode-properties": "^1.4.1"
+      }
+    },
+    "node_modules/@react-pdf/types": {
+      "version": "2.9.0",
+      "resolved": "https://registry.npmjs.org/@react-pdf/types/-/types-2.9.0.tgz",
+      "integrity": "sha512-ckj80vZLlvl9oYrQ4tovEaqKWP3O06Eb1D48/jQWbdwz1Yh7Y9v1cEmwlP8ET+a1Whp8xfdM0xduMexkuPANCQ==",
+      "license": "MIT",
+      "dependencies": {
+        "@react-pdf/font": "^4.0.2",
+        "@react-pdf/primitives": "^4.1.1",
+        "@react-pdf/stylesheet": "^6.1.0"
+      }
+    },
     "node_modules/@standard-schema/utils": {
       "version": "0.3.0",
       "resolved": "https://registry.npmjs.org/@standard-schema/utils/-/utils-0.3.0.tgz",
@@ -833,6 +1011,12 @@ Generated: 2025-07-30 11:32:18
       "integrity": "sha512-ScaPdn1dQczgbl0QFTeTOmVHFULt394XJgOQNoyVhZ6r2vLnMLJfBPd53SB52T/3G36VI1/g2MZaX0cwDuXsfw==",
       "license": "MIT",
       "optional": true
+    },
+    "node_modules/abs-svg-path": {
+      "version": "0.1.1",
+      "resolved": "https://registry.npmjs.org/abs-svg-path/-/abs-svg-path-0.1.1.tgz",
+      "integrity": "sha512-d8XPSGjfyzlXC3Xx891DJRyZfqk5JU0BJrDQcsWomFIV1/BIzPW5HDH5iDdWpqWaav0YVIEzT1RHTwWr0FFshA==",
+      "license": "MIT"
     },
     "node_modules/ansi-regex": {
       "version": "6.1.0",
@@ -947,6 +1131,35 @@ Generated: 2025-07-30 11:32:18
         "node": ">= 0.6.0"
       }
     },
+    "node_modules/base64-js": {
+      "version": "1.5.1",
+      "resolved": "https://registry.npmjs.org/base64-js/-/base64-js-1.5.1.tgz",
+      "integrity": "sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==",
+      "funding": [
+        {
+          "type": "github",
+          "url": "https://github.com/sponsors/feross"
+        },
+        {
+          "type": "patreon",
+          "url": "https://www.patreon.com/feross"
+        },
+        {
+          "type": "consulting",
+          "url": "https://feross.org/support"
+        }
+      ],
+      "license": "MIT"
+    },
+    "node_modules/bidi-js": {
+      "version": "1.0.3",
+      "resolved": "https://registry.npmjs.org/bidi-js/-/bidi-js-1.0.3.tgz",
+      "integrity": "sha512-RKshQI1R3YQ+n9YJz2QQ147P66ELpa1FQEg20Dk8oW9t2KgLbpDLLp9aGZ7y8WHSshDknG0bknqGw5/tyCs5tw==",
+      "license": "MIT",
+      "dependencies": {
+        "require-from-string": "^2.0.2"
+      }
+    },
     "node_modules/binary-extensions": {
       "version": "2.3.0",
       "resolved": "https://registry.npmjs.org/binary-extensions/-/binary-extensions-2.3.0.tgz",
@@ -978,6 +1191,24 @@ Generated: 2025-07-30 11:32:18
       },
       "engines": {
         "node": ">=8"
+      }
+    },
+    "node_modules/brotli": {
+      "version": "1.3.3",
+      "resolved": "https://registry.npmjs.org/brotli/-/brotli-1.3.3.tgz",
+      "integrity": "sha512-oTKjJdShmDuGW94SyyaoQvAjf30dZaHnjJ8uAF+u2/vGJkJbJPJAT1gDiOJP5v1Zb6f9KEyW/1HpuaWIXtGHPg==",
+      "license": "MIT",
+      "dependencies": {
+        "base64-js": "^1.1.2"
+      }
+    },
+    "node_modules/browserify-zlib": {
+      "version": "0.2.0",
+      "resolved": "https://registry.npmjs.org/browserify-zlib/-/browserify-zlib-0.2.0.tgz",
+      "integrity": "sha512-Z942RysHXmJrhqk88FmKBVq/v5tqmSkDz7p54G/MGyjMnCFFnC79XWNbg+Vta8W6Wb2qtSZTSxIGkJrRpCFEiA==",
+      "license": "MIT",
+      "dependencies": {
+        "pako": "~1.0.5"
       }
     },
     "node_modules/browserslist": {
@@ -1115,6 +1346,15 @@ Generated: 2025-07-30 11:32:18
       "integrity": "sha512-IV3Ou0jSMzZrd3pZ48nLkT9DA7Ag1pnPzaiQhpW7c3RbcqqzvzzVu+L8gfqMp/8IM2MQtSiqaCxrrcfu8I8rMA==",
       "license": "MIT"
     },
+    "node_modules/clone": {
+      "version": "2.1.2",
+      "resolved": "https://registry.npmjs.org/clone/-/clone-2.1.2.tgz",
+      "integrity": "sha512-3Pe/CF1Nn94hyhIYpjtiLhdCoEoz0DqQ+988E9gmeEdQZlojxnOb74wctFyuwWQHzqyf9X7C7MG8juUpqBJT8w==",
+      "license": "MIT",
+      "engines": {
+        "node": ">=0.8"
+      }
+    },
     "node_modules/color": {
       "version": "4.2.3",
       "resolved": "https://registry.npmjs.org/color/-/color-4.2.3.tgz",
@@ -1152,7 +1392,6 @@ Generated: 2025-07-30 11:32:18
       "resolved": "https://registry.npmjs.org/color-string/-/color-string-1.9.1.tgz",
       "integrity": "sha512-shrVawQFojnZv6xM40anx4CkoDP+fZsw/ZerEMsW/pyzsRbElpsL/DBVW7q3ExxwusdNXI3lXpuhEZkzs8p5Eg==",
       "license": "MIT",
-      "optional": true,
       "dependencies": {
         "color-name": "^1.0.0",
         "simple-swizzle": "^0.2.2"
@@ -1193,6 +1432,12 @@ Generated: 2025-07-30 11:32:18
         "node": ">= 8"
       }
     },
+    "node_modules/crypto-js": {
+      "version": "4.2.0",
+      "resolved": "https://registry.npmjs.org/crypto-js/-/crypto-js-4.2.0.tgz",
+      "integrity": "sha512-KALDyEYgpY+Rlob/iriUtjV6d5Eq+Y191A5g4UqLAi8CyGP9N1+FdVbkc1SxKc2r4YAYqG8JzO2KGL+AizD70Q==",
+      "license": "MIT"
+    },
     "node_modules/css-line-break": {
       "version": "2.1.0",
       "resolved": "https://registry.npmjs.org/css-line-break/-/css-line-break-2.1.0.tgz",
@@ -1230,6 +1475,12 @@ Generated: 2025-07-30 11:32:18
       "engines": {
         "node": ">=8"
       }
+    },
+    "node_modules/dfa": {
+      "version": "1.2.0",
+      "resolved": "https://registry.npmjs.org/dfa/-/dfa-1.2.0.tgz",
+      "integrity": "sha512-ED3jP8saaweFTjeGX8HQPjeC1YYyZs98jGNZx6IiBvxW7JG5v492kamAQB3m2wop07CvU/RQmzcKr6bgcC5D/Q==",
+      "license": "MIT"
     },
     "node_modules/didyoumean": {
       "version": "1.2.2",
@@ -1279,6 +1530,21 @@ Generated: 2025-07-30 11:32:18
       "engines": {
         "node": ">=6"
       }
+    },
+    "node_modules/events": {
+      "version": "3.3.0",
+      "resolved": "https://registry.npmjs.org/events/-/events-3.3.0.tgz",
+      "integrity": "sha512-mQw+2fkQbALzQ7V0MY0IqdnXNOeTtP4r0lN9z7AAawCXgqea7bDii20AYrIBrFd/Hx0M2Ocz6S111CaFkUcb0Q==",
+      "license": "MIT",
+      "engines": {
+        "node": ">=0.8.x"
+      }
+    },
+    "node_modules/fast-deep-equal": {
+      "version": "3.1.3",
+      "resolved": "https://registry.npmjs.org/fast-deep-equal/-/fast-deep-equal-3.1.3.tgz",
+      "integrity": "sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==",
+      "license": "MIT"
     },
     "node_modules/fast-glob": {
       "version": "3.3.3",
@@ -1335,6 +1601,23 @@ Generated: 2025-07-30 11:32:18
         "node": ">=8"
       }
     },
+    "node_modules/fontkit": {
+      "version": "2.0.4",
+      "resolved": "https://registry.npmjs.org/fontkit/-/fontkit-2.0.4.tgz",
+      "integrity": "sha512-syetQadaUEDNdxdugga9CpEYVaQIxOwk7GlwZWWZ19//qW4zE5bknOKeMBDYAASwnpaSHKJITRLMF9m1fp3s6g==",
+      "license": "MIT",
+      "dependencies": {
+        "@swc/helpers": "^0.5.12",
+        "brotli": "^1.3.2",
+        "clone": "^2.1.2",
+        "dfa": "^1.2.0",
+        "fast-deep-equal": "^3.1.3",
+        "restructure": "^3.0.0",
+        "tiny-inflate": "^1.0.3",
+        "unicode-properties": "^1.4.0",
+        "unicode-trie": "^2.0.0"
+      }
+    },
     "node_modules/foreground-child": {
       "version": "3.3.1",
       "resolved": "https://registry.npmjs.org/foreground-child/-/foreground-child-3.3.1.tgz",
@@ -1362,29 +1645,6 @@ Generated: 2025-07-30 11:32:18
       "funding": {
         "type": "patreon",
         "url": "https://github.com/sponsors/rawify"
-      }
-    },
-    "node_modules/fs-extra": {
-      "version": "8.1.0",
-      "resolved": "https://registry.npmjs.org/fs-extra/-/fs-extra-8.1.0.tgz",
-      "integrity": "sha512-yhlQgA6mnOJUKOsRUFsgJdQCvkKhcz8tlZG5HBQfReYZy46OwLcY+Zia0mtdHsOo9y/hP+CxMN0TU9QxoOtG4g==",
-      "license": "MIT",
-      "dependencies": {
-        "graceful-fs": "^4.2.0",
-        "jsonfile": "^4.0.0",
-        "universalify": "^0.1.0"
-      },
-      "engines": {
-        "node": ">=6 <7 || >=8"
-      }
-    },
-    "node_modules/fs-extra/node_modules/jsonfile": {
-      "version": "4.0.0",
-      "resolved": "https://registry.npmjs.org/jsonfile/-/jsonfile-4.0.0.tgz",
-      "integrity": "sha512-m6F1R3z8jjlf2imQHS2Qez5sjKWQzbuuhuJ/FKYFRZvPE3PuHcSMVZzfsLhGVOkfd20obL5SWEBew5ShlquNxg==",
-      "license": "MIT",
-      "optionalDependencies": {
-        "graceful-fs": "^4.1.6"
       }
     },
     "node_modules/fsevents": {
@@ -1442,12 +1702,6 @@ Generated: 2025-07-30 11:32:18
         "node": ">=10.13.0"
       }
     },
-    "node_modules/graceful-fs": {
-      "version": "4.2.11",
-      "resolved": "https://registry.npmjs.org/graceful-fs/-/graceful-fs-4.2.11.tgz",
-      "integrity": "sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==",
-      "license": "ISC"
-    },
     "node_modules/hasown": {
       "version": "2.0.2",
       "resolved": "https://registry.npmjs.org/hasown/-/hasown-2.0.2.tgz",
@@ -1459,6 +1713,21 @@ Generated: 2025-07-30 11:32:18
       "engines": {
         "node": ">= 0.4"
       }
+    },
+    "node_modules/hsl-to-hex": {
+      "version": "1.0.0",
+      "resolved": "https://registry.npmjs.org/hsl-to-hex/-/hsl-to-hex-1.0.0.tgz",
+      "integrity": "sha512-K6GVpucS5wFf44X0h2bLVRDsycgJmf9FF2elg+CrqD8GcFU8c6vYhgXn8NjUkFCwj+xDFb70qgLbTUm6sxwPmA==",
+      "license": "MIT",
+      "dependencies": {
+        "hsl-to-rgb-for-reals": "^1.1.0"
+      }
+    },
+    "node_modules/hsl-to-rgb-for-reals": {
+      "version": "1.1.1",
+      "resolved": "https://registry.npmjs.org/hsl-to-rgb-for-reals/-/hsl-to-rgb-for-reals-1.1.1.tgz",
+      "integrity": "sha512-LgOWAkrN0rFaQpfdWBQlv/VhkOxb5AsBjk6NQVx4yEzWS923T07X0M1Y0VNko2H52HeSpZrZNNMJ0aFqsdVzQg==",
+      "license": "ISC"
     },
     "node_modules/html2canvas": {
       "version": "1.4.1",
@@ -1473,12 +1742,23 @@ Generated: 2025-07-30 11:32:18
         "node": ">=8.0.0"
       }
     },
+    "node_modules/hyphen": {
+      "version": "1.10.6",
+      "resolved": "https://registry.npmjs.org/hyphen/-/hyphen-1.10.6.tgz",
+      "integrity": "sha512-fXHXcGFTXOvZTSkPJuGOQf5Lv5T/R2itiiCVPg9LxAje5D00O0pP83yJShFq5V89Ly//Gt6acj7z8pbBr34stw==",
+      "license": "ISC"
+    },
+    "node_modules/inherits": {
+      "version": "2.0.4",
+      "resolved": "https://registry.npmjs.org/inherits/-/inherits-2.0.4.tgz",
+      "integrity": "sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==",
+      "license": "ISC"
+    },
     "node_modules/is-arrayish": {
       "version": "0.3.2",
       "resolved": "https://registry.npmjs.org/is-arrayish/-/is-arrayish-0.3.2.tgz",
       "integrity": "sha512-eVRqCvVlZbuw3GrM63ovNSNAeA1K16kaR/LRY/92w0zxQ5/1YzwblUX652i4Xs9RwAGjW9d9y6X88t8OaAJfWQ==",
-      "license": "MIT",
-      "optional": true
+      "license": "MIT"
     },
     "node_modules/is-binary-path": {
       "version": "2.1.0",
@@ -1546,6 +1826,12 @@ Generated: 2025-07-30 11:32:18
         "node": ">=0.12.0"
       }
     },
+    "node_modules/is-url": {
+      "version": "1.2.4",
+      "resolved": "https://registry.npmjs.org/is-url/-/is-url-1.2.4.tgz",
+      "integrity": "sha512-ITvGim8FhRiYe4IQ5uHSkj7pVaPDrCTkNd3yq3cV7iZAcJdHTUMPMEHcqSOy9xZ9qFenQCvi+2wjH9a1nXqHww==",
+      "license": "MIT"
+    },
     "node_modules/isexe": {
       "version": "2.0.0",
       "resolved": "https://registry.npmjs.org/isexe/-/isexe-2.0.0.tgz",
@@ -1567,6 +1853,15 @@ Generated: 2025-07-30 11:32:18
         "@pkgjs/parseargs": "^0.11.0"
       }
     },
+    "node_modules/jay-peg": {
+      "version": "1.1.1",
+      "resolved": "https://registry.npmjs.org/jay-peg/-/jay-peg-1.1.1.tgz",
+      "integrity": "sha512-D62KEuBxz/ip2gQKOEhk/mx14o7eiFRaU+VNNSP4MOiIkwb/D6B3G1Mfas7C/Fit8EsSV2/IWjZElx/Gs6A4ww==",
+      "license": "MIT",
+      "dependencies": {
+        "restructure": "^3.0.0"
+      }
+    },
     "node_modules/jiti": {
       "version": "1.21.7",
       "resolved": "https://registry.npmjs.org/jiti/-/jiti-1.21.7.tgz",
@@ -1576,17 +1871,11 @@ Generated: 2025-07-30 11:32:18
         "jiti": "bin/jiti.js"
       }
     },
-    "node_modules/jsonfile": {
-      "version": "5.0.0",
-      "resolved": "https://registry.npmjs.org/jsonfile/-/jsonfile-5.0.0.tgz",
-      "integrity": "sha512-NQRZ5CRo74MhMMC3/3r5g2k4fjodJ/wh8MxjFbCViWKFjxrnudWSY5vomh+23ZaXzAS7J3fBZIR2dV6WbmfM0w==",
-      "license": "MIT",
-      "dependencies": {
-        "universalify": "^0.1.2"
-      },
-      "optionalDependencies": {
-        "graceful-fs": "^4.1.6"
-      }
+    "node_modules/js-tokens": {
+      "version": "4.0.0",
+      "resolved": "https://registry.npmjs.org/js-tokens/-/js-tokens-4.0.0.tgz",
+      "integrity": "sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==",
+      "license": "MIT"
     },
     "node_modules/jspdf": {
       "version": "3.0.1",
@@ -1615,11 +1904,42 @@ Generated: 2025-07-30 11:32:18
         "node": ">=10"
       }
     },
+    "node_modules/linebreak": {
+      "version": "1.1.0",
+      "resolved": "https://registry.npmjs.org/linebreak/-/linebreak-1.1.0.tgz",
+      "integrity": "sha512-MHp03UImeVhB7XZtjd0E4n6+3xr5Dq/9xI/5FptGk5FrbDR3zagPa2DS6U8ks/3HjbKWG9Q1M2ufOzxV2qLYSQ==",
+      "license": "MIT",
+      "dependencies": {
+        "base64-js": "0.0.8",
+        "unicode-trie": "^2.0.0"
+      }
+    },
+    "node_modules/linebreak/node_modules/base64-js": {
+      "version": "0.0.8",
+      "resolved": "https://registry.npmjs.org/base64-js/-/base64-js-0.0.8.tgz",
+      "integrity": "sha512-3XSA2cR/h/73EzlXXdU6YNycmYI7+kicTxks4eJg2g39biHR84slg2+des+p7iHYhbRg/udIS4TD53WabcOUkw==",
+      "license": "MIT",
+      "engines": {
+        "node": ">= 0.4"
+      }
+    },
     "node_modules/lines-and-columns": {
       "version": "1.2.4",
       "resolved": "https://registry.npmjs.org/lines-and-columns/-/lines-and-columns-1.2.4.tgz",
       "integrity": "sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==",
       "license": "MIT"
+    },
+    "node_modules/loose-envify": {
+      "version": "1.4.0",
+      "resolved": "https://registry.npmjs.org/loose-envify/-/loose-envify-1.4.0.tgz",
+      "integrity": "sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==",
+      "license": "MIT",
+      "dependencies": {
+        "js-tokens": "^3.0.0 || ^4.0.0"
+      },
+      "bin": {
+        "loose-envify": "cli.js"
+      }
     },
     "node_modules/lru-cache": {
       "version": "10.4.3",
@@ -1635,6 +1955,12 @@ Generated: 2025-07-30 11:32:18
       "peerDependencies": {
         "react": "^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0"
       }
+    },
+    "node_modules/media-engine": {
+      "version": "1.0.3",
+      "resolved": "https://registry.npmjs.org/media-engine/-/media-engine-1.0.3.tgz",
+      "integrity": "sha512-aa5tG6sDoK+k70B9iEX1NeyfT8ObCKhNDs6lJVpwF6r8vhUfuKMslIcirq6HIUYuuUYLefcEQOn9bSBOvawtwg==",
+      "license": "MIT"
     },
     "node_modules/merge2": {
       "version": "1.4.1",
@@ -1815,6 +2141,15 @@ Generated: 2025-07-30 11:32:18
         "node": ">=0.10.0"
       }
     },
+    "node_modules/normalize-svg-path": {
+      "version": "1.1.0",
+      "resolved": "https://registry.npmjs.org/normalize-svg-path/-/normalize-svg-path-1.1.0.tgz",
+      "integrity": "sha512-r9KHKG2UUeB5LoTouwDzBy2VxXlHsiM6fyLQvnJa0S5hrhzqElH/CH7TUGhT1fVvIYBIKf3OpY4YJ4CK+iaqHg==",
+      "license": "MIT",
+      "dependencies": {
+        "svg-arc-to-cubic-bezier": "^3.0.0"
+      }
+    },
     "node_modules/object-assign": {
       "version": "4.1.1",
       "resolved": "https://registry.npmjs.org/object-assign/-/object-assign-4.1.1.tgz",
@@ -1838,6 +2173,18 @@ Generated: 2025-07-30 11:32:18
       "resolved": "https://registry.npmjs.org/package-json-from-dist/-/package-json-from-dist-1.0.1.tgz",
       "integrity": "sha512-UEZIS3/by4OC8vL3P2dTXRETpebLI2NiI5vIrjaD/5UtrkFX/tNbwjTSRAGC/+7CAo2pIcBaRgWmcBBHcsaCIw==",
       "license": "BlueOak-1.0.0"
+    },
+    "node_modules/pako": {
+      "version": "1.0.11",
+      "resolved": "https://registry.npmjs.org/pako/-/pako-1.0.11.tgz",
+      "integrity": "sha512-4hLB8Py4zZce5s4yd9XzopqwVv/yGNhV1Bl8NTmCq1763HeK2+EwVTv+leGeL13Dnh2wfbqowVPXCIO0z4taYw==",
+      "license": "(MIT AND Zlib)"
+    },
+    "node_modules/parse-svg-path": {
+      "version": "0.1.2",
+      "resolved": "https://registry.npmjs.org/parse-svg-path/-/parse-svg-path-0.1.2.tgz",
+      "integrity": "sha512-JyPSBnkTJ0AI8GGJLfMXvKq42cj5c006fnLz6fXy6zfoVjJizi8BNTpu8on8ziI1cKy9d9DGNuY17Ce7wuejpQ==",
+      "license": "MIT"
     },
     "node_modules/path-key": {
       "version": "3.1.1",
@@ -2021,6 +2368,26 @@ Generated: 2025-07-30 11:32:18
       "integrity": "sha512-1NNCs6uurfkVbeXG4S8JFT9t19m45ICnif8zWLd5oPSZ50QnwMfK+H3jv408d4jw/7Bttv5axS5IiHoLaVNHeQ==",
       "license": "MIT"
     },
+    "node_modules/prop-types": {
+      "version": "15.8.1",
+      "resolved": "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz",
+      "integrity": "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==",
+      "license": "MIT",
+      "dependencies": {
+        "loose-envify": "^1.4.0",
+        "object-assign": "^4.1.1",
+        "react-is": "^16.13.1"
+      }
+    },
+    "node_modules/queue": {
+      "version": "6.0.2",
+      "resolved": "https://registry.npmjs.org/queue/-/queue-6.0.2.tgz",
+      "integrity": "sha512-iHZWu+q3IdFZFX36ro/lKBkSvfkztY5Y7HMiPlOUjhupPcG2JMfst2KKEpu5XndviX/3UhFbRngUPNKtgvtZiA==",
+      "license": "MIT",
+      "dependencies": {
+        "inherits": "~2.0.3"
+      }
+    },
     "node_modules/queue-microtask": {
       "version": "1.2.3",
       "resolved": "https://registry.npmjs.org/queue-microtask/-/queue-microtask-1.2.3.tgz",
@@ -2088,6 +2455,12 @@ Generated: 2025-07-30 11:32:18
         "react": "^16.8.0 || ^17 || ^18 || ^19"
       }
     },
+    "node_modules/react-is": {
+      "version": "16.13.1",
+      "resolved": "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz",
+      "integrity": "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==",
+      "license": "MIT"
+    },
     "node_modules/read-cache": {
       "version": "1.0.0",
       "resolved": "https://registry.npmjs.org/read-cache/-/read-cache-1.0.0.tgz",
@@ -2116,6 +2489,15 @@ Generated: 2025-07-30 11:32:18
       "license": "MIT",
       "optional": true
     },
+    "node_modules/require-from-string": {
+      "version": "2.0.2",
+      "resolved": "https://registry.npmjs.org/require-from-string/-/require-from-string-2.0.2.tgz",
+      "integrity": "sha512-Xf0nWe6RseziFMu+Ap9biiUbmplq6S9/p+7w7YXP/JBHhrUDDUhwa+vANyubuqfZWTveU//DYVGsDG7RKL/vEw==",
+      "license": "MIT",
+      "engines": {
+        "node": ">=0.10.0"
+      }
+    },
     "node_modules/resolve": {
       "version": "1.22.10",
       "resolved": "https://registry.npmjs.org/resolve/-/resolve-1.22.10.tgz",
@@ -2135,6 +2517,12 @@ Generated: 2025-07-30 11:32:18
       "funding": {
         "url": "https://github.com/sponsors/ljharb"
       }
+    },
+    "node_modules/restructure": {
+      "version": "3.0.2",
+      "resolved": "https://registry.npmjs.org/restructure/-/restructure-3.0.2.tgz",
+      "integrity": "sha512-gSfoiOEA0VPE6Tukkrr7I0RBdE0s7H1eFCDBk05l1KIQT1UIKNc5JZy6jdyW6eYH3aR3g5b3PuL77rq0hvwtAw==",
+      "license": "MIT"
     },
     "node_modules/reusify": {
       "version": "1.1.0",
@@ -2178,6 +2566,26 @@ Generated: 2025-07-30 11:32:18
       "dependencies": {
         "queue-microtask": "^1.2.2"
       }
+    },
+    "node_modules/safe-buffer": {
+      "version": "5.2.1",
+      "resolved": "https://registry.npmjs.org/safe-buffer/-/safe-buffer-5.2.1.tgz",
+      "integrity": "sha512-rp3So07KcdmmKbGvgaNxQSJr7bGVSVk5S9Eq1F+ppbRo70+YeaDxkw5Dd8NPN+GD6bjnYm2VuPuCXmpuYvmCXQ==",
+      "funding": [
+        {
+          "type": "github",
+          "url": "https://github.com/sponsors/feross"
+        },
+        {
+          "type": "patreon",
+          "url": "https://www.patreon.com/feross"
+        },
+        {
+          "type": "consulting",
+          "url": "https://feross.org/support"
+        }
+      ],
+      "license": "MIT"
     },
     "node_modules/scheduler": {
       "version": "0.26.0",
@@ -2279,7 +2687,6 @@ Generated: 2025-07-30 11:32:18
       "resolved": "https://registry.npmjs.org/simple-swizzle/-/simple-swizzle-0.2.2.tgz",
       "integrity": "sha512-JA//kQgZtbuY83m+xT+tXJkmJncGMTFT+C+g2h2R9uxkYIrE2yy9sgmcLhCnw57/WSD+Eh3J97FPEDFnbXnDUg==",
       "license": "MIT",
-      "optional": true,
       "dependencies": {
         "is-arrayish": "^0.3.1"
       }
@@ -2301,6 +2708,15 @@ Generated: 2025-07-30 11:32:18
       "optional": true,
       "engines": {
         "node": ">=0.1.14"
+      }
+    },
+    "node_modules/string_decoder": {
+      "version": "1.3.0",
+      "resolved": "https://registry.npmjs.org/string_decoder/-/string_decoder-1.3.0.tgz",
+      "integrity": "sha512-hkRX8U1WjJFd8LsDJ2yQ/wWWxaopEsABU1XfkM8A+j0+85JAGppt16cr1Whg6KIbb4okU6Mql6BOj+uup/wKeA==",
+      "license": "MIT",
+      "dependencies": {
+        "safe-buffer": "~5.2.0"
       }
     },
     "node_modules/string-width": {
@@ -2456,6 +2872,12 @@ Generated: 2025-07-30 11:32:18
         "url": "https://github.com/sponsors/ljharb"
       }
     },
+    "node_modules/svg-arc-to-cubic-bezier": {
+      "version": "3.2.0",
+      "resolved": "https://registry.npmjs.org/svg-arc-to-cubic-bezier/-/svg-arc-to-cubic-bezier-3.2.0.tgz",
+      "integrity": "sha512-djbJ/vZKZO+gPoSDThGNpKDO+o+bAeA4XQKovvkNCqnIS2t+S4qnLAGQhyyrulhCFRl1WWzAp0wUDV8PpTVU3g==",
+      "license": "ISC"
+    },
     "node_modules/svg-pathdata": {
       "version": "6.0.3",
       "resolved": "https://registry.npmjs.org/svg-pathdata/-/svg-pathdata-6.0.3.tgz",
@@ -2580,6 +3002,12 @@ Generated: 2025-07-30 11:32:18
         "node": ">=0.8"
       }
     },
+    "node_modules/tiny-inflate": {
+      "version": "1.0.3",
+      "resolved": "https://registry.npmjs.org/tiny-inflate/-/tiny-inflate-1.0.3.tgz",
+      "integrity": "sha512-pkY1fj1cKHb2seWDy0B16HeWyczlJA9/WW3u3c4z/NiWDsO3DOU5D7nhTLE9CF0yXv/QZFY7sEJmj24dK+Rrqw==",
+      "license": "MIT"
+    },
     "node_modules/to-regex-range": {
       "version": "5.0.1",
       "resolved": "https://registry.npmjs.org/to-regex-range/-/to-regex-range-5.0.1.tgz",
@@ -2604,24 +3032,6 @@ Generated: 2025-07-30 11:32:18
       "integrity": "sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==",
       "license": "0BSD"
     },
-    "node_modules/twemoji": {
-      "version": "14.0.2",
-      "resolved": "https://registry.npmjs.org/twemoji/-/twemoji-14.0.2.tgz",
-      "integrity": "sha512-BzOoXIe1QVdmsUmZ54xbEH+8AgtOKUiG53zO5vVP2iUu6h5u9lN15NcuS6te4OY96qx0H7JK9vjjl9WQbkTRuA==",
-      "license": "MIT",
-      "dependencies": {
-        "fs-extra": "^8.0.1",
-        "jsonfile": "^5.0.0",
-        "twemoji-parser": "14.0.0",
-        "universalify": "^0.1.2"
-      }
-    },
-    "node_modules/twemoji-parser": {
-      "version": "14.0.0",
-      "resolved": "https://registry.npmjs.org/twemoji-parser/-/twemoji-parser-14.0.0.tgz",
-      "integrity": "sha512-9DUOTGLOWs0pFWnh1p6NF+C3CkQ96PWmEFwhOVmT3WbecRC+68AIqpsnJXygfkFcp4aXbOp8Dwbhh/HQgvoRxA==",
-      "license": "MIT"
-    },
     "node_modules/typescript": {
       "version": "5.8.3",
       "resolved": "https://registry.npmjs.org/typescript/-/typescript-5.8.3.tgz",
@@ -2643,14 +3053,31 @@ Generated: 2025-07-30 11:32:18
       "dev": true,
       "license": "MIT"
     },
-    "node_modules/universalify": {
-      "version": "0.1.2",
-      "resolved": "https://registry.npmjs.org/universalify/-/universalify-0.1.2.tgz",
-      "integrity": "sha512-rBJeI5CXAlmy1pV+617WB9J63U6XcazHHF2f2dbJix4XzpUF0RS3Zbj0FGIOCAva5P/d/GBOYaACQ1w+0azUkg==",
+    "node_modules/unicode-properties": {
+      "version": "1.4.1",
+      "resolved": "https://registry.npmjs.org/unicode-properties/-/unicode-properties-1.4.1.tgz",
+      "integrity": "sha512-CLjCCLQ6UuMxWnbIylkisbRj31qxHPAurvena/0iwSVbQ2G1VY5/HjV0IRabOEbDHlzZlRdCrD4NhB0JtU40Pg==",
       "license": "MIT",
-      "engines": {
-        "node": ">= 4.0.0"
+      "dependencies": {
+        "base64-js": "^1.3.0",
+        "unicode-trie": "^2.0.0"
       }
+    },
+    "node_modules/unicode-trie": {
+      "version": "2.0.0",
+      "resolved": "https://registry.npmjs.org/unicode-trie/-/unicode-trie-2.0.0.tgz",
+      "integrity": "sha512-x7bc76x0bm4prf1VLg79uhAzKw8DVboClSN5VxJuQ+LKDOVEW9CdH+VY7SP+vX7xCYQqzzgQpFqz15zeLvAtZQ==",
+      "license": "MIT",
+      "dependencies": {
+        "pako": "^0.2.5",
+        "tiny-inflate": "^1.0.0"
+      }
+    },
+    "node_modules/unicode-trie/node_modules/pako": {
+      "version": "0.2.9",
+      "resolved": "https://registry.npmjs.org/pako/-/pako-0.2.9.tgz",
+      "integrity": "sha512-NUcwaKxUxWrZLpDG+z/xZaCgQITkA/Dv4V/T6bw7VON6l1Xz/VnrBqrYjZQ12TamKHzITTfOEIYUj48y2KXImA==",
+      "license": "MIT"
     },
     "node_modules/update-browserslist-db": {
       "version": "1.1.3",
@@ -2695,6 +3122,20 @@ Generated: 2025-07-30 11:32:18
       "license": "MIT",
       "dependencies": {
         "base64-arraybuffer": "^1.0.2"
+      }
+    },
+    "node_modules/vite-compatible-readable-stream": {
+      "version": "3.6.1",
+      "resolved": "https://registry.npmjs.org/vite-compatible-readable-stream/-/vite-compatible-readable-stream-3.6.1.tgz",
+      "integrity": "sha512-t20zYkrSf868+j/p31cRIGN28Phrjm3nRSLR2fyc2tiWi4cZGVdv68yNlwnIINTkMTmPoMiSlc0OadaO7DXZaQ==",
+      "license": "MIT",
+      "dependencies": {
+        "inherits": "^2.0.3",
+        "string_decoder": "^1.1.1",
+        "util-deprecate": "^1.0.1"
+      },
+      "engines": {
+        "node": ">= 6"
       }
     },
     "node_modules/which": {
@@ -2814,6 +3255,12 @@ Generated: 2025-07-30 11:32:18
       "engines": {
         "node": ">= 14.6"
       }
+    },
+    "node_modules/yoga-layout": {
+      "version": "3.2.1",
+      "resolved": "https://registry.npmjs.org/yoga-layout/-/yoga-layout-3.2.1.tgz",
+      "integrity": "sha512-0LPOt3AxKqMdFBZA3HBAt/t/8vIKq7VaQYbuA8WxCgung+p9TVyKRYdpvCb80HcdTN2NkbIKbhNwKUfm3tQywQ==",
+      "license": "MIT"
     },
     "node_modules/zod": {
       "version": "4.0.13",
@@ -4481,6 +4928,318 @@ export default function Home() {
 
 ```n
 
+## File: src\components\ResumeDocument.tsx
+
+```typescript
+import React from 'react';
+import { 
+  Page, 
+  Text, 
+  View, 
+  Document, 
+  StyleSheet, 
+  Font,
+  Image 
+} from '@react-pdf/renderer';
+
+// Register emoji source for proper emoji rendering
+Font.registerEmojiSource({
+  format: 'png',
+  url: 'https://cdn.jsdelivr.net/npm/emoji-datasource-apple@15.0.1/img/apple/64/',
+});
+
+// Register custom fonts if needed
+Font.register({
+  family: 'Inter',
+  src: 'https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2',
+});
+
+// Create styles for 8.5x11 paper
+const styles = StyleSheet.create({
+  page: {
+    flexDirection: 'column',
+    backgroundColor: '#FFFFFF',
+    padding: 40,
+    fontFamily: 'Inter, Helvetica, Arial, sans-serif',
+    fontSize: 10,
+    lineHeight: 1.4,
+  },
+  header: {
+    marginBottom: 20,
+    borderBottom: '1px solid #e5e7eb',
+    paddingBottom: 15,
+  },
+  name: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 5,
+    color: '#1f2937',
+  },
+  tagline: {
+    fontSize: 14,
+    fontStyle: 'italic',
+    color: '#6b7280',
+    marginBottom: 10,
+  },
+  contactInfo: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 15,
+    marginBottom: 5,
+  },
+  contactItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 5,
+  },
+  contactText: {
+    fontSize: 10,
+    color: '#374151',
+  },
+  section: {
+    marginBottom: 15,
+  },
+  sectionTitle: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#1f2937',
+    marginBottom: 8,
+    borderBottom: '1px solid #e5e7eb',
+    paddingBottom: 3,
+  },
+  experienceItem: {
+    marginBottom: 12,
+  },
+  jobHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    marginBottom: 5,
+  },
+  jobTitle: {
+    fontSize: 12,
+    fontWeight: 'bold',
+    color: '#1f2937',
+    flex: 1,
+  },
+  jobDuration: {
+    fontSize: 10,
+    color: '#6b7280',
+    fontStyle: 'italic',
+  },
+  companyName: {
+    fontSize: 11,
+    fontWeight: '600',
+    color: '#374151',
+    marginBottom: 3,
+  },
+  jobDescription: {
+    fontSize: 10,
+    color: '#4b5563',
+    marginTop: 5,
+  },
+  skillsContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+    marginTop: 5,
+  },
+  skillTag: {
+    backgroundColor: '#f3f4f6',
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderRadius: 4,
+    fontSize: 9,
+    color: '#374151',
+  },
+  educationItem: {
+    marginBottom: 10,
+  },
+  educationHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    marginBottom: 3,
+  },
+  institutionName: {
+    fontSize: 11,
+    fontWeight: '600',
+    color: '#374151',
+    flex: 1,
+  },
+  educationYear: {
+    fontSize: 10,
+    color: '#6b7280',
+  },
+  degreeInfo: {
+    fontSize: 10,
+    color: '#4b5563',
+    fontStyle: 'italic',
+  },
+  extrasSection: {
+    marginTop: 15,
+  },
+  extraItem: {
+    fontSize: 10,
+    color: '#4b5563',
+    marginBottom: 3,
+  },
+});
+
+interface ContactInfo {
+  phone: string;
+  email: string;
+}
+
+interface Location {
+  city: string;
+  state: string;
+}
+
+interface SoftwareJob {
+  title: string;
+  description: string;
+  skills: string[];
+  languages: string[];
+}
+
+interface Workplace {
+  name: string;
+  link: string;
+  blurb: string;
+  tenure: string;
+  jobs: SoftwareJob[];
+}
+
+interface EducationRecord {
+  institution: string;
+  link: string;
+  year: string;
+  degree: string;
+}
+
+interface ResumeData {
+  header: {
+    name: string;
+    tagline: string;
+    contact: ContactInfo;
+    location: Location;
+  };
+  experience: Workplace[];
+  education: EducationRecord[];
+  skills: string[];
+  extras: string[];
+}
+
+interface ResumeDocumentProps {
+  data: ResumeData;
+}
+
+export const ResumeDocument: React.FC<ResumeDocumentProps> = ({ data }) => (
+  <Document>
+    <Page size="LETTER" style={styles.page}>
+      {/* Header Section */}
+      <View style={styles.header}>
+        <Text style={styles.name}>{data.header?.name || 'Your Name'}</Text>
+        <Text style={styles.tagline}>{data.header?.tagline || 'Your Professional Title'}</Text>
+        
+        <View style={styles.contactInfo}>
+          {data.header?.contact?.email && (
+            <View style={styles.contactItem}>
+              <Text style={styles.contactText}>📧 {data.header.contact.email}</Text>
+            </View>
+          )}
+          {data.header?.contact?.phone && (
+            <View style={styles.contactItem}>
+              <Text style={styles.contactText}>📱 {data.header.contact.phone}</Text>
+            </View>
+          )}
+          {(data.header?.location?.city || data.header?.location?.state) && (
+            <View style={styles.contactItem}>
+              <Text style={styles.contactText}>
+                📍 {[data.header.location.city, data.header.location.state].filter(Boolean).join(', ')}
+              </Text>
+            </View>
+          )}
+        </View>
+      </View>
+
+      {/* Experience Section */}
+      {data.experience && data.experience.length > 0 && (
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>💼 Experience</Text>
+          {data.experience.map((exp, index) => (
+            <View key={index} style={styles.experienceItem}>
+              <View style={styles.jobHeader}>
+                <Text style={styles.companyName}>{exp.name}</Text>
+                {exp.tenure && <Text style={styles.jobDuration}>{exp.tenure}</Text>}
+              </View>
+              
+              {exp.jobs && exp.jobs.map((job, jobIndex) => (
+                <View key={jobIndex}>
+                  <Text style={styles.jobTitle}>{job.title}</Text>
+                  {job.description && (
+                    <Text style={styles.jobDescription}>{job.description}</Text>
+                  )}
+                  {(job.skills?.length > 0 || job.languages?.length > 0) && (
+                    <View style={styles.skillsContainer}>
+                      {job.skills?.map((skill, skillIndex) => (
+                        <Text key={skillIndex} style={styles.skillTag}>{skill}</Text>
+                      ))}
+                      {job.languages?.map((lang, langIndex) => (
+                        <Text key={langIndex} style={styles.skillTag}>{lang}</Text>
+                      ))}
+                    </View>
+                  )}
+                </View>
+              ))}
+            </View>
+          ))}
+        </View>
+      )}
+
+      {/* Education Section */}
+      {data.education && data.education.length > 0 && (
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>🎓 Education</Text>
+          {data.education.map((edu, index) => (
+            <View key={index} style={styles.educationItem}>
+              <View style={styles.educationHeader}>
+                <Text style={styles.institutionName}>{edu.institution}</Text>
+                {edu.year && <Text style={styles.educationYear}>{edu.year}</Text>}
+              </View>
+              {edu.degree && <Text style={styles.degreeInfo}>{edu.degree}</Text>}
+            </View>
+          ))}
+        </View>
+      )}
+
+      {/* Skills Section */}
+      {data.skills && data.skills.length > 0 && (
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>⚡ Skills</Text>
+          <View style={styles.skillsContainer}>
+            {data.skills.map((skill, index) => (
+              <Text key={index} style={styles.skillTag}>{skill}</Text>
+            ))}
+          </View>
+        </View>
+      )}
+
+      {/* Additional Information */}
+      {data.extras && data.extras.length > 0 && (
+        <View style={styles.extrasSection}>
+          <Text style={styles.sectionTitle}>🏆 Additional Information</Text>
+          {data.extras.map((extra, index) => (
+            <Text key={index} style={styles.extraItem}>• {extra}</Text>
+          ))}
+        </View>
+      )}
+    </Page>
+  </Document>
+); 
+```n
+
 ## File: src\components\ResumeGenerator.tsx
 
 ```typescript
@@ -4488,9 +5247,8 @@ export default function Home() {
 
 import React, { useState, useEffect } from 'react';
 import { Download, Plus, Trash2, Moon, Sun, FileText, User, Briefcase, GraduationCap, Code, Award } from 'lucide-react';
-import jsPDF from 'jspdf';
-import 'jspdf/dist/polyfills.es.js';
-import { exportResumePdf } from '../../lib/pdf/exportResume';
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import { ResumeDocument } from './ResumeDocument';
 
 // TypeScript interfaces
 interface ContactInfo {
@@ -4705,53 +5463,7 @@ const ResumeGenerator = () => {
     }));
   };
 
-  const exportToPDF = async () => {
-    try {
-      // Check if resume preview exists
-      const previewElement = document.querySelector<HTMLElement>("#resume-preview");
-      if (!previewElement) {
-        console.error("Resume preview element not found");
-        alert("Resume preview not found. Please ensure the page is loaded correctly.");
-        return;
-      }
-
-      console.log("Resume preview element found:", previewElement);
-      console.log("Preview content length:", previewElement.innerHTML.length);
-      console.log("Preview text content:", previewElement.textContent?.substring(0, 200));
-      
-      // Check if there's actual content
-      if (!previewElement.textContent || previewElement.textContent.trim().length === 0) {
-        console.error("Resume preview has no content");
-        alert("Resume preview has no content. Please add some information to your resume first.");
-        return;
-      }
-
-      // Show loading indicator
-      const exportButton = document.querySelector('[data-export-pdf]') as HTMLButtonElement;
-      if (exportButton) {
-        exportButton.disabled = true;
-        exportButton.textContent = 'Generating PDF...';
-      }
-
-      await exportResumePdf('resume.pdf');
-      
-      // Reset button
-      if (exportButton) {
-        exportButton.disabled = false;
-        exportButton.textContent = 'Export PDF';
-      }
-    } catch (error) {
-      console.error('Failed to export PDF:', error);
-      alert('Failed to export PDF. Please try again.');
-      
-      // Reset button on error
-      const exportButton = document.querySelector('[data-export-pdf]') as HTMLButtonElement;
-      if (exportButton) {
-        exportButton.disabled = false;
-        exportButton.textContent = 'Export PDF';
-      }
-    }
-  };
+  // React PDF export is handled by PDFDownloadLink component
 
   const exportToJSON = () => {
     const dataStr = JSON.stringify(resumeData, null, 2);
@@ -4824,208 +5536,9 @@ const ResumeGenerator = () => {
     link.click();
   };
 
-  const exportMarkdownToPDF = () => {
-    // Generate the same markdown content with emojis
-    let markdown = `# ${resumeData.header?.name || 'Your Name'}\n\n`;
-    markdown += `*${resumeData.header?.tagline || 'Your Professional Title'}*\n\n`;
-    
-    // Contact Information with emojis
-    markdown += `📧 ${resumeData.header?.contact?.email || ''}\n`;
-    markdown += `📱 ${resumeData.header?.contact?.phone || ''}\n`;
-    markdown += `📍 ${resumeData.header?.location?.city || ''}, ${resumeData.header?.location?.state || ''}\n\n`;
-    
-    // Experience
-    if (resumeData.experience && resumeData.experience.length > 0) {
-      markdown += `## 💼 Experience\n\n`;
-      resumeData.experience.forEach((exp) => {
-        markdown += `### ${exp.name}\n`;
-        if (exp.jobs?.[0]?.title) {
-          markdown += `**${exp.jobs[0].title}**\n`;
-        }
-        if (exp.tenure) {
-          markdown += `*${exp.tenure}*\n\n`;
-        }
-        if (exp.jobs?.[0]?.description) {
-          markdown += `${exp.jobs[0].description}\n\n`;
-        }
-        if (exp.jobs?.[0]?.skills && exp.jobs[0].skills.length > 0) {
-          markdown += `**Skills:** ${exp.jobs[0].skills.join(', ')}\n\n`;
-        }
-      });
-    }
-    
-    // Education
-    if (resumeData.education && resumeData.education.length > 0) {
-      markdown += `## 🎓 Education\n\n`;
-      resumeData.education.forEach((edu) => {
-        markdown += `### ${edu.institution}\n`;
-        markdown += `**${edu.degree}**\n`;
-        markdown += `*${edu.year}*\n\n`;
-      });
-    }
-    
-    // Skills
-    if (resumeData.skills && resumeData.skills.length > 0) {
-      markdown += `## ⚡ Skills\n\n`;
-      markdown += `${resumeData.skills.join(', ')}\n\n`;
-    }
-    
-    // Additional Information
-    if (resumeData.extras && resumeData.extras.length > 0) {
-      markdown += `## 🏆 Additional Information\n\n`;
-      resumeData.extras.forEach((extra) => {
-        markdown += `• ${extra}\n`;
-      });
-    }
+  
 
-    // Convert markdown to HTML with styling
-    const htmlContent = convertMarkdownToStyledHTML(markdown);
-    
-    // Create a temporary div with proper sizing and positioning for 8.5x11
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = htmlContent;
-    tempDiv.style.position = 'absolute';
-    tempDiv.style.left = '0';
-    tempDiv.style.top = '0';
-    tempDiv.style.width = '612px'; // 8.5 inches at 72 DPI
-    tempDiv.style.minHeight = '792px'; // 11 inches at 72 DPI
-    tempDiv.style.backgroundColor = 'white';
-    tempDiv.style.color = 'black';
-    tempDiv.style.fontFamily = 'Inter, Segoe UI Emoji, Apple Color Emoji, Noto Color Emoji, Arial, Helvetica, sans-serif';
-    tempDiv.style.fontSize = '12px';
-    tempDiv.style.lineHeight = '1.4';
-    tempDiv.style.padding = '40px';
-    tempDiv.style.boxSizing = 'border-box';
-    tempDiv.style.overflow = 'visible';
-    
-    // Add to body temporarily
-    document.body.appendChild(tempDiv);
-    
-    // Wait for content to render
-    setTimeout(async () => {
-      try {
-        // Convert HTML to PDF with 8.5x11 format
-        const pdf = new jsPDF({ unit: 'pt', format: [612, 792] }); // 8.5x11 inches
-        
-        await (pdf as any).html(tempDiv, {
-          margin: [30, 30, 30, 30],
-          autoPaging: "text",
-          html2canvas: {
-            scale: 2,
-            useCORS: true,
-            allowTaint: true,
-            backgroundColor: "#ffffff",
-            logging: true, // Enable logging for debugging
-            removeContainer: true,
-            foreignObjectRendering: false,
-            imageTimeout: 0,
-            onclone: (clonedDoc: Document) => {
-              // Ensure proper styling in cloned document with emoji support
-              const style = clonedDoc.createElement('style');
-              style.textContent = `
-                @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-                * { 
-                  font-family: 'Inter', 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', Arial, Helvetica, sans-serif !important; 
-                  color: #000000 !important;
-                  background-color: #ffffff !important;
-                }
-                body { 
-                  margin: 0; 
-                  padding: 30px; 
-                  font-size: 12px;
-                  line-height: 1.4;
-                  max-width: 552px; /* 8.5 inches minus margins */
-                }
-                h1, h2, h3 { 
-                  color: #000000 !important; 
-                  font-weight: bold;
-                }
-                p, span, div { 
-                  color: #000000 !important; 
-                }
-                .contact-info {
-                  margin: 15px 0;
-                }
-                .contact-item {
-                  margin: 5px 0;
-                }
-                .emoji {
-                  font-family: 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif !important;
-                  font-size: 14px;
-                  vertical-align: middle;
-                }
-                .skill-tags {
-                  margin: 10px 0;
-                }
-                .skill-tag {
-                  background-color: #f0f0f0;
-                  color: #000000;
-                  padding: 4px 8px;
-                  margin: 2px;
-                  border-radius: 4px;
-                  display: inline-block;
-                  font-size: 10px;
-                }
-                .job-title {
-                  color: #000000;
-                  font-weight: bold;
-                  margin: 5px 0;
-                }
-                .job-duration {
-                  color: #666666;
-                  font-style: italic;
-                  margin: 5px 0;
-                }
-                .job-description {
-                  margin: 10px 0;
-                  color: #000000;
-                }
-              `;
-              clonedDoc.head.appendChild(style);
-            }
-          },
-          callback: (pdf: jsPDF) => {
-            console.log("PDF generated successfully");
-            pdf.save('resume.pdf');
-          },
-        });
-      } catch (error) {
-        console.error("PDF generation failed:", error);
-        
-        // Fallback: create simple text PDF
-        const pdf = new jsPDF({ unit: 'pt', format: 'a4' });
-        const textContent = tempDiv.textContent || "No content available";
-        const lines = textContent.split('\n').filter(line => line.trim());
-        
-        let yPosition = 40;
-        const lineHeight = 14;
-        
-        pdf.setFontSize(16);
-        pdf.setFont('helvetica', 'bold');
-        pdf.text('Resume', 40, yPosition);
-        yPosition += 30;
-        
-        pdf.setFontSize(12);
-        pdf.setFont('helvetica', 'normal');
-        
-        lines.forEach(line => {
-          if (yPosition > 750) {
-            pdf.addPage();
-            yPosition = 40;
-          }
-          pdf.text(line.trim(), 40, yPosition);
-          yPosition += lineHeight;
-        });
-        
-        pdf.save('resume.pdf');
-      } finally {
-        // Clean up
-        document.body.removeChild(tempDiv);
-      }
-    }, 500); // Wait 500ms for content to render
-  };
 
-  const convertMarkdownToStyledHTML = (markdown: string) => {
     let html = `
       <html>
         <head>
@@ -5407,13 +5920,6 @@ const ResumeGenerator = () => {
                 Export Markdown
               </button>
               <button
-                onClick={exportMarkdownToPDF}
-                className="px-4 py-2 text-sm font-medium text-red-600 hover:text-red-700 transition-colors"
-                title="Export Markdown as PDF"
-              >
-                Export PDF (Markdown)
-              </button>
-              <button
                 onClick={() => {
                   debugCurrentData();
                   alert('Check console for current data');
@@ -5423,14 +5929,25 @@ const ResumeGenerator = () => {
               >
                 Debug Data
               </button>
-              <button
-                onClick={exportToPDF}
-                data-export-pdf
+              <PDFDownloadLink
+                document={<ResumeDocument data={resumeData} />}
+                fileName="resume.pdf"
                 className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
               >
-                <Download className="h-4 w-4" />
-                <span>Export PDF</span>
-              </button>
+                {({ blob, url, loading, error }) =>
+                  loading ? (
+                    <div className="flex items-center space-x-2">
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                      <span>Generating PDF...</span>
+                    </div>
+                  ) : (
+                    <div className="flex items-center space-x-2">
+                      <Download className="h-4 w-4" />
+                      <span>Export PDF</span>
+                    </div>
+                  )
+                }
+              </PDFDownloadLink>
               <button
                 onClick={() => setDarkMode(!darkMode)}
                 className={`p-2 rounded-md transition-colors ${
@@ -5955,131 +6472,6 @@ const ResumeGenerator = () => {
 };
 
 export default ResumeGenerator; 
-```n
-
-## File: lib\pdf\exportResume.ts
-
-```typescript
-import { jsPDF } from "jspdf";
-import "jspdf/dist/polyfills.es.js";
-
-/* public API */
-export async function exportResumePdf(file = "resume.pdf") {
-  try {
-    const src = document.querySelector<HTMLElement>("#resume-preview");
-    if (!src) {
-      console.error("Resume preview element not found");
-      throw new Error("#resume-preview not found");
-    }
-
-    console.log("Found resume preview element:", src);
-    console.log("Element content length:", src.innerHTML.length);
-    console.log("Element text content:", src.textContent?.substring(0, 200));
-
-    // Wait a bit to ensure content is fully rendered
-    await new Promise(resolve => setTimeout(resolve, 100));
-
-    // Create a temporary div to ensure proper styling
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = src.innerHTML;
-    tempDiv.style.position = 'absolute';
-    tempDiv.style.left = '-9999px';
-    tempDiv.style.top = '0';
-    tempDiv.style.width = '595px'; // A4 width in points
-    tempDiv.style.backgroundColor = 'white';
-    tempDiv.style.color = 'black';
-    tempDiv.style.fontFamily = 'Arial, sans-serif';
-    tempDiv.style.fontSize = '12px';
-    tempDiv.style.lineHeight = '1.4';
-    tempDiv.style.padding = '20px';
-    
-    // Copy computed styles
-    const computedStyle = window.getComputedStyle(src);
-    tempDiv.style.backgroundColor = computedStyle.backgroundColor;
-    tempDiv.style.color = computedStyle.color;
-    tempDiv.style.fontFamily = computedStyle.fontFamily;
-    tempDiv.style.fontSize = computedStyle.fontSize;
-    tempDiv.style.lineHeight = computedStyle.lineHeight;
-    
-    document.body.appendChild(tempDiv);
-
-    // Create PDF
-    const pdf = new jsPDF({ unit: "pt", format: "a4" });
-    
-    try {
-      // Use the html method with better options
-      await (pdf as any).html(tempDiv, {
-        margin: [20, 20, 20, 20],
-        autoPaging: "text",
-        html2canvas: {
-          scale: 2,
-          useCORS: true,
-          allowTaint: true,
-          backgroundColor: "#ffffff",
-          logging: true, // Enable logging for debugging
-          removeContainer: true,
-          foreignObjectRendering: false,
-          imageTimeout: 0,
-          onclone: (clonedDoc: Document) => {
-            // Ensure proper styling in cloned document
-            const style = clonedDoc.createElement('style');
-            style.textContent = `
-              * { 
-                font-family: Arial, sans-serif !important; 
-                color: #000000 !important;
-                background-color: #ffffff !important;
-              }
-              body { margin: 0; padding: 20px; }
-              h1, h2, h3 { color: #000000 !important; }
-              p, span, div { color: #000000 !important; }
-            `;
-            clonedDoc.head.appendChild(style);
-          }
-        },
-        callback: (pdf: jsPDF) => {
-          console.log("PDF generated successfully");
-          pdf.save(file);
-        },
-      });
-    } catch (htmlError) {
-      console.error("HTML to PDF conversion failed:", htmlError);
-      
-      // Fallback: try to add text content manually
-      console.log("Attempting fallback PDF generation...");
-      
-      const textContent = src.textContent || "No content available";
-      const lines = textContent.split('\n').filter(line => line.trim());
-      
-      let yPosition = 40;
-      const lineHeight = 14;
-      
-      pdf.setFontSize(16);
-      pdf.setFont('helvetica', 'bold');
-      pdf.text('Resume', 40, yPosition);
-      yPosition += 30;
-      
-      pdf.setFontSize(12);
-      pdf.setFont('helvetica', 'normal');
-      
-      lines.forEach(line => {
-        if (yPosition > 750) {
-          pdf.addPage();
-          yPosition = 40;
-        }
-        pdf.text(line.trim(), 40, yPosition);
-        yPosition += lineHeight;
-      });
-      
-      pdf.save(file);
-    } finally {
-      // Clean up
-      document.body.removeChild(tempDiv);
-    }
-  } catch (error) {
-    console.error("PDF export error:", error);
-    throw error;
-  }
-} 
 ```n
 
 ---

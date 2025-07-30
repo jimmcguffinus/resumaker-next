@@ -291,9 +291,7 @@ const ResumeGenerator = () => {
     link.click();
   };
 
-  
-
-
+  const convertMarkdownToStyledHTML = (markdown: string) => {
     let html = `
       <html>
         <head>
