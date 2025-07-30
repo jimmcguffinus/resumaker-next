@@ -57,6 +57,25 @@ function scrub(node: Window | Document | HTMLElement) {
       if (val && val.includes("oklch"))
         (el.style as any)[prop] = val.replace(/oklch\([^)]+\)/g, m => oklchToRgb(m));
     });
+
+    // additional properties that might contain OKLCH
+    fix("background");  // catches linear-gradient, etc.
+    fix("filter");      // catches drop-shadow()
+    fix("borderImage");
+    fix("maskImage");
+    fix("clipPath");
+  });
+
+  // handle SVG elements specifically
+  doc.querySelectorAll("svg").forEach(svg => {
+    const fill = svg.getAttribute("fill");
+    if (fill && fill.includes("oklch")) {
+      svg.setAttribute("fill", oklchToRgb(fill));
+    }
+    const stroke = svg.getAttribute("stroke");
+    if (stroke && stroke.includes("oklch")) {
+      svg.setAttribute("stroke", oklchToRgb(stroke));
+    }
   });
 }
 
