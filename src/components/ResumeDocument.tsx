@@ -92,13 +92,14 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: 'bold',
     color: '#1e293b', // slate-800
+    marginBottom: 8, // <-- INCREASED FROM 4 to 8
   },
   tagline: {
     fontSize: 11,
     fontStyle: 'italic',
     color: '#475569', // slate-600
-    marginTop: 4,
-    marginBottom: 10,
+    marginTop: 0,      // <-- REMOVED a marginTop to have one source of spacing
+    marginBottom: 12,  // <-- INCREASED FROM 10 to 12
   },
   contactInfo: {
     flexDirection: 'row',
@@ -114,7 +115,7 @@ const styles = StyleSheet.create({
     color: '#0f172a', // slate-900
     marginBottom: 12,
     paddingBottom: 4,
-    borderBottomWidth: 1,
+    borderBottomWidth: 1.5,
     borderColor: '#e2e8f0', // slate-200
     flexDirection: 'row',
     alignItems: 'center',
