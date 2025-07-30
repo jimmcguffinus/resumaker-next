@@ -94,7 +94,6 @@ export async function exportResumePdf(file = "resume.pdf") {
     margin: 24,
     autoPaging: "text",
     html2canvas: {
-      ...(h2cMod.default as Options),
       scale: 2,
       onclone: (w: any) => scrub(w.document ?? w),
     },
