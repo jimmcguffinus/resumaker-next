@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     fontSize: 26,
     fontWeight: 'bold',
     color: '#1e293b', // slate-800
-    marginBottom: 12,
+    marginBottom: 16,
   },
   tagline: {
     fontSize: 12,
