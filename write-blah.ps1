@@ -1,166 +1,88 @@
 param (
-    [string]$OutputFile = "emoji-font-support.md"
+    [string]$OutputFile = "resumaker-source-code.md"
 )
 
 Clear-Host
-Write-Host "Generating emoji font support instructions for jsPDF..." -ForegroundColor Yellow
+Write-Host "Gathering Resume Maker source code files..." -ForegroundColor Yellow
 
-$MarkdownContent = @"
-# 📝 Emoji Font Support for jsPDF in Next.js Resume Generator
+# Define source directories and file extensions
+$SourceDirs = @(
+    "src",
+    "lib",
+    "public"
+)
+$FileExtensions = @("*.tsx", "*.ts", "*.js", "*.jsx", "*.css", "*.mjs", "*.json", "*.md")
 
-## Problem
+# Define specific root files to include
+$RootFiles = @(
+    "package.json",
+    "next.config.ts",
+    "tsconfig.json",
+    "tailwind.config.js",
+    "postcss.config.mjs",
+    "README.md",
+    "PRD.md",
+    "MVP.md"
+)
 
-- The UI displays emojis perfectly (📧📱📍💼🎓⚡🏆🏅), but PDF exports using jsPDF show "funky chars" or boxes instead of emojis.
-- This is because jsPDF's default fonts do not support emojis and special Unicode characters.
-- Current workaround: Using `sanitizeText()` function to remove emojis, but this makes the PDF look dull compared to the beautiful UI.
-
-## Solution: Add Custom Font Support
-
-### Step 1: Download an Emoji-Supporting Font
-- **Symbola**: Free font with good emoji support
-- **Noto Color Emoji**: Google's emoji font
-- **Apple Color Emoji**: If on macOS
-
-### Step 2: Convert Font to jsPDF Format
-1. Go to [jsPDF Font Converter](https://rawgit.com/MrRio/jsPDF/master/fontconverter/fontconverter.html)
-2. Upload your font file (.ttf or .otf)
-3. Download the resulting .js file
-4. Place it in your project (e.g., `public/fonts/Symbola.js`)
-
-### Step 3: Update Your Code
-
-#### File: src/components/ResumeGenerator.tsx
-
-```typescript
-import jsPDF from 'jspdf';
-// Import the converted font file
-import '../public/fonts/Symbola.js'; // Adjust path as needed
-
-// In your exportToPDF function, replace the sanitizeText approach:
-const exportToPDF = () => {
-  const doc = new jsPDF();
-  
-  // Register and use the emoji font
-  doc.setFont('Symbola'); // Use your font's name here
-  
-  // Now you can use emojis directly without sanitization
-  doc.setFontSize(20);
-  doc.setTextColor(59, 130, 246); // Blue color
-  doc.text('John Doe', 20, 30);
-  
-  doc.setFontSize(12);
-  doc.setTextColor(107, 114, 128); // Gray color
-  doc.text('📧 john@example.com', 20, 40);
-  doc.text('📱 (555) 123-4567', 20, 50);
-  doc.text('📍 New York, NY', 20, 60);
-  
-  // Experience section
-  doc.setFontSize(16);
-  doc.setTextColor(59, 130, 246);
-  doc.text('💼 Experience', 20, 80);
-  
-  doc.setFontSize(12);
-  doc.setTextColor(0, 0, 0);
-  doc.setFont('Symbola', 'bold');
-  doc.text('Software Engineer - Tech Corp', 20, 95);
-  
-  doc.setFont('Symbola', 'normal');
-  doc.text('2020 - Present', 20, 105);
-  doc.text('React • TypeScript • Node.js', 20, 115);
-  
-  // Skills section
-  doc.setFontSize(16);
-  doc.setTextColor(59, 130, 246);
-  doc.text('⚡ Skills', 20, 140);
-  
-  doc.setFontSize(10);
-  doc.setTextColor(0, 0, 0);
-  doc.text('JavaScript • Python • React • Node.js • Docker', 20, 155);
-  
-  // Additional Information
-  doc.setFontSize(16);
-  doc.setTextColor(59, 130, 246);
-  doc.text('🏆 Additional Information', 20, 180);
-  
-  doc.setFontSize(10);
-  doc.setTextColor(0, 0, 0);
-  doc.text('🏅 Award-winning developer with 5+ years experience', 20, 195);
-  doc.text('🏅 Led team of 10 developers on major project', 20, 205);
-  
-  doc.save('resume.pdf');
-};
-```
-
-#### File: package.json (if needed)
-```json
-{
-  "dependencies": {
-    "jspdf": "^2.5.1"
-  }
+# Dynamic File Discovery
+$FilesToInclude = @()
+$FilesToInclude += $RootFiles | ForEach-Object { Get-Item -Path $_ -ErrorAction SilentlyContinue }
+foreach ($dir in $SourceDirs) {
+    if (Test-Path $dir) {
+        $FilesToInclude += Get-ChildItem -Path $dir -Recurse -Include $FileExtensions -ErrorAction SilentlyContinue
+    }
 }
-```
 
-### Step 4: Remove Sanitization Code
+$MarkdownContent = "# 🔍 Resume Maker Source Code Dump`n`n"
+$MarkdownContent += "Generated: $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')`n`n"
+$MarkdownContent += "## Project: Next.js Resume Generator with PDF Export`n`n"
 
-Remove or comment out the `sanitizeText` function and its usage:
+foreach ($file in $FilesToInclude) {
+    if ($file -and (Test-Path $file.FullName)) {
+        $RelativeFilePath = $file.FullName.Substring($PSScriptRoot.Length + 1)
+        $MarkdownContent += "`n## File: $RelativeFilePath`n`n"
 
-```typescript
-// Remove this function:
-// const sanitizeText = (text: string) => {
-//   return text
-//     .replace(/[📧📱📍💼🎓⚡🏆🏅•]/g, '')
-//     .replace(/[^\x00-\x7F]/g, '');
-// };
+        try {
+            Write-Host "Processing: $RelativeFilePath" -ForegroundColor Green
+            $FileContent = Get-Content -Path $file.FullName -Raw -ErrorAction Stop
 
-// And remove sanitizeText() calls from all text rendering
-```
+            if ([string]::IsNullOrWhiteSpace($FileContent)) {
+                $MarkdownContent += "*File is empty*`n"
+                continue
+            }
 
-## Testing
+            $FileExtension = $file.Extension.TrimStart('.').ToLower()
+            $LanguageSyntax = switch ($FileExtension) {
+                { $_ -in @('ts', 'tsx') } { 'typescript' }
+                'js'   { 'javascript' }
+                'mjs'  { 'javascript' }
+                'json' { 'json' }
+                'md'   { 'markdown' }
+                'css'  { 'css' }
+                default { '' }
+            }
 
-1. **Local Testing**: Run `npm run dev` and test PDF export
-2. **Font Loading**: Check browser console for any font loading errors
-3. **Deployment**: Ensure the font file is included in your build output
+            $MarkdownContent += "``````$LanguageSyntax`n"
+            $MarkdownContent += $FileContent
+            $MarkdownContent += "`n``````n`n"
+        }
+        catch {
+            Write-Warning "Could not read file: '$RelativeFilePath'. Error: $($_.Exception.Message)"
+            $MarkdownContent += "*Could not read file: $($_.Exception.Message)*`n`n"
+        }
+    }
+}
 
-## Troubleshooting
-
-- **Font not loading**: Check the import path and file location
-- **Still showing boxes**: Verify the font name in `setFont()` matches the converted font
-- **Build errors**: Make sure the font file is in the correct public directory
-
-## Alternative: Font Loading at Runtime
-
-If you prefer to load the font dynamically:
-
-```typescript
-// Load font at runtime
-const loadFont = async () => {
-  const response = await fetch('/fonts/Symbola.js');
-  const fontData = await response.text();
-  // Register with jsPDF
-  // (Implementation depends on jsPDF version)
-};
-```
-
-## Notes
-
-- The font name in `setFont()` must match the name used in the converted font file
-- Test with a small subset of emojis first before applying to the entire resume
-- Consider font file size - emoji fonts can be large
-- Backup your current working code before making these changes
-
----
-*Generated by write-blah.ps1 for Resume Generator emoji font support*
-"@
+# Add footer
+$MarkdownContent += "`n---`n"
+$MarkdownContent += "*Generated by Write-blah.ps1 for Resume Maker (Next.js + jsPDF)*`n"
 
 try {
     $MarkdownContent | Out-File -FilePath $OutputFile -Encoding UTF8 -Force
-    Write-Host "`n✅ Success! Emoji font support instructions written to '$OutputFile'" -ForegroundColor Green
+    Write-Host "`n✅ Success! Source code written to '$OutputFile'" -ForegroundColor Green
     Write-Host "📦 File size: $((Get-Item $OutputFile).Length) bytes" -ForegroundColor Cyan
-    Write-Host "`n📝 Next steps:" -ForegroundColor Yellow
-    Write-Host "   1. Download an emoji font (Symbola recommended)" -ForegroundColor White
-    Write-Host "   2. Convert it using jsPDF font converter" -ForegroundColor White
-    Write-Host "   3. Add the .js file to your project" -ForegroundColor White
-    Write-Host "   4. Update your ResumeGenerator.tsx code" -ForegroundColor White
+    Write-Host "`n📋 Ready to share with LLM for debugging PDF export issues" -ForegroundColor Yellow
 }
 catch {
     Write-Error "❌ Failed to write output file '$OutputFile': $($_.Exception.Message)"

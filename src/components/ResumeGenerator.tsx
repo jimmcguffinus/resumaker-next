@@ -229,7 +229,7 @@ const ResumeGenerator = () => {
         additionalInfo: resumeData.extras
       };
 
-      await exportResumePdf(resumeDataForExport, 'resume.pdf');
+      await exportResumePdf(resumeDataForExport);
     } catch (error) {
       console.error('Failed to export PDF:', error);
       alert('Failed to export PDF. Please try again.');
