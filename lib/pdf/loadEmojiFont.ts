@@ -51,7 +51,8 @@ export const exportResumePdf = async (resumeData: any): Promise<void> => {
     
     // Contact info with text-based icons (matching UI)
     doc.setFontSize(12);
-    doc.setTextColor(75, 85, 99);
+    doc.setTextColor(107, 114, 128); // Gray color like UI
+    doc.setFont('helvetica', 'italic');
     let yPos = 55;
     
     if (resumeData.header.email) {
@@ -79,48 +80,40 @@ export const exportResumePdf = async (resumeData: any): Promise<void> => {
     resumeData.experience.forEach((exp: any, index: number) => {
       if (index > 0) yPos += 5;
       
+      // Company name (bold black)
       doc.setFontSize(14);
       doc.setFont('helvetica', 'bold');
       doc.setTextColor(0, 0, 0);
       doc.text(safeText(exp.company), 20, yPos);
       
+      // Job title (blue)
       doc.setFontSize(12);
       doc.setTextColor(59, 130, 246);
       doc.text(safeText(exp.title), 20, yPos + 8);
       
-      // Add team/description if available
+      // Description if available (gray italic)
       if (exp.jobs && exp.jobs[0] && exp.jobs[0].description) {
         doc.setFontSize(10);
+        doc.setFont('helvetica', 'italic');
         doc.setTextColor(107, 114, 128);
         doc.text(safeText(exp.jobs[0].description), 20, yPos + 16);
         yPos += 8;
       }
       
+      // Years (gray)
       doc.setFontSize(10);
+      doc.setFont('helvetica', 'normal');
       doc.setTextColor(107, 114, 128);
       doc.text(`${safeText(exp.startYear)} - ${safeText(exp.endYear)}`, 20, yPos + 24);
       
-      // Skills as pill-style tags (matching UI)
+      // Skills as simple text (matching UI)
       if (exp.jobs && exp.jobs[0] && exp.jobs[0].skills) {
         yPos += 8;
         const skills = exp.jobs[0].skills.map((s: string) => cleanText(s));
-        let xPos = 20;
-        skills.forEach((skill: string, skillIndex: number) => {
-          const skillWidth = doc.getTextWidth(skill) + 8;
-          if (xPos + skillWidth > 180) {
-            xPos = 20;
-            yPos += 12;
-          }
-          // Draw pill background
-          doc.setFillColor(219, 234, 254); // Light blue background
-          doc.roundedRect(xPos, yPos - 2, skillWidth, 8, 4, 4, 'F');
-          // Draw skill text
-          doc.setFontSize(8);
-          doc.setTextColor(59, 130, 246);
-          doc.text(skill, xPos + 4, yPos + 3);
-          xPos += skillWidth + 4;
-        });
-        yPos += 15;
+        doc.setFontSize(10);
+        doc.setTextColor(0, 0, 0);
+        doc.text(skills.join(' | '), 20, yPos + 8);
+        yPos += 20;
       } else {
         yPos += 20;
       }
