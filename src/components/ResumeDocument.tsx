@@ -11,6 +11,56 @@ import {
   Link,
 } from '@react-pdf/renderer';
 
+// TypeScript interfaces
+interface ContactInfo {
+  phone: string;
+  email: string;
+}
+
+interface Location {
+  city: string;
+  state: string;
+}
+
+interface SoftwareJob {
+  title: string;
+  description: string;
+  skills: string[];
+  languages: string[];
+}
+
+interface Workplace {
+  name: string;
+  link: string;
+  blurb: string;
+  tenure: string;
+  jobs: SoftwareJob[];
+}
+
+interface EducationRecord {
+  institution: string;
+  link: string;
+  year: string;
+  degree: string;
+}
+
+interface Resume {
+  header: {
+    name: string;
+    tagline: string;
+    contact: ContactInfo;
+    location: Location;
+  };
+  experience: Workplace[];
+  education: EducationRecord[];
+  skills: string[];
+  extras: string[];
+}
+
+interface ResumeDocumentProps {
+  data: Resume;
+}
+
 // Register fonts with fallback to system fonts if Inter is not available
 try {
   Font.register({
@@ -132,7 +182,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export const ResumeDocument = ({ data }) => (
+export const ResumeDocument: React.FC<ResumeDocumentProps> = ({ data }) => (
   <Document author={data?.header?.name || 'User'} title={`Resume for ${data?.header?.name}`}>
     <Page size="LETTER" style={styles.page}>
       {/* Header */}
