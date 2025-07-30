@@ -1,6 +1,6 @@
 # 🔍 Resume Maker Source Code Dump
 
-Generated: 2025-07-29 20:13:32
+Generated: 2025-07-29 20:27:29
 
 ## Project: Next.js Resume Generator with PDF Export
 
@@ -1819,64 +1819,66 @@ export default ResumeGenerator;
 ```typescript
 import { jsPDF } from "jspdf";
 
-function normalizeCssColor(c: string): string {
-  // Skip if already rgb/rgba/hex
-  if (!c.startsWith("oklch")) return c;
+/* ---------- helpers ---------- */
 
-  // Let Chrome convert it for us
+/** Convert any OKLCH colour to rgb() because html2canvas/jsPDF don't
+ *  understand OKLCH yet.  If the value is already rgb / rgba / hex etc.
+ *  we return it untouched. */
+function okLchToRgb(cssColour: string): string {
+  if (!cssColour.startsWith("oklch")) return cssColour;
+
   const ctx = document.createElement("canvas").getContext("2d")!;
-  ctx.fillStyle = c;                   // browser parses OKLCH
-  return ctx.fillStyle as string;      // comes back as rgb(r,g,b)
+  ctx.fillStyle = cssColour;           // browser converts OKLCH → rgb()
+  return ctx.fillStyle as string;      // e.g. "rgb(37, 99, 235)"
 }
 
-/**
- * Export the on-screen preview (#resume-preview) to a paginated PDF that
- * looks exactly like the UI.
- *
- * @param filename name of the downloaded file (default: resume.pdf)
- */
-export async function exportResumePdf(filename = "resume.pdf") {
-  const src = document.querySelector<HTMLElement>("#resume-preview");
-  if (!src) throw new Error("preview not found");
+/** Scrub the colour‑style properties that trip up jsPDF */
+function scrubColours(root: Document | HTMLElement) {
+  const nodes = (root instanceof Document ? root.body : root)
+    .querySelectorAll<HTMLElement>("*");
 
-  // Clone node; put it off‑screen
-  const clone = src.cloneNode(true) as HTMLElement;
-  clone.style.position = "fixed";
-  clone.style.left = "-9999px";
-  document.body.appendChild(clone);
-
-  /* ── NEW: walk the clone & canonicalise colours ─────────────── */
-  clone.querySelectorAll<HTMLElement>("*").forEach(el => {
+  nodes.forEach(el => {
     const cs = getComputedStyle(el);
 
     // text colour
-    const c = normalizeCssColor(cs.color);
-    el.style.color = c;
+    el.style.color = okLchToRgb(cs.color);
 
-    // bg colour (only if non‑transparent)
-    const bg = cs.backgroundColor;
-    if (bg && bg !== "rgba(0, 0, 0, 0)") {
-      el.style.backgroundColor = normalizeCssColor(bg);
-    }
+    // background colour (ignore 'transparent')
+    if (cs.backgroundColor && cs.backgroundColor !== "rgba(0, 0, 0, 0)")
+      el.style.backgroundColor = okLchToRgb(cs.backgroundColor);
 
-    // border colours
-    ["borderColor", "borderTopColor", "borderRightColor",
-     "borderBottomColor", "borderLeftColor"].forEach(prop => {
-       const v = (cs as any)[prop];
-       if (v) (el.style as any)[prop] = normalizeCssColor(v);
-     });
+    // border colours (only if they exist)
+    ["borderColor","borderTopColor","borderRightColor",
+     "borderBottomColor","borderLeftColor"]
+      .forEach(prop => {
+        const val = (cs as any)[prop] as string | undefined;
+        if (val) (el.style as any)[prop] = okLchToRgb(val);
+      });
   });
-  /* ───────────────────────────────────────────────────────────── */
+}
+
+/* ---------- public API ---------- */
+
+/** Export the #resume-preview element to a paginated PDF that
+ *  visually matches the on‑screen card. */
+export async function exportResumePdf(filename = "resume.pdf") {
+  const src = document.querySelector<HTMLElement>("#resume-preview");
+  if (!src) throw new Error("❌  #resume-preview element not found.");
 
   const pdf = new jsPDF({ unit: "pt", format: "a4" });
-  await pdf.html(clone, {
-    html2canvas: { scale: 2 },
+
+  await pdf.html(src, {
     margin: 24,
     autoPaging: "text",
-    callback: doc => doc.save(filename),
+    html2canvas: {
+      scale: 2,
+      /* This callback fires inside html2canvas's *own* clone of the DOM,
+         which is the version jsPDF renders.  We scrub that clone so the
+         OKLCH values never reach the parser. */
+      onclone: (clonedDoc: Document) => scrubColours(clonedDoc)
+    },
+    callback: doc => doc.save(filename)
   });
-
-  document.body.removeChild(clone);
 } 
 ```n
 

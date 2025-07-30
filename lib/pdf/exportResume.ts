@@ -1,50 +1,62 @@
 import { jsPDF } from "jspdf";
 
-/* ---------- helpers ---------- */
+/* ───────── helpers ───────── */
 
-/** Convert any OKLCH colour to rgb() because html2canvas/jsPDF don't
- *  understand OKLCH yet.  If the value is already rgb / rgba / hex etc.
- *  we return it untouched. */
-function okLchToRgb(cssColour: string): string {
-  if (!cssColour.startsWith("oklch")) return cssColour;
+const COLOR_PROPS = [
+  // plain colours
+  "color",
+  "backgroundColor",
+  // borders
+  "borderColor", "borderTopColor", "borderRightColor",
+  "borderBottomColor", "borderLeftColor",
+  // outlines & focus rings
+  "outlineColor",
+  // shadows may include multiple colours → treat as free‑text
+  "boxShadow", "textShadow",
+  // web‑kit long‑hands (Chrome)
+  "WebkitTextDecorationColor",
+] as const;
 
+function oklchToRgb(c: string): string {
+  if (!c || !c.includes("oklch")) return c;
   const ctx = document.createElement("canvas").getContext("2d")!;
-  ctx.fillStyle = cssColour;           // browser converts OKLCH → rgb()
-  return ctx.fillStyle as string;      // e.g. "rgb(37, 99, 235)"
+  ctx.fillStyle = c;                 // browser converts to rgb()
+  return ctx.fillStyle as string;    // → "rgb(r,g,b)"
 }
 
-/** Scrub the colour‑style properties that trip up jsPDF */
-function scrubColours(root: Document | HTMLElement) {
-  const nodes = (root instanceof Document ? root.body : root)
-    .querySelectorAll<HTMLElement>("*");
-
-  nodes.forEach(el => {
-    const cs = getComputedStyle(el);
-
-    // text colour
-    el.style.color = okLchToRgb(cs.color);
-
-    // background colour (ignore 'transparent')
-    if (cs.backgroundColor && cs.backgroundColor !== "rgba(0, 0, 0, 0)")
-      el.style.backgroundColor = okLchToRgb(cs.backgroundColor);
-
-    // border colours (only if they exist)
-    ["borderColor","borderTopColor","borderRightColor",
-     "borderBottomColor","borderLeftColor"]
-      .forEach(prop => {
+function scrub(root: Document | HTMLElement) {
+  (root instanceof Document ? root.body : root)
+    .querySelectorAll<HTMLElement>("*")
+    .forEach(el => {
+      const cs = getComputedStyle(el);
+      COLOR_PROPS.forEach(prop => {
         const val = (cs as any)[prop] as string | undefined;
-        if (val) (el.style as any)[prop] = okLchToRgb(val);
+        if (val) {
+          const cleaned =
+            prop.endsWith("Shadow")           // shadows may embed multiple colours
+              ? val.replace(/oklch\([^)]+\)/g, m => oklchToRgb(m))
+              : oklchToRgb(val);
+
+          (el.style as any)[prop] = cleaned;
+        }
       });
-  });
+    });
+
+  /* Scrub the root/background colour as well */
+  const rootEl = root instanceof Document ? root.documentElement : root;
+  const bg = getComputedStyle(rootEl).backgroundColor;
+  if (bg && bg.includes("oklch"))
+    (rootEl as HTMLElement).style.backgroundColor = oklchToRgb(bg);
 }
 
-/* ---------- public API ---------- */
+/* ───────── export API ───────── */
 
-/** Export the #resume-preview element to a paginated PDF that
- *  visually matches the on‑screen card. */
-export async function exportResumePdf(filename = "resume.pdf") {
+export async function exportResumePdf(file = "resume.pdf") {
   const src = document.querySelector<HTMLElement>("#resume-preview");
-  if (!src) throw new Error("❌  #resume-preview element not found.");
+  if (!src) throw new Error("#resume-preview not found");
+
+  /* ① clean the live node *before* html2canvas sees it */
+  scrub(src);
 
   const pdf = new jsPDF({ unit: "pt", format: "a4" });
 
@@ -53,11 +65,9 @@ export async function exportResumePdf(filename = "resume.pdf") {
     autoPaging: "text",
     html2canvas: {
       scale: 2,
-      /* This callback fires inside html2canvas's *own* clone of the DOM,
-         which is the version jsPDF renders.  We scrub that clone so the
-         OKLCH values never reach the parser. */
-      onclone: (clonedDoc: Document) => scrubColours(clonedDoc)
+      /* ② clean the internal clone again for good measure */
+      onclone: (doc: Document) => scrub(doc),
     },
-    callback: doc => doc.save(filename)
+    callback: doc => doc.save(file),
   });
 } 
