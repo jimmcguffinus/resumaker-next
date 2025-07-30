@@ -232,11 +232,38 @@ const ResumeGenerator = () => {
       console.log("Resume preview element found:", previewElement);
       console.log("Preview content length:", previewElement.innerHTML.length);
       console.log("Preview text content:", previewElement.textContent?.substring(0, 200));
+      
+      // Check if there's actual content
+      if (!previewElement.textContent || previewElement.textContent.trim().length === 0) {
+        console.error("Resume preview has no content");
+        alert("Resume preview has no content. Please add some information to your resume first.");
+        return;
+      }
+
+      // Show loading indicator
+      const exportButton = document.querySelector('[data-export-pdf]') as HTMLButtonElement;
+      if (exportButton) {
+        exportButton.disabled = true;
+        exportButton.textContent = 'Generating PDF...';
+      }
 
       await exportResumePdf('resume.pdf');
+      
+      // Reset button
+      if (exportButton) {
+        exportButton.disabled = false;
+        exportButton.textContent = 'Export PDF';
+      }
     } catch (error) {
       console.error('Failed to export PDF:', error);
       alert('Failed to export PDF. Please try again.');
+      
+      // Reset button on error
+      const exportButton = document.querySelector('[data-export-pdf]') as HTMLButtonElement;
+      if (exportButton) {
+        exportButton.disabled = false;
+        exportButton.textContent = 'Export PDF';
+      }
     }
   };
 
@@ -783,6 +810,7 @@ const ResumeGenerator = () => {
               </button>
               <button
                 onClick={exportToPDF}
+                data-export-pdf
                 className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
               >
                 <Download className="h-4 w-4" />
