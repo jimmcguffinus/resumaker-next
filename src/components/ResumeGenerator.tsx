@@ -516,7 +516,7 @@ const ResumeGenerator = () => {
       return `${startYear} - ${endYear}`;
     };
 
-    const experience = (scalaData.experience?.workplaces || []).map((workplace: any) => ({
+    const experience = (jsonData.experience?.workplaces || []).map((workplace: any) => ({
       name: workplace.name || '',
       link: workplace.link || '',
       blurb: workplace.blurb || '',
@@ -530,7 +530,7 @@ const ResumeGenerator = () => {
       })),
     }));
 
-    const education = (scalaData.education?.certifcations || []).map((edu: any) => ({
+    const education = (jsonData.education?.certifcations || []).map((edu: any) => ({
       institution: edu.instituion || '',
       link: edu.link || '',
       year: edu.awarded?.toString() || '',
@@ -545,7 +545,7 @@ const ResumeGenerator = () => {
       });
     });
 
-    const extras = (scalaData.extras?.elements || []).map((el: any) =>
+    const extras = (jsonData.extras?.elements || []).map((el: any) =>
       (el.contentChunks || []).map((chunk: any) =>
         typeof chunk === 'string' ? chunk : chunk.text
       ).join('')
@@ -553,15 +553,15 @@ const ResumeGenerator = () => {
 
     return {
       header: {
-        name: scalaData.header?.name || '',
-        tagline: scalaData.header?.tagline || '',
+        name: jsonData.header?.name || '',
+        tagline: jsonData.header?.tagline || '',
         contact: {
-          phone: formatPhone(scalaData.header?.contactInfo?.phoneNumber),
-          email: formatEmail(scalaData.header?.contactInfo?.email),
+          phone: formatPhone(jsonData.header?.contactInfo?.phoneNumber),
+          email: formatEmail(jsonData.header?.contactInfo?.email),
         },
         location: {
-          city: scalaData.header?.location?.city || '',
-          state: scalaData.header?.location?.state?.name || '',
+          city: jsonData.header?.location?.city || '',
+          state: jsonData.header?.location?.state?.name || '',
         },
       },
       experience,
