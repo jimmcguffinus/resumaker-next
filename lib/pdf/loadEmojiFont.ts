@@ -6,21 +6,21 @@ import jsPDF from 'jspdf';
  */
 export const loadEmojiFont = async (): Promise<boolean> => {
   try {
-    // Use dynamic import instead of eval to handle ES module syntax
-    const fontModule = await import('/fonts/Symbola-normal.js');
-    
-    // The font module should export a function to register the font
-    if (typeof fontModule.default === 'function') {
-      fontModule.default(jsPDF);
-    } else if (typeof fontModule.registerFont === 'function') {
-      fontModule.registerFont(jsPDF);
-    } else {
-      // Fallback: try to find any function that might register the font
-      const fontFunctions = Object.values(fontModule).filter(v => typeof v === 'function');
-      if (fontFunctions.length > 0) {
-        fontFunctions[0](jsPDF);
-      }
+    // Use fetch to load the font file at runtime
+    const response = await fetch('/fonts/Symbola-normal.js');
+    if (!response.ok) {
+      throw new Error(`Failed to load font: ${response.statusText}`);
     }
+    
+    const fontData = await response.text();
+    
+    // Create a script element to execute the font data
+    const script = document.createElement('script');
+    script.textContent = fontData;
+    document.head.appendChild(script);
+    
+    // Give it a moment to register
+    await new Promise(resolve => setTimeout(resolve, 100));
     
     console.log('✅ Symbola emoji font loaded successfully');
     return true;
