@@ -231,6 +231,8 @@ const ResumeGenerator = () => {
   // Convert Scala format to Next.js format
   const importScalaData = (scalaData: any) => {
     try {
+      console.log('Importing Scala data:', scalaData);
+      
       // Helper function to format phone number
       const formatPhone = (phoneObj: any) => {
         if (phoneObj && phoneObj.areaCode && phoneObj.prefix && phoneObj.suffix) {
@@ -267,51 +269,52 @@ const ResumeGenerator = () => {
 
       const converted: Resume = {
         header: {
-          name: scalaData.header.name,
-          tagline: scalaData.header.tagline,
+          name: scalaData.header?.name || 'Your Name',
+          tagline: scalaData.header?.tagline || 'Your Professional Title',
           contact: {
-            phone: formatPhone(scalaData.header.contactInfo.phoneNumber),
-            email: formatEmail(scalaData.header.contactInfo.email)
+            phone: formatPhone(scalaData.header?.contactInfo?.phoneNumber),
+            email: formatEmail(scalaData.header?.contactInfo?.email)
           },
           location: {
-            city: scalaData.header.location.city,
-            state: scalaData.header.location.state.name
+            city: scalaData.header?.location?.city || '',
+            state: scalaData.header?.location?.state?.name || ''
           }
         },
-        experience: scalaData.experience.workplaces.map((workplace: any) => ({
-          name: workplace.name,
-          link: workplace.link,
-          blurb: workplace.blurb,
+        experience: (scalaData.experience?.workplaces || []).map((workplace: any) => ({
+          name: workplace.name || '',
+          link: workplace.link || '',
+          blurb: workplace.blurb || '',
           tenure: formatTenure(workplace.tenure),
-          jobs: workplace.jobs.map((job: any) => ({
-            title: job.title,
-            description: job.description,
+          jobs: (workplace.jobs || []).map((job: any) => ({
+            title: job.title || '',
+            description: job.description || '',
             skills: job.skillsAndTools || [],
             languages: Object.keys(job.langsAndLibs || {}).flatMap(lang => 
               job.langsAndLibs[lang] || [lang]
             )
           }))
         })),
-        education: scalaData.education.certifcations.map((edu: any) => ({
-          institution: edu.instituion,
-          link: edu.link,
-          year: edu.awarded.toString(),
+        education: (scalaData.education?.certifcations || []).map((edu: any) => ({
+          institution: edu.instituion || '',
+          link: edu.link || '',
+          year: edu.awarded?.toString() || '',
           degree: formatEducationProof(edu.proof)
         })),
-        skills: scalaData.experience.workplaces.flatMap((workplace: any) =>
-          workplace.jobs.flatMap((job: any) => 
+        skills: (scalaData.experience?.workplaces || []).flatMap((workplace: any) =>
+          (workplace.jobs || []).flatMap((job: any) => 
             [...(job.skillsAndTools || []), ...Object.keys(job.langsAndLibs || {})]
           )
         ).filter((skill: string, index: number, arr: string[]) => 
           arr.indexOf(skill) === index
         ),
-        extras: scalaData.extras.elements.map((element: any) => 
-          element.contentChunks.map((chunk: any) => 
+        extras: (scalaData.extras?.elements || []).map((element: any) => 
+          (element.contentChunks || []).map((chunk: any) => 
             typeof chunk === 'string' ? chunk : chunk.text
           ).join('')
         )
       };
       
+      console.log('Converted data:', converted);
       setResumeData(converted);
       alert('Scala data imported successfully!');
     } catch (error) {
@@ -385,6 +388,16 @@ const ResumeGenerator = () => {
                 className="px-4 py-2 text-sm font-medium text-green-600 hover:text-green-700 transition-colors"
               >
                 Export JSON
+              </button>
+              <button
+                onClick={() => {
+                  console.log('Current resume data:', resumeData);
+                  alert('Check console for current data');
+                }}
+                className="px-4 py-2 text-sm font-medium text-orange-600 hover:text-orange-700 transition-colors"
+                title="Debug: Show current data in console"
+              >
+                Debug Data
               </button>
               <button
                 onClick={exportToPDF}
@@ -741,167 +754,164 @@ const ResumeGenerator = () => {
                 </div>
               </div>
               
-                             {/* Resume Preview */}
-               <div id="resume-preview" className={`bg-white text-gray-900 p-8 rounded-lg shadow-lg min-h-[800px] ${
-                 activeTemplate === 'modern' ? 'border-l-4 border-blue-500' :
-                 activeTemplate === 'classic' ? 'border border-gray-300' :
-                 'shadow-none border border-gray-200'
-               }`}>
-                 {/* Header */}
-                 <div className={`pb-6 mb-6 ${
-                   activeTemplate === 'modern' ? 'border-b-2 border-blue-100' :
-                   activeTemplate === 'classic' ? 'border-b border-gray-400' :
-                   'border-b border-gray-200'
-                 }`}>
-                   <h1 className={`text-3xl font-bold mb-3 ${
-                     activeTemplate === 'modern' ? 'text-blue-600' :
-                     activeTemplate === 'classic' ? 'text-gray-800' :
-                     'text-gray-900'
-                   }`}>
-                     {resumeData.header?.name || 'Your Name'}
-                   </h1>
-                   <p className={`text-lg mb-4 italic ${
-                     activeTemplate === 'modern' ? 'text-gray-600' :
-                     'text-gray-700'
-                   }`}>
-                     {resumeData.header?.tagline || 'Your Professional Title'}
-                   </p>
-                   <div className="flex flex-wrap gap-6 text-sm text-gray-600">
-                     <span className="flex items-center">
-                       <span className="mr-1">📧</span>
-                       {resumeData.header?.contact?.email}
-                     </span>
-                     <span className="flex items-center">
-                       <span className="mr-1">📱</span>
-                       {resumeData.header?.contact?.phone}
-                     </span>
-                     <span className="flex items-center">
-                       <span className="mr-1">📍</span>
-                       {resumeData.header?.location?.city}, {resumeData.header?.location?.state}
-                     </span>
-                   </div>
-                 </div>
+              {/* Resume Preview */}
+              <div id="resume-preview" className={`bg-white text-gray-900 p-8 rounded-lg shadow-lg min-h-[800px] ${
+                activeTemplate === 'modern' ? 'border-l-4 border-blue-500' :
+                activeTemplate === 'classic' ? 'border border-gray-300' :
+                'shadow-none border border-gray-200'
+              }`}>
+                {/* Header */}
+                <div className={`pb-6 mb-6 ${
+                  activeTemplate === 'modern' ? 'border-b-2 border-blue-100' :
+                  activeTemplate === 'classic' ? 'border-b border-gray-400' :
+                  'border-b border-gray-200'
+                }`}>
+                  <h1 className={`text-3xl font-bold mb-3 ${
+                    activeTemplate === 'modern' ? 'text-blue-600' :
+                    activeTemplate === 'classic' ? 'text-gray-800' :
+                    'text-gray-900'
+                  }`}>
+                    {resumeData.header?.name || 'Your Name'}
+                  </h1>
+                  <p className={`text-lg mb-4 italic ${
+                    activeTemplate === 'modern' ? 'text-gray-600' :
+                    'text-gray-700'
+                  }`}>
+                    {resumeData.header?.tagline || 'Your Professional Title'}
+                  </p>
+                  <div className="flex flex-wrap gap-6 text-sm text-gray-600">
+                    <span className="flex items-center">
+                      <span className="mr-1">📧</span>
+                      {resumeData.header?.contact?.email}
+                    </span>
+                    <span className="flex items-center">
+                      <span className="mr-1">📱</span>
+                      {resumeData.header?.contact?.phone}
+                    </span>
+                    <span className="flex items-center">
+                      <span className="mr-1">📍</span>
+                      {resumeData.header?.location?.city}, {resumeData.header?.location?.state}
+                    </span>
+                  </div>
+                </div>
 
-                                 {/* Experience */}
-                 {resumeData.experience && resumeData.experience.length > 0 && (
-                   <div className="mb-6">
-                     <h2 className={`text-xl font-semibold mb-4 ${
-                       activeTemplate === 'modern' ? 'text-blue-600 border-b border-blue-200 pb-1' :
-                       activeTemplate === 'classic' ? 'text-gray-800 border-b border-gray-300 pb-1' :
-                       'text-gray-900'
-                     }`}>
-                       💼 Experience
-                     </h2>
-                     {resumeData.experience.map((exp, index) => (
-                       <div key={index} className="mb-6 p-4 border-l-4 border-gray-200 bg-gray-50 rounded-r-lg">
-                         <div className="flex justify-between items-start mb-3">
-                           <div className="flex-1">
-                             <h3 className="font-bold text-lg text-gray-900 mb-1">{exp.name}</h3>
-                             {exp.jobs?.[0] && (
-                               <p className="text-blue-600 font-semibold">{exp.jobs[0].title}</p>
-                             )}
-                           </div>
-                           <span className="text-sm text-gray-500 font-medium bg-white px-2 py-1 rounded">
-                             {exp.tenure}
-                           </span>
-                         </div>
-                         {exp.jobs?.[0]?.description && (
-                           <p className="text-gray-700 text-sm mb-3 leading-relaxed">{exp.jobs[0].description}</p>
-                         )}
-                         {exp.jobs?.[0]?.skills && exp.jobs[0].skills.length > 0 && (
-                           <div className="flex flex-wrap gap-2">
-                             {exp.jobs[0].skills.map((skill, skillIndex) => (
-                               <span
-                                 key={skillIndex}
-                                 className={`px-3 py-1 text-xs font-medium rounded-full ${
-                                   activeTemplate === 'modern' ? 'bg-blue-100 text-blue-800' :
-                                   activeTemplate === 'classic' ? 'bg-gray-200 text-gray-800' :
-                                   'bg-gray-100 text-gray-700'
-                                 }`}
-                               >
-                                 {skill}
-                               </span>
-                             ))}
-                           </div>
-                         )}
-                       </div>
-                     ))}
-                   </div>
-                 )}
+                {/* Experience */}
+                {resumeData.experience && resumeData.experience.length > 0 && (
+                  <div className="mb-6">
+                    <h2 className={`text-xl font-semibold mb-4 ${
+                      activeTemplate === 'modern' ? 'text-blue-600 border-b border-blue-200 pb-1' :
+                      activeTemplate === 'classic' ? 'text-gray-800 border-b border-gray-300 pb-1' :
+                      'text-gray-900'
+                    }`}>
+                      💼 Experience
+                    </h2>
+                    {resumeData.experience.map((exp, index) => (
+                      <div key={index} className="mb-6 p-4 border-l-4 border-gray-200 bg-gray-50 rounded-r-lg">
+                        <div className="flex justify-between items-start mb-3">
+                          <div className="flex-1">
+                            <h3 className="font-bold text-lg text-gray-900 mb-1">{exp.name}</h3>
+                            {exp.jobs?.[0] && (
+                              <p className="text-blue-600 font-semibold">{exp.jobs[0].title}</p>
+                            )}
+                          </div>
+                          <span className="text-sm text-gray-500 font-medium bg-white px-2 py-1 rounded">
+                            {exp.tenure}
+                          </span>
+                        </div>
+                        {exp.jobs?.[0]?.description && (
+                          <p className="text-gray-700 text-sm mb-3 leading-relaxed">{exp.jobs[0].description}</p>
+                        )}
+                        {exp.jobs?.[0]?.skills && exp.jobs[0].skills.length > 0 && (
+                          <div className="flex flex-wrap gap-2">
+                            {exp.jobs[0].skills.map((skill, skillIndex) => (
+                              <span
+                                key={skillIndex}
+                                className={`px-3 py-1 text-xs font-medium rounded-full ${
+                                  activeTemplate === 'modern' ? 'bg-blue-100 text-blue-800' :
+                                  activeTemplate === 'classic' ? 'bg-gray-200 text-gray-800' :
+                                  'bg-gray-100 text-gray-700'
+                                }`}
+                              >
+                                {skill}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
 
-                                 {/* Education */}
-                 {resumeData.education && resumeData.education.length > 0 && (
-                   <div className="mb-6">
-                     <h2 className={`text-xl font-semibold mb-4 ${
-                       activeTemplate === 'modern' ? 'text-blue-600 border-b border-blue-200 pb-1' :
-                       activeTemplate === 'classic' ? 'text-gray-800 border-b border-gray-300 pb-1' :
-                       'text-gray-900'
-                     }`}>
-                       🎓 Education
-                     </h2>
-                     {resumeData.education.map((edu, index) => (
-                       <div key={index} className="mb-4 p-3 bg-gray-50 rounded-lg">
-                         <div className="flex justify-between items-start">
-                           <div className="flex-1">
-                             <h3 className="font-bold text-gray-900 mb-1">{edu.institution}</h3>
-                             <p className="text-blue-600 font-medium">{edu.degree}</p>
-                           </div>
-                           <span className="text-sm text-gray-500 font-medium bg-white px-3 py-1 rounded-full">
-                             {edu.year}
-                           </span>
-                         </div>
-                       </div>
-                     ))}
-                   </div>
-                 )}
+                {/* Education */}
+                {resumeData.education && resumeData.education.length > 0 && (
+                  <div className="mb-6">
+                    <h2 className={`text-xl font-semibold mb-4 ${
+                      activeTemplate === 'modern' ? 'text-blue-600 border-b border-blue-200 pb-1' :
+                      activeTemplate === 'classic' ? 'text-gray-800 border-b border-gray-300 pb-1' :
+                      'text-gray-900'
+                    }`}>
+                      🎓 Education
+                    </h2>
+                    {resumeData.education.map((edu, index) => (
+                      <div key={index} className="mb-4 p-3 bg-gray-50 rounded-lg">
+                        <div className="flex justify-between items-start">
+                          <div className="flex-1">
+                            <h3 className="font-bold text-gray-900 mb-1">{edu.institution}</h3>
+                            <p className="text-blue-600 font-medium">{edu.degree}</p>
+                          </div>
+                          <span className="text-sm text-gray-500 font-medium bg-white px-3 py-1 rounded-full">
+                            {edu.year}
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
 
-                                 {/* Skills */}
-                 {resumeData.skills && resumeData.skills.length > 0 && (
-                   <div className="mb-6">
-                     <h2 className={`text-xl font-semibold mb-4 ${
-                       activeTemplate === 'modern' ? 'text-blue-600 border-b border-blue-200 pb-1' :
-                       activeTemplate === 'classic' ? 'text-gray-800 border-b border-gray-300 pb-1' :
-                       'text-gray-900'
-                     }`}>
-                       ⚡ Skills
-                     </h2>
-                     <div className="flex flex-wrap gap-3">
-                       {resumeData.skills.map((skill, index) => (
-                         <span
-                           key={index}
-                           className={`px-4 py-2 text-sm font-medium rounded-full shadow-sm ${
-                             activeTemplate === 'modern' ? 'bg-blue-100 text-blue-800 border border-blue-200' :
-                             activeTemplate === 'classic' ? 'bg-gray-200 text-gray-800 border border-gray-300' :
-                             'bg-gray-100 text-gray-700 border border-gray-200'
-                           }`}
-                         >
-                           {skill}
-                         </span>
-                       ))}
-                     </div>
-                   </div>
-                 )}
+                {/* Skills */}
+                {resumeData.skills && resumeData.skills.length > 0 && (
+                  <div className="mb-6">
+                    <h2 className={`text-xl font-semibold mb-4 ${
+                      activeTemplate === 'modern' ? 'text-blue-600 border-b border-blue-200 pb-1' :
+                      activeTemplate === 'classic' ? 'text-gray-800 border-b border-gray-300 pb-1' :
+                      'text-gray-900'
+                    }`}>
+                      ⚡ Skills
+                    </h2>
+                    <div className="flex flex-wrap gap-2">
+                      {resumeData.skills.map((skill, index) => (
+                        <span
+                          key={index}
+                          className={`px-3 py-1 text-sm font-medium rounded-full ${
+                            activeTemplate === 'modern' ? 'bg-blue-100 text-blue-800' :
+                            activeTemplate === 'classic' ? 'bg-gray-200 text-gray-800' :
+                            'bg-gray-100 text-gray-700'
+                          }`}
+                        >
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
 
-                                 {/* Extras */}
-                 {resumeData.extras && resumeData.extras.length > 0 && (
-                   <div className="mb-6">
-                     <h2 className={`text-xl font-semibold mb-4 ${
-                       activeTemplate === 'modern' ? 'text-blue-600 border-b border-blue-200 pb-1' :
-                       activeTemplate === 'classic' ? 'text-gray-800 border-b border-gray-300 pb-1' :
-                       'text-gray-900'
-                     }`}>
-                       🏆 Additional Information
-                     </h2>
-                     <div className="space-y-3">
-                       {resumeData.extras.map((extra, index) => (
-                         <div key={index} className="flex items-start p-3 bg-gray-50 rounded-lg">
-                           <span className="mr-3 mt-1 text-blue-500">🏅</span>
-                           <span className="text-gray-700 text-sm leading-relaxed">{extra}</span>
-                         </div>
-                       ))}
-                     </div>
-                   </div>
-                 )}
+                {/* Additional Information */}
+                {resumeData.extras && resumeData.extras.length > 0 && (
+                  <div>
+                    <h2 className={`text-xl font-semibold mb-4 ${
+                      activeTemplate === 'modern' ? 'text-blue-600 border-b border-blue-200 pb-1' :
+                      activeTemplate === 'classic' ? 'text-gray-800 border-b border-gray-300 pb-1' :
+                      'text-gray-900'
+                    }`}>
+                      🏆 Additional Information
+                    </h2>
+                    <ul className="list-disc list-inside text-gray-700 space-y-1">
+                      {resumeData.extras.map((extra, index) => (
+                        <li key={index} className="text-sm">{extra}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </div>
             </div>
           </div>
