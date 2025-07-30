@@ -1,16 +1,19 @@
 import type { Config } from 'tailwindcss'
 
-const config: Config = {
-  // tell Tailwind *where* to look for class names
+export default <Config>{
+  /* scan *every* source file that can contain Tailwind classes */
   content: [
-    './src/**/*.{js,jsx,ts,tsx}',
+    './src/**/*.{ts,tsx,js,jsx}',
+    './src/app/**/*.{ts,tsx,js,jsx}',
+    './src/components/**/*.{ts,tsx,js,jsx}',
+    './src/lib/**/*.{ts,tsx,js,jsx}',
   ],
 
   theme: {
-    extend: {},   // customise later if you want
+    extend: {
+      /* (optional) put any custom colours / fonts back here */
+    },
   },
 
-  darkMode: 'class',   // we toggle via the `.dark` class
-}
-
-export default config 
+  plugins: [],            // add typography/forms later if you like
+} 

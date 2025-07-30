@@ -2,6 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ─── Emoji support & print‑export patch ─────────────── */
+html {
+  font-family: "Noto Color Emoji",
+               system-ui, -apple-system,
+               "Segoe UI", Roboto, sans-serif;
+}
+
+/* Ensure white pages when html2canvas/jsPDF rasterise */
+@media print {
+  body { background:#ffffff !important; color:#000000 !important; }
+}
+/* ────────────────────────────────────────────────────── */
+
+/* --- existing custom CSS continues below --- */
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
