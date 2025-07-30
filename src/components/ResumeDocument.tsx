@@ -61,19 +61,14 @@ interface ResumeDocumentProps {
   data: Resume;
 }
 
-// Register fonts with fallback to system fonts if Inter is not available
-try {
-  Font.register({
-    family: 'Inter',
-    fonts: [
-      { src: '/fonts/Inter-Regular.ttf' },
-      { src: '/fonts/Inter-Bold.ttf', fontWeight: 'bold' },
-      { src: '/fonts/Inter-Italic.ttf', fontStyle: 'italic' },
-    ],
-  });
-} catch (error) {
-  console.warn('Inter fonts not found, using system fonts');
-}
+// Use system fonts instead of trying to load Inter fonts
+// This avoids 404 errors and ensures PDF generation works
+Font.register({
+  family: 'Inter',
+  fonts: [
+    { src: 'https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2' },
+  ],
+});
 
 Font.registerEmojiSource({
   format: 'png',
