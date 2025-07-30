@@ -282,13 +282,13 @@ const ResumeGenerator = () => {
     markdown += `*${resumeData.header?.tagline || 'Your Professional Title'}*\n\n`;
     
     // Contact Information
-    markdown += `📧 ${resumeData.header?.contact?.email || ''}\n`;
-    markdown += `📱 ${resumeData.header?.contact?.phone || ''}\n`;
-    markdown += `📍 ${resumeData.header?.location?.city || ''}, ${resumeData.header?.location?.state || ''}\n\n`;
+    markdown += `Email: ${resumeData.header?.contact?.email || ''}\n`;
+    markdown += `Phone: ${resumeData.header?.contact?.phone || ''}\n`;
+    markdown += `Location: ${resumeData.header?.location?.city || ''}, ${resumeData.header?.location?.state || ''}\n\n`;
     
     // Experience
     if (resumeData.experience && resumeData.experience.length > 0) {
-      markdown += `## 💼 Experience\n\n`;
+      markdown += `## Experience\n\n`;
       resumeData.experience.forEach((exp) => {
         markdown += `### ${exp.name}\n`;
         if (exp.jobs?.[0]?.title) {
@@ -308,7 +308,7 @@ const ResumeGenerator = () => {
     
     // Education
     if (resumeData.education && resumeData.education.length > 0) {
-      markdown += `## 🎓 Education\n\n`;
+      markdown += `## Education\n\n`;
       resumeData.education.forEach((edu) => {
         markdown += `### ${edu.institution}\n`;
         markdown += `**${edu.degree}**\n`;
@@ -318,13 +318,13 @@ const ResumeGenerator = () => {
     
     // Skills
     if (resumeData.skills && resumeData.skills.length > 0) {
-      markdown += `## ⚡ Skills\n\n`;
+      markdown += `## Skills\n\n`;
       markdown += `${resumeData.skills.join(', ')}\n\n`;
     }
     
     // Additional Information
     if (resumeData.extras && resumeData.extras.length > 0) {
-      markdown += `## 🏆 Additional Information\n\n`;
+      markdown += `## Additional Information\n\n`;
       resumeData.extras.forEach((extra) => {
         markdown += `• ${extra}\n`;
       });
@@ -343,14 +343,14 @@ const ResumeGenerator = () => {
     let markdown = `# ${resumeData.header?.name || 'Your Name'}\n\n`;
     markdown += `*${resumeData.header?.tagline || 'Your Professional Title'}*\n\n`;
     
-    // Contact Information
-    markdown += `📧 ${resumeData.header?.contact?.email || ''}\n`;
-    markdown += `📱 ${resumeData.header?.contact?.phone || ''}\n`;
-    markdown += `📍 ${resumeData.header?.location?.city || ''}, ${resumeData.header?.location?.state || ''}\n\n`;
+    // Contact Information - Use text instead of emojis to avoid font issues
+    markdown += `Email: ${resumeData.header?.contact?.email || ''}\n`;
+    markdown += `Phone: ${resumeData.header?.contact?.phone || ''}\n`;
+    markdown += `Location: ${resumeData.header?.location?.city || ''}, ${resumeData.header?.location?.state || ''}\n\n`;
     
     // Experience
     if (resumeData.experience && resumeData.experience.length > 0) {
-      markdown += `## 💼 Experience\n\n`;
+      markdown += `## Experience\n\n`;
       resumeData.experience.forEach((exp) => {
         markdown += `### ${exp.name}\n`;
         if (exp.jobs?.[0]?.title) {
@@ -370,7 +370,7 @@ const ResumeGenerator = () => {
     
     // Education
     if (resumeData.education && resumeData.education.length > 0) {
-      markdown += `## 🎓 Education\n\n`;
+      markdown += `## Education\n\n`;
       resumeData.education.forEach((edu) => {
         markdown += `### ${edu.institution}\n`;
         markdown += `**${edu.degree}**\n`;
@@ -380,13 +380,13 @@ const ResumeGenerator = () => {
     
     // Skills
     if (resumeData.skills && resumeData.skills.length > 0) {
-      markdown += `## ⚡ Skills\n\n`;
+      markdown += `## Skills\n\n`;
       markdown += `${resumeData.skills.join(', ')}\n\n`;
     }
     
     // Additional Information
     if (resumeData.extras && resumeData.extras.length > 0) {
-      markdown += `## 🏆 Additional Information\n\n`;
+      markdown += `## Additional Information\n\n`;
       resumeData.extras.forEach((extra) => {
         markdown += `• ${extra}\n`;
       });
@@ -395,37 +395,141 @@ const ResumeGenerator = () => {
     // Convert markdown to HTML with styling
     const htmlContent = convertMarkdownToStyledHTML(markdown);
     
-    // Create a temporary div to hold the styled HTML
+    // Create a temporary div with proper sizing and positioning
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML = htmlContent;
     tempDiv.style.position = 'absolute';
-    tempDiv.style.left = '-9999px';
-    tempDiv.style.top = '-9999px';
+    tempDiv.style.left = '0';
+    tempDiv.style.top = '0';
+    tempDiv.style.width = '595px'; // A4 width in points
+    tempDiv.style.minHeight = '842px'; // A4 height in points
+    tempDiv.style.backgroundColor = 'white';
+    tempDiv.style.color = 'black';
+    tempDiv.style.fontFamily = 'Arial, Helvetica, sans-serif';
+    tempDiv.style.fontSize = '12px';
+    tempDiv.style.lineHeight = '1.4';
+    tempDiv.style.padding = '40px';
+    tempDiv.style.boxSizing = 'border-box';
+    tempDiv.style.overflow = 'visible';
+    
+    // Add to body temporarily
     document.body.appendChild(tempDiv);
     
-    // Convert HTML to PDF
-    const pdf = new jsPDF({ unit: 'pt', format: 'a4' });
-    
-    (pdf as any).html(tempDiv, {
-      margin: [20, 20, 20, 20],
-      autoPaging: "text",
-      html2canvas: {
-        scale: 2,
-        useCORS: true,
-        allowTaint: true,
-        backgroundColor: "#ffffff",
-        logging: false,
-        removeContainer: true,
-        foreignObjectRendering: false,
-        imageTimeout: 0
-      },
-      callback: (pdf: jsPDF) => {
-        console.log("PDF generated successfully");
+    // Wait for content to render
+    setTimeout(async () => {
+      try {
+        // Convert HTML to PDF
+        const pdf = new jsPDF({ unit: 'pt', format: 'a4' });
+        
+        await (pdf as any).html(tempDiv, {
+          margin: [20, 20, 20, 20],
+          autoPaging: "text",
+          html2canvas: {
+            scale: 2,
+            useCORS: true,
+            allowTaint: true,
+            backgroundColor: "#ffffff",
+            logging: true, // Enable logging for debugging
+            removeContainer: true,
+            foreignObjectRendering: false,
+            imageTimeout: 0,
+            onclone: (clonedDoc: Document) => {
+              // Ensure proper styling in cloned document
+              const style = clonedDoc.createElement('style');
+              style.textContent = `
+                * { 
+                  font-family: Arial, Helvetica, sans-serif !important; 
+                  color: #000000 !important;
+                  background-color: #ffffff !important;
+                }
+                body { 
+                  margin: 0; 
+                  padding: 20px; 
+                  font-size: 12px;
+                  line-height: 1.4;
+                }
+                h1, h2, h3 { 
+                  color: #000000 !important; 
+                  font-weight: bold;
+                }
+                p, span, div { 
+                  color: #000000 !important; 
+                }
+                .contact-info {
+                  margin: 15px 0;
+                }
+                .contact-item {
+                  margin: 5px 0;
+                }
+                .skill-tags {
+                  margin: 10px 0;
+                }
+                .skill-tag {
+                  background-color: #f0f0f0;
+                  color: #000000;
+                  padding: 4px 8px;
+                  margin: 2px;
+                  border-radius: 4px;
+                  display: inline-block;
+                  font-size: 10px;
+                }
+                .job-title {
+                  color: #000000;
+                  font-weight: bold;
+                  margin: 5px 0;
+                }
+                .job-duration {
+                  color: #666666;
+                  font-style: italic;
+                  margin: 5px 0;
+                }
+                .job-description {
+                  margin: 10px 0;
+                  color: #000000;
+                }
+              `;
+              clonedDoc.head.appendChild(style);
+            }
+          },
+          callback: (pdf: jsPDF) => {
+            console.log("PDF generated successfully");
+            pdf.save('resume.pdf');
+          },
+        });
+      } catch (error) {
+        console.error("PDF generation failed:", error);
+        
+        // Fallback: create simple text PDF
+        const pdf = new jsPDF({ unit: 'pt', format: 'a4' });
+        const textContent = tempDiv.textContent || "No content available";
+        const lines = textContent.split('\n').filter(line => line.trim());
+        
+        let yPosition = 40;
+        const lineHeight = 14;
+        
+        pdf.setFontSize(16);
+        pdf.setFont('helvetica', 'bold');
+        pdf.text('Resume', 40, yPosition);
+        yPosition += 30;
+        
+        pdf.setFontSize(12);
+        pdf.setFont('helvetica', 'normal');
+        
+        lines.forEach(line => {
+          if (yPosition > 750) {
+            pdf.addPage();
+            yPosition = 40;
+          }
+          pdf.text(line.trim(), 40, yPosition);
+          yPosition += lineHeight;
+        });
+        
         pdf.save('resume.pdf');
+      } finally {
         // Clean up
         document.body.removeChild(tempDiv);
-      },
-    });
+      }
+    }, 500); // Wait 500ms for content to render
   };
 
   const convertMarkdownToStyledHTML = (markdown: string) => {
@@ -565,15 +669,15 @@ const ResumeGenerator = () => {
         // Job duration
         const duration = line.substring(1, line.length - 1);
         html += `<div class="job-duration">${duration}</div>`;
-      } else if (line.startsWith('📧') || line.startsWith('📱') || line.startsWith('📍')) {
+      } else if (line.startsWith('Email:') || line.startsWith('Phone:') || line.startsWith('Location:')) {
         // Contact info
-        if (i === lines.findIndex(l => l.startsWith('📧'))) {
+        if (i === lines.findIndex(l => l.startsWith('Email:'))) {
           html += '<div class="contact-info">';
         }
-        const emoji = line.substring(0, 2);
-        const text = line.substring(2).trim();
-        html += `<div class="contact-item"><span>${emoji}</span>${text}</div>`;
-        if (i === lines.findIndex(l => l.startsWith('📍')) || i === lines.length - 1) {
+        const label = line.split(':')[0];
+        const text = line.split(':')[1]?.trim() || '';
+        html += `<div class="contact-item"><strong>${label}:</strong> ${text}</div>`;
+        if (i === lines.findIndex(l => l.startsWith('Location:')) || i === lines.length - 1) {
           html += '</div>';
         }
       } else if (line.startsWith('**Skills:**')) {
