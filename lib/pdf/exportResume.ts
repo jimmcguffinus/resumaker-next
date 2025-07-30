@@ -12,10 +12,10 @@ export async function exportResumePdf(file = "resume.pdf") {
     console.log("Found resume preview element:", src);
     console.log("Element content:", src.innerHTML);
 
-    // Create a simple PDF without complex DOM manipulation
+    // Create PDF with better settings
     const pdf = new jsPDF({ unit: "pt", format: "a4" });
     
-    // Use a simpler approach with html2canvas
+    // Enhanced html2canvas options for better rendering
     await pdf.html(src, {
       margin: [20, 20, 20, 20],
       autoPaging: "text",
@@ -23,7 +23,20 @@ export async function exportResumePdf(file = "resume.pdf") {
         scale: 2,
         useCORS: true,
         allowTaint: true,
-        backgroundColor: "#ffffff"
+        backgroundColor: "#ffffff",
+        logging: false,
+        removeContainer: true,
+        foreignObjectRendering: false,
+        imageTimeout: 0,
+        onclone: (clonedDoc) => {
+          // Ensure emoji fonts are loaded in the cloned document
+          const style = clonedDoc.createElement('style');
+          style.textContent = `
+            @import url('https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap');
+            * { font-family: "Noto Color Emoji", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif !important; }
+          `;
+          clonedDoc.head.appendChild(style);
+        }
       },
       callback: (pdf) => {
         console.log("PDF generated successfully");
