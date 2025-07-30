@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Download, Plus, Trash2, Moon, Sun, FileText, User, Briefcase, GraduationCap, Code, Award } from 'lucide-react';
 import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 import { exportResumePdf } from '../../lib/pdf/exportResume';
 
 // TypeScript interfaces
@@ -364,69 +365,222 @@ const ResumeGenerator = () => {
       });
     }
 
-    // Convert markdown to simple text for PDF
-    const textContent = markdown
-      .replace(/^# (.+)$/gm, '$1') // Remove # from title
-      .replace(/^\*\*(.+)\*\*$/gm, '$1') // Remove ** from bold
-      .replace(/^\*(.+)\*$/gm, '$1') // Remove * from italic
-      .replace(/^## (.+)$/gm, '\n$1\n') // Convert ## to newlines
-      .replace(/^### (.+)$/gm, '\n$1\n') // Convert ### to newlines
-      .replace(/^📧 (.+)$/gm, 'Email: $1') // Convert emojis to text
-      .replace(/^📱 (.+)$/gm, 'Phone: $1')
-      .replace(/^📍 (.+)$/gm, 'Location: $1')
-      .replace(/^💼 (.+)$/gm, '$1') // Remove emoji from section headers
-      .replace(/^🎓 (.+)$/gm, '$1')
-      .replace(/^⚡ (.+)$/gm, '$1')
-      .replace(/^🏆 (.+)$/gm, '$1');
-
-    // Create PDF with simple text
+    // Convert markdown to HTML with styling
+    const htmlContent = convertMarkdownToStyledHTML(markdown);
+    
+    // Create a temporary div to hold the styled HTML
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = htmlContent;
+    tempDiv.style.position = 'absolute';
+    tempDiv.style.left = '-9999px';
+    tempDiv.style.top = '-9999px';
+    document.body.appendChild(tempDiv);
+    
+    // Convert HTML to PDF
     const pdf = new jsPDF({ unit: 'pt', format: 'a4' });
-    const pageWidth = pdf.internal.pageSize.getWidth();
-    const pageHeight = pdf.internal.pageSize.getHeight();
-    const margin = 40;
-    const lineHeight = 14;
     
-    let y = margin;
-    const lines = textContent.split('\n');
-    
-    pdf.setFontSize(24);
-    pdf.setFont('helvetica', 'bold');
-    pdf.text(lines[0], margin, y);
-    y += lineHeight * 2;
-    
-    pdf.setFontSize(12);
-    pdf.setFont('helvetica', 'normal');
-    
-    for (let i = 1; i < lines.length; i++) {
+    pdf.html(tempDiv, {
+      margin: [20, 20, 20, 20],
+      autoPaging: "text",
+      html2canvas: {
+        scale: 2,
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: "#ffffff",
+        logging: false,
+        removeContainer: true,
+        foreignObjectRendering: false,
+        imageTimeout: 0
+      },
+      callback: (pdf: jsPDF) => {
+        console.log("PDF generated successfully");
+        pdf.save('resume.pdf');
+        // Clean up
+        document.body.removeChild(tempDiv);
+      },
+    });
+  };
+
+  const convertMarkdownToStyledHTML = (markdown: string) => {
+    let html = `
+      <html>
+        <head>
+          <style>
+            body {
+              font-family: 'Helvetica', 'Arial', sans-serif;
+              line-height: 1.6;
+              color: #333;
+              max-width: 800px;
+              margin: 0 auto;
+              padding: 20px;
+            }
+            h1 {
+              color: #2563eb;
+              font-size: 28px;
+              margin-bottom: 10px;
+              border-bottom: 2px solid #dbeafe;
+              padding-bottom: 10px;
+            }
+            h2 {
+              color: #2563eb;
+              font-size: 20px;
+              margin-top: 25px;
+              margin-bottom: 15px;
+              border-bottom: 1px solid #dbeafe;
+              padding-bottom: 5px;
+            }
+            h3 {
+              color: #1f2937;
+              font-size: 16px;
+              margin-top: 15px;
+              margin-bottom: 5px;
+              font-weight: bold;
+            }
+            p {
+              margin: 8px 0;
+            }
+            .contact-info {
+              display: flex;
+              flex-wrap: wrap;
+              gap: 20px;
+              margin: 15px 0;
+              font-size: 14px;
+              color: #6b7280;
+            }
+            .contact-item {
+              display: flex;
+              align-items: center;
+              gap: 5px;
+            }
+            .skill-tags {
+              display: flex;
+              flex-wrap: wrap;
+              gap: 8px;
+              margin: 10px 0;
+            }
+            .skill-tag {
+              background-color: #dbeafe;
+              color: #1e40af;
+              border-radius: 20px;
+              padding: 6px 12px;
+              font-size: 12px;
+              font-weight: 500;
+              display: inline-block;
+            }
+            .job-title {
+              color: #2563eb;
+              font-weight: 600;
+              margin: 5px 0;
+            }
+            .job-duration {
+              color: #6b7280;
+              font-style: italic;
+              margin: 5px 0;
+            }
+            .job-description {
+              margin: 10px 0;
+              color: #374151;
+            }
+            .education-item {
+              margin: 15px 0;
+              padding: 10px;
+              background-color: #f9fafb;
+              border-radius: 8px;
+            }
+            .education-degree {
+              color: #2563eb;
+              font-weight: 500;
+            }
+            .education-year {
+              color: #6b7280;
+              font-size: 14px;
+            }
+            ul {
+              margin: 10px 0;
+              padding-left: 20px;
+            }
+            li {
+              margin: 5px 0;
+            }
+          </style>
+        </head>
+        <body>
+    `;
+
+    // Convert markdown to HTML with custom styling
+    let lines = markdown.split('\n');
+    let inSkillsSection = false;
+    let inExperienceSection = false;
+
+    for (let i = 0; i < lines.length; i++) {
       const line = lines[i].trim();
+      
       if (!line) {
-        y += lineHeight;
+        html += '<br>';
         continue;
       }
-      
-      if (y > pageHeight - margin) {
-        pdf.addPage();
-        y = margin;
-      }
-      
-      // Check if this is a section header (all caps or specific patterns)
-      if (line.match(/^(EXPERIENCE|EDUCATION|SKILLS|ADDITIONAL INFORMATION)$/i)) {
-        pdf.setFontSize(16);
-        pdf.setFont('helvetica', 'bold');
-        y += lineHeight;
-      } else if (line.match(/^[A-Z][A-Z\s]+$/)) {
-        pdf.setFontSize(14);
-        pdf.setFont('helvetica', 'bold');
+
+      // Handle headers
+      if (line.startsWith('# ')) {
+        html += `<h1>${line.substring(2)}</h1>`;
+      } else if (line.startsWith('## ')) {
+        const section = line.substring(3);
+        html += `<h2>${section}</h2>`;
+        inSkillsSection = section.includes('Skills');
+        inExperienceSection = section.includes('Experience');
+      } else if (line.startsWith('### ')) {
+        html += `<h3>${line.substring(4)}</h3>`;
+      } else if (line.startsWith('**') && line.endsWith('**')) {
+        // Job title
+        const title = line.substring(2, line.length - 2);
+        html += `<div class="job-title">${title}</div>`;
+      } else if (line.startsWith('*') && line.endsWith('*') && !line.startsWith('**')) {
+        // Job duration
+        const duration = line.substring(1, line.length - 1);
+        html += `<div class="job-duration">${duration}</div>`;
+      } else if (line.startsWith('📧') || line.startsWith('📱') || line.startsWith('📍')) {
+        // Contact info
+        if (i === lines.findIndex(l => l.startsWith('📧'))) {
+          html += '<div class="contact-info">';
+        }
+        const emoji = line.substring(0, 2);
+        const text = line.substring(2).trim();
+        html += `<div class="contact-item"><span>${emoji}</span>${text}</div>`;
+        if (i === lines.findIndex(l => l.startsWith('📍')) || i === lines.length - 1) {
+          html += '</div>';
+        }
+      } else if (line.startsWith('**Skills:**')) {
+        // Skills section with oval tags
+        const skillsText = line.substring(11).trim();
+        const skills = skillsText.split(',').map(s => s.trim());
+        html += '<div class="skill-tags">';
+        skills.forEach(skill => {
+          html += `<span class="skill-tag">${skill}</span>`;
+        });
+        html += '</div>';
+      } else if (inSkillsSection && line.includes(',')) {
+        // Skills list with oval tags
+        const skills = line.split(',').map(s => s.trim());
+        html += '<div class="skill-tags">';
+        skills.forEach(skill => {
+          html += `<span class="skill-tag">${skill}</span>`;
+        });
+        html += '</div>';
+      } else if (line.startsWith('• ')) {
+        // List items
+        html += `<li>${line.substring(2)}</li>`;
       } else {
-        pdf.setFontSize(12);
-        pdf.setFont('helvetica', 'normal');
+        // Regular paragraph
+        html += `<p>${line}</p>`;
       }
-      
-      pdf.text(line, margin, y);
-      y += lineHeight;
     }
-    
-    pdf.save('resume.pdf');
+
+    html += `
+        </body>
+      </html>
+    `;
+
+    return html;
   };
 
   const loadSampleData = () => {
