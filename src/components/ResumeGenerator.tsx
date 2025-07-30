@@ -539,8 +539,8 @@ const ResumeGenerator = () => {
 
     // Create a comprehensive, unique list of skills from all job entries
     const allSkills = new Set<string>();
-    experience.forEach(exp => {
-      exp.jobs.forEach(job => {
+    experience.forEach((exp: Workplace) => {
+      exp.jobs.forEach((job: SoftwareJob) => {
         job.skills.forEach(skill => allSkills.add(skill));
       });
     });
