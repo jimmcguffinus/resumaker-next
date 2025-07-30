@@ -1,6 +1,6 @@
 # 🔍 Resume Maker Source Code Dump
 
-Generated: 2025-07-29 21:59:57
+Generated: 2025-07-29 23:20:43
 
 ## Project: Next.js Resume Generator with PDF Export
 
@@ -21,20 +21,21 @@ Generated: 2025-07-29 21:59:57
   "dependencies": {
     "@hookform/resolvers": "^5.2.1",
     "@types/jspdf": "^1.3.3",
+    "autoprefixer": "10.4.16",
+    "html2canvas": "1.4.1",
     "jspdf": "^3.0.1",
     "lucide-react": "^0.534.0",
     "next": "15.4.5",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-hook-form": "^7.61.1",
+    "tailwindcss": "3.4.5",
     "zod": "^4.0.13"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "tailwindcss": "^4",
     "typescript": "^5"
   }
 }
@@ -90,11 +91,12 @@ export default nextConfig;
 ## File: postcss.config.mjs
 
 ```javascript
-const config = {
-  plugins: ["@tailwindcss/postcss"],
+export default {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
 };
-
-export default config;
 
 ```n
 
@@ -1818,46 +1820,12 @@ export default ResumeGenerator;
 
 ```typescript
 import { jsPDF } from "jspdf";
-import type { Options } from "html2canvas";   // dev‑only type
-
-/* helper: oklch → rgb() */
-const ok2rgb = (c: string) => {
-  const ctx = document.createElement("canvas").getContext("2d")!;
-  ctx.fillStyle = c;
-  return ctx.fillStyle as string;
-};
-
-/* patch the *given* html2canvas module */
-function patchH2C(h2c: any) {
-  const C = h2c?.Color;
-  if (!C || C.__oklchPatched) return;
-
-  // Initialize conversion counter
-  (window as any).__h2cConversions = 0;
-
-  for (const key of Object.keys(C)) {
-    const fn = C[key];
-    if (typeof fn !== 'function') continue;
-
-    C[key] = function patched(v: any, ...rest: any[]) {
-      if (typeof v === 'string' && v.trim().startsWith('oklch(')) {
-        console.debug('[h2c‑patch]', key, 'converting', v);
-        (window as any).__h2cConversions++;
-        v = ok2rgb(v);
-      }
-      return fn.call(this, v, ...rest);
-    };
-  }
-
-  C.__oklchPatched = true;
-  console.debug('[h2c‑patch] all Color fns wrapped ✔');
-}
 
 /* --------------------------------------------------------------- */
-/* 3️⃣  Your existing DOM scrubber (keep it – belt‑and‑suspenders)  */
+/* DOM scrubber (belt-and-suspenders) */
 function scrub(node: Window | Document | HTMLElement) {
   const doc = toDoc(node);
-  if (!doc || !doc.documentElement) return;     // <-- safeguard
+  if (!doc || !doc.documentElement) return;
 
   // :root background
   const root = doc.documentElement as HTMLElement;
@@ -1926,35 +1894,17 @@ function oklchToRgb(c: string): string {
 
 /* public API */
 export async function exportResumePdf(file = "resume.pdf") {
-  console.log("exportResumePdf loaded"); // debug log
   const src = document.querySelector<HTMLElement>("#resume-preview");
   if (!src) throw new Error("#resume-preview not found");
 
-  /* 1️⃣  scrub live node */
+  /* scrub live node */
   scrub(src);
-
-  /* 2️⃣  load + patch html2canvas */
-  const h2c = (await import("html2canvas")).default;
-  console.log("html2canvas loaded:", !!h2c); // debug log
-  patchH2C(h2c);
-
-  /* 3️⃣  ***important*** — hand the *same* instance to jspdf */
-  (window as any).html2canvas = h2c;   // –> jspdf will reuse this
-  console.log("window.html2canvas set:", !!(window as any).html2canvas); // debug log
-
-  /* 4️⃣  extra belt-and-suspenders (rare but helpful) */
-  for (const k in window) {
-    const maybe = (window as any)[k];
-    if (maybe?.Color?.parseColor && !maybe.Color.__oklchPatched) {
-      patchH2C(maybe);            // patch *every* stray copy hanging around
-    }
-  }
 
   const pdf = new jsPDF({ unit: "pt", format: "a4" });
   await pdf.html(src, {
     margin: 24,
     autoPaging: "text",
-    html2canvas: {          // normal h2c options go here
+    html2canvas: {
       scale: 2,
       onclone: (w: any) => scrub(w.document ?? w),
     },
