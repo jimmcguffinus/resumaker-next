@@ -92,14 +92,14 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: 'bold',
     color: '#1e293b', // slate-800
-    marginBottom: 16, // <-- INCREASED FROM 8 to 16
+    marginBottom: 24, // <-- INCREASED FROM 16 to 24
   },
   tagline: {
     fontSize: 11,
     fontStyle: 'italic',
     color: '#475569', // slate-600
     marginTop: 0,      // <-- REMOVED a marginTop to have one source of spacing
-    marginBottom: 16,  // <-- INCREASED FROM 12 to 16
+    marginBottom: 20,  // <-- INCREASED FROM 16 to 20
   },
   contactInfo: {
     flexDirection: 'row',
