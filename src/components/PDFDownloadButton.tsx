@@ -16,8 +16,19 @@ export const PDFDownloadButton: React.FC<PDFDownloadButtonProps> = ({ resumeData
       fileName="resume.pdf"
       className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
     >
-      {({ blob, url, loading, error }) =>
-        loading ? (
+      {({ blob, url, loading, error }) => {
+        console.log('PDFDownloadLink state:', { loading, error, blob: !!blob, url: !!url });
+        
+        if (error) {
+          console.error('PDF generation error:', error);
+          return (
+            <div className="flex items-center space-x-2 px-4 py-2 bg-red-600 text-white rounded-md">
+              <span>PDF Error</span>
+            </div>
+          );
+        }
+        
+        return loading ? (
           <div className="flex items-center space-x-2">
             <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
             <span>Generating PDF...</span>
@@ -27,8 +38,8 @@ export const PDFDownloadButton: React.FC<PDFDownloadButtonProps> = ({ resumeData
             <Download className="h-4 w-4" />
             <span>Export PDF</span>
           </div>
-        )
-      }
+        );
+      }}
     </PDFDownloadLink>
   );
 }; 
