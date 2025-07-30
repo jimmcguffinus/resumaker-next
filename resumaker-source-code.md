@@ -1,6 +1,6 @@
 # 🔍 Resume Maker Source Code Dump
 
-Generated: 2025-07-30 11:58:06
+Generated: 2025-07-30 12:25:57
 
 ## Project: Next.js Resume Generator with PDF Export
 
@@ -21,7 +21,6 @@ Generated: 2025-07-30 11:58:06
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.1",
-    "@react-pdf/renderer": "^4.3.0",
     "autoprefixer": "10.4.16",
     "lucide-react": "^0.534.0",
     "next": "15.4.5",
@@ -4928,316 +4927,167 @@ export default function Home() {
 
 ```n
 
-## File: src\components\ResumeDocument.tsx
+## File: src\components\PDFDownloadButton.tsx
 
 ```typescript
-import React from 'react';
-import { 
-  Page, 
-  Text, 
-  View, 
-  Document, 
-  StyleSheet, 
-  Font,
-  Image 
-} from '@react-pdf/renderer';
+'use client';
 
-// Register emoji source for proper emoji rendering
-Font.registerEmojiSource({
-  format: 'png',
-  url: 'https://cdn.jsdelivr.net/npm/emoji-datasource-apple@15.0.1/img/apple/64/',
-});
+import React, { useRef } from 'react';
+import { Download } from 'lucide-react';
 
-// Register custom fonts if needed
-Font.register({
-  family: 'Inter',
-  src: 'https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2',
-});
-
-// Create styles for 8.5x11 paper
-const styles = StyleSheet.create({
-  page: {
-    flexDirection: 'column',
-    backgroundColor: '#FFFFFF',
-    padding: 40,
-    fontFamily: 'Inter, Helvetica, Arial, sans-serif',
-    fontSize: 10,
-    lineHeight: 1.4,
-  },
-  header: {
-    marginBottom: 20,
-    borderBottom: '1px solid #e5e7eb',
-    paddingBottom: 15,
-  },
-  name: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 5,
-    color: '#1f2937',
-  },
-  tagline: {
-    fontSize: 14,
-    fontStyle: 'italic',
-    color: '#6b7280',
-    marginBottom: 10,
-  },
-  contactInfo: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 15,
-    marginBottom: 5,
-  },
-  contactItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 5,
-  },
-  contactText: {
-    fontSize: 10,
-    color: '#374151',
-  },
-  section: {
-    marginBottom: 15,
-  },
-  sectionTitle: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: '#1f2937',
-    marginBottom: 8,
-    borderBottom: '1px solid #e5e7eb',
-    paddingBottom: 3,
-  },
-  experienceItem: {
-    marginBottom: 12,
-  },
-  jobHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
-    marginBottom: 5,
-  },
-  jobTitle: {
-    fontSize: 12,
-    fontWeight: 'bold',
-    color: '#1f2937',
-    flex: 1,
-  },
-  jobDuration: {
-    fontSize: 10,
-    color: '#6b7280',
-    fontStyle: 'italic',
-  },
-  companyName: {
-    fontSize: 11,
-    fontWeight: '600',
-    color: '#374151',
-    marginBottom: 3,
-  },
-  jobDescription: {
-    fontSize: 10,
-    color: '#4b5563',
-    marginTop: 5,
-  },
-  skillsContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 8,
-    marginTop: 5,
-  },
-  skillTag: {
-    backgroundColor: '#f3f4f6',
-    paddingHorizontal: 8,
-    paddingVertical: 3,
-    borderRadius: 4,
-    fontSize: 9,
-    color: '#374151',
-  },
-  educationItem: {
-    marginBottom: 10,
-  },
-  educationHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
-    marginBottom: 3,
-  },
-  institutionName: {
-    fontSize: 11,
-    fontWeight: '600',
-    color: '#374151',
-    flex: 1,
-  },
-  educationYear: {
-    fontSize: 10,
-    color: '#6b7280',
-  },
-  degreeInfo: {
-    fontSize: 10,
-    color: '#4b5563',
-    fontStyle: 'italic',
-  },
-  extrasSection: {
-    marginTop: 15,
-  },
-  extraItem: {
-    fontSize: 10,
-    color: '#4b5563',
-    marginBottom: 3,
-  },
-});
-
-interface ContactInfo {
-  phone: string;
-  email: string;
+interface PDFDownloadButtonProps {
+  resumeData: any;
 }
 
-interface Location {
-  city: string;
-  state: string;
-}
+export const PDFDownloadButton: React.FC<PDFDownloadButtonProps> = ({ resumeData }) => {
+  const printRef = useRef<HTMLDivElement>(null);
 
-interface SoftwareJob {
-  title: string;
-  description: string;
-  skills: string[];
-  languages: string[];
-}
+  const handleDownload = () => {
+    if (!printRef.current) return;
 
-interface Workplace {
-  name: string;
-  link: string;
-  blurb: string;
-  tenure: string;
-  jobs: SoftwareJob[];
-}
+    // Create a new window for printing
+    const printWindow = window.open('', '_blank');
+    if (!printWindow) {
+      alert('Please allow popups to download PDF');
+      return;
+    }
 
-interface EducationRecord {
-  institution: string;
-  link: string;
-  year: string;
-  degree: string;
-}
+    // Generate the resume HTML
+    const resumeHTML = generateResumeHTML(resumeData);
 
-interface ResumeData {
-  header: {
-    name: string;
-    tagline: string;
-    contact: ContactInfo;
-    location: Location;
+    // Write the HTML to the new window
+    printWindow.document.write(`
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>Resume - ${resumeData.header?.name || 'Your Name'}</title>
+          <style>
+            @media print {
+              body { margin: 0; padding: 20px; }
+              .resume { max-width: 8.5in; margin: 0 auto; }
+            }
+            body { font-family: Arial, sans-serif; line-height: 1.6; }
+            .header { margin-bottom: 20px; border-bottom: 2px solid #333; padding-bottom: 10px; }
+            .name { font-size: 24px; font-weight: bold; margin-bottom: 5px; }
+            .tagline { font-size: 16px; color: #666; margin-bottom: 10px; }
+            .contact-info { margin-bottom: 15px; }
+            .contact-item { margin: 2px 0; }
+            .section { margin-bottom: 20px; }
+            .section-title { font-size: 18px; font-weight: bold; margin-bottom: 10px; border-bottom: 1px solid #ccc; }
+            .experience-item { margin-bottom: 15px; }
+            .job-header { display: flex; justify-content: space-between; margin-bottom: 5px; }
+            .job-title { font-weight: bold; }
+            .company-name { font-weight: bold; color: #333; }
+            .job-duration { color: #666; font-style: italic; }
+            .job-description { margin-top: 5px; }
+            .skills-container { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 5px; }
+            .skill-tag { background: #f0f0f0; padding: 2px 8px; border-radius: 3px; font-size: 12px; }
+            .education-item { margin-bottom: 10px; }
+            .education-header { display: flex; justify-content: space-between; margin-bottom: 3px; }
+            .institution-name { font-weight: bold; }
+            .education-year { color: #666; }
+            .degree-info { font-style: italic; }
+            .extras-item { margin: 2px 0; }
+          </style>
+        </head>
+        <body>
+          <div class="resume">
+            ${resumeHTML}
+          </div>
+        </body>
+      </html>
+    `);
+    printWindow.document.close();
+
+    // Wait for content to load, then print
+    printWindow.onload = () => {
+      printWindow.print();
+      printWindow.close();
+    };
   };
-  experience: Workplace[];
-  education: EducationRecord[];
-  skills: string[];
-  extras: string[];
-}
 
-interface ResumeDocumentProps {
-  data: ResumeData;
-}
+  const generateResumeHTML = (data: any) => {
+    return `
+      <div class="header">
+        <div class="name">${data.header?.name || 'Your Name'}</div>
+        <div class="tagline">${data.header?.tagline || 'Your Professional Title'}</div>
+        <div class="contact-info">
+          ${data.header?.contact?.email ? `<div class="contact-item">📧 ${data.header.contact.email}</div>` : ''}
+          ${data.header?.contact?.phone ? `<div class="contact-item">📱 ${data.header.contact.phone}</div>` : ''}
+          ${(data.header?.location?.city || data.header?.location?.state) ? 
+            `<div class="contact-item">📍 ${[data.header.location.city, data.header.location.state].filter(Boolean).join(', ')}</div>` : ''}
+        </div>
+      </div>
 
-export const ResumeDocument: React.FC<ResumeDocumentProps> = ({ data }) => (
-  <Document>
-    <Page size="LETTER" style={styles.page}>
-      {/* Header Section */}
-      <View style={styles.header}>
-        <Text style={styles.name}>{data.header?.name || 'Your Name'}</Text>
-        <Text style={styles.tagline}>{data.header?.tagline || 'Your Professional Title'}</Text>
-        
-        <View style={styles.contactInfo}>
-          {data.header?.contact?.email && (
-            <View style={styles.contactItem}>
-              <Text style={styles.contactText}>📧 {data.header.contact.email}</Text>
-            </View>
-          )}
-          {data.header?.contact?.phone && (
-            <View style={styles.contactItem}>
-              <Text style={styles.contactText}>📱 {data.header.contact.phone}</Text>
-            </View>
-          )}
-          {(data.header?.location?.city || data.header?.location?.state) && (
-            <View style={styles.contactItem}>
-              <Text style={styles.contactText}>
-                📍 {[data.header.location.city, data.header.location.state].filter(Boolean).join(', ')}
-              </Text>
-            </View>
-          )}
-        </View>
-      </View>
+      ${data.experience && data.experience.length > 0 ? `
+        <div class="section">
+          <div class="section-title">💼 Experience</div>
+          ${data.experience.map((exp: any) => `
+            <div class="experience-item">
+              <div class="job-header">
+                <div class="company-name">${exp.name}</div>
+                ${exp.tenure ? `<div class="job-duration">${exp.tenure}</div>` : ''}
+              </div>
+              ${exp.jobs ? exp.jobs.map((job: any) => `
+                <div>
+                  <div class="job-title">${job.title}</div>
+                  ${job.description ? `<div class="job-description">${job.description}</div>` : ''}
+                  ${(job.skills?.length > 0 || job.languages?.length > 0) ? `
+                    <div class="skills-container">
+                      ${job.skills?.map((skill: string) => `<span class="skill-tag">${skill}</span>`).join('') || ''}
+                      ${job.languages?.map((lang: string) => `<span class="skill-tag">${lang}</span>`).join('') || ''}
+                    </div>
+                  ` : ''}
+                </div>
+              `).join('') : ''}
+            </div>
+          `).join('')}
+        </div>
+      ` : ''}
 
-      {/* Experience Section */}
-      {data.experience && data.experience.length > 0 && (
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>💼 Experience</Text>
-          {data.experience.map((exp, index) => (
-            <View key={index} style={styles.experienceItem}>
-              <View style={styles.jobHeader}>
-                <Text style={styles.companyName}>{exp.name}</Text>
-                {exp.tenure && <Text style={styles.jobDuration}>{exp.tenure}</Text>}
-              </View>
-              
-              {exp.jobs && exp.jobs.map((job, jobIndex) => (
-                <View key={jobIndex}>
-                  <Text style={styles.jobTitle}>{job.title}</Text>
-                  {job.description && (
-                    <Text style={styles.jobDescription}>{job.description}</Text>
-                  )}
-                  {(job.skills?.length > 0 || job.languages?.length > 0) && (
-                    <View style={styles.skillsContainer}>
-                      {job.skills?.map((skill, skillIndex) => (
-                        <Text key={skillIndex} style={styles.skillTag}>{skill}</Text>
-                      ))}
-                      {job.languages?.map((lang, langIndex) => (
-                        <Text key={langIndex} style={styles.skillTag}>{lang}</Text>
-                      ))}
-                    </View>
-                  )}
-                </View>
-              ))}
-            </View>
-          ))}
-        </View>
-      )}
+      ${data.education && data.education.length > 0 ? `
+        <div class="section">
+          <div class="section-title">🎓 Education</div>
+          ${data.education.map((edu: any) => `
+            <div class="education-item">
+              <div class="education-header">
+                <div class="institution-name">${edu.institution}</div>
+                ${edu.year ? `<div class="education-year">${edu.year}</div>` : ''}
+              </div>
+              ${edu.degree ? `<div class="degree-info">${edu.degree}</div>` : ''}
+            </div>
+          `).join('')}
+        </div>
+      ` : ''}
 
-      {/* Education Section */}
-      {data.education && data.education.length > 0 && (
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>🎓 Education</Text>
-          {data.education.map((edu, index) => (
-            <View key={index} style={styles.educationItem}>
-              <View style={styles.educationHeader}>
-                <Text style={styles.institutionName}>{edu.institution}</Text>
-                {edu.year && <Text style={styles.educationYear}>{edu.year}</Text>}
-              </View>
-              {edu.degree && <Text style={styles.degreeInfo}>{edu.degree}</Text>}
-            </View>
-          ))}
-        </View>
-      )}
+      ${data.skills && data.skills.length > 0 ? `
+        <div class="section">
+          <div class="section-title">⚡ Skills</div>
+          <div class="skills-container">
+            ${data.skills.map((skill: string) => `<span class="skill-tag">${skill}</span>`).join('')}
+          </div>
+        </div>
+      ` : ''}
 
-      {/* Skills Section */}
-      {data.skills && data.skills.length > 0 && (
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>⚡ Skills</Text>
-          <View style={styles.skillsContainer}>
-            {data.skills.map((skill, index) => (
-              <Text key={index} style={styles.skillTag}>{skill}</Text>
-            ))}
-          </View>
-        </View>
-      )}
+      ${data.extras && data.extras.length > 0 ? `
+        <div class="section">
+          <div class="section-title">🏆 Additional Information</div>
+          ${data.extras.map((extra: string) => `<div class="extras-item">• ${extra}</div>`).join('')}
+        </div>
+      ` : ''}
+    `;
+  };
 
-      {/* Additional Information */}
-      {data.extras && data.extras.length > 0 && (
-        <View style={styles.extrasSection}>
-          <Text style={styles.sectionTitle}>🏆 Additional Information</Text>
-          {data.extras.map((extra, index) => (
-            <Text key={index} style={styles.extraItem}>• {extra}</Text>
-          ))}
-        </View>
-      )}
-    </Page>
-  </Document>
-); 
+  return (
+    <button
+      onClick={handleDownload}
+      className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+    >
+      <Download className="h-4 w-4" />
+      <span>Export PDF</span>
+    </button>
+  );
+}; 
 ```n
 
 ## File: src\components\ResumeGenerator.tsx
@@ -5247,8 +5097,7 @@ export const ResumeDocument: React.FC<ResumeDocumentProps> = ({ data }) => (
 
 import React, { useState, useEffect } from 'react';
 import { Download, Plus, Trash2, Moon, Sun, FileText, User, Briefcase, GraduationCap, Code, Award } from 'lucide-react';
-import { PDFDownloadLink } from '@react-pdf/renderer';
-import { ResumeDocument } from './ResumeDocument';
+import { PDFDownloadButton } from './PDFDownloadButton';
 
 // TypeScript interfaces
 interface ContactInfo {
@@ -5536,9 +5385,7 @@ const ResumeGenerator = () => {
     link.click();
   };
 
-  
-
-
+  const convertMarkdownToStyledHTML = (markdown: string) => {
     let html = `
       <html>
         <head>
@@ -5929,25 +5776,7 @@ const ResumeGenerator = () => {
               >
                 Debug Data
               </button>
-              <PDFDownloadLink
-                document={<ResumeDocument data={resumeData} />}
-                fileName="resume.pdf"
-                className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
-              >
-                {({ blob, url, loading, error }) =>
-                  loading ? (
-                    <div className="flex items-center space-x-2">
-                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                      <span>Generating PDF...</span>
-                    </div>
-                  ) : (
-                    <div className="flex items-center space-x-2">
-                      <Download className="h-4 w-4" />
-                      <span>Export PDF</span>
-                    </div>
-                  )
-                }
-              </PDFDownloadLink>
+                              <PDFDownloadButton resumeData={resumeData} />
               <button
                 onClick={() => setDarkMode(!darkMode)}
                 className={`p-2 rounded-md transition-colors ${

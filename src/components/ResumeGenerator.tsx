@@ -50,60 +50,60 @@ interface Resume {
   extras: string[];
 }
 
-// Sample data
+// Sample data - using Kaden's data as the default
 const sampleResume: Resume = {
   header: {
-    name: "Alex Johnson",
-    tagline: "Full Stack Software Engineer",
+    name: "Kaden Taylor",
+    tagline: "I like building things, solving problems, and building things that solve problems.",
     contact: {
-      phone: "(555) 123-4567",
-      email: "alex.johnson@email.com"
+      phone: "(480) 734-8791",
+      email: "kadenjtaylor@gmail.com"
     },
     location: {
-      city: "San Francisco",
-      state: "CA"
+      city: "Tucson",
+      state: "Arizona"
     }
   },
   experience: [
     {
-      name: "TechCorp Inc.",
-      link: "https://techcorp.com",
-      blurb: "Leading technology company focused on cloud solutions",
-      tenure: "2022 - Present",
+      name: "Crunchbase",
+      link: "",
+      blurb: "",
+      tenure: "2022 - 2025",
       jobs: [
         {
-          title: "Senior Software Engineer",
-          description: "Led development of microservices architecture serving 1M+ users daily",
-          skills: ["React", "Node.js", "AWS", "Docker"],
-          languages: ["TypeScript", "Python", "Go"]
+          title: "Platform Engineer",
+          description: "Discovery Team",
+          skills: ["Kafka", "Docker", "Kubernetes", "Debezium"],
+          languages: []
         }
       ]
     },
     {
-      name: "StartupXYZ",
-      link: "https://startupxyz.com",
-      blurb: "Early-stage fintech startup",
-      tenure: "2020 - 2022",
+      name: "Axoni",
+      link: "",
+      blurb: "",
+      tenure: "2021 - 2022",
       jobs: [
         {
-          title: "Full Stack Developer",
-          description: "Built and deployed scalable web applications from scratch",
-          skills: ["Vue.js", "Express", "PostgreSQL", "Redis"],
-          languages: ["JavaScript", "Python"]
+          title: "Software Engineer",
+          description: "Platform Team",
+          skills: ["Kubernetes", "Docker", "Debezium"],
+          languages: []
         }
       ]
     }
   ],
   education: [
     {
-      institution: "Stanford University",
-      link: "https://stanford.edu",
-      year: "2020",
+      institution: "University of Arizona",
+      link: "",
+      year: "2016",
       degree: "B.S. Computer Science"
     }
   ],
-  skills: ["JavaScript", "TypeScript", "React", "Node.js", "Python", "AWS", "Docker", "Kubernetes"],
-  extras: ["Open source contributor to React ecosystem", "Speaker at tech conferences", "AWS Certified Solutions Architect"]
+  skills: ["Kafka", "Docker", "Kubernetes", "Scala", "Java", "React"],
+  extras: ["Runner-up on The FOX network gameshow, SuperHuman"]
 };
 
 const ResumeGenerator = () => {
@@ -505,98 +505,70 @@ const ResumeGenerator = () => {
   };
 
   // Convert Scala format to Next.js format
-  const importScalaData = (scalaData: any) => {
-    try {
-      console.log('Importing Scala data:', scalaData);
-      
-      // Helper function to format phone number
-      const formatPhone = (phoneObj: any) => {
-        if (phoneObj && phoneObj.areaCode && phoneObj.prefix && phoneObj.suffix) {
-          return `(${phoneObj.areaCode}) ${phoneObj.prefix}-${phoneObj.suffix}`;
-        }
-        return phoneObj?.toString() || '';
-      };
+  // This function will now correctly parse the detailed Scala JSON
+  const importScalaData = (scalaData: any): Resume => {
+    const formatPhone = (p: any) => p ? `(${p.areaCode}) ${p.prefix}-${p.suffix}` : '';
+    const formatEmail = (e: any) => e ? `${e.host}@${e.domain}` : '';
+    const formatTenure = (t: any) => {
+      if (!t || !t.start || !t.end) return '';
+      const startYear = new Date(t.start).getFullYear();
+      const endYear = new Date(t.end).getFullYear();
+      return `${startYear} - ${endYear}`;
+    };
 
-      // Helper function to format email
-      const formatEmail = (emailObj: any) => {
-        if (emailObj && emailObj.host && emailObj.domain) {
-          return `${emailObj.host}@${emailObj.domain}`;
-        }
-        return emailObj?.toString() || '';
-      };
+    const experience = (scalaData.experience?.workplaces || []).map((workplace: any) => ({
+      name: workplace.name || '',
+      link: workplace.link || '',
+      blurb: workplace.blurb || '',
+      tenure: formatTenure(workplace.tenure),
+      jobs: (workplace.jobs || []).map((job: any) => ({
+        title: job.title || '',
+        description: job.description || '',
+        // Combine skills and languages into a single skills array for simplicity
+        skills: [...(job.skillsAndTools || []), ...Object.keys(job.langsAndLibs || {})],
+        languages: [], // This can be deprecated if skills now holds everything
+      })),
+    }));
 
-      // Helper function to format tenure
-      const formatTenure = (tenureObj: any) => {
-        if (tenureObj && tenureObj.start && tenureObj.end) {
-          const startYear = new Date(tenureObj.start).getFullYear();
-          const endYear = new Date(tenureObj.end).getFullYear();
-          return `${startYear} - ${endYear}`;
-        }
-        return tenureObj?.toString() || '';
-      };
+    const education = (scalaData.education?.certifcations || []).map((edu: any) => ({
+      institution: edu.instituion || '',
+      link: edu.link || '',
+      year: edu.awarded?.toString() || '',
+      degree: edu.proof?.areaOfStudy || '',
+    }));
 
-      // Helper function to format education proof
-      const formatEducationProof = (proofObj: any) => {
-        if (proofObj && proofObj.areaOfStudy) {
-          return proofObj.areaOfStudy;
-        }
-        return proofObj?.toString() || '';
-      };
+    // Create a comprehensive, unique list of skills from all job entries
+    const allSkills = new Set<string>();
+    experience.forEach(exp => {
+      exp.jobs.forEach(job => {
+        job.skills.forEach(skill => allSkills.add(skill));
+      });
+    });
 
-      const converted: Resume = {
-        header: {
-          name: scalaData.header?.name || 'Your Name',
-          tagline: scalaData.header?.tagline || 'Your Professional Title',
-          contact: {
-            phone: formatPhone(scalaData.header?.contactInfo?.phoneNumber),
-            email: formatEmail(scalaData.header?.contactInfo?.email)
-          },
-          location: {
-            city: scalaData.header?.location?.city || '',
-            state: scalaData.header?.location?.state?.name || ''
-          }
+    const extras = (scalaData.extras?.elements || []).map((el: any) =>
+      (el.contentChunks || []).map((chunk: any) =>
+        typeof chunk === 'string' ? chunk : chunk.text
+      ).join('')
+    );
+
+    return {
+      header: {
+        name: scalaData.header?.name || '',
+        tagline: scalaData.header?.tagline || '',
+        contact: {
+          phone: formatPhone(scalaData.header?.contactInfo?.phoneNumber),
+          email: formatEmail(scalaData.header?.contactInfo?.email),
         },
-        experience: (scalaData.experience?.workplaces || []).map((workplace: any) => ({
-          name: workplace.name || '',
-          link: workplace.link || '',
-          blurb: workplace.blurb || '',
-          tenure: formatTenure(workplace.tenure),
-          jobs: (workplace.jobs || []).map((job: any) => ({
-            title: job.title || '',
-            description: job.description || '',
-            skills: job.skillsAndTools || [],
-            languages: Object.keys(job.langsAndLibs || {}).flatMap(lang => 
-              job.langsAndLibs[lang] || [lang]
-            )
-          }))
-        })),
-        education: (scalaData.education?.certifcations || []).map((edu: any) => ({
-          institution: edu.instituion || '',
-          link: edu.link || '',
-          year: edu.awarded?.toString() || '',
-          degree: formatEducationProof(edu.proof)
-        })),
-        skills: (scalaData.experience?.workplaces || []).flatMap((workplace: any) =>
-          (workplace.jobs || []).flatMap((job: any) => 
-            [...(job.skillsAndTools || []), ...Object.keys(job.langsAndLibs || {})]
-          )
-        ).filter((skill: string, index: number, arr: string[]) => 
-          arr.indexOf(skill) === index
-        ),
-        extras: (scalaData.extras?.elements || []).map((element: any) => 
-          (element.contentChunks || []).map((chunk: any) => 
-            typeof chunk === 'string' ? chunk : chunk.text
-          ).join('')
-        )
-      };
-      
-      console.log('Converted data:', converted);
-      setResumeData(converted);
-      alert('Scala data imported successfully!');
-    } catch (error) {
-      console.error('Error importing Scala data:', error);
-      alert('Error importing Scala data. Please check the format.');
-    }
+        location: {
+          city: scalaData.header?.location?.city || '',
+          state: scalaData.header?.location?.state?.name || '',
+        },
+      },
+      experience,
+      education,
+      skills: Array.from(allSkills),
+      extras,
+    };
   };
 
   return (
@@ -644,9 +616,12 @@ const ResumeGenerator = () => {
                       reader.onload = (e) => {
                         try {
                           const scalaData = JSON.parse(e.target?.result as string);
-                          importScalaData(scalaData);
+                          const convertedData = importScalaData(scalaData);
+                          setResumeData(convertedData);
+                          alert('Scala data imported successfully!');
                         } catch (error) {
-                          alert('Error reading file. Please ensure it\'s a valid JSON file.');
+                          console.error("Failed to parse or convert Scala JSON", error);
+                          alert('Error processing file. Please ensure it\'s a valid Scala resume JSON.');
                         }
                       };
                       reader.readAsText(file);
