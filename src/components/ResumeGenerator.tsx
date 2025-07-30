@@ -221,16 +221,16 @@ const ResumeGenerator = () => {
     doc.setTextColor(107, 114, 128); // Gray color
     doc.text(resumeData.header.tagline || 'Your Professional Title', 20, 42);
     
-    // Contact info with icons
-    doc.setFontSize(10);
-    doc.setFont('helvetica', 'normal');
-    doc.setTextColor(75, 85, 99);
-    
-    const contactInfo = [
-      `📧 ${resumeData.header.contact.email}`,
-      `📱 ${resumeData.header.contact.phone}`,
-      `📍 ${resumeData.header.location.city}, ${resumeData.header.location.state}`
-    ];
+           // Contact info
+       doc.setFontSize(10);
+       doc.setFont('helvetica', 'normal');
+       doc.setTextColor(75, 85, 99);
+
+       const contactInfo = [
+         `Email: ${resumeData.header.contact.email}`,
+         `Phone: ${resumeData.header.contact.phone}`,
+         `Location: ${resumeData.header.location.city}, ${resumeData.header.location.state}`
+       ];
     
     let contactX = 20;
     contactInfo.forEach((info, index) => {
@@ -246,11 +246,11 @@ const ResumeGenerator = () => {
     
     // Experience with enhanced styling
     if (resumeData.experience && resumeData.experience.length > 0) {
-      // Section header
-      doc.setFontSize(18);
-      doc.setFont('helvetica', 'bold');
-      doc.setTextColor(59, 130, 246);
-      doc.text('💼 Experience', 20, yPosition);
+               // Section header
+         doc.setFontSize(18);
+         doc.setFont('helvetica', 'bold');
+         doc.setTextColor(59, 130, 246);
+         doc.text('Experience', 20, yPosition);
       
       // Draw underline
       doc.setDrawColor(59, 130, 246);
@@ -319,11 +319,11 @@ const ResumeGenerator = () => {
         yPosition = 20;
       }
       
-      // Section header
-      doc.setFontSize(18);
-      doc.setFont('helvetica', 'bold');
-      doc.setTextColor(59, 130, 246);
-      doc.text('🎓 Education', 20, yPosition);
+               // Section header
+         doc.setFontSize(18);
+         doc.setFont('helvetica', 'bold');
+         doc.setTextColor(59, 130, 246);
+         doc.text('Education', 20, yPosition);
       
       // Draw underline
       doc.setDrawColor(59, 130, 246);
@@ -367,11 +367,11 @@ const ResumeGenerator = () => {
         yPosition = 20;
       }
       
-      // Section header
-      doc.setFontSize(18);
-      doc.setFont('helvetica', 'bold');
-      doc.setTextColor(59, 130, 246);
-      doc.text('⚡ Skills', 20, yPosition);
+               // Section header
+         doc.setFontSize(18);
+         doc.setFont('helvetica', 'bold');
+         doc.setTextColor(59, 130, 246);
+         doc.text('Skills', 20, yPosition);
       
       // Draw underline
       doc.setDrawColor(59, 130, 246);
@@ -427,11 +427,11 @@ const ResumeGenerator = () => {
         yPosition = 20;
       }
       
-      // Section header
-      doc.setFontSize(18);
-      doc.setFont('helvetica', 'bold');
-      doc.setTextColor(59, 130, 246);
-      doc.text('🏆 Additional Information', 20, yPosition);
+               // Section header
+         doc.setFontSize(18);
+         doc.setFont('helvetica', 'bold');
+         doc.setTextColor(59, 130, 246);
+         doc.text('Additional Information', 20, yPosition);
       
       // Draw underline
       doc.setDrawColor(59, 130, 246);
@@ -450,14 +450,14 @@ const ResumeGenerator = () => {
           yPosition = 20;
         }
         
-        // Achievement icon
-        doc.setTextColor(59, 130, 246);
-        doc.text('🏅', 20, yPosition);
-        
-        // Achievement text
-        doc.setTextColor(75, 85, 99);
-        const lines = doc.splitTextToSize(extra, 150);
-        doc.text(lines, 30, yPosition);
+                   // Achievement bullet
+           doc.setTextColor(59, 130, 246);
+           doc.text('•', 20, yPosition);
+
+           // Achievement text
+           doc.setTextColor(75, 85, 99);
+           const lines = doc.splitTextToSize(extra, 150);
+           doc.text(lines, 30, yPosition);
         yPosition += lines.length * 5 + 3;
       });
     }
