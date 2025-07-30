@@ -9,7 +9,7 @@ html {
                "Segoe UI", Roboto, sans-serif;
 }
 
-/* Ensure white pages when html2canvas/jsPDF rasterise */
+/* Ensure white pages when PDF is generated */
 @media print {
   body { background:#ffffff !important; color:#000000 !important; }
 }
