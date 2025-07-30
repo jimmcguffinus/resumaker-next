@@ -249,6 +249,186 @@ const ResumeGenerator = () => {
     link.click();
   };
 
+  const exportToMarkdown = () => {
+    let markdown = `# ${resumeData.header?.name || 'Your Name'}\n\n`;
+    markdown += `*${resumeData.header?.tagline || 'Your Professional Title'}*\n\n`;
+    
+    // Contact Information
+    markdown += `📧 ${resumeData.header?.contact?.email || ''}\n`;
+    markdown += `📱 ${resumeData.header?.contact?.phone || ''}\n`;
+    markdown += `📍 ${resumeData.header?.location?.city || ''}, ${resumeData.header?.location?.state || ''}\n\n`;
+    
+    // Experience
+    if (resumeData.experience && resumeData.experience.length > 0) {
+      markdown += `## 💼 Experience\n\n`;
+      resumeData.experience.forEach((exp) => {
+        markdown += `### ${exp.name}\n`;
+        if (exp.jobs?.[0]?.title) {
+          markdown += `**${exp.jobs[0].title}**\n`;
+        }
+        if (exp.tenure) {
+          markdown += `*${exp.tenure}*\n\n`;
+        }
+        if (exp.jobs?.[0]?.description) {
+          markdown += `${exp.jobs[0].description}\n\n`;
+        }
+        if (exp.jobs?.[0]?.skills && exp.jobs[0].skills.length > 0) {
+          markdown += `**Skills:** ${exp.jobs[0].skills.join(', ')}\n\n`;
+        }
+      });
+    }
+    
+    // Education
+    if (resumeData.education && resumeData.education.length > 0) {
+      markdown += `## 🎓 Education\n\n`;
+      resumeData.education.forEach((edu) => {
+        markdown += `### ${edu.institution}\n`;
+        markdown += `**${edu.degree}**\n`;
+        markdown += `*${edu.year}*\n\n`;
+      });
+    }
+    
+    // Skills
+    if (resumeData.skills && resumeData.skills.length > 0) {
+      markdown += `## ⚡ Skills\n\n`;
+      markdown += `${resumeData.skills.join(', ')}\n\n`;
+    }
+    
+    // Additional Information
+    if (resumeData.extras && resumeData.extras.length > 0) {
+      markdown += `## 🏆 Additional Information\n\n`;
+      resumeData.extras.forEach((extra) => {
+        markdown += `• ${extra}\n`;
+      });
+    }
+    
+    const dataBlob = new Blob([markdown], { type: 'text/markdown' });
+    const url = URL.createObjectURL(dataBlob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'resume.md';
+    link.click();
+  };
+
+  const exportMarkdownToPDF = () => {
+    // Generate the same markdown content
+    let markdown = `# ${resumeData.header?.name || 'Your Name'}\n\n`;
+    markdown += `*${resumeData.header?.tagline || 'Your Professional Title'}*\n\n`;
+    
+    // Contact Information
+    markdown += `📧 ${resumeData.header?.contact?.email || ''}\n`;
+    markdown += `📱 ${resumeData.header?.contact?.phone || ''}\n`;
+    markdown += `📍 ${resumeData.header?.location?.city || ''}, ${resumeData.header?.location?.state || ''}\n\n`;
+    
+    // Experience
+    if (resumeData.experience && resumeData.experience.length > 0) {
+      markdown += `## 💼 Experience\n\n`;
+      resumeData.experience.forEach((exp) => {
+        markdown += `### ${exp.name}\n`;
+        if (exp.jobs?.[0]?.title) {
+          markdown += `**${exp.jobs[0].title}**\n`;
+        }
+        if (exp.tenure) {
+          markdown += `*${exp.tenure}*\n\n`;
+        }
+        if (exp.jobs?.[0]?.description) {
+          markdown += `${exp.jobs[0].description}\n\n`;
+        }
+        if (exp.jobs?.[0]?.skills && exp.jobs[0].skills.length > 0) {
+          markdown += `**Skills:** ${exp.jobs[0].skills.join(', ')}\n\n`;
+        }
+      });
+    }
+    
+    // Education
+    if (resumeData.education && resumeData.education.length > 0) {
+      markdown += `## 🎓 Education\n\n`;
+      resumeData.education.forEach((edu) => {
+        markdown += `### ${edu.institution}\n`;
+        markdown += `**${edu.degree}**\n`;
+        markdown += `*${edu.year}*\n\n`;
+      });
+    }
+    
+    // Skills
+    if (resumeData.skills && resumeData.skills.length > 0) {
+      markdown += `## ⚡ Skills\n\n`;
+      markdown += `${resumeData.skills.join(', ')}\n\n`;
+    }
+    
+    // Additional Information
+    if (resumeData.extras && resumeData.extras.length > 0) {
+      markdown += `## 🏆 Additional Information\n\n`;
+      resumeData.extras.forEach((extra) => {
+        markdown += `• ${extra}\n`;
+      });
+    }
+
+    // Convert markdown to simple text for PDF
+    const textContent = markdown
+      .replace(/^# (.+)$/gm, '$1') // Remove # from title
+      .replace(/^\*\*(.+)\*\*$/gm, '$1') // Remove ** from bold
+      .replace(/^\*(.+)\*$/gm, '$1') // Remove * from italic
+      .replace(/^## (.+)$/gm, '\n$1\n') // Convert ## to newlines
+      .replace(/^### (.+)$/gm, '\n$1\n') // Convert ### to newlines
+      .replace(/^📧 (.+)$/gm, 'Email: $1') // Convert emojis to text
+      .replace(/^📱 (.+)$/gm, 'Phone: $1')
+      .replace(/^📍 (.+)$/gm, 'Location: $1')
+      .replace(/^💼 (.+)$/gm, '$1') // Remove emoji from section headers
+      .replace(/^🎓 (.+)$/gm, '$1')
+      .replace(/^⚡ (.+)$/gm, '$1')
+      .replace(/^🏆 (.+)$/gm, '$1');
+
+    // Create PDF with simple text
+    const pdf = new jsPDF({ unit: 'pt', format: 'a4' });
+    const pageWidth = pdf.internal.pageSize.getWidth();
+    const pageHeight = pdf.internal.pageSize.getHeight();
+    const margin = 40;
+    const lineHeight = 14;
+    
+    let y = margin;
+    const lines = textContent.split('\n');
+    
+    pdf.setFontSize(24);
+    pdf.setFont('helvetica', 'bold');
+    pdf.text(lines[0], margin, y);
+    y += lineHeight * 2;
+    
+    pdf.setFontSize(12);
+    pdf.setFont('helvetica', 'normal');
+    
+    for (let i = 1; i < lines.length; i++) {
+      const line = lines[i].trim();
+      if (!line) {
+        y += lineHeight;
+        continue;
+      }
+      
+      if (y > pageHeight - margin) {
+        pdf.addPage();
+        y = margin;
+      }
+      
+      // Check if this is a section header (all caps or specific patterns)
+      if (line.match(/^(EXPERIENCE|EDUCATION|SKILLS|ADDITIONAL INFORMATION)$/i)) {
+        pdf.setFontSize(16);
+        pdf.setFont('helvetica', 'bold');
+        y += lineHeight;
+      } else if (line.match(/^[A-Z][A-Z\s]+$/)) {
+        pdf.setFontSize(14);
+        pdf.setFont('helvetica', 'bold');
+      } else {
+        pdf.setFontSize(12);
+        pdf.setFont('helvetica', 'normal');
+      }
+      
+      pdf.text(line, margin, y);
+      y += lineHeight;
+    }
+    
+    pdf.save('resume.pdf');
+  };
+
   const loadSampleData = () => {
     console.log('Loading sample data:', sampleResume);
     setResumeData(sampleResume);
@@ -423,6 +603,19 @@ const ResumeGenerator = () => {
                 className="px-4 py-2 text-sm font-medium text-green-600 hover:text-green-700 transition-colors"
               >
                 Export JSON
+              </button>
+              <button
+                onClick={exportToMarkdown}
+                className="px-4 py-2 text-sm font-medium text-yellow-600 hover:text-yellow-700 transition-colors"
+              >
+                Export Markdown
+              </button>
+              <button
+                onClick={exportMarkdownToPDF}
+                className="px-4 py-2 text-sm font-medium text-red-600 hover:text-red-700 transition-colors"
+                title="Export Markdown as PDF"
+              >
+                Export PDF (Markdown)
               </button>
               <button
                 onClick={() => {
