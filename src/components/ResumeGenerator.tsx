@@ -210,26 +210,54 @@ const ResumeGenerator = () => {
     // Set font
     doc.setFont('helvetica');
     
-    // Header
-    doc.setFontSize(24);
+    // Header with better styling
+    doc.setFontSize(28);
     doc.setFont('helvetica', 'bold');
+    doc.setTextColor(59, 130, 246); // Blue color
     doc.text(resumeData.header.name || 'Your Name', 20, 30);
     
-    doc.setFontSize(14);
-    doc.setFont('helvetica', 'normal');
-    doc.text(resumeData.header.tagline || 'Your Professional Title', 20, 40);
+    doc.setFontSize(16);
+    doc.setFont('helvetica', 'italic');
+    doc.setTextColor(107, 114, 128); // Gray color
+    doc.text(resumeData.header.tagline || 'Your Professional Title', 20, 42);
     
+    // Contact info with icons
     doc.setFontSize(10);
-    doc.text(`${resumeData.header.contact.email} | ${resumeData.header.contact.phone} | ${resumeData.header.location.city}, ${resumeData.header.location.state}`, 20, 50);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(75, 85, 99);
+    
+    const contactInfo = [
+      `📧 ${resumeData.header.contact.email}`,
+      `📱 ${resumeData.header.contact.phone}`,
+      `📍 ${resumeData.header.location.city}, ${resumeData.header.location.state}`
+    ];
+    
+    let contactX = 20;
+    contactInfo.forEach((info, index) => {
+      if (contactX > 180) {
+        contactX = 20;
+        yPosition += 8;
+      }
+      doc.text(info, contactX, 52);
+      contactX += 60;
+    });
     
     let yPosition = 70;
     
-    // Experience
+    // Experience with enhanced styling
     if (resumeData.experience && resumeData.experience.length > 0) {
-      doc.setFontSize(16);
+      // Section header
+      doc.setFontSize(18);
       doc.setFont('helvetica', 'bold');
-      doc.text('Experience', 20, yPosition);
-      yPosition += 10;
+      doc.setTextColor(59, 130, 246);
+      doc.text('💼 Experience', 20, yPosition);
+      
+      // Draw underline
+      doc.setDrawColor(59, 130, 246);
+      doc.setLineWidth(0.5);
+      doc.line(20, yPosition + 2, 50, yPosition + 2);
+      
+      yPosition += 15;
       
       resumeData.experience.forEach((exp, index) => {
         if (yPosition > 250) {
@@ -237,41 +265,72 @@ const ResumeGenerator = () => {
           yPosition = 20;
         }
         
-        doc.setFontSize(12);
+        // Company name
+        doc.setFontSize(14);
         doc.setFont('helvetica', 'bold');
+        doc.setTextColor(17, 24, 39);
         doc.text(exp.name, 20, yPosition);
         
+        // Tenure badge
         doc.setFontSize(10);
         doc.setFont('helvetica', 'normal');
+        doc.setTextColor(107, 114, 128);
         doc.text(exp.tenure, 150, yPosition);
-        yPosition += 5;
+        yPosition += 6;
         
+        // Job title
         if (exp.jobs?.[0]) {
+          doc.setFontSize(12);
+          doc.setFont('helvetica', 'bold');
+          doc.setTextColor(59, 130, 246);
           doc.text(exp.jobs[0].title, 20, yPosition);
-          yPosition += 5;
+          yPosition += 6;
           
+          // Description
           if (exp.jobs[0].description) {
-            const lines = doc.splitTextToSize(exp.jobs[0].description, 170);
+            doc.setFontSize(10);
+            doc.setFont('helvetica', 'normal');
+            doc.setTextColor(75, 85, 99);
+            const lines = doc.splitTextToSize(exp.jobs[0].description, 160);
             doc.text(lines, 20, yPosition);
             yPosition += lines.length * 5;
           }
+          
+          // Skills
+          if (exp.jobs[0].skills && exp.jobs[0].skills.length > 0) {
+            yPosition += 3;
+            doc.setFontSize(8);
+            doc.setFont('helvetica', 'normal');
+            doc.setTextColor(59, 130, 246);
+            const skillsText = exp.jobs[0].skills.join(' • ');
+            doc.text(skillsText, 20, yPosition);
+            yPosition += 8;
+          }
         }
         
-        yPosition += 5;
+        yPosition += 8;
       });
     }
     
-    // Education
+    // Education with enhanced styling
     if (resumeData.education && resumeData.education.length > 0) {
       if (yPosition > 250) {
         doc.addPage();
         yPosition = 20;
       }
       
-      doc.setFontSize(16);
+      // Section header
+      doc.setFontSize(18);
       doc.setFont('helvetica', 'bold');
-      doc.text('Education', 20, yPosition);
-      yPosition += 10;
+      doc.setTextColor(59, 130, 246);
+      doc.text('🎓 Education', 20, yPosition);
+      
+      // Draw underline
+      doc.setDrawColor(59, 130, 246);
+      doc.setLineWidth(0.5);
+      doc.line(20, yPosition + 2, 50, yPosition + 2);
+      
+      yPosition += 15;
       
       resumeData.education.forEach((edu) => {
         if (yPosition > 250) {
@@ -279,59 +338,127 @@ const ResumeGenerator = () => {
           yPosition = 20;
         }
         
+        // Institution name
         doc.setFontSize(12);
         doc.setFont('helvetica', 'bold');
+        doc.setTextColor(17, 24, 39);
         doc.text(edu.institution, 20, yPosition);
         
+        // Year badge
         doc.setFontSize(10);
         doc.setFont('helvetica', 'normal');
+        doc.setTextColor(107, 114, 128);
         doc.text(edu.year, 150, yPosition);
         yPosition += 5;
         
+        // Degree
+        doc.setFontSize(11);
+        doc.setFont('helvetica', 'bold');
+        doc.setTextColor(59, 130, 246);
         doc.text(edu.degree, 20, yPosition);
         yPosition += 10;
       });
     }
     
-    // Skills
+    // Skills with enhanced styling
     if (resumeData.skills && resumeData.skills.length > 0) {
       if (yPosition > 250) {
         doc.addPage();
         yPosition = 20;
       }
       
-      doc.setFontSize(16);
+      // Section header
+      doc.setFontSize(18);
       doc.setFont('helvetica', 'bold');
-      doc.text('Skills', 20, yPosition);
-      yPosition += 10;
+      doc.setTextColor(59, 130, 246);
+      doc.text('⚡ Skills', 20, yPosition);
       
+      // Draw underline
+      doc.setDrawColor(59, 130, 246);
+      doc.setLineWidth(0.5);
+      doc.line(20, yPosition + 2, 35, yPosition + 2);
+      
+      yPosition += 15;
+      
+      // Skills as pills
       doc.setFontSize(10);
       doc.setFont('helvetica', 'normal');
-      doc.text(resumeData.skills.join(', '), 20, yPosition);
-      yPosition += 10;
+      doc.setTextColor(59, 130, 246);
+      
+      let skillX = 20;
+      let skillY = yPosition;
+      
+      resumeData.skills.forEach((skill, index) => {
+        const skillWidth = doc.getTextWidth(skill) + 8;
+        
+        if (skillX + skillWidth > 180) {
+          skillX = 20;
+          skillY += 12;
+        }
+        
+        if (skillY > 250) {
+          doc.addPage();
+          skillY = 20;
+        }
+        
+        // Draw skill pill background
+        doc.setFillColor(239, 246, 255);
+        doc.roundedRect(skillX, skillY - 4, skillWidth, 8, 4, 4, 'F');
+        
+        // Draw skill pill border
+        doc.setDrawColor(59, 130, 246);
+        doc.setLineWidth(0.5);
+        doc.roundedRect(skillX, skillY - 4, skillWidth, 8, 4, 4, 'S');
+        
+        // Skill text
+        doc.setTextColor(59, 130, 246);
+        doc.text(skill, skillX + 4, skillY + 1);
+        
+        skillX += skillWidth + 6;
+      });
+      
+      yPosition = skillY + 15;
     }
     
-    // Extras
+    // Extras with enhanced styling
     if (resumeData.extras && resumeData.extras.length > 0) {
       if (yPosition > 250) {
         doc.addPage();
         yPosition = 20;
       }
       
-      doc.setFontSize(16);
+      // Section header
+      doc.setFontSize(18);
       doc.setFont('helvetica', 'bold');
-      doc.text('Additional Information', 20, yPosition);
-      yPosition += 10;
+      doc.setTextColor(59, 130, 246);
+      doc.text('🏆 Additional Information', 20, yPosition);
+      
+      // Draw underline
+      doc.setDrawColor(59, 130, 246);
+      doc.setLineWidth(0.5);
+      doc.line(20, yPosition + 2, 70, yPosition + 2);
+      
+      yPosition += 15;
       
       doc.setFontSize(10);
       doc.setFont('helvetica', 'normal');
-      resumeData.extras.forEach((extra) => {
+      doc.setTextColor(75, 85, 99);
+      
+      resumeData.extras.forEach((extra, index) => {
         if (yPosition > 250) {
           doc.addPage();
           yPosition = 20;
         }
-        doc.text(`• ${extra}`, 20, yPosition);
-        yPosition += 5;
+        
+        // Achievement icon
+        doc.setTextColor(59, 130, 246);
+        doc.text('🏅', 20, yPosition);
+        
+        // Achievement text
+        doc.setTextColor(75, 85, 99);
+        const lines = doc.splitTextToSize(extra, 150);
+        doc.text(lines, 30, yPosition);
+        yPosition += lines.length * 5 + 3;
       });
     }
     
