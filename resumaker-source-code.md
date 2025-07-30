@@ -1,6 +1,6 @@
 # 🔍 Resume Maker Source Code Dump
 
-Generated: 2025-07-29 20:27:29
+Generated: 2025-07-29 20:53:51
 
 ## Project: Next.js Resume Generator with PDF Export
 
@@ -1821,49 +1821,65 @@ import { jsPDF } from "jspdf";
 
 /* ---------- helpers ---------- */
 
-/** Convert any OKLCH colour to rgb() because html2canvas/jsPDF don't
- *  understand OKLCH yet.  If the value is already rgb / rgba / hex etc.
- *  we return it untouched. */
-function okLchToRgb(cssColour: string): string {
-  if (!cssColour.startsWith("oklch")) return cssColour;
-
+function oklchToRgb(c: string): string {
+  if (!c.startsWith("oklch")) return c;
   const ctx = document.createElement("canvas").getContext("2d")!;
-  ctx.fillStyle = cssColour;           // browser converts OKLCH → rgb()
-  return ctx.fillStyle as string;      // e.g. "rgb(37, 99, 235)"
+  ctx.fillStyle = c;
+  return ctx.fillStyle as string;
 }
 
-/** Scrub the colour‑style properties that trip up jsPDF */
-function scrubColours(root: Document | HTMLElement) {
-  const nodes = (root instanceof Document ? root.body : root)
-    .querySelectorAll<HTMLElement>("*");
+/** Accept Window | Document | HTMLElement and return its Document */
+function toDoc(node: Window | Document | HTMLElement): Document {
+  return node instanceof Window
+    ? node.document
+    : node instanceof Document
+      ? node
+      : node.ownerDocument!;
+}
 
-  nodes.forEach(el => {
+/** Walk every element (+ :root) and re‑write any OKLCH colours to rgb. */
+function scrub(node: Window | Document | HTMLElement) {
+  const doc = toDoc(node);
+  if (!doc || !doc.documentElement) return;     // <-- safeguard
+
+  // :root background
+  const root = doc.documentElement as HTMLElement;
+  const rootBg = getComputedStyle(root).backgroundColor;
+  if (rootBg.includes("oklch")) root.style.backgroundColor = oklchToRgb(rootBg);
+
+  // every descendant
+  doc.body.querySelectorAll<HTMLElement>("*").forEach(el => {
     const cs = getComputedStyle(el);
 
-    // text colour
-    el.style.color = okLchToRgb(cs.color);
+    const fix = (prop: string) => {
+      const val = (cs as any)[prop] as string | undefined;
+      if (val && val.includes("oklch"))
+        (el.style as any)[prop] = oklchToRgb(val);
+    };
 
-    // background colour (ignore 'transparent')
-    if (cs.backgroundColor && cs.backgroundColor !== "rgba(0, 0, 0, 0)")
-      el.style.backgroundColor = okLchToRgb(cs.backgroundColor);
-
-    // border colours (only if they exist)
+    fix("color");
+    fix("backgroundColor");
+    fix("outlineColor");
     ["borderColor","borderTopColor","borderRightColor",
-     "borderBottomColor","borderLeftColor"]
-      .forEach(prop => {
-        const val = (cs as any)[prop] as string | undefined;
-        if (val) (el.style as any)[prop] = okLchToRgb(val);
-      });
+     "borderBottomColor","borderLeftColor"].forEach(fix);
+
+    // shadows can contain multiple colours → regex replace
+    ["boxShadow","textShadow","WebkitBoxShadow"].forEach(prop => {
+      const val = (cs as any)[prop] as string | undefined;
+      if (val && val.includes("oklch"))
+        (el.style as any)[prop] = val.replace(/oklch\([^)]+\)/g, m => oklchToRgb(m));
+    });
   });
 }
 
 /* ---------- public API ---------- */
 
-/** Export the #resume-preview element to a paginated PDF that
- *  visually matches the on‑screen card. */
 export async function exportResumePdf(filename = "resume.pdf") {
   const src = document.querySelector<HTMLElement>("#resume-preview");
-  if (!src) throw new Error("❌  #resume-preview element not found.");
+  if (!src) throw new Error("#resume-preview not found");
+
+  /* 1️⃣  Scrub the **live** node before html2canvas clones anything */
+  scrub(src);
 
   const pdf = new jsPDF({ unit: "pt", format: "a4" });
 
@@ -1872,12 +1888,11 @@ export async function exportResumePdf(filename = "resume.pdf") {
     autoPaging: "text",
     html2canvas: {
       scale: 2,
-      /* This callback fires inside html2canvas's *own* clone of the DOM,
-         which is the version jsPDF renders.  We scrub that clone so the
-         OKLCH values never reach the parser. */
-      onclone: (clonedDoc: Document) => scrubColours(clonedDoc)
+      /* 2️⃣  Scrub html2canvas's internal clone as well */
+      onclone: (cloneWin: any) =>                    // new
+        scrub(cloneWin.document ?? cloneWin), // cope with null doc
     },
-    callback: doc => doc.save(filename)
+    callback: doc => doc.save(filename),
   });
 } 
 ```n

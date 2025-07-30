@@ -1,24 +1,34 @@
 import { jsPDF } from "jspdf";
 
-/* ---------- helpers ---------- */
-
-function oklchToRgb(c: string): string {
-  if (!c.startsWith("oklch")) return c;
+/* --------------------------------------------------------------- */
+/* 1️⃣  ONE‑LINER OKLCH → rgb helper                                */
+const cssOkLchToRgb = (c: string) => {
   const ctx = document.createElement("canvas").getContext("2d")!;
   ctx.fillStyle = c;
-  return ctx.fillStyle as string;
+  return ctx.fillStyle as string;              // returns "rgb(r g b)"
+};
+
+/* --------------------------------------------------------------- */
+/* 2️⃣  Patch html2canvas's colour parser ONCE per page‑load        */
+function patchHtml2canvasColor() {
+  // jspdf pulls in its own bundled copy of html2canvas on demand
+  const h2c: any = (window as any).html2canvas;
+  if (!h2c?.Color || h2c.Color.__oklchPatched) return;
+
+  const orig = h2c.Color.parseColor;
+  h2c.Color.parseColor = (value: any, ...rest: any[]) => {
+    if (typeof value === "string" && value.trim().startsWith("oklch(")) {
+      console.debug("[h2c‑patch] converting", value);
+      value = cssOkLchToRgb(value);
+    }
+    return orig(value, ...rest);
+  };
+  h2c.Color.__oklchPatched = true;
+  console.debug("[h2c‑patch] html2canvas colour parser patched");
 }
 
-/** Accept Window | Document | HTMLElement and return its Document */
-function toDoc(node: Window | Document | HTMLElement): Document {
-  return node instanceof Window
-    ? node.document
-    : node instanceof Document
-      ? node
-      : node.ownerDocument!;
-}
-
-/** Walk every element (+ :root) and re‑write any OKLCH colours to rgb. */
+/* --------------------------------------------------------------- */
+/* 3️⃣  Your existing DOM scrubber (keep it – belt‑and‑suspenders)  */
 function scrub(node: Window | Document | HTMLElement) {
   const doc = toDoc(node);
   if (!doc || !doc.documentElement) return;     // <-- safeguard
@@ -53,25 +63,38 @@ function scrub(node: Window | Document | HTMLElement) {
   });
 }
 
-/* ---------- public API ---------- */
+/** Accept Window | Document | HTMLElement and return its Document */
+function toDoc(node: Window | Document | HTMLElement): Document {
+  return node instanceof Window
+    ? node.document
+    : node instanceof Document
+      ? node
+      : node.ownerDocument!;
+}
 
+function oklchToRgb(c: string): string {
+  if (!c.startsWith("oklch")) return c;
+  const ctx = document.createElement("canvas").getContext("2d")!;
+  ctx.fillStyle = c;
+  return ctx.fillStyle as string;
+}
+
+/* --------------------------------------------------------------- */
+/* 4️⃣  Public API                                                 */
 export async function exportResumePdf(filename = "resume.pdf") {
   const src = document.querySelector<HTMLElement>("#resume-preview");
   if (!src) throw new Error("#resume-preview not found");
 
-  /* 1️⃣  Scrub the **live** node before html2canvas clones anything */
-  scrub(src);
+  scrub(src);                    // pass #1  – live node
+  patchHtml2canvasColor();       // <--- NEW
 
   const pdf = new jsPDF({ unit: "pt", format: "a4" });
-
   await pdf.html(src, {
     margin: 24,
     autoPaging: "text",
     html2canvas: {
       scale: 2,
-      /* 2️⃣  Scrub html2canvas's internal clone as well */
-      onclone: (cloneWin: any) =>                    // new
-        scrub(cloneWin.document ?? cloneWin), // cope with null doc
+      onclone: (win: any) => scrub(win.document ?? win),  // pass #2
     },
     callback: doc => doc.save(filename),
   });
