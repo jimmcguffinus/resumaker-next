@@ -8,8 +8,7 @@ Write-Host "Gathering Resume Maker source code files..." -ForegroundColor Yellow
 # Define source directories and file extensions
 $SourceDirs = @(
     "src",
-    "lib",
-    "public"
+    "lib"
 )
 $FileExtensions = @("*.tsx", "*.ts", "*.js", "*.jsx", "*.css", "*.mjs", "*.json", "*.md")
 
@@ -41,10 +40,18 @@ $MarkdownContent += "## Project: Next.js Resume Generator with PDF Export`n`n"
 foreach ($file in $FilesToInclude) {
     if ($file -and (Test-Path $file.FullName)) {
         $RelativeFilePath = $file.FullName.Substring($PSScriptRoot.Length + 1)
+        
+        # Skip binary files and non-text files
+        $FileExtension = $file.Extension.TrimStart('.').ToLower()
+        if ($FileExtension -in @('png', 'jpg', 'jpeg', 'gif', 'svg', 'ico', 'woff', 'woff2', 'ttf', 'eot', 'pdf', 'zip', 'exe', 'dll', 'so', 'dylib')) {
+            continue
+        }
+        
         $MarkdownContent += "`n## File: $RelativeFilePath`n`n"
 
         try {
             Write-Host "Processing: $RelativeFilePath" -ForegroundColor Green
+            
             $FileContent = Get-Content -Path $file.FullName -Raw -ErrorAction Stop
 
             if ([string]::IsNullOrWhiteSpace($FileContent)) {
@@ -52,20 +59,24 @@ foreach ($file in $FilesToInclude) {
                 continue
             }
 
-            $FileExtension = $file.Extension.TrimStart('.').ToLower()
-            $LanguageSyntax = switch ($FileExtension) {
-                { $_ -in @('ts', 'tsx') } { 'typescript' }
-                'js'   { 'javascript' }
-                'mjs'  { 'javascript' }
-                'json' { 'json' }
-                'md'   { 'markdown' }
-                'css'  { 'css' }
-                default { '' }
-            }
+            # Check if content looks like text (not binary)
+            if ($FileContent -match '[^\x00-\x08\x0B\x0C\x0E-\x1F\x7F]') {
+                $LanguageSyntax = switch ($FileExtension) {
+                    { $_ -in @('ts', 'tsx') } { 'typescript' }
+                    'js'   { 'javascript' }
+                    'mjs'  { 'javascript' }
+                    'json' { 'json' }
+                    'md'   { 'markdown' }
+                    'css'  { 'css' }
+                    default { '' }
+                }
 
-            $MarkdownContent += "``````$LanguageSyntax`n"
-            $MarkdownContent += $FileContent
-            $MarkdownContent += "`n``````n`n"
+                $MarkdownContent += "``````$LanguageSyntax`n"
+                $MarkdownContent += $FileContent
+                $MarkdownContent += "`n``````n`n"
+            } else {
+                $MarkdownContent += "*Binary file - skipped*`n`n"
+            }
         }
         catch {
             Write-Warning "Could not read file: '$RelativeFilePath'. Error: $($_.Exception.Message)"
