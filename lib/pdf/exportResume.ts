@@ -10,18 +10,30 @@ const ok2rgb = (c: string) => {
 
 /* patch the *given* html2canvas module */
 function patchH2C(h2c: any) {
-  if (!h2c?.Color || h2c.Color.__oklchPatched) return;
+  const C = h2c?.Color ?? {};                    // grab the class
+  if (C.__oklchPatched) return;                  // already done
 
-  const orig = h2c.Color.parseColor;
-  h2c.Color.parseColor = (v: any, ...rest: any[]) => {
-    if (typeof v === "string" && v.trim().startsWith("oklch(")) {
-      console.debug("[h2c‑patch] converting", v);
+  // whichever of these three exists in this build:
+  const entry =
+        C.parseColor   // v1.5 and earlier
+     ?? C.parse        // v1.6 (→ renamed)
+     ?? C.fromString;  // some forks
+
+  if (typeof entry !== 'function') {
+    console.warn('[h2c‑patch] ✖ unable to locate parse fn – build mismatch');
+    return;
+  }
+
+  C[entry.name] = function patch(v: any, ...rest: any[]) {
+    if (typeof v === 'string' && v.trim().startsWith('oklch(')) {
+      console.debug('[h2c‑patch] converting', v);
       v = ok2rgb(v);
     }
-    return orig(v, ...rest);
+    return entry.call(this, v, ...rest);
   };
-  h2c.Color.__oklchPatched = true;
-  console.debug("[h2c‑patch] parser patched ✔");
+
+  C.__oklchPatched = true;
+  console.debug('[h2c‑patch] parser patched ✔');
 }
 
 /* --------------------------------------------------------------- */
