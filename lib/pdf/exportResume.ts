@@ -97,6 +97,7 @@ function oklchToRgb(c: string): string {
 
 /* public API */
 export async function exportResumePdf(file = "resume.pdf") {
+  console.log("exportResumePdf loaded"); // debug log
   const src = document.querySelector<HTMLElement>("#resume-preview");
   if (!src) throw new Error("#resume-preview not found");
 
@@ -105,10 +106,12 @@ export async function exportResumePdf(file = "resume.pdf") {
 
   /* 2️⃣  load + patch html2canvas */
   const h2c = (await import("html2canvas")).default;
+  console.log("html2canvas loaded:", !!h2c); // debug log
   patchH2C(h2c);
 
   /* 3️⃣  ***important*** — hand the *same* instance to jspdf */
   (window as any).html2canvas = h2c;   // –> jspdf will reuse this
+  console.log("window.html2canvas set:", !!(window as any).html2canvas); // debug log
 
   /* 4️⃣  extra belt-and-suspenders (rare but helpful) */
   for (const k in window) {
