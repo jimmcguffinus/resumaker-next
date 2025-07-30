@@ -47,14 +47,15 @@
 
 **Core Functionality:**
 - Generate professional PDF resumes
-- Client-side PDF generation using jsPDF
-- Proper formatting and layout
+- Client-side PDF generation using @react-pdf/renderer
+- Proper formatting and layout with custom fonts
 
 **Acceptance Criteria:**
 - ✅ PDF generation completes within 5 seconds
 - ✅ PDF opens correctly in all major readers
 - ✅ Layout matches preview exactly
 - ✅ Professional formatting and styling
+- ✅ Custom Inter fonts render correctly
 
 ### 4. Template System
 **Status:** ✅ Complete  
@@ -108,9 +109,9 @@
 - **Framework:** Next.js 15.4.5 ✅
 - **Language:** TypeScript 5.0 ✅
 - **UI Library:** React 19.1.0 ✅
-- **Styling:** Tailwind CSS 4.0 ✅
+- **Styling:** Tailwind CSS 3.4.5 ✅
 - **Icons:** Lucide React ✅
-- **PDF Generation:** jsPDF ✅
+- **PDF Generation:** @react-pdf/renderer ✅
 
 ### Deployment
 - **Platform:** Cloudflare Pages ✅
@@ -177,7 +178,7 @@
 - ✅ Next.js 15 with TypeScript
 - ✅ React 19 with modern hooks
 - ✅ Tailwind CSS for styling
-- ✅ jsPDF for client-side PDF generation
+- ✅ @react-pdf/renderer for client-side PDF generation
 - ✅ Lucide React for icons
 - ✅ Local storage for data persistence
 
@@ -214,23 +215,19 @@
 
 ## 📈 Post-MVP Roadmap
 
-### Phase 1 (v1.1) - Enhancement
-- Additional resume templates
-- Cover letter generator
-- Resume scoring/optimization
-- Social media integration
+With the core resume builder (v1.0) complete, the next major development phase will focus on integrating Artificial Intelligence to provide users with powerful content generation and optimization tools.
 
-### Phase 2 (v1.2) - Advanced Features
-- AI-powered resume suggestions
-- Collaboration features
-- Advanced PDF customization
-- Integration with job boards
+### Phase 1 (v1.1) - AI Writing Assistant
+- **AI Content Generation:** Introduce features to rewrite experience bullet points for impact, generate professional summaries, and create tailored cover letters.
+
+### Phase 2 (v1.2) - Advanced Features & Personalization
+- **AI Resume Tailoring:** Implement a "one-click" feature to analyze a job description and suggest keyword and content optimizations for the user's resume.
+- **User Accounts:** Add user authentication and database support to allow saving and managing multiple resumes.
 
 ### Phase 3 (v2.0) - Platform Expansion
-- Mobile app development
-- PWA capabilities
-- Offline mode
-- Advanced analytics
+- **Collaboration Features:** Resume sharing and feedback systems
+- **Mobile App:** Native mobile application development
+- **Advanced Analytics:** User behavior tracking and optimization insights
 
 ## 🎯 MVP Success Definition
 

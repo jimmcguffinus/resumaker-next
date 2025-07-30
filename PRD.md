@@ -72,8 +72,8 @@ To provide job seekers with a modern, accessible, and user-friendly tool for cre
 **Description:** Generate and download professional PDF resumes
 
 **Requirements:**
-- Client-side PDF generation using jsPDF
-- Professional formatting and layout
+- Client-side PDF generation using @react-pdf/renderer
+- Professional formatting and layout with custom fonts
 - Proper page breaks for long resumes
 - Consistent styling across all templates
 
@@ -81,6 +81,7 @@ To provide job seekers with a modern, accessible, and user-friendly tool for cre
 - PDF generation completes within 5 seconds
 - PDF opens correctly in all major PDF readers
 - Layout matches preview exactly
+- Custom Inter fonts render correctly
 
 ### 4. Template System
 **Priority:** P1 (High)  
@@ -131,9 +132,9 @@ To provide job seekers with a modern, accessible, and user-friendly tool for cre
 - **Framework:** Next.js 15.4.5
 - **Language:** TypeScript 5.0
 - **UI Library:** React 19.1.0
-- **Styling:** Tailwind CSS 4.0
+- **Styling:** Tailwind CSS 3.4.5
 - **Icons:** Lucide React
-- **PDF Generation:** jsPDF
+- **PDF Generation:** @react-pdf/renderer
 
 ### Performance
 - **Load Time:** < 2 seconds initial load
@@ -209,12 +210,25 @@ To provide job seekers with a modern, accessible, and user-friendly tool for cre
 
 ## 🎯 Future Enhancements (v2.0)
 
-### Planned Features
-- **Resume Templates:** Additional professional templates
-- **Cover Letter Generator:** Integrated cover letter creation
-- **Resume Scoring:** AI-powered resume optimization
-- **Collaboration:** Share resumes with others for feedback
-- **Mobile App:** Native mobile application
+The next major version will focus on integrating AI to transform the app from a simple editor into an intelligent resume-building assistant.
+
+### Phase 1: Core AI Content Generation
+**Goal:** Introduce the first set of high-value AI writing tools.
+- **AI Bullet Point Rewriter:** An "Enhance with AI" button next to each experience bullet point to rewrite it for impact, focusing on active verbs and quantifiable results.
+- **AI Summary Generator:** A feature to automatically generate a professional, 2-3 sentence summary based on the complete resume data.
+- **AI Cover Letter Generator:** A tool to create a tailored cover letter based on the user's resume and a pasted job description.
+
+### Phase 2: User Accounts and Personalization
+**Goal:** Enable users to save their work and access it from anywhere.
+- **User Authentication:** Secure sign-up and login (e.g., Google, GitHub, email).
+- **Database Storage:** Save user resumes to a central database (e.g., Cloudflare D1), replacing the reliance on `localStorage`.
+- **Multiple Resume Versions:** Allow users to save and manage different versions of their resume.
+
+### Phase 3: Advanced AI Tailoring and Collaboration
+**Goal:** Provide expert-level, job-specific optimization and feedback.
+- **One-Click Resume Tailoring:** The user pastes a job description, and the AI analyzes both the resume and the ad to suggest specific keyword integrations and content edits.
+- **AI Resume Checker:** An automated review that scores the resume on clarity, impact, and grammar, providing actionable feedback.
+- **Resume Sharing:** A feature to generate a unique link for sharing the resume with others for feedback.
 
 ### Technical Improvements
 - **PWA Support:** Progressive web app capabilities
