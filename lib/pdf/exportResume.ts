@@ -1,4 +1,5 @@
 import { jsPDF } from "jspdf";
+import "jspdf/dist/polyfills.es.js";
 
 /* public API */
 export async function exportResumePdf(file = "resume.pdf") {

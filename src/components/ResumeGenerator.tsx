@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Download, Plus, Trash2, Moon, Sun, FileText, User, Briefcase, GraduationCap, Code, Award } from 'lucide-react';
 import jsPDF from 'jspdf';
-import 'jspdf-autotable';
+import 'jspdf/dist/polyfills.es.js';
 import { exportResumePdf } from '../../lib/pdf/exportResume';
 
 // TypeScript interfaces
@@ -379,7 +379,7 @@ const ResumeGenerator = () => {
     // Convert HTML to PDF
     const pdf = new jsPDF({ unit: 'pt', format: 'a4' });
     
-    pdf.html(tempDiv, {
+    (pdf as any).html(tempDiv, {
       margin: [20, 20, 20, 20],
       autoPaging: "text",
       html2canvas: {
