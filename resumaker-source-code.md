@@ -1,6 +1,6 @@
 # 🔍 Resume Maker Source Code Dump
 
-Generated: 2025-07-30 13:17:09
+Generated: 2025-07-30 13:57:04
 
 ## Project: Next.js Resume Generator with PDF Export
 
@@ -4949,8 +4949,19 @@ export const PDFDownloadButton: React.FC<PDFDownloadButtonProps> = ({ resumeData
       fileName="resume.pdf"
       className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
     >
-      {({ blob, url, loading, error }) =>
-        loading ? (
+      {({ blob, url, loading, error }) => {
+        console.log('PDFDownloadLink state:', { loading, error, blob: !!blob, url: !!url });
+        
+        if (error) {
+          console.error('PDF generation error:', error);
+          return (
+            <div className="flex items-center space-x-2 px-4 py-2 bg-red-600 text-white rounded-md">
+              <span>PDF Error</span>
+            </div>
+          );
+        }
+        
+        return loading ? (
           <div className="flex items-center space-x-2">
             <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
             <span>Generating PDF...</span>
@@ -4960,8 +4971,8 @@ export const PDFDownloadButton: React.FC<PDFDownloadButtonProps> = ({ resumeData
             <Download className="h-4 w-4" />
             <span>Export PDF</span>
           </div>
-        )
-      }
+        );
+      }}
     </PDFDownloadLink>
   );
 }; 
@@ -5033,19 +5044,15 @@ interface ResumeDocumentProps {
   data: Resume;
 }
 
-// Register fonts with fallback to system fonts if Inter is not available
-try {
-  Font.register({
-    family: 'Inter',
-    fonts: [
-      { src: '/fonts/Inter-Regular.ttf' },
-      { src: '/fonts/Inter-Bold.ttf', fontWeight: 'bold' },
-      { src: '/fonts/Inter-Italic.ttf', fontStyle: 'italic' },
-    ],
-  });
-} catch (error) {
-  console.warn('Inter fonts not found, using system fonts');
-}
+// Register Inter fonts from local files
+Font.register({
+  family: 'Inter',
+  fonts: [
+    { src: '/fonts/Inter-Regular.ttf' },
+    { src: '/fonts/Inter-Bold.ttf', fontWeight: 'bold' },
+    { src: '/fonts/Inter-Italic.ttf', fontStyle: 'italic' },
+  ],
+});
 
 Font.registerEmojiSource({
   format: 'png',
@@ -5070,13 +5077,13 @@ const styles = StyleSheet.create({
     fontSize: 26,
     fontWeight: 'bold',
     color: '#1e293b', // slate-800
+    marginBottom: 12,
   },
   tagline: {
     fontSize: 12,
     fontStyle: 'italic',
     color: '#64748b', // slate-500
-    marginTop: 4,
-    marginBottom: 8,
+    marginBottom: 12,
   },
   contactInfo: {
     flexDirection: 'row',
@@ -5240,7 +5247,7 @@ export const ResumeDocument: React.FC<ResumeDocumentProps> = ({ data }) => (
 import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { Download, Plus, Trash2, Moon, Sun, FileText, User, Briefcase, GraduationCap, Code, Award } from 'lucide-react';
 
-// Dynamically import PDFDownloadButton to avoid SSG issues
+// Use React.lazy for the button component that contains the client-side only PDFDownloadLink
 const PDFDownloadButton = lazy(() => import('./PDFDownloadButton').then(module => ({ default: module.PDFDownloadButton })));
 
 // TypeScript interfaces
@@ -5349,8 +5356,12 @@ const ResumeGenerator = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [activeTemplate, setActiveTemplate] = useState('modern');
   const [resumeData, setResumeData] = useState<Resume>(sampleResume);
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
+    // Mark as client-side after mounting
+    setIsClient(true);
+    
     const saved = localStorage.getItem('resume-data');
     if (saved) {
       try {
@@ -5895,14 +5906,16 @@ const ResumeGenerator = () => {
               >
                 Debug Data
               </button>
-                              <Suspense fallback={
-                                <button className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
-                                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                                  <span>Loading PDF...</span>
-                                </button>
-                              }>
-                                <PDFDownloadButton resumeData={resumeData} />
-                              </Suspense>
+                              {isClient && (
+                                <Suspense fallback={
+                                  <button className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
+                                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                                    <span>Loading PDF...</span>
+                                  </button>
+                                }>
+                                  <PDFDownloadButton resumeData={resumeData} />
+                                </Suspense>
+                              )}
               <button
                 onClick={() => setDarkMode(!darkMode)}
                 className={`p-2 rounded-md transition-colors ${
