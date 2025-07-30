@@ -114,3 +114,6 @@ pids
 # Temporary folders
 tmp/
 temp/
+
+# Scala project files (local reference only)
+scala_resumemaker/
