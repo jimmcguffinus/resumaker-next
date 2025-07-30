@@ -1,8 +1,10 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { Download, Plus, Trash2, Moon, Sun, FileText, User, Briefcase, GraduationCap, Code, Award } from 'lucide-react';
-import { PDFDownloadButton } from './PDFDownloadButton';
+
+// Dynamically import PDFDownloadButton to avoid SSG issues
+const PDFDownloadButton = lazy(() => import('./PDFDownloadButton').then(module => ({ default: module.PDFDownloadButton })));
 
 // TypeScript interfaces
 interface ContactInfo {
@@ -656,7 +658,14 @@ const ResumeGenerator = () => {
               >
                 Debug Data
               </button>
-                              <PDFDownloadButton resumeData={resumeData} />
+                              <Suspense fallback={
+                                <button className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
+                                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                                  <span>Loading PDF...</span>
+                                </button>
+                              }>
+                                <PDFDownloadButton resumeData={resumeData} />
+                              </Suspense>
               <button
                 onClick={() => setDarkMode(!darkMode)}
                 className={`p-2 rounded-md transition-colors ${
