@@ -70,8 +70,7 @@ export async function exportResumePdf(filename = "resume.pdf") {
     html2canvas: {
       scale: 2,
       /* 2️⃣  Scrub html2canvas's internal clone as well */
-      onclone: cloneWin =>                    // new
-        scrub(cloneWin.document ?? cloneWin), // cope with null doc
+      onclone: (cloneDoc: Document) => scrub(cloneDoc),
     },
     callback: doc => doc.save(filename),
   });
