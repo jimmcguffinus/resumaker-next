@@ -1,68 +1,64 @@
 import { jsPDF } from "jspdf";
 
-/* ───────── helpers ───────── */
-
-const COLOR_PROPS = [
-  // plain colours
-  "color",
-  "backgroundColor",
-  // borders
-  "borderColor", "borderTopColor", "borderRightColor",
-  "borderBottomColor", "borderLeftColor",
-  // outlines & focus rings
-  "outlineColor",
-  // shadows may include multiple colours → treat as free‑text
-  "boxShadow", "textShadow",
-  // web‑kit long‑hands (Chrome)
-  "WebkitTextDecorationColor",
-] as const;
+/* ---------- helpers ---------- */
 
 function oklchToRgb(c: string): string {
-  if (!c || !c.includes("oklch")) return c;
+  if (!c.startsWith("oklch")) return c;
   const ctx = document.createElement("canvas").getContext("2d")!;
-  ctx.fillStyle = c;                 // browser converts to rgb()
-  return ctx.fillStyle as string;    // → "rgb(r,g,b)"
+  ctx.fillStyle = c;
+  return ctx.fillStyle as string;
 }
 
-function scrub(root: HTMLElement | Document | Window) {
-  /* NEW: normalise to a Document */
-  const doc =
-    root instanceof Window   ? root.document :
-    root instanceof Document ? root :
-    root.ownerDocument;
+/** Accept Window | Document | HTMLElement and return its Document */
+function toDoc(node: Window | Document | HTMLElement): Document {
+  return node instanceof Window
+    ? node.document
+    : node instanceof Document
+      ? node
+      : node.ownerDocument!;
+}
 
-  if (!doc) return; // should never happen
+/** Walk every element (+ :root) and re‑write any OKLCH colours to rgb. */
+function scrub(node: Window | Document | HTMLElement) {
+  const doc = toDoc(node);
 
-  /* 1️⃣ iterate every element inside <body> */
+  // :root background
+  const root = doc.documentElement as HTMLElement;
+  const rootBg = getComputedStyle(root).backgroundColor;
+  if (rootBg.includes("oklch")) root.style.backgroundColor = oklchToRgb(rootBg);
+
+  // every descendant
   doc.body.querySelectorAll<HTMLElement>("*").forEach(el => {
     const cs = getComputedStyle(el);
-    COLOR_PROPS.forEach(prop => {
-      const val = (cs as any)[prop] as string | undefined;
-      if (val) {
-        const cleaned =
-          prop.endsWith("Shadow")           // shadows may embed multiple colours
-            ? val.replace(/oklch\([^)]+\)/g, m => oklchToRgb(m))
-            : oklchToRgb(val);
 
-        (el.style as any)[prop] = cleaned;
-      }
+    const fix = (prop: string) => {
+      const val = (cs as any)[prop] as string | undefined;
+      if (val && val.includes("oklch"))
+        (el.style as any)[prop] = oklchToRgb(val);
+    };
+
+    fix("color");
+    fix("backgroundColor");
+    fix("outlineColor");
+    ["borderColor","borderTopColor","borderRightColor",
+     "borderBottomColor","borderLeftColor"].forEach(fix);
+
+    // shadows can contain multiple colours → regex replace
+    ["boxShadow","textShadow","WebkitBoxShadow"].forEach(prop => {
+      const val = (cs as any)[prop] as string | undefined;
+      if (val && val.includes("oklch"))
+        (el.style as any)[prop] = val.replace(/oklch\([^)]+\)/g, m => oklchToRgb(m));
     });
   });
-
-  /* 2️⃣ scrub the root element (:root / <html>) */
-  const rootEl = doc.documentElement as HTMLElement;
-  const bg = getComputedStyle(rootEl).backgroundColor;
-  if (bg && bg.includes("oklch"))
-    rootEl.style.backgroundColor = oklchToRgb(bg);
 }
 
-/* ───────── export API ───────── */
+/* ---------- public API ---------- */
 
-export async function exportResumePdf(file = "resume.pdf") {
+export async function exportResumePdf(filename = "resume.pdf") {
   const src = document.querySelector<HTMLElement>("#resume-preview");
   if (!src) throw new Error("#resume-preview not found");
 
-  /* ① clean the live node *before* html2canvas sees it */
+  /* 1️⃣  Scrub the **live** node before html2canvas clones anything */
   scrub(src);
 
   const pdf = new jsPDF({ unit: "pt", format: "a4" });
@@ -72,9 +68,9 @@ export async function exportResumePdf(file = "resume.pdf") {
     autoPaging: "text",
     html2canvas: {
       scale: 2,
-      /* ② clean the internal clone again for good measure */
-      onclone: (doc: Document) => scrub(doc),
+      /* 2️⃣  Scrub html2canvas's internal clone as well */
+      onclone: cloneWin => scrub(cloneWin),
     },
-    callback: doc => doc.save(file),
+    callback: doc => doc.save(filename),
   });
 } 
