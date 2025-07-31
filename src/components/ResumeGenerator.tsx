@@ -98,6 +98,8 @@ const defaultResume: Resume = {
 const ResumeGenerator = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [activeTemplate, setActiveTemplate] = useState('modern');
+  const [aiResponse, setAiResponse] = useState<string>('');
+  const [isLoading, setIsLoading] = useState(false);
   const [resumeData, setResumeData] = useState<Resume>(defaultResume);
   const [isClient, setIsClient] = useState(false);
 
@@ -494,6 +496,34 @@ const ResumeGenerator = () => {
     console.log('Extras length:', resumeData.extras?.length);
   };
 
+  // Hablo AI function
+  const handleHabloClick = async () => {
+    setIsLoading(true);
+    setAiResponse('');
+    
+    try {
+      const response = await fetch('/api/hablo', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const data = await response.json();
+      
+      if (data.error) {
+        setAiResponse(`Error: ${data.error}`);
+      } else {
+        setAiResponse(data.message);
+      }
+    } catch (error) {
+      setAiResponse('Failed to connect to AI service');
+      console.error('Hablo error:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   // Convert Scala format to Next.js format
   // This function will now correctly parse the detailed JSON from the original CLI tool
   const importJsonData = (jsonData: any): Resume => {
@@ -641,6 +671,18 @@ const ResumeGenerator = () => {
               >
                 Debug Data
               </button>
+              <button
+                onClick={handleHabloClick}
+                disabled={isLoading}
+                className={`px-4 py-2 text-sm font-medium transition-colors ${
+                  isLoading 
+                    ? 'bg-gray-400 text-gray-600 cursor-not-allowed' 
+                    : 'bg-purple-600 text-white hover:bg-purple-700'
+                }`}
+                title="Test AI Career Co-Pilot connection"
+              >
+                {isLoading ? 'Testing...' : 'Hablo!'}
+              </button>
                               {isClient && (
                                 <Suspense fallback={
                                   <button className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
@@ -669,6 +711,25 @@ const ResumeGenerator = () => {
           </div>
         </div>
       </header>
+
+      {/* AI Response Display */}
+      {aiResponse && (
+        <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 ${
+          darkMode ? 'bg-gray-800' : 'bg-blue-50'
+        }`}>
+          <div className={`p-4 rounded-lg border ${
+            darkMode 
+              ? 'bg-gray-700 border-gray-600 text-white' 
+              : 'bg-white border-blue-200 text-gray-900'
+          }`}>
+            <div className="flex items-center space-x-2 mb-2">
+              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+              <span className="text-sm font-medium text-green-600">Career Co-Pilot Response:</span>
+            </div>
+            <p className="text-sm leading-relaxed">{aiResponse}</p>
+          </div>
+        </div>
+      )}
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
