@@ -31,11 +31,11 @@ Visit: [resumaker.42-it.com](https://resumaker.42-it.com)
 3. **Set up environment variables**
    Create a `.env.local` file in the root directory:
    ```
-   NEXT_PUBLIC_GEMINI_API_KEY=your_gemini_api_key_here
+   GEMINI_API_KEY=your_gemini_api_key_here
    ```
    
    **Important:** 
-   - Use `NEXT_PUBLIC_GEMINI_API_KEY` (not `GEMINI_API_KEY`) for client-side AI functionality
+   - Use `GEMINI_API_KEY` (not `NEXT_PUBLIC_GEMINI_API_KEY`) for secure server-side AI functionality
    - For local development: Add to `.env.local` file
    - For production (Cloudflare Pages): Add as environment variable in Cloudflare Pages dashboard
 

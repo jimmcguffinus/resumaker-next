@@ -496,58 +496,27 @@ const ResumeGenerator = () => {
     console.log('Extras length:', resumeData.extras?.length);
   };
 
-  // Hablo AI function - Direct client-side API call
+  // Hablo AI function - Secure server-side API call
   const handleHabloClick = async () => {
     setIsLoading(true);
     setAiResponse('');
     
     try {
-      // Call Gemini API directly from client side
-      const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
-      if (!apiKey) {
-        setAiResponse('Error: Gemini API key not configured');
-        return;
-      }
-      
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
-      const prompt = `
-        You are 'Career Co-Pilot,' a friendly, encouraging, and highly capable AI assistant integrated into a resume builder application.
-        A user has just clicked a test button labeled "Hablo!" which means "I speak!" in Spanish. They are testing the connection to you for the first time.
-        Your task is to provide a brief, welcoming, and slightly playful response that accomplishes the following:
-        1. Acknowledge the "Hablo!" button by responding in Spanish first, then providing an English translation.
-        2. Introduce yourself as their Career Co-Pilot.
-        3. Briefly and confidently state your purpose: to help them craft a standout resume by rewriting bullet points, generating summaries, and tailoring their application to job descriptions.
-        4. Keep the tone encouraging and professional, but not robotic.
-        5. End with a friendly and relevant emoji.
-        6. Keep the entire response under 60 words.
-      `;
-      
-      const response = await fetch(url, {
+      // Call YOUR secure backend endpoint, not Google's.
+      const response = await fetch('/api/hablo', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{
-            parts: [{
-              text: prompt
-            }]
-          }]
-        })
       });
-      
-      if (!response.ok) {
-        throw new Error(`API responded with status: ${response.status}`);
-      }
-      
+
       const data = await response.json();
-      const aiResponse = data.candidates[0]?.content?.parts[0]?.text;
       
-      if (aiResponse) {
-        setAiResponse(aiResponse);
-      } else {
-        setAiResponse('Error: No response from AI');
+      if (!response.ok || data.error) {
+        throw new Error(data.error || 'An unknown error occurred.');
       }
+      
+      setAiResponse(data.message);
+
     } catch (error) {
-      setAiResponse('Failed to connect to AI service');
+      setAiResponse(`Error: ${error.message}`);
       console.error('Hablo error:', error);
     } finally {
       setIsLoading(false);
