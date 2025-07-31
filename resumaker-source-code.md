@@ -1,6 +1,6 @@
 # 🔍 Resume Maker Source Code Dump
 
-Generated: 2025-07-30 22:43:50
+Generated: 2025-07-31 09:55:27
 
 ## Project: Next.js Resume Generator with PDF Export
 
@@ -4746,8 +4746,10 @@ scala_resumemaker/
 // src/app/api/hablo/route.ts
 import { NextResponse } from 'next/server';
 
+// This line is crucial for serverless environments like Cloudflare
 export const dynamic = 'force-dynamic';
 
+// Changed from POST to GET
 export async function GET() {
   // 1. Securely get the API key from server-side environment variables.
   const apiKey = process.env.GEMINI_API_KEY;
@@ -5728,8 +5730,8 @@ const ResumeGenerator = () => {
     setAiResponse('');
     
     try {
-              // Call YOUR secure backend endpoint, not Google's.
-        const response = await fetch('/api/hablo');
+      // This now sends a GET request, which matches our updated API route
+      const response = await fetch('/api/hablo');
 
       const data = await response.json();
       
