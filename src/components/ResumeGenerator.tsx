@@ -2,9 +2,10 @@
 
 import React, { useState, useEffect, lazy, Suspense, Component, ReactNode } from 'react';
 import { Download, Plus, Trash2, Moon, Sun, FileText, User, Briefcase, GraduationCap, Code, Award } from 'lucide-react';
+import { PDFDownloadButton } from './PDFDownloadButton';
 
-// Use React.lazy for the button component that contains the client-side only PDFDownloadLink
-const PDFDownloadButton = lazy(() => import('./PDFDownloadButton').then(module => ({ default: module.PDFDownloadButton })));
+// Temporarily disable lazy loading to fix page loading issue
+// const PDFDownloadButton = lazy(() => import('./PDFDownloadButton').then(module => ({ default: module.PDFDownloadButton })));
 
 // Error boundary component to catch PDF generation errors
 class ErrorBoundary extends Component<{ children: ReactNode; fallback: ReactNode }, { hasError: boolean }> {
@@ -682,20 +683,13 @@ const ResumeGenerator = () => {
                 {isLoading ? 'Testing...' : 'Hablo!'}
               </button>
                               {isClient && (
-                                <Suspense fallback={
-                                  <button className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
-                                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                                    <span>Loading PDF...</span>
+                                <ErrorBoundary fallback={
+                                  <button className="flex items-center space-x-2 px-4 py-2 bg-red-600 text-white rounded-md">
+                                    <span>PDF Error</span>
                                   </button>
                                 }>
-                                  <ErrorBoundary fallback={
-                                    <button className="flex items-center space-x-2 px-4 py-2 bg-red-600 text-white rounded-md">
-                                      <span>PDF Error</span>
-                                    </button>
-                                  }>
-                                    <PDFDownloadButton resumeData={resumeData} />
-                                  </ErrorBoundary>
-                                </Suspense>
+                                  <PDFDownloadButton resumeData={resumeData} />
+                                </ErrorBoundary>
                               )}
               <button
                 onClick={() => setDarkMode(!darkMode)}
