@@ -1,6 +1,9 @@
 // src/app/api/hablo/route.ts
 import { NextResponse } from 'next/server';
 
+// Configure for serverless deployment
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   const apiKey = process.env.GEMINI_API_KEY;
 
