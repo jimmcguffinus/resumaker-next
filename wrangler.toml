@@ -1,8 +1,0 @@
-# FILE: wrangler.toml
-
-name = "resumaker-next"
-compatibility_date = "2025-07-31"
-
-# This array forces Cloudflare to enable the compatibility flags
-# that are missing from your dashboard UI.
-compatibility_flags = ["nodejs_compat", "nodejs_compat_populate_process_env"] 
