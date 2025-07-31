@@ -496,7 +496,7 @@ const ResumeGenerator = () => {
     console.log('Extras length:', resumeData.extras?.length);
   };
 
-  // Hablo AI function - Secure server-side API call
+  // Hablo AI function - Secure server-side API call (GET method)
   const handleHabloClick = async () => {
     setIsLoading(true);
     setAiResponse('');
