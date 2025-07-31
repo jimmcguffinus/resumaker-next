@@ -1,6 +1,9 @@
 // src/app/api/hablo/route.ts
 import { NextResponse } from 'next/server';
 
+// This tells Next.js to build this for Cloudflare's Edge network
+export const runtime = 'edge';
+
 // This line is crucial for serverless environments like Cloudflare
 export const dynamic = 'force-dynamic';
 
