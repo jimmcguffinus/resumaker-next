@@ -1,6 +1,8 @@
 // src/app/api/hablo/route.ts
 import { NextResponse } from 'next/server';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   // 1. Securely get the API key from server-side environment variables.
   const apiKey = process.env.GEMINI_API_KEY;
