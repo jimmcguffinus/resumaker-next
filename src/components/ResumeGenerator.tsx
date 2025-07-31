@@ -502,12 +502,7 @@ const ResumeGenerator = () => {
     setAiResponse('');
     
     try {
-      const response = await fetch('/api/hablo', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      const response = await fetch('/api/hablo');
 
       const data = await response.json();
       

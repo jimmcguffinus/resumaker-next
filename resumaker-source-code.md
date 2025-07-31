@@ -1,6 +1,6 @@
 # 🔍 Resume Maker Source Code Dump
 
-Generated: 2025-07-30 14:38:59
+Generated: 2025-07-30 20:35:01
 
 ## Project: Next.js Resume Generator with PDF Export
 
@@ -3384,19 +3384,20 @@ A **Next.js-based resume generator** that creates professional PDF resumes with 
 ![Resume Maker](https://img.shields.io/badge/Next.js-15.4.5-black?style=for-the-badge&logo=next.js)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=for-the-badge&logo=typescript)
 ![React](https://img.shields.io/badge/React-19.1.0-blue?style=for-the-badge&logo=react)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.0-38B2AC?style=for-the-badge&logo=tailwind-css)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4.5-38B2AC?style=for-the-badge&logo=tailwind-css)
 
 ## 🌟 Features
 
 - **📝 Real-time Resume Builder** - Live preview as you type
-- **🎨 Modern Template** - Clean, professional design
+- **🎨 Modern Template** - Clean, professional design with proper typography
 - **🌙 Dark/Light Mode** - Toggle between themes
-- **📄 PDF Export** - Generate professional PDF resumes (HTML-to-PDF)
+- **📄 Professional PDF Export** - Pixel-perfect PDF generation with @react-pdf/renderer
 - **💾 JSON Export** - Save and share resume data
 - **📱 Responsive Design** - Works on desktop, tablet, and mobile
 - **💾 Local Storage** - Auto-save your progress
 - **⚡ Fast & Modern** - Built with Next.js 15 and React 19
 - **🔄 Scala Data Import** - Import data from original Scala format
+- **🎯 CI/CD Pipeline** - Automatic deployment via Cloudflare Pages
 
 ## 🚀 Live Demo
 
@@ -3405,10 +3406,10 @@ Visit: [resumaker.42-it.com](https://resumaker.42-it.com)
 ## 🛠️ Tech Stack
 
 - **Frontend**: Next.js 15.4.5, React 19.1.0, TypeScript 5.0
-- **Styling**: Tailwind CSS 4.0
+- **Styling**: Tailwind CSS 3.4.5
 - **Icons**: Lucide React
-- **PDF Generation**: jsPDF with HTML-to-PDF rendering
-- **Deployment**: Cloudflare Pages
+- **PDF Generation**: @react-pdf/renderer for declarative PDF generation
+- **Deployment**: Cloudflare Pages with automatic CI/CD
 - **Version Control**: Git & GitHub
 
 ## 📦 Installation
@@ -3437,14 +3438,13 @@ resumaker-next/
 │   │   ├── page.tsx            # Home page
 │   │   └── globals.css         # Global styles
 │   └── components/
-│       └── ResumeGenerator.tsx  # Main resume component
-├── lib/
-│   └── pdf/
-│       └── exportResume.ts     # PDF export functionality
-├── public/                     # Static assets
-├── scala_resumaker/          # Original Scala project
+│       ├── ResumeGenerator.tsx  # Main resume component
+│       ├── ResumeDocument.tsx   # PDF document structure
+│       └── PDFDownloadButton.tsx # Client-side PDF export
+├── public/
+│   └── fonts/                  # Inter font files
 ├── package.json                # Dependencies
-├── next.config.ts             # Next.js config
+├── next.config.ts             # Next.js config (static export)
 └── README.md                  # This file
 ```
 
@@ -3453,8 +3453,9 @@ resumaker-next/
 1. **Fill in your information** - Add personal details, experience, education
 2. **Real-time preview** - See changes instantly as you type
 3. **Export options**:
-   - **PDF**: Download as professional PDF (matches UI exactly)
+   - **PDF**: Download as professional PDF with perfect formatting
    - **JSON**: Save data for later editing
+   - **Markdown**: Export as markdown format
 4. **Load sample data** - Try the demo with pre-filled content
 5. **Import Scala data** - Import from original Scala format
 
@@ -3501,31 +3502,44 @@ interface Resume {
 
 ## 🔄 Migration from Scala
 
-This project was converted from a Scala-based resume generator that used LaTeX for PDF generation. The migration involved:
+This project was converted from [Kaden Taylor's original Scala-based resume generator](https://github.com/kadenjtaylor/resumaker.git) that used LaTeX for PDF generation. The migration involved:
 
-- **Frontend**: Scala → Next.js/React
-- **PDF Generation**: LaTeX → jsPDF (HTML-to-PDF)
-- **Deployment**: Local build → Cloudflare Pages
-- **UI**: Command-line → Modern web interface
+### Original Scala Project
+- **Language**: Scala with SBT build system
+- **PDF Generation**: LaTeX compilation
+- **Deployment**: Local builds with `sbt run`
+- **UI**: Command-line interface
+- **Data Format**: Scala case classes
+
+### Modern Next.js Implementation
+- **Frontend**: Scala → Next.js/React with TypeScript
+- **PDF Generation**: LaTeX → @react-pdf/renderer (declarative PDF generation)
+- **Deployment**: Local build → Cloudflare Pages with automatic CI/CD
+- **UI**: Command-line → Modern responsive web interface
 - **Data Import**: Scala format → JSON with conversion utilities
 
-### Key Improvements
+### Key Improvements Achieved
 
 - **Real-time preview** instead of command-line editing
-- **Modern web UI** with responsive design
-- **Client-side PDF generation** using jsPDF
+- **Modern web UI** with responsive design and dark/light mode
+- **Professional PDF generation** using @react-pdf/renderer for pixel-perfect output
 - **Auto-save functionality** with local storage
-- **Scala data compatibility** for easy migration
+- **Scala data compatibility** for easy migration from the original
+- **CI/CD pipeline** with automatic deployments on Git push
+- **Client-side rendering** with proper SSG handling for static export
+- **Font handling** with Inter fonts and emoji support
+- **Professional typography** with proper spacing and visual hierarchy
 
 ## 🚀 Deployment
 
 ### Cloudflare Pages
 
-The app is deployed on Cloudflare Pages with automatic builds from GitHub:
+The app is deployed on Cloudflare Pages with automatic CI/CD:
 
 1. **Connected to GitHub**: Automatic deployments on push
 2. **Build settings**: Next.js framework preset with static export
 3. **Custom domain**: resumaker.42-it.com
+4. **Zero-downtime deployments**: Instant updates with each push
 
 ### Local Development
 
@@ -3537,10 +3551,12 @@ npm run start    # Start production server
 
 ## 🔧 PDF Export
 
-The PDF export uses jsPDF's HTML-to-PDF functionality to capture the exact UI appearance:
+The PDF export uses @react-pdf/renderer for declarative PDF generation:
 
-- **HTML-to-PDF**: Renders the live preview directly to PDF
-- **Color compatibility**: Handles Tailwind CSS 4.0 color formats
+- **Declarative PDF**: React components render directly to PDF
+- **Professional typography**: Inter fonts with proper spacing
+- **Emoji support**: Full emoji rendering in PDFs
+- **Color accuracy**: Perfect color reproduction
 - **Responsive layout**: Maintains design across different screen sizes
 - **Auto-pagination**: Automatically splits content across pages
 
@@ -3556,17 +3572,32 @@ The PDF export uses jsPDF's HTML-to-PDF functionality to capture the exact UI ap
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 👨‍💻 Author
+## 👨‍💻 Authors
 
 **Jim McGuffin** - [GitHub](https://github.com/jimmcguffinus)
+- Modern Next.js/React implementation
+- PDF generation with @react-pdf/renderer
+- Cloudflare Pages deployment
+- Real-time web interface
+
+**Kaden Taylor** - [GitHub](https://github.com/kadenjtaylor) - [Original Scala Project](https://github.com/kadenjtaylor/resumaker.git)
+- Original Scala-based resume generator
+- LaTeX PDF generation system
+- Data structure and resume logic
+- Inspiration for this modern conversion
 
 ## 🙏 Acknowledgments
 
+- **Kaden Taylor** for the original Scala project that inspired this conversion
 - **Next.js team** for the amazing framework
 - **Tailwind CSS** for the utility-first CSS framework
-- **Cloudflare** for the excellent hosting platform
-- **Original Scala version** that inspired this conversion
-- **jsPDF** for client-side PDF generation capabilities
+- **Cloudflare** for the excellent hosting platform and CI/CD
+- **@react-pdf/renderer** for declarative PDF generation capabilities
+- **Inter font family** for professional typography
+
+---
+
+*This project was a fun conversion from Scala to React/Next.js with Cloudflare CI/CD. We successfully migrated from a command-line LaTeX-based system to a modern web application with real-time preview, professional PDF generation, and automatic deployments. The journey involved solving complex technical challenges like SSG compatibility, font loading, emoji rendering, and achieving pixel-perfect PDF output.*
 
 ```n
 
@@ -3647,8 +3678,8 @@ To provide job seekers with a modern, accessible, and user-friendly tool for cre
 **Description:** Generate and download professional PDF resumes
 
 **Requirements:**
-- Client-side PDF generation using jsPDF
-- Professional formatting and layout
+- Client-side PDF generation using @react-pdf/renderer
+- Professional formatting and layout with custom fonts
 - Proper page breaks for long resumes
 - Consistent styling across all templates
 
@@ -3656,6 +3687,7 @@ To provide job seekers with a modern, accessible, and user-friendly tool for cre
 - PDF generation completes within 5 seconds
 - PDF opens correctly in all major PDF readers
 - Layout matches preview exactly
+- Custom Inter fonts render correctly
 
 ### 4. Template System
 **Priority:** P1 (High)  
@@ -3706,9 +3738,9 @@ To provide job seekers with a modern, accessible, and user-friendly tool for cre
 - **Framework:** Next.js 15.4.5
 - **Language:** TypeScript 5.0
 - **UI Library:** React 19.1.0
-- **Styling:** Tailwind CSS 4.0
+- **Styling:** Tailwind CSS 3.4.5
 - **Icons:** Lucide React
-- **PDF Generation:** jsPDF
+- **PDF Generation:** @react-pdf/renderer
 
 ### Performance
 - **Load Time:** < 2 seconds initial load
@@ -3784,12 +3816,25 @@ To provide job seekers with a modern, accessible, and user-friendly tool for cre
 
 ## 🎯 Future Enhancements (v2.0)
 
-### Planned Features
-- **Resume Templates:** Additional professional templates
-- **Cover Letter Generator:** Integrated cover letter creation
-- **Resume Scoring:** AI-powered resume optimization
-- **Collaboration:** Share resumes with others for feedback
-- **Mobile App:** Native mobile application
+The next major version will focus on integrating AI to transform the app from a simple editor into an intelligent resume-building assistant.
+
+### Phase 1: Core AI Content Generation
+**Goal:** Introduce the first set of high-value AI writing tools.
+- **AI Bullet Point Rewriter:** An "Enhance with AI" button next to each experience bullet point to rewrite it for impact, focusing on active verbs and quantifiable results.
+- **AI Summary Generator:** A feature to automatically generate a professional, 2-3 sentence summary based on the complete resume data.
+- **AI Cover Letter Generator:** A tool to create a tailored cover letter based on the user's resume and a pasted job description.
+
+### Phase 2: User Accounts and Personalization
+**Goal:** Enable users to save their work and access it from anywhere.
+- **User Authentication:** Secure sign-up and login (e.g., Google, GitHub, email).
+- **Database Storage:** Save user resumes to a central database (e.g., Cloudflare D1), replacing the reliance on `localStorage`.
+- **Multiple Resume Versions:** Allow users to save and manage different versions of their resume.
+
+### Phase 3: Advanced AI Tailoring and Collaboration
+**Goal:** Provide expert-level, job-specific optimization and feedback.
+- **One-Click Resume Tailoring:** The user pastes a job description, and the AI analyzes both the resume and the ad to suggest specific keyword integrations and content edits.
+- **AI Resume Checker:** An automated review that scores the resume on clarity, impact, and grammar, providing actionable feedback.
+- **Resume Sharing:** A feature to generate a unique link for sharing the resume with others for feedback.
 
 ### Technical Improvements
 - **PWA Support:** Progressive web app capabilities
@@ -3876,14 +3921,15 @@ To provide job seekers with a modern, accessible, and user-friendly tool for cre
 
 **Core Functionality:**
 - Generate professional PDF resumes
-- Client-side PDF generation using jsPDF
-- Proper formatting and layout
+- Client-side PDF generation using @react-pdf/renderer
+- Proper formatting and layout with custom fonts
 
 **Acceptance Criteria:**
 - ✅ PDF generation completes within 5 seconds
 - ✅ PDF opens correctly in all major readers
 - ✅ Layout matches preview exactly
 - ✅ Professional formatting and styling
+- ✅ Custom Inter fonts render correctly
 
 ### 4. Template System
 **Status:** ✅ Complete  
@@ -3937,9 +3983,9 @@ To provide job seekers with a modern, accessible, and user-friendly tool for cre
 - **Framework:** Next.js 15.4.5 ✅
 - **Language:** TypeScript 5.0 ✅
 - **UI Library:** React 19.1.0 ✅
-- **Styling:** Tailwind CSS 4.0 ✅
+- **Styling:** Tailwind CSS 3.4.5 ✅
 - **Icons:** Lucide React ✅
-- **PDF Generation:** jsPDF ✅
+- **PDF Generation:** @react-pdf/renderer ✅
 
 ### Deployment
 - **Platform:** Cloudflare Pages ✅
@@ -4006,7 +4052,7 @@ To provide job seekers with a modern, accessible, and user-friendly tool for cre
 - ✅ Next.js 15 with TypeScript
 - ✅ React 19 with modern hooks
 - ✅ Tailwind CSS for styling
-- ✅ jsPDF for client-side PDF generation
+- ✅ @react-pdf/renderer for client-side PDF generation
 - ✅ Lucide React for icons
 - ✅ Local storage for data persistence
 
@@ -4043,23 +4089,19 @@ To provide job seekers with a modern, accessible, and user-friendly tool for cre
 
 ## 📈 Post-MVP Roadmap
 
-### Phase 1 (v1.1) - Enhancement
-- Additional resume templates
-- Cover letter generator
-- Resume scoring/optimization
-- Social media integration
+With the core resume builder (v1.0) complete, the next major development phase will focus on integrating Artificial Intelligence to provide users with powerful content generation and optimization tools.
 
-### Phase 2 (v1.2) - Advanced Features
-- AI-powered resume suggestions
-- Collaboration features
-- Advanced PDF customization
-- Integration with job boards
+### Phase 1 (v1.1) - AI Writing Assistant
+- **AI Content Generation:** Introduce features to rewrite experience bullet points for impact, generate professional summaries, and create tailored cover letters.
+
+### Phase 2 (v1.2) - Advanced Features & Personalization
+- **AI Resume Tailoring:** Implement a "one-click" feature to analyze a job description and suggest keyword and content optimizations for the user's resume.
+- **User Accounts:** Add user authentication and database support to allow saving and managing multiple resumes.
 
 ### Phase 3 (v2.0) - Platform Expansion
-- Mobile app development
-- PWA capabilities
-- Offline mode
-- Advanced analytics
+- **Collaboration Features:** Resume sharing and feedback systems
+- **Mobile App:** Native mobile application development
+- **Advanced Analytics:** User behavior tracking and optimization insights
 
 ## 🎯 MVP Success Definition
 
@@ -4589,7 +4631,7 @@ $RootFiles = @(
     "scala.readme.md",
     "resume.md",
     "kaden-scala-data.json",
-    "cala_resumaker submodule to fix build",
+    "cala_resumemaker submodule to fix build",
     "write-blah.ps1",
     "next-env.d.ts",
     ".gitignore"
@@ -4735,6 +4777,7 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+.env.local
 
 # vercel
 .vercel
@@ -4819,8 +4862,68 @@ tmp/
 temp/
 
 # Scala project files (local reference only)
-scala_resumaker/
+scala_resumemaker/
 
+```n
+
+## File: src\app\api\hablo\route.ts
+
+```typescript
+// src/app/api/hablo/route.ts
+import { NextResponse } from 'next/server';
+
+export async function POST() {
+  const apiKey = process.env.GEMINI_API_KEY;
+
+  if (!apiKey) {
+    return NextResponse.json({ error: 'Gemini API key not found in .env.local' }, { status: 500 });
+  }
+
+  // The official endpoint for Gemini 1.5 Flash
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
+
+  // This is our new, detailed prompt!
+  const prompt = `
+    You are 'Career Co-Pilot,' a friendly, encouraging, and highly capable AI assistant integrated into a resume builder application.
+    A user has just clicked a test button labeled "Hablo!" which means "I speak!" in Spanish. They are testing the connection to you for the first time.
+    Your task is to provide a brief, welcoming, and slightly playful response that accomplishes the following:
+    1. Acknowledge the "Hablo!" button by responding in Spanish first, then providing an English translation.
+    2. Introduce yourself as their Career Co-Pilot.
+    3. Briefly and confidently state your purpose: to help them craft a standout resume by rewriting bullet points, generating summaries, and tailoring their application to job descriptions.
+    4. Keep the tone encouraging and professional, but not robotic.
+    5. End with a friendly and relevant emoji.
+    6. Keep the entire response under 60 words.
+  `;
+
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{
+          parts: [{
+            text: prompt
+          }]
+        }]
+      })
+    });
+
+    if (!response.ok) {
+      const errorBody = await response.json();
+      console.error('Google API Error:', errorBody);
+      throw new Error(`Google API responded with status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    const aiResponse = data.candidates[0]?.content?.parts[0]?.text;
+    
+    return NextResponse.json({ message: aiResponse });
+
+  } catch (error) {
+    console.error('Gemini API error:', error);
+    return NextResponse.json({ error: 'Failed to communicate with the AI' }, { status: 500 });
+  }
+} 
 ```n
 
 ## File: src\app\globals.css
@@ -5256,11 +5359,34 @@ export const ResumeDocument: React.FC<ResumeDocumentProps> = ({ data }) => (
 ```typescript
 'use client';
 
-import React, { useState, useEffect, lazy, Suspense } from 'react';
+import React, { useState, useEffect, lazy, Suspense, Component, ReactNode } from 'react';
 import { Download, Plus, Trash2, Moon, Sun, FileText, User, Briefcase, GraduationCap, Code, Award } from 'lucide-react';
 
 // Use React.lazy for the button component that contains the client-side only PDFDownloadLink
 const PDFDownloadButton = lazy(() => import('./PDFDownloadButton').then(module => ({ default: module.PDFDownloadButton })));
+
+// Error boundary component to catch PDF generation errors
+class ErrorBoundary extends Component<{ children: ReactNode; fallback: ReactNode }, { hasError: boolean }> {
+  constructor(props: { children: ReactNode; fallback: ReactNode }) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(error: any) {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: any, errorInfo: any) {
+    console.error('PDF Error Boundary caught an error:', error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback;
+    }
+    return this.props.children;
+  }
+}
 
 // TypeScript interfaces
 interface ContactInfo {
@@ -5308,66 +5434,32 @@ interface Resume {
   extras: string[];
 }
 
-// Sample data - using Kaden's data as the default
-const sampleResume: Resume = {
+// Default resume data structure
+const defaultResume: Resume = {
   header: {
-    name: "Kaden Taylor",
-    tagline: "I like building things, solving problems, and building things that solve problems.",
+    name: "",
+    tagline: "",
     contact: {
-      phone: "(480) 734-8791",
-      email: "kadenjtaylor@gmail.com"
+      phone: "",
+      email: ""
     },
     location: {
-      city: "Tucson",
-      state: "Arizona"
+      city: "",
+      state: ""
     }
   },
-  experience: [
-    {
-      name: "Crunchbase",
-      link: "",
-      blurb: "",
-      tenure: "2022 - 2025",
-      jobs: [
-        {
-          title: "Platform Engineer",
-          description: "Discovery Team",
-          skills: ["Kafka", "Docker", "Kubernetes", "Debezium"],
-          languages: []
-        }
-      ]
-    },
-    {
-      name: "Axoni",
-      link: "",
-      blurb: "",
-      tenure: "2021 - 2022",
-      jobs: [
-        {
-          title: "Software Engineer",
-          description: "Platform Team",
-          skills: ["Kubernetes", "Docker", "Debezium"],
-          languages: []
-        }
-      ]
-    }
-  ],
-  education: [
-    {
-      institution: "University of Arizona",
-      link: "",
-      year: "2016",
-      degree: "B.S. Computer Science"
-    }
-  ],
-  skills: ["Kafka", "Docker", "Kubernetes", "Scala", "Java", "React"],
-  extras: ["Runner-up on The FOX network gameshow, SuperHuman"]
+  experience: [],
+  education: [],
+  skills: [],
+  extras: []
 };
 
 const ResumeGenerator = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [activeTemplate, setActiveTemplate] = useState('modern');
-  const [resumeData, setResumeData] = useState<Resume>(sampleResume);
+  const [aiResponse, setAiResponse] = useState<string>('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [resumeData, setResumeData] = useState<Resume>(defaultResume);
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
@@ -5384,10 +5476,10 @@ const ResumeGenerator = () => {
         }
       } catch (e) {
         console.error('Failed to load saved data:', e);
-        // If parsing fails, keep the sample data
+        // If parsing fails, keep the default data
       }
     }
-    // If no saved data or invalid data, keep the sample data
+    // If no saved data or invalid data, keep the default data
   }, []);
 
   useEffect(() => {
@@ -5752,10 +5844,7 @@ const ResumeGenerator = () => {
     return html;
   };
 
-  const loadSampleData = () => {
-    console.log('Loading sample data:', sampleResume);
-    setResumeData(sampleResume);
-  };
+
 
   // Debug function to check current state
   const debugCurrentData = () => {
@@ -5764,6 +5853,34 @@ const ResumeGenerator = () => {
     console.log('Education length:', resumeData.education?.length);
     console.log('Skills length:', resumeData.skills?.length);
     console.log('Extras length:', resumeData.extras?.length);
+  };
+
+  // Hablo AI function
+  const handleHabloClick = async () => {
+    setIsLoading(true);
+    setAiResponse('');
+    
+    try {
+      const response = await fetch('/api/hablo', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const data = await response.json();
+      
+      if (data.error) {
+        setAiResponse(`Error: ${data.error}`);
+      } else {
+        setAiResponse(data.message);
+      }
+    } catch (error) {
+      setAiResponse('Failed to connect to AI service');
+      console.error('Hablo error:', error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   // Convert Scala format to Next.js format
@@ -5859,12 +5976,7 @@ const ResumeGenerator = () => {
                 <option value="classic">Classic</option>
                 <option value="minimal">Minimal</option>
               </select>
-              <button
-                onClick={loadSampleData}
-                className="px-4 py-2 text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors"
-              >
-                Load Sample
-              </button>
+
               <button
                 onClick={() => {
                   // Create a file input for importing Scala data
@@ -5918,6 +6030,18 @@ const ResumeGenerator = () => {
               >
                 Debug Data
               </button>
+              <button
+                onClick={handleHabloClick}
+                disabled={isLoading}
+                className={`px-4 py-2 text-sm font-medium transition-colors ${
+                  isLoading 
+                    ? 'bg-gray-400 text-gray-600 cursor-not-allowed' 
+                    : 'bg-purple-600 text-white hover:bg-purple-700'
+                }`}
+                title="Test AI Career Co-Pilot connection"
+              >
+                {isLoading ? 'Testing...' : 'Hablo!'}
+              </button>
                               {isClient && (
                                 <Suspense fallback={
                                   <button className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
@@ -5925,7 +6049,13 @@ const ResumeGenerator = () => {
                                     <span>Loading PDF...</span>
                                   </button>
                                 }>
-                                  <PDFDownloadButton resumeData={resumeData} />
+                                  <ErrorBoundary fallback={
+                                    <button className="flex items-center space-x-2 px-4 py-2 bg-red-600 text-white rounded-md">
+                                      <span>PDF Error</span>
+                                    </button>
+                                  }>
+                                    <PDFDownloadButton resumeData={resumeData} />
+                                  </ErrorBoundary>
                                 </Suspense>
                               )}
               <button
@@ -5940,6 +6070,25 @@ const ResumeGenerator = () => {
           </div>
         </div>
       </header>
+
+      {/* AI Response Display */}
+      {aiResponse && (
+        <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 ${
+          darkMode ? 'bg-gray-800' : 'bg-blue-50'
+        }`}>
+          <div className={`p-4 rounded-lg border ${
+            darkMode 
+              ? 'bg-gray-700 border-gray-600 text-white' 
+              : 'bg-white border-blue-200 text-gray-900'
+          }`}>
+            <div className="flex items-center space-x-2 mb-2">
+              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+              <span className="text-sm font-medium text-green-600">Career Co-Pilot Response:</span>
+            </div>
+            <p className="text-sm leading-relaxed">{aiResponse}</p>
+          </div>
+        </div>
+      )}
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
