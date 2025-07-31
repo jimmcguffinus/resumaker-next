@@ -116,5 +116,8 @@ pids
 tmp/
 temp/
 
+# PowerShell scripts
+*.ps1
+
 # Scala project files (local reference only)
 scala_resumemaker/

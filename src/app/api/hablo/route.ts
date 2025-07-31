@@ -19,7 +19,7 @@ export async function GET() {
   const prompt = `
     You are 'Career Co-Pilot,' a friendly AI assistant. A user has clicked a "Hablo!" button.
     Respond with a brief, welcoming message in Spanish and English that introduces yourself
-    and mentions you're ready to help with their resume. End with a rocket emoji.
+    and mentions you're ready to help with your resume. End with a rocket emoji.
     Keep the entire response under 50 words.
   `;
 

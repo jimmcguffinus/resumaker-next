@@ -1,6 +1,6 @@
 # 🔍 Resume Maker Source Code Dump
 
-Generated: 2025-07-31 12:08:25
+Generated: 2025-07-31 12:42:59
 
 ## Project: Next.js Resume Generator with PDF Export
 
@@ -15,7 +15,7 @@ Generated: 2025-07-31 12:08:25
   "type": "module",
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "rm -rf .next/cache && next build && rm -rf .next/cache",
+    "build": "rm -rf .next && next build",
     "start": "next start",
     "lint": "next lint"
   },
@@ -4096,9 +4096,6 @@ GEMINI_API_KEY=AIzaSyBgAJLNclieKRmupQCXXeALtJFJpef8XLc
 // src/app/api/hablo/route.ts
 import { NextResponse } from 'next/server';
 
-// This tells Next.js to build this for Cloudflare's Edge network
-export const runtime = 'edge';
-
 // This line is crucial for serverless environments like Cloudflare
 export const dynamic = 'force-dynamic';
 
@@ -4117,7 +4114,7 @@ export async function GET() {
   const prompt = `
     You are 'Career Co-Pilot,' a friendly AI assistant. A user has clicked a "Hablo!" button.
     Respond with a brief, welcoming message in Spanish and English that introduces yourself
-    and mentions you're ready to help with their resume. End with a rocket emoji.
+    and mentions you're ready to help with your resume. End with a rocket emoji.
     Keep the entire response under 50 words.
   `;
 
