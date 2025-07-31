@@ -1,6 +1,6 @@
 # 🔍 Resume Maker Source Code Dump
 
-Generated: 2025-07-31 10:58:34
+Generated: 2025-07-31 11:13:08
 
 ## Project: Next.js Resume Generator with PDF Export
 
@@ -15,7 +15,7 @@ Generated: 2025-07-31 10:58:34
   "type": "module",
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "rm -rf .next/cache && next build && rm -rf .next/cache",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
@@ -3282,7 +3282,13 @@ Generated: 2025-07-31 10:58:34
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  trailingSlash: true,
+  /**
+   * Tell Next.js to generate a static export of your application.
+   * This is required for static hosts like Cloudflare Pages.
+   */
+  output: 'export',
+
+  // This setting is correct for static export
   images: {
     unoptimized: true
   }
