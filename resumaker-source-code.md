@@ -1,6 +1,6 @@
 # 🔍 Resume Maker Source Code Dump
 
-Generated: 2025-07-31 11:27:27
+Generated: 2025-07-31 11:35:19
 
 ## Project: Next.js Resume Generator with PDF Export
 
@@ -4766,6 +4766,9 @@ GEMINI_API_KEY=AIzaSyBgAJLNclieKRmupQCXXeALtJFJpef8XLc
 ```typescript
 // src/app/api/hablo/route.ts
 import { NextResponse } from 'next/server';
+
+// This tells Next.js to build this for Cloudflare's Edge network
+export const runtime = 'edge';
 
 // This line is crucial for serverless environments like Cloudflare
 export const dynamic = 'force-dynamic';
