@@ -1,6 +1,6 @@
 # 🔍 Resume Maker Source Code Dump
 
-Generated: 2025-07-31 09:55:27
+Generated: 2025-07-31 10:16:38
 
 ## Project: Next.js Resume Generator with PDF Export
 
@@ -15,7 +15,7 @@ Generated: 2025-07-31 09:55:27
   "type": "module",
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build",
+    "build": "rm -rf .next/cache && next build && rm -rf .next/cache",
     "start": "next start",
     "lint": "next lint"
   },
