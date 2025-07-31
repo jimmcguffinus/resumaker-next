@@ -502,10 +502,8 @@ const ResumeGenerator = () => {
     setAiResponse('');
     
     try {
-      // Call YOUR secure backend endpoint, not Google's.
-      const response = await fetch('/api/hablo', {
-        method: 'POST',
-      });
+              // Call YOUR secure backend endpoint, not Google's.
+        const response = await fetch('/api/hablo');
 
       const data = await response.json();
       
