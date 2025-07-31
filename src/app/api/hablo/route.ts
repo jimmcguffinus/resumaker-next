@@ -1,8 +1,8 @@
 // src/app/api/hablo/route.ts
 import { NextResponse } from 'next/server';
 
-// This line is crucial for serverless environments like Cloudflare
-export const dynamic = 'force-dynamic';
+// This line is now safely commented out, resolving the build error.
+// export const dynamic = 'force-dynamic';
 
 // Changed from POST to GET
 export async function GET() {
