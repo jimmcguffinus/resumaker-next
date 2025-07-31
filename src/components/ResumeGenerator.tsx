@@ -496,13 +496,13 @@ const ResumeGenerator = () => {
     console.log('Extras length:', resumeData.extras?.length);
   };
 
-  // Hablo AI function - Secure server-side API call (GET method)
+  // Hablo AI function - Force fresh deployment (GET method)
   const handleHabloClick = async () => {
     setIsLoading(true);
     setAiResponse('');
     
     try {
-      // This now sends a GET request, which matches our updated API route
+      // Force fresh deployment - GET request to match API route
       const response = await fetch('/api/hablo');
 
       const data = await response.json();
