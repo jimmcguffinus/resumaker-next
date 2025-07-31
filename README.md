@@ -31,7 +31,7 @@ Visit: [resumaker.42-it.com](https://resumaker.42-it.com)
 3. **Set up environment variables**
    Create a `.env.local` file in the root directory:
    ```
-   GEMINI_API_KEY=your_gemini_api_key_here
+   NEXT_PUBLIC_GEMINI_API_KEY=your_gemini_api_key_here
    ```
 
 4. **Run the development server**

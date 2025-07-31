@@ -7,8 +7,7 @@ command = "npm run build"
 [build.environment]
 NODE_VERSION = "18"
 
-[site]
-bucket = ".next/static"
+pages_build_output_dir = ".next"
 
 [env.production]
 name = "resumaker-next"
