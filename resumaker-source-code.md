@@ -1,6 +1,6 @@
 # 🔍 Resume Maker Source Code Dump
 
-Generated: 2025-07-31 10:25:39
+Generated: 2025-07-31 10:36:14
 
 ## Project: Next.js Resume Generator with PDF Export
 
@@ -15,7 +15,7 @@ Generated: 2025-07-31 10:25:39
   "type": "module",
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "rm -rf .next/cache && next build && rm -rf .next/cache",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
@@ -5724,13 +5724,13 @@ const ResumeGenerator = () => {
     console.log('Extras length:', resumeData.extras?.length);
   };
 
-  // Hablo AI function - Secure server-side API call (GET method)
+  // Hablo AI function - Force fresh deployment (GET method)
   const handleHabloClick = async () => {
     setIsLoading(true);
     setAiResponse('');
     
     try {
-      // This now sends a GET request, which matches our updated API route
+      // Force fresh deployment - GET request to match API route
       const response = await fetch('/api/hablo');
 
       const data = await response.json();
