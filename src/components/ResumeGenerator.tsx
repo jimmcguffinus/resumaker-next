@@ -516,7 +516,8 @@ const ResumeGenerator = () => {
       setAiResponse(data.message);
 
     } catch (error) {
-      setAiResponse(`Error: ${error.message}`);
+      const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
+      setAiResponse(`Error: ${errorMessage}`);
       console.error('Hablo error:', error);
     } finally {
       setIsLoading(false);
