@@ -496,7 +496,7 @@ const ResumeGenerator = () => {
     console.log('Extras length:', resumeData.extras?.length);
   };
 
-  // Hablo AI function - Force fresh deployment (GET method)
+  // Hablo AI function - Force fresh deployment v2 (GET method)
   const handleHabloClick = async () => {
     setIsLoading(true);
     setAiResponse('');
