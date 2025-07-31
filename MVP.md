@@ -115,7 +115,7 @@
 
 ### Deployment
 - **Platform:** Cloudflare Pages ✅
-- **Domain:** resumemaker.42-it.com ✅
+- **Domain:** resumaker.42-it.com ✅
 - **SSL:** Automatic HTTPS ✅
 - **CDN:** Global content delivery ✅
 
@@ -142,7 +142,7 @@
 ## 🎯 MVP User Journey
 
 ### Step 1: Landing
-- User visits resumemaker.42-it.com
+- User visits resumaker.42-it.com
 - Clear value proposition visible
 - Call-to-action to start building resume
 
@@ -210,7 +210,7 @@
 
 ### Launch Day
 - **Date:** January 2025
-- **URL:** https://resumemaker.42-it.com
+- **URL:** https://resumaker.42-it.com
 - **Status:** Ready for public launch
 
 ## 📈 Post-MVP Roadmap

@@ -5,7 +5,7 @@
 
 **Product Name:** Resume Maker  
 **Version:** 1.0.0  
-**Target URL:** resumemaker.42-it.com  
+**Target URL:** resumaker.42-it.com  
 **Last Updated:** January 2025  
 
 Resume Maker is a modern, web-based resume generator that allows users to create professional PDF resumes through an intuitive, real-time interface. The application provides multiple templates, instant preview, and seamless export capabilities.
@@ -186,7 +186,7 @@ To provide job seekers with a modern, accessible, and user-friendly tool for cre
 
 ### Hosting
 - **Platform:** Cloudflare Pages
-- **Domain:** resumemaker.42-it.com
+- **Domain:** resumaker.42-it.com
 - **SSL:** Automatic HTTPS
 - **CDN:** Global content delivery
 

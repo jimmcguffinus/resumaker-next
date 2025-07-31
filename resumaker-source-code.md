@@ -3400,7 +3400,7 @@ A **Next.js-based resume generator** that creates professional PDF resumes with 
 
 ## 🚀 Live Demo
 
-Visit: [resumemaker.42-it.com](https://resumemaker.42-it.com)
+Visit: [resumaker.42-it.com](https://resumaker.42-it.com)
 
 ## 🛠️ Tech Stack
 
@@ -3442,7 +3442,7 @@ resumaker-next/
 │   └── pdf/
 │       └── exportResume.ts     # PDF export functionality
 ├── public/                     # Static assets
-├── scala_resumemaker/          # Original Scala project
+├── scala_resumaker/          # Original Scala project
 ├── package.json                # Dependencies
 ├── next.config.ts             # Next.js config
 └── README.md                  # This file
@@ -3525,7 +3525,7 @@ The app is deployed on Cloudflare Pages with automatic builds from GitHub:
 
 1. **Connected to GitHub**: Automatic deployments on push
 2. **Build settings**: Next.js framework preset with static export
-3. **Custom domain**: resumemaker.42-it.com
+3. **Custom domain**: resumaker.42-it.com
 
 ### Local Development
 
@@ -3580,7 +3580,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Product Name:** Resume Maker  
 **Version:** 1.0.0  
-**Target URL:** resumemaker.42-it.com  
+**Target URL:** resumaker.42-it.com  
 **Last Updated:** January 2025  
 
 Resume Maker is a modern, web-based resume generator that allows users to create professional PDF resumes through an intuitive, real-time interface. The application provides multiple templates, instant preview, and seamless export capabilities.
@@ -3760,7 +3760,7 @@ To provide job seekers with a modern, accessible, and user-friendly tool for cre
 
 ### Hosting
 - **Platform:** Cloudflare Pages
-- **Domain:** resumemaker.42-it.com
+- **Domain:** resumaker.42-it.com
 - **SSL:** Automatic HTTPS
 - **CDN:** Global content delivery
 
@@ -3943,7 +3943,7 @@ To provide job seekers with a modern, accessible, and user-friendly tool for cre
 
 ### Deployment
 - **Platform:** Cloudflare Pages ✅
-- **Domain:** resumemaker.42-it.com ✅
+- **Domain:** resumaker.42-it.com ✅
 - **SSL:** Automatic HTTPS ✅
 - **CDN:** Global content delivery ✅
 
@@ -3970,7 +3970,7 @@ To provide job seekers with a modern, accessible, and user-friendly tool for cre
 ## 🎯 MVP User Journey
 
 ### Step 1: Landing
-- User visits resumemaker.42-it.com
+- User visits resumaker.42-it.com
 - Clear value proposition visible
 - Call-to-action to start building resume
 
@@ -4038,7 +4038,7 @@ To provide job seekers with a modern, accessible, and user-friendly tool for cre
 
 ### Launch Day
 - **Date:** January 2025
-- **URL:** https://resumemaker.42-it.com
+- **URL:** https://resumaker.42-it.com
 - **Status:** Ready for public launch
 
 ## 📈 Post-MVP Roadmap
@@ -4589,7 +4589,7 @@ $RootFiles = @(
     "scala.readme.md",
     "resume.md",
     "kaden-scala-data.json",
-    "cala_resumemaker submodule to fix build",
+    "cala_resumaker submodule to fix build",
     "write-blah.ps1",
     "next-env.d.ts",
     ".gitignore"
@@ -4819,7 +4819,7 @@ tmp/
 temp/
 
 # Scala project files (local reference only)
-scala_resumemaker/
+scala_resumaker/
 
 ```n
 

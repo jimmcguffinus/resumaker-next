@@ -159,7 +159,7 @@ The app is deployed on Cloudflare Pages with automatic CI/CD:
 
 1. **Connected to GitHub**: Automatic deployments on push
 2. **Build settings**: Next.js framework preset with static export
-3. **Custom domain**: resumemaker.42-it.com
+3. **Custom domain**: resumaker.42-it.com
 4. **Zero-downtime deployments**: Instant updates with each push
 
 ### Local Development
