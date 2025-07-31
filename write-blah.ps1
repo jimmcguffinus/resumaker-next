@@ -31,7 +31,12 @@ $RootFiles = @(
     "cala_resumemaker submodule to fix build",
     "write-blah.ps1",
     "next-env.d.ts",
-    ".gitignore"
+    ".gitignore",
+    ".cloudflareignore",
+    ".env",
+    ".env.local",
+    ".env.production",
+    ".env.development"
 )
 
 # Dynamic File Discovery
@@ -44,7 +49,7 @@ foreach ($dir in $SourceDirs) {
 }
 
 # Also scan for any additional files in root that might be relevant
-$AdditionalRootFiles = Get-ChildItem -Path "." -File -Include "*.md", "*.json", "*.ts", "*.js", "*.ps1", "*.txt", "*.config*" | Where-Object { 
+$AdditionalRootFiles = Get-ChildItem -Path "." -File -Include "*.md", "*.json", "*.ts", "*.js", "*.ps1", "*.txt", "*.config*", ".*" | Where-Object { 
     $_.Name -notin $RootFiles -and 
     $_.Name -notlike "*.lock" -and 
     $_.Name -notlike "node_modules*" -and
