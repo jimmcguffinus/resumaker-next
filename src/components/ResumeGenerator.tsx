@@ -502,8 +502,8 @@ const ResumeGenerator = () => {
     setAiResponse('');
     
     try {
-              // Call YOUR secure backend endpoint, not Google's.
-        const response = await fetch('/api/hablo');
+      // This now sends a GET request, which matches our updated API route
+      const response = await fetch('/api/hablo');
 
       const data = await response.json();
       

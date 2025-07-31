@@ -1,8 +1,10 @@
 // src/app/api/hablo/route.ts
 import { NextResponse } from 'next/server';
 
+// This line is crucial for serverless environments like Cloudflare
 export const dynamic = 'force-dynamic';
 
+// Changed from POST to GET
 export async function GET() {
   // 1. Securely get the API key from server-side environment variables.
   const apiKey = process.env.GEMINI_API_KEY;

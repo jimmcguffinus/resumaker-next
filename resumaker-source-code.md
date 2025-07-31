@@ -1,6 +1,6 @@
 # 🔍 Resume Maker Source Code Dump
 
-Generated: 2025-07-30 22:09:21
+Generated: 2025-07-30 22:43:50
 
 ## Project: Next.js Resume Generator with PDF Export
 
@@ -3292,18 +3292,6 @@ export default nextConfig;
 
 ```n
 
-## File: next.config.js
-
-```javascript
-/** @type {import("next").NextConfig} */
-const nextConfig = {
-  output: "export" // enables static HTML export mode in Next 15+
-};
-
-export default nextConfig;
-
-```n
-
 ## File: tsconfig.json
 
 ```json
@@ -4758,7 +4746,9 @@ scala_resumemaker/
 // src/app/api/hablo/route.ts
 import { NextResponse } from 'next/server';
 
-export async function POST() {
+export const dynamic = 'force-dynamic';
+
+export async function GET() {
   // 1. Securely get the API key from server-side environment variables.
   const apiKey = process.env.GEMINI_API_KEY;
 
@@ -5738,10 +5728,8 @@ const ResumeGenerator = () => {
     setAiResponse('');
     
     try {
-      // Call YOUR secure backend endpoint, not Google's.
-      const response = await fetch('/api/hablo', {
-        method: 'POST',
-      });
+              // Call YOUR secure backend endpoint, not Google's.
+        const response = await fetch('/api/hablo');
 
       const data = await response.json();
       
