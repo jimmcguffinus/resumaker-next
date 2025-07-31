@@ -1,13 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /**
-   * Tell Next.js to generate a static export of your application.
-   * This is required for static hosts like Cloudflare Pages.
-   */
-  output: 'export',
-
-  // This setting is correct for static export
+  // The 'output: "export"' line MUST be removed.
+  // We are no longer exporting a static site.
   images: {
     unoptimized: true
   }
