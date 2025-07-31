@@ -22,7 +22,7 @@ A **Next.js-based resume generator** that creates professional PDF resumes with 
 
 ## 🚀 Live Demo
 
-Visit: [resumemaker.42-it.com](https://resumemaker.42-it.com)
+Visit: [resumaker.42-it.com](https://resumaker.42-it.com)
 
 ## 🛠️ Tech Stack
 
