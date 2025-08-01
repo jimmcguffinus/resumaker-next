@@ -131,6 +131,11 @@ const ResumeGenerator = () => {
   });
   const [newExtras, setNewExtras] = useState<string>('');
 
+  // Job posting modal state
+  const [showJobPostingModal, setShowJobPostingModal] = useState(false);
+  const [jobPostingText, setJobPostingText] = useState('');
+  const [isProcessingJobPosting, setIsProcessingJobPosting] = useState(false);
+
   useEffect(() => {
     // Mark as client-side after mounting
     setIsClient(true);
@@ -748,6 +753,57 @@ const ResumeGenerator = () => {
     }
   };
 
+  // Analyze job posting and tailor resume
+  const analyzeJobPosting = async () => {
+    if (!jobPostingText.trim()) {
+      alert('Please paste a job posting first.');
+      return;
+    }
+
+    setIsProcessingJobPosting(true);
+    try {
+      const response = await fetch('/api/hablo?persona=default', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          currentResume: resumeData,
+          jobPosting: jobPostingText,
+          enhanceType: 'job_posting_analysis'
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      
+      if (data.enhancedResume) {
+        // Import the AI-generated resume data
+        const tailoredResume = importJsonData(data.enhancedResume);
+        setResumeData(tailoredResume);
+        
+        // Save to localStorage
+        localStorage.setItem('resumeData', JSON.stringify(tailoredResume));
+        
+        // Close the modal
+        setShowJobPostingModal(false);
+        setJobPostingText('');
+        
+        alert('Resume successfully tailored to the job posting!');
+      } else {
+        throw new Error(data.error || 'Failed to analyze job posting');
+      }
+    } catch (error) {
+      console.error('Job posting analysis error:', error);
+      alert('Failed to analyze job posting. Please try again.');
+    } finally {
+      setIsProcessingJobPosting(false);
+    }
+  };
+
   // Convert Scala format to Next.js format
   // This function will now correctly parse the detailed JSON from the original CLI tool
   const importJsonData = (jsonData: any): Resume => {
@@ -913,6 +969,14 @@ const ResumeGenerator = () => {
                 title="Enhance your resume with AI"
               >
                 {isLoading ? 'Enhancing...' : 'AI Enhance'}
+              </button>
+              
+              <button
+                onClick={() => setShowJobPostingModal(true)}
+                className="px-2 sm:px-4 py-1 sm:py-2 text-fluid-sm sm:text-fluid-base font-semibold bg-green-600 text-white hover:bg-green-700 transition-colors"
+                title="Tailor your resume to a specific job posting"
+              >
+                🎯 Job Match
               </button>
                               {isClient && (
                                 <ErrorBoundary fallback={
@@ -1754,6 +1818,77 @@ const ResumeGenerator = () => {
                 className="px-4 sm:px-6 py-2 sm:py-3 text-fluid-base sm:text-fluid-lg font-bold text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors"
               >
                 {editingExperienceIndex !== null ? 'Update Experience' : 'Save Experience'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Job Posting Modal */}
+      {showJobPostingModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-75 overflow-y-auto h-full w-full flex items-center justify-center z-50 p-4">
+          <div className="relative p-4 sm:p-6 lg:p-8 bg-white border-2 border-green-300 rounded-lg shadow-2xl w-full max-w-4xl max-h-full mx-auto">
+            <div className="flex justify-between items-center mb-4 sm:mb-6">
+              <h3 className="text-fluid-xl sm:text-fluid-2xl lg:text-fluid-3xl font-bold text-black">
+                🎯 Job Posting Analysis
+              </h3>
+              <button 
+                onClick={() => {
+                  setShowJobPostingModal(false);
+                  setJobPostingText('');
+                }} 
+                className="text-gray-700 hover:text-black p-2"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="sm:w-8 sm:h-8"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+              </button>
+            </div>
+            
+            <div className="space-y-4">
+              <div>
+                <label className="block text-fluid-lg sm:text-fluid-xl font-bold mb-2 sm:mb-3 text-black">
+                  Paste Job Posting
+                </label>
+                <textarea
+                  value={jobPostingText}
+                  onChange={(e) => setJobPostingText(e.target.value)}
+                  rows={12}
+                  className="w-full p-3 sm:p-4 text-fluid-base sm:text-fluid-lg rounded-lg border-2 border-gray-300 transition-colors focus:ring-4 focus:ring-green-500 focus:border-green-500 placeholder-gray-500"
+                  placeholder="Paste the full job posting from Indeed, LinkedIn, or any job board here. Include the job title, requirements, responsibilities, and any other details..."
+                />
+              </div>
+              
+              <div className="bg-blue-50 border-2 border-blue-200 rounded-lg p-4">
+                <h4 className="text-fluid-lg font-bold text-blue-900 mb-2">💡 How it works:</h4>
+                <ul className="text-fluid-sm text-blue-800 space-y-1">
+                  <li>• AI analyzes the job posting for key requirements and keywords</li>
+                  <li>• Compares with your current resume to identify relevant experience</li>
+                  <li>• Tailors your resume to highlight matching skills and achievements</li>
+                  <li>• Updates all sections to better align with the job requirements</li>
+                  <li>• Automatically imports the optimized resume into all form fields</li>
+                </ul>
+              </div>
+            </div>
+            
+            <div className="flex flex-col sm:flex-row justify-end gap-3 sm:gap-4 mt-6 sm:mt-8">
+              <button
+                onClick={() => {
+                  setShowJobPostingModal(false);
+                  setJobPostingText('');
+                }}
+                className="px-4 sm:px-6 py-2 sm:py-3 text-fluid-base sm:text-fluid-lg font-bold text-gray-700 border-2 border-gray-300 rounded-lg hover:bg-gray-100 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={analyzeJobPosting}
+                disabled={isProcessingJobPosting || !jobPostingText.trim()}
+                className={`px-4 sm:px-6 py-2 sm:py-3 text-fluid-base sm:text-fluid-lg font-bold text-white rounded-lg transition-colors ${
+                  isProcessingJobPosting || !jobPostingText.trim()
+                    ? 'bg-gray-400 cursor-not-allowed'
+                    : 'bg-green-600 hover:bg-green-700'
+                }`}
+              >
+                {isProcessingJobPosting ? 'Analyzing...' : '🎯 Tailor Resume'}
               </button>
             </div>
           </div>

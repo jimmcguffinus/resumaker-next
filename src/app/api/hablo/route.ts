@@ -85,8 +85,70 @@ export async function POST(request: Request) {
   
   // Check if this is a single experience enhancement
   const isSingleExperience = resumeData.enhanceType === 'single_experience';
+  const isJobPostingAnalysis = resumeData.enhanceType === 'job_posting_analysis';
   
-  const prompt = isSingleExperience ? `
+  const prompt = isJobPostingAnalysis ? `
+    You are 'Career Co-Pilot,' an AI assistant with a ${persona} personality. Your job is to analyze a job posting and tailor a resume to match it perfectly.
+
+    JOB POSTING:
+    ${resumeData.jobPosting}
+
+    CURRENT RESUME:
+    ${JSON.stringify(resumeData.currentResume, null, 2)}
+
+    Your task is to:
+    1. Analyze the job posting for key requirements, skills, and keywords
+    2. Identify relevant experience from the current resume
+    3. Tailor the resume to highlight matching skills and achievements
+    4. Rewrite experience descriptions to align with job requirements
+    5. Update skills to prioritize job-relevant ones
+    6. Adjust the overall tone and focus to match the job
+
+    IMPORTANT: You must return ONLY a valid JSON object that follows this exact schema (the converted format the app uses):
+
+    {
+      "header": {
+        "name": "string",
+        "tagline": "string",
+        "contact": {
+          "phone": "string",
+          "email": "string"
+        },
+        "location": {
+          "city": "string",
+          "state": "string"
+        }
+      },
+      "experience": [
+        {
+          "name": "string",
+          "link": "string",
+          "blurb": "string",
+          "tenure": "string",
+          "jobs": [
+            {
+              "title": "string",
+              "description": "string",
+              "skills": ["string"],
+              "languages": []
+            }
+          ]
+        }
+      ],
+      "education": [
+        {
+          "institution": "string",
+          "link": "string",
+          "year": "string",
+          "degree": "string"
+        }
+      ],
+      "skills": ["string"],
+      "extras": ["string"]
+    }
+
+    Return ONLY the raw JSON object following this exact structure. No explanations, no markdown, no formatting.
+  ` : isSingleExperience ? `
     You are 'Career Co-Pilot,' an AI assistant with a ${persona} personality. Your job is to enhance a single work experience entry.
 
     Current experience data: ${JSON.stringify(resumeData.experience[0], null, 2)}
