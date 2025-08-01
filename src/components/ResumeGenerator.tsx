@@ -1356,68 +1356,72 @@ const ResumeGenerator = () => {
 
       {/* Add Experience Modal */}
       {showAddExperienceModal && (
-        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center z-50">
-          <div className="relative p-8 border w-full max-w-md max-h-full">
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="text-xl font-bold">Add New Experience</h3>
-              <button onClick={cancelAddExperience} className="text-gray-500 hover:text-gray-700">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        <div className="fixed inset-0 bg-black bg-opacity-75 overflow-y-auto h-full w-full flex items-center justify-center z-50">
+          <div className="relative p-8 bg-white border-2 border-blue-300 rounded-lg shadow-2xl w-full max-w-4xl max-h-full mx-4">
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="text-2xl font-bold text-black">Add New Experience</h3>
+              <button onClick={cancelAddExperience} className="text-gray-700 hover:text-black p-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
               </button>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-semibold mb-2">Company Name</label>
+                <label className="block text-lg font-bold mb-3 text-black">Company Name</label>
                 <input
                   value={newExperience.name}
                   onChange={(e) => setNewExperience({ ...newExperience, name: e.target.value })}
-                  className="w-full p-2 rounded border transition-colors focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full p-4 text-lg rounded-lg border-2 border-gray-300 transition-colors focus:ring-4 focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="Enter company name"
                 />
               </div>
               <div>
-                <label className="block text-sm font-semibold mb-2">Tenure</label>
+                <label className="block text-lg font-bold mb-3 text-black">Tenure</label>
                 <input
                   value={newExperience.tenure}
                   onChange={(e) => setNewExperience({ ...newExperience, tenure: e.target.value })}
-                  className="w-full p-2 rounded border transition-colors focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full p-4 text-lg rounded-lg border-2 border-gray-300 transition-colors focus:ring-4 focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="2020 - 2023"
                 />
               </div>
               <div>
-                <label className="block text-sm font-semibold mb-2">Job Title</label>
+                <label className="block text-lg font-bold mb-3 text-black">Job Title</label>
                 <input
                   value={newExperience.jobs[0]?.title}
                   onChange={(e) => setNewExperience({ ...newExperience, jobs: [{ ...newExperience.jobs[0], title: e.target.value }] })}
-                  className="w-full p-2 rounded border transition-colors focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full p-4 text-lg rounded-lg border-2 border-gray-300 transition-colors focus:ring-4 focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="Software Engineer"
                 />
               </div>
               <div>
-                <label className="block text-sm font-semibold mb-2">Description</label>
-                <textarea
-                  value={newExperience.jobs[0]?.description}
-                  onChange={(e) => setNewExperience({ ...newExperience, jobs: [{ ...newExperience.jobs[0], description: e.target.value }] })}
-                  rows={3}
-                  className="w-full p-2 rounded border transition-colors focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-semibold mb-2">Skills</label>
+                <label className="block text-lg font-bold mb-3 text-black">Skills</label>
                 <input
                   value={newExperience.jobs[0]?.skills.join(', ')}
                   onChange={(e) => setNewExperience({ ...newExperience, jobs: [{ ...newExperience.jobs[0], skills: e.target.value.split(',').map(s => s.trim()).filter(Boolean) }] })}
-                  className="w-full p-2 rounded border transition-colors focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full p-4 text-lg rounded-lg border-2 border-gray-300 transition-colors focus:ring-4 focus:ring-blue-500 focus:border-blue-500"
                   placeholder="React, Node.js, AWS..."
                 />
               </div>
+              <div className="lg:col-span-2">
+                <label className="block text-lg font-bold mb-3 text-black">Description</label>
+                <textarea
+                  value={newExperience.jobs[0]?.description}
+                  onChange={(e) => setNewExperience({ ...newExperience, jobs: [{ ...newExperience.jobs[0], description: e.target.value }] })}
+                  rows={6}
+                  className="w-full p-4 text-lg rounded-lg border-2 border-gray-300 transition-colors focus:ring-4 focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="Describe your role, achievements, and responsibilities..."
+                />
+              </div>
             </div>
-            <div className="flex justify-end space-x-2 mt-6">
+            <div className="flex justify-end space-x-4 mt-8">
               <button
                 onClick={cancelAddExperience}
-                className="px-4 py-2 text-sm font-medium text-gray-700 border border-gray-300 rounded-md hover:bg-gray-100 transition-colors"
+                className="px-6 py-3 text-lg font-bold text-gray-700 border-2 border-gray-300 rounded-lg hover:bg-gray-100 transition-colors"
               >
                 Cancel
               </button>
               <button
                 onClick={saveNewExperience}
-                className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 transition-colors"
+                className="px-6 py-3 text-lg font-bold text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors"
               >
                 Save Experience
               </button>
