@@ -94,75 +94,47 @@ export async function POST(request: Request) {
     3. Improving the overall presentation
     4. Maintaining the ${persona} personality in your enhancements
 
-    IMPORTANT: You must return ONLY a valid JSON object that follows this exact schema:
+    IMPORTANT: You must return ONLY a valid JSON object that follows this exact schema (the converted format the app uses):
 
     {
       "header": {
         "name": "string",
         "tagline": "string",
-        "contactInfo": {
-          "phoneNumber": {
-            "areaCode": number,
-            "prefix": number,
-            "suffix": number
-          },
-          "email": {
-            "host": "string",
-            "domain": "string"
-          }
+        "contact": {
+          "phone": "string",
+          "email": "string"
         },
         "location": {
           "city": "string",
-          "state": {
-            "name": "string",
-            "abbrev": "string"
-          }
+          "state": "string"
         }
       },
-      "experience": {
-        "workplaces": [
-          {
-            "name": "string",
-            "link": "string",
-            "blurb": "string",
-            "tenure": {
-              "type": "string",
-              "start": "string",
-              "end": "string"
-            },
-            "jobs": [
-              {
-                "title": "string",
-                "description": "string",
-                "skillsAndTools": ["string"],
-                "langsAndLibs": {
-                  "string": ["string"]
-                }
-              }
-            ]
-          }
-        ]
-      },
-      "education": {
-        "certifcations": [
-          {
-            "instituion": "string",
-            "link": "string",
-            "awarded": number,
-            "proof": {
-              "type": "string",
-              "areaOfStudy": "string"
+      "experience": [
+        {
+          "name": "string",
+          "link": "string",
+          "blurb": "string",
+          "tenure": "string",
+          "jobs": [
+            {
+              "title": "string",
+              "description": "string",
+              "skills": ["string"],
+              "languages": []
             }
-          }
-        ]
-      },
-      "extras": {
-        "elements": [
-          {
-            "contentChunks": ["string"]
-          }
-        ]
-      }
+          ]
+        }
+      ],
+      "education": [
+        {
+          "institution": "string",
+          "link": "string",
+          "year": "string",
+          "degree": "string"
+        }
+      ],
+      "skills": ["string"],
+      "extras": ["string"]
     }
 
     Return ONLY the raw JSON object following this exact structure. No explanations, no markdown, no formatting.
