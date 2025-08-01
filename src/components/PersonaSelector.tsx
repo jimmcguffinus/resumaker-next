@@ -39,7 +39,11 @@ export default function PersonaSelector({ onPersonaChange, currentPersona }: Per
 
   return (
     <div className="flex items-center gap-3">
-      <label htmlFor="persona-select" className="text-sm font-bold text-black dark:text-white">
+      <label 
+        htmlFor="persona-select" 
+        className="text-sm font-bold text-black dark:text-white"
+        style={{ color: '#000000 !important' }}
+      >
         AI Personality:
       </label>
       <div className="relative">
