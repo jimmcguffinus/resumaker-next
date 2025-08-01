@@ -1,5 +1,6 @@
 // src/app/api/hablo/route.ts
 import { NextResponse } from 'next/server';
+import { loadPersonas, getPersonaResponse } from '../../../../lib/persona-loader';
 
 // This tells Next.js to build this for Cloudflare's Edge network
 export const runtime = 'edge';
@@ -8,7 +9,10 @@ export const runtime = 'edge';
 export const dynamic = 'force-dynamic';
 
 // Changed from POST to GET
-export async function GET() {
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const persona = searchParams.get('persona') || 'default';
+
   // 1. Securely get the API key from server-side environment variables.
   const apiKey = process.env.GEMINI_API_KEY;
 
@@ -17,13 +21,18 @@ export async function GET() {
     return NextResponse.json({ error: 'API key not configured' }, { status: 500 });
   }
 
+  // Load personas and get the selected persona's response
+  const personas = loadPersonas();
+  const personaResponse = getPersonaResponse(persona, personas);
+
   const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
   
   const prompt = `
-    You are 'Career Co-Pilot,' a friendly AI assistant. A user has clicked a "Hablo!" button.
-    Respond with a brief, welcoming message in Spanish and English that introduces yourself
-    and mentions you're ready to help with your resume. End with a rocket emoji.
-    Keep the entire response under 50 words.
+    You are 'Career Co-Pilot,' a friendly AI assistant with a ${persona} personality. A user has clicked a "Hablo!" button.
+    
+    Respond in the style of: ${personaResponse}
+    
+    Keep the entire response under 50 words and maintain the ${persona} personality throughout.
   `;
 
   try {
