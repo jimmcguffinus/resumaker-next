@@ -1061,27 +1061,16 @@ const ResumeGenerator = () => {
                       <h3 className="font-medium text-fluid-sm">Experience {index + 1}</h3>
                       <div className="flex items-center space-x-2">
                         <button
-                          onClick={() => enhanceExperience(index)}
-                          disabled={isLoading}
-                          className={`flex items-center space-x-1 px-2 py-1 text-fluid-xs rounded transition-colors ${
-                            isLoading 
-                              ? 'bg-gray-400 text-gray-600 cursor-not-allowed' 
-                              : 'bg-green-600 text-white hover:bg-green-700'
-                          }`}
-                          title="Enhance this experience with AI"
-                        >
-                          <span>✨ AI</span>
-                        </button>
-                        <button
                           onClick={() => {
                             setEditingExperienceIndex(index);
                             setNewExperience(exp);
                             setShowAddExperienceModal(true);
                           }}
-                          className="text-blue-500 hover:text-blue-700 transition-colors"
-                          title="Edit Experience"
+                          className="flex items-center space-x-1 text-blue-500 hover:text-blue-700 transition-colors"
+                          title="AI Edit Experience"
                         >
                           <Pencil className="h-4 w-4" />
+                          <span className="text-fluid-xs">AI Edit</span>
                         </button>
                         <button
                           onClick={() => removeExperience(index)}
