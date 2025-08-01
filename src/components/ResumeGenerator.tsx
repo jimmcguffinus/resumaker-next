@@ -639,6 +639,70 @@ const ResumeGenerator = () => {
     }
   };
 
+  // AI Enhancement for modal experience (new experience being created)
+  const enhanceModalExperience = async () => {
+    setIsLoading(true);
+    setAiResponse('');
+    
+    try {
+      // Create a temporary experience object from the modal data
+      const tempExperience = {
+        name: newExperience.name,
+        link: newExperience.link,
+        blurb: newExperience.blurb,
+        tenure: newExperience.tenure,
+        jobs: [{
+          title: newExperience.jobs[0]?.title || '',
+          description: newExperience.jobs[0]?.description || '',
+          skills: newExperience.jobs[0]?.skills || [],
+          languages: newExperience.jobs[0]?.languages || []
+        }]
+      };
+
+      // Send to AI for enhancement
+      const url = selectedPersona === 'default' 
+        ? '/api/hablo' 
+        : `/api/hablo?persona=${selectedPersona}`;
+      
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          experience: [tempExperience],
+          enhanceType: 'single_experience'
+        }),
+      });
+
+      const data = await response.json();
+      
+      if (!response.ok || data.error) {
+        throw new Error(data.error || 'An unknown error occurred.');
+      }
+      
+      console.log('AI Response for modal experience enhancement:', data);
+      
+      // Update the modal experience with enhanced content
+      if (data.enhancedResume) {
+        const enhancedExperience = data.enhancedResume;
+        console.log('Enhanced modal experience:', enhancedExperience);
+        setNewExperience(enhancedExperience);
+        setAiResponse(`✅ Experience enhanced with ${selectedPersona} personality!`);
+      } else {
+        console.log('No enhanced data in response:', data);
+        setAiResponse(`❌ No enhanced data received from AI`);
+      }
+
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
+      setAiResponse(`Error: ${errorMessage}`);
+      console.error('Modal experience enhancement error:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   // Convert Scala format to Next.js format
   // This function will now correctly parse the detailed JSON from the original CLI tool
   const importJsonData = (jsonData: any): Resume => {
@@ -1419,8 +1483,13 @@ const ResumeGenerator = () => {
                     placeholder="Software Engineer"
                   />
                   <button
-                    onClick={() => {/* TODO: AI generation */}}
-                    className="px-3 sm:px-4 py-3 sm:py-4 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors flex items-center justify-center gap-2 text-fluid-base sm:text-fluid-lg font-bold"
+                    onClick={enhanceModalExperience}
+                    disabled={isLoading}
+                    className={`px-3 sm:px-4 py-3 sm:py-4 rounded-lg transition-colors flex items-center justify-center gap-2 text-fluid-base sm:text-fluid-lg font-bold ${
+                      isLoading 
+                        ? 'bg-gray-400 text-gray-600 cursor-not-allowed' 
+                        : 'bg-green-600 hover:bg-green-700 text-white'
+                    }`}
                     title="Generate with AI"
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="sm:w-6 sm:h-6">
@@ -1429,18 +1498,18 @@ const ResumeGenerator = () => {
                       <line x1="12" x2="12" y1="19" y2="23"/>
                       <line x1="8" x2="16" y1="23" y2="23"/>
                     </svg>
-                    AI
+                    {isLoading ? 'Processing...' : 'AI'}
                   </button>
                 </div>
               </div>
               <div>
                 <label className="block text-fluid-lg sm:text-fluid-xl font-bold mb-2 sm:mb-3 text-black">Persona</label>
                 <select
-                  onChange={(e) => {/* TODO: Handle persona selection */}}
+                  value={selectedPersona}
+                  onChange={(e) => setSelectedPersona(e.target.value)}
                   className="w-full p-3 sm:p-4 text-fluid-base sm:text-fluid-lg rounded-lg border-2 border-gray-300 transition-colors focus:ring-4 focus:ring-blue-500 focus:border-blue-500"
-                  defaultValue=""
                 >
-                  <option value="" className="text-fluid-base sm:text-fluid-lg">Select a persona...</option>
+                  <option value="default" className="text-fluid-base sm:text-fluid-lg">Default</option>
                   <option value="senior-developer" className="text-fluid-base sm:text-fluid-lg">Senior Developer</option>
                   <option value="junior-developer" className="text-fluid-base sm:text-fluid-lg">Junior Developer</option>
                   <option value="data-scientist" className="text-fluid-base sm:text-fluid-lg">Data Scientist</option>
