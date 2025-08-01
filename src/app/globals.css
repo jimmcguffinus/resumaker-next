@@ -2,6 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ===== BUBBA VISION MODE FOR AI PERSONALITY ===== */
+.ai-personality-label {
+  font-size: 18px !important;      /* Big text so Bubba don't squint */
+  font-weight: 900 !important;     /* Thicker than grandma's gravy */
+  color: #000000 !important;       /* Solid black text */
+  background-color: #FFFF00 !important; /* Yellow highlight like a school bus */
+  padding: 6px 10px !important;    /* Give it some elbow room */
+  border-radius: 6px !important;   /* So it looks nice and chunky */
+  text-transform: uppercase;       /* MAKE IT SHOUT */
+  letter-spacing: 1px;             /* Spread letters out a bit */
+  display: inline-block !important;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* A little shadow for pop */
+}
+
 /* ─── Emoji support & print‑export patch ─────────────── */
 html {
   font-family: "Noto Color Emoji",
