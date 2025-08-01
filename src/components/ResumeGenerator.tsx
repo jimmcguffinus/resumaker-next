@@ -1385,12 +1385,46 @@ const ResumeGenerator = () => {
               </div>
               <div>
                 <label className="block text-lg font-bold mb-3 text-black">Job Title</label>
-                <input
-                  value={newExperience.jobs[0]?.title}
-                  onChange={(e) => setNewExperience({ ...newExperience, jobs: [{ ...newExperience.jobs[0], title: e.target.value }] })}
+                <div className="flex gap-2">
+                  <input
+                    value={newExperience.jobs[0]?.title}
+                    onChange={(e) => setNewExperience({ ...newExperience, jobs: [{ ...newExperience.jobs[0], title: e.target.value }] })}
+                    className="flex-1 p-4 text-lg rounded-lg border-2 border-gray-300 transition-colors focus:ring-4 focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="Software Engineer"
+                  />
+                  <button
+                    onClick={() => {/* TODO: AI generation */}}
+                    className="px-4 py-4 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors flex items-center gap-2"
+                    title="Generate with AI"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+                      <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                      <line x1="12" x2="12" y1="19" y2="23"/>
+                      <line x1="8" x2="16" y1="23" y2="23"/>
+                    </svg>
+                    AI
+                  </button>
+                </div>
+              </div>
+              <div>
+                <label className="block text-lg font-bold mb-3 text-black">Persona</label>
+                <select
+                  onChange={(e) => {/* TODO: Handle persona selection */}}
                   className="w-full p-4 text-lg rounded-lg border-2 border-gray-300 transition-colors focus:ring-4 focus:ring-blue-500 focus:border-blue-500"
-                  placeholder="Software Engineer"
-                />
+                  defaultValue=""
+                >
+                  <option value="">Select a persona...</option>
+                  <option value="senior-developer">Senior Developer</option>
+                  <option value="junior-developer">Junior Developer</option>
+                  <option value="data-scientist">Data Scientist</option>
+                  <option value="product-manager">Product Manager</option>
+                  <option value="designer">Designer</option>
+                  <option value="devops-engineer">DevOps Engineer</option>
+                  <option value="full-stack">Full Stack Developer</option>
+                  <option value="frontend">Frontend Developer</option>
+                  <option value="backend">Backend Developer</option>
+                </select>
               </div>
               <div>
                 <label className="block text-lg font-bold mb-3 text-black">Skills</label>
