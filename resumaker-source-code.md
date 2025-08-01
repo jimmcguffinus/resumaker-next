@@ -1,6 +1,6 @@
 # 🔍 Resume Maker Source Code Dump
 
-Generated: 2025-07-31 19:13:19
+Generated: 2025-07-31 19:49:10
 
 ## Project: Next.js Resume Generator with PDF Export
 
@@ -3817,7 +3817,7 @@ $SourceDirs = @(
     "src",
     "lib"
 )
-$FileExtensions = @("*.tsx", "*.ts", "*.js", "*.jsx", "*.css", "*.mjs", "*.json", "*.md", "*.txt", "*.ps1", "*.yml", "*.yaml", "*.config", "*.env*")
+$FileExtensions = @("*.tsx", "*.ts", "*.js", "*.jsx", "*.css", "*.mjs", "*.json", "*.md", "*.txt", "*.ps1", "*.yml", "*.yaml", "*.config")
 
 # Define specific root files to include - EXPANDED LIST
 $RootFiles = @(
@@ -3839,11 +3839,7 @@ $RootFiles = @(
     "write-blah.ps1",
     "next-env.d.ts",
     ".gitignore",
-    ".cloudflareignore",
-    ".env",
-    ".env.local",
-    ".env.production",
-    ".env.development"
+    ".cloudflareignore"
 )
 
 # Dynamic File Discovery
@@ -3862,7 +3858,8 @@ $AdditionalRootFiles = Get-ChildItem -Path "." -File -Include "*.md", "*.json", 
     $_.Name -notlike "node_modules*" -and
     $_.Name -notlike ".git*" -and
     $_.Name -notlike ".next*" -and
-    $_.Name -notlike "out*"
+    $_.Name -notlike "out*" -and
+    $_.Name -notlike ".env*"
 }
 $FilesToInclude += $AdditionalRootFiles
 
@@ -4085,12 +4082,6 @@ scala_resumemaker/
 .next/cache/webpack/
 .next/cache/webpack/client-production/
 .next/cache/webpack/client-production/0.pack 
-```n
-
-## File: .env.local
-
-```
-GEMINI_API_KEY=AIzaSyBgAJLNclieKRmupQCXXeALtJFJpef8XLc
 ```n
 
 ## File: src\app\api\hablo\route.ts
