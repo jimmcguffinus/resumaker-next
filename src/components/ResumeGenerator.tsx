@@ -108,6 +108,8 @@ const ResumeGenerator = () => {
   const [personas, setPersonas] = useState<Record<string, any>>({});
   const [showAddExperienceModal, setShowAddExperienceModal] = useState(false);
   const [editingExperienceIndex, setEditingExperienceIndex] = useState<number | null>(null);
+  const [editingEducationIndex, setEditingEducationIndex] = useState<number | null>(null);
+  const [isEditingSkills, setIsEditingSkills] = useState(false);
   const [newExperience, setNewExperience] = useState<Workplace>({
     name: '',
     link: '',
@@ -119,6 +121,12 @@ const ResumeGenerator = () => {
       skills: [],
       languages: []
     }]
+  });
+  const [newEducation, setNewEducation] = useState<EducationRecord>({
+    institution: '',
+    link: '',
+    year: '',
+    degree: ''
   });
 
   useEffect(() => {
@@ -235,7 +243,27 @@ const ResumeGenerator = () => {
 
   const cancelAddExperience = () => {
     setShowAddExperienceModal(false);
-    setEditingExperienceIndex(null); // Clear editing index on cancel
+    setEditingExperienceIndex(null);
+    setEditingEducationIndex(null);
+    setIsEditingSkills(false);
+    setNewExperience({
+      name: '',
+      link: '',
+      blurb: '',
+      tenure: '',
+      jobs: [{
+        title: '',
+        description: '',
+        skills: [],
+        languages: []
+      }]
+    });
+    setNewEducation({
+      institution: '',
+      link: '',
+      year: '',
+      degree: ''
+    });
   };
 
   const removeExperience = (index: number) => {
@@ -1166,12 +1194,26 @@ const ResumeGenerator = () => {
                   <div key={index} className={`p-3 sm:p-4 border rounded-lg ${darkMode ? 'border-gray-600' : 'border-gray-200'}`}>
                     <div className="flex flex-col sm:flex-row justify-between items-start mb-3 sm:mb-4 gap-2">
                       <h3 className="font-medium text-fluid-sm">Education {index + 1}</h3>
-                      <button
-                        onClick={() => removeEducation(index)}
-                        className="text-red-500 hover:text-red-700 transition-colors"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </button>
+                      <div className="flex items-center space-x-2">
+                        <button
+                          onClick={() => {
+                            setEditingEducationIndex(index);
+                            setNewEducation(edu); // Reusing newEducation for editing
+                            setShowAddExperienceModal(true);
+                          }}
+                          className="flex items-center space-x-1 text-blue-500 hover:text-blue-700 transition-colors"
+                          title="AI Edit Education"
+                        >
+                          <Pencil className="h-4 w-4" />
+                          <span className="text-fluid-xs">AI Edit</span>
+                        </button>
+                        <button
+                          onClick={() => removeEducation(index)}
+                          className="text-red-500 hover:text-red-700 transition-colors"
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </button>
+                      </div>
                     </div>
                     
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
@@ -1217,13 +1259,26 @@ const ResumeGenerator = () => {
             <div className={`p-4 sm:p-6 rounded-lg border transition-colors ${
               darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
             }`}>
-              <div className="flex items-center space-x-2 mb-4">
-                <Code className="h-5 w-5 text-blue-500" />
-                <h2 className={`text-fluid-lg font-semibold mb-4 ${
-                  darkMode ? 'text-white' : 'text-gray-900'
-                }`}>
-                  ⚡ Skills
-                </h2>
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center space-x-2">
+                  <Code className="h-5 w-5 text-blue-500" />
+                  <h2 className={`text-fluid-lg font-semibold ${
+                    darkMode ? 'text-white' : 'text-gray-900'
+                  }`}>
+                    ⚡ Skills
+                  </h2>
+                </div>
+                <button
+                  onClick={() => {
+                    setIsEditingSkills(true);
+                    setShowAddExperienceModal(true);
+                  }}
+                  className="flex items-center space-x-1 text-blue-500 hover:text-blue-700 transition-colors"
+                  title="AI Edit Skills"
+                >
+                  <Pencil className="h-4 w-4" />
+                  <span className="text-fluid-xs">AI Edit</span>
+                </button>
               </div>
               
               <textarea
@@ -1444,104 +1499,196 @@ const ResumeGenerator = () => {
         </div>
       </div>
 
-      {/* Add Experience Modal */}
+      {/* Add/Edit Modal */}
       {showAddExperienceModal && (
         <div className="fixed inset-0 bg-black bg-opacity-75 overflow-y-auto h-full w-full flex items-center justify-center z-50 p-4">
           <div className="relative p-4 sm:p-6 lg:p-8 bg-white border-2 border-blue-300 rounded-lg shadow-2xl w-full max-w-4xl max-h-full mx-auto">
             <div className="flex justify-between items-center mb-4 sm:mb-6">
               <h3 className="text-fluid-xl sm:text-fluid-2xl lg:text-fluid-3xl font-bold text-black">
-                {editingExperienceIndex !== null ? 'Edit Experience' : 'Add New Experience'}
+                {isEditingSkills ? 'Edit Skills' : 
+                 editingEducationIndex !== null ? 'Edit Education' : 
+                 editingExperienceIndex !== null ? 'Edit Experience' : 'Add New Experience'}
               </h3>
               <button onClick={cancelAddExperience} className="text-gray-700 hover:text-black p-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="sm:w-8 sm:h-8"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
               </button>
             </div>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
-              <div>
-                <label className="block text-fluid-lg sm:text-fluid-xl font-bold mb-2 sm:mb-3 text-black">Company Name</label>
-                <input
-                  value={newExperience.name}
-                  onChange={(e) => setNewExperience({ ...newExperience, name: e.target.value })}
-                  className="w-full p-3 sm:p-4 text-fluid-base sm:text-fluid-lg rounded-lg border-2 border-gray-300 transition-colors focus:ring-4 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-500"
-                  placeholder="Enter company name"
-                />
-              </div>
-              <div>
-                <label className="block text-fluid-lg sm:text-fluid-xl font-bold mb-2 sm:mb-3 text-black">Tenure</label>
-                <input
-                  value={newExperience.tenure}
-                  onChange={(e) => setNewExperience({ ...newExperience, tenure: e.target.value })}
-                  className="w-full p-3 sm:p-4 text-fluid-base sm:text-fluid-lg rounded-lg border-2 border-gray-300 transition-colors focus:ring-4 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-500"
-                  placeholder="2020 - 2023"
-                />
-              </div>
-              <div>
-                <label className="block text-fluid-lg sm:text-fluid-xl font-bold mb-2 sm:mb-3 text-black">Job Title</label>
-                <div className="flex flex-col sm:flex-row gap-2">
-                  <input
-                    value={newExperience.jobs[0]?.title}
-                    onChange={(e) => setNewExperience({ ...newExperience, jobs: [{ ...newExperience.jobs[0], title: e.target.value }] })}
-                    className="flex-1 p-3 sm:p-4 text-fluid-base sm:text-fluid-lg rounded-lg border-2 border-gray-300 transition-colors focus:ring-4 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-500"
-                    placeholder="Software Engineer"
+            
+            {/* Skills Editing */}
+            {isEditingSkills && (
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-fluid-lg sm:text-fluid-xl font-bold mb-2 sm:mb-3 text-black">Skills</label>
+                  <textarea
+                    value={resumeData.skills.join(', ')}
+                    onChange={(e) => updateResumeData('skills', e.target.value.split(',').map(s => s.trim()).filter(Boolean))}
+                    rows={6}
+                    className="w-full p-3 sm:p-4 text-fluid-base sm:text-fluid-lg rounded-lg border-2 border-gray-300 transition-colors focus:ring-4 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-500"
+                    placeholder="JavaScript, TypeScript, React, Node.js, Python..."
                   />
+                </div>
+                <div className="flex justify-end space-x-3">
                   <button
-                    onClick={enhanceModalExperience}
-                    disabled={isLoading}
-                    className={`px-3 sm:px-4 py-3 sm:py-4 rounded-lg transition-colors flex items-center justify-center gap-2 text-fluid-base sm:text-fluid-lg font-bold ${
-                      isLoading 
-                        ? 'bg-gray-400 text-gray-600 cursor-not-allowed' 
-                        : 'bg-green-600 hover:bg-green-700 text-white'
-                    }`}
-                    title="Generate with AI"
+                    onClick={cancelAddExperience}
+                    className="px-4 py-2 text-fluid-base bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors"
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="sm:w-6 sm:h-6">
-                      <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
-                      <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
-                      <line x1="12" x2="12" y1="19" y2="23"/>
-                      <line x1="8" x2="16" y1="23" y2="23"/>
-                    </svg>
-                    {isLoading ? 'Processing...' : 'AI'}
+                    Cancel
+                  </button>
+                  <button
+                    onClick={() => {
+                      setIsEditingSkills(false);
+                      setShowAddExperienceModal(false);
+                    }}
+                    className="px-4 py-2 text-fluid-base bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                  >
+                    Save Skills
                   </button>
                 </div>
               </div>
-              <div>
-                <label className="block text-fluid-lg sm:text-fluid-xl font-bold mb-2 sm:mb-3 text-black">Persona</label>
-                <select
-                  value={selectedPersona}
-                  onChange={(e) => setSelectedPersona(e.target.value)}
-                  className="w-full p-3 sm:p-4 text-fluid-base sm:text-fluid-lg rounded-lg border-2 border-gray-300 transition-colors focus:ring-4 focus:ring-blue-500 focus:border-blue-500"
-                >
-                  {Object.keys(personas).map((personaKey) => (
-                    <option 
-                      key={personaKey} 
-                      value={personaKey}
-                      className="text-fluid-base sm:text-fluid-lg"
+            )}
+
+            {/* Education Editing */}
+            {editingEducationIndex !== null && (
+              <div className="space-y-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-fluid-lg sm:text-fluid-xl font-bold mb-2 sm:mb-3 text-black">Institution</label>
+                    <input
+                      value={newEducation.institution}
+                      onChange={(e) => setNewEducation({ ...newEducation, institution: e.target.value })}
+                      className="w-full p-3 sm:p-4 text-fluid-base sm:text-fluid-lg rounded-lg border-2 border-gray-300 transition-colors focus:ring-4 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-500"
+                      placeholder="University Name"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-fluid-lg sm:text-fluid-xl font-bold mb-2 sm:mb-3 text-black">Year</label>
+                    <input
+                      value={newEducation.year}
+                      onChange={(e) => setNewEducation({ ...newEducation, year: e.target.value })}
+                      className="w-full p-3 sm:p-4 text-fluid-base sm:text-fluid-lg rounded-lg border-2 border-gray-300 transition-colors focus:ring-4 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-500"
+                      placeholder="2020"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-fluid-lg sm:text-fluid-xl font-bold mb-2 sm:mb-3 text-black">Degree</label>
+                  <input
+                    value={newEducation.degree}
+                    onChange={(e) => setNewEducation({ ...newEducation, degree: e.target.value })}
+                    className="w-full p-3 sm:p-4 text-fluid-base sm:text-fluid-lg rounded-lg border-2 border-gray-300 transition-colors focus:ring-4 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-500"
+                    placeholder="Bachelor of Science in Computer Science"
+                  />
+                </div>
+                <div className="flex justify-end space-x-3">
+                  <button
+                    onClick={cancelAddExperience}
+                    className="px-4 py-2 text-fluid-base bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={() => {
+                      updateResumeData(`education[${editingEducationIndex}]`, newEducation);
+                      setEditingEducationIndex(null);
+                      setShowAddExperienceModal(false);
+                    }}
+                    className="px-4 py-2 text-fluid-base bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                  >
+                    Save Education
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* Experience Editing */}
+            {editingExperienceIndex === null && editingEducationIndex === null && !isEditingSkills && (
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+                <div>
+                  <label className="block text-fluid-lg sm:text-fluid-xl font-bold mb-2 sm:mb-3 text-black">Company Name</label>
+                  <input
+                    value={newExperience.name}
+                    onChange={(e) => setNewExperience({ ...newExperience, name: e.target.value })}
+                    className="w-full p-3 sm:p-4 text-fluid-base sm:text-fluid-lg rounded-lg border-2 border-gray-300 transition-colors focus:ring-4 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-500"
+                    placeholder="Enter company name"
+                  />
+                </div>
+                <div>
+                  <label className="block text-fluid-lg sm:text-fluid-xl font-bold mb-2 sm:mb-3 text-black">Tenure</label>
+                  <input
+                    value={newExperience.tenure}
+                    onChange={(e) => setNewExperience({ ...newExperience, tenure: e.target.value })}
+                    className="w-full p-3 sm:p-4 text-fluid-base sm:text-fluid-lg rounded-lg border-2 border-gray-300 transition-colors focus:ring-4 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-500"
+                    placeholder="2020 - 2023"
+                  />
+                </div>
+                <div>
+                  <label className="block text-fluid-lg sm:text-fluid-xl font-bold mb-2 sm:mb-3 text-black">Job Title</label>
+                  <div className="flex flex-col sm:flex-row gap-2">
+                    <input
+                      value={newExperience.jobs[0]?.title}
+                      onChange={(e) => setNewExperience({ ...newExperience, jobs: [{ ...newExperience.jobs[0], title: e.target.value }] })}
+                      className="flex-1 p-3 sm:p-4 text-fluid-base sm:text-fluid-lg rounded-lg border-2 border-gray-300 transition-colors focus:ring-4 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-500"
+                      placeholder="Software Engineer"
+                    />
+                    <button
+                      onClick={enhanceModalExperience}
+                      disabled={isLoading}
+                      className={`px-3 sm:px-4 py-3 sm:py-4 rounded-lg transition-colors flex items-center justify-center gap-2 text-fluid-base sm:text-fluid-lg font-bold ${
+                        isLoading 
+                          ? 'bg-gray-400 text-gray-600 cursor-not-allowed' 
+                          : 'bg-green-600 hover:bg-green-700 text-white'
+                      }`}
+                      title="Generate with AI"
                     >
-                      {personas[personaKey]?.name || personaKey}
-                    </option>
-                  ))}
-                </select>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="sm:w-6 sm:h-6">
+                        <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+                        <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                        <line x1="12" x2="12" y1="19" y2="23"/>
+                        <line x1="8" x2="16" y1="23" y2="23"/>
+                      </svg>
+                      {isLoading ? 'Processing...' : 'AI'}
+                    </button>
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-fluid-lg sm:text-fluid-xl font-bold mb-2 sm:mb-3 text-black">Persona</label>
+                  <select
+                    value={selectedPersona}
+                    onChange={(e) => setSelectedPersona(e.target.value)}
+                    className="w-full p-3 sm:p-4 text-fluid-base sm:text-fluid-lg rounded-lg border-2 border-gray-300 transition-colors focus:ring-4 focus:ring-blue-500 focus:border-blue-500"
+                  >
+                    {Object.keys(personas).map((personaKey) => (
+                      <option 
+                        key={personaKey} 
+                        value={personaKey}
+                        className="text-fluid-base sm:text-fluid-lg"
+                      >
+                        {personas[personaKey]?.name || personaKey}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-fluid-lg sm:text-fluid-xl font-bold mb-2 sm:mb-3 text-black">Skills</label>
+                  <input
+                    value={newExperience.jobs[0]?.skills.join(', ')}
+                    onChange={(e) => setNewExperience({ ...newExperience, jobs: [{ ...newExperience.jobs[0], skills: e.target.value.split(',').map(s => s.trim()).filter(Boolean) }] })}
+                    className="w-full p-3 sm:p-4 text-fluid-base sm:text-fluid-lg rounded-lg border-2 border-gray-300 transition-colors focus:ring-4 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-500"
+                    placeholder="React, Node.js, AWS..."
+                  />
+                </div>
+                <div className="lg:col-span-2">
+                  <label className="block text-fluid-lg sm:text-fluid-xl font-bold mb-2 sm:mb-3 text-black">Description</label>
+                  <textarea
+                    value={newExperience.jobs[0]?.description}
+                    onChange={(e) => setNewExperience({ ...newExperience, jobs: [{ ...newExperience.jobs[0], description: e.target.value }] })}
+                    rows={6}
+                    className="w-full p-3 sm:p-4 text-fluid-base sm:text-fluid-lg rounded-lg border-2 border-gray-300 transition-colors focus:ring-4 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-500"
+                    placeholder="Describe your role, achievements, and responsibilities..."
+                  />
+                </div>
               </div>
-              <div>
-                <label className="block text-fluid-lg sm:text-fluid-xl font-bold mb-2 sm:mb-3 text-black">Skills</label>
-                <input
-                  value={newExperience.jobs[0]?.skills.join(', ')}
-                  onChange={(e) => setNewExperience({ ...newExperience, jobs: [{ ...newExperience.jobs[0], skills: e.target.value.split(',').map(s => s.trim()).filter(Boolean) }] })}
-                  className="w-full p-3 sm:p-4 text-fluid-base sm:text-fluid-lg rounded-lg border-2 border-gray-300 transition-colors focus:ring-4 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-500"
-                  placeholder="React, Node.js, AWS..."
-                />
-              </div>
-              <div className="lg:col-span-2">
-                <label className="block text-fluid-lg sm:text-fluid-xl font-bold mb-2 sm:mb-3 text-black">Description</label>
-                <textarea
-                  value={newExperience.jobs[0]?.description}
-                  onChange={(e) => setNewExperience({ ...newExperience, jobs: [{ ...newExperience.jobs[0], description: e.target.value }] })}
-                  rows={6}
-                  className="w-full p-3 sm:p-4 text-fluid-base sm:text-fluid-lg rounded-lg border-2 border-gray-300 transition-colors focus:ring-4 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-500"
-                  placeholder="Describe your role, achievements, and responsibilities..."
-                />
-              </div>
-            </div>
+            )}
             <div className="flex flex-col sm:flex-row justify-end gap-3 sm:gap-4 mt-6 sm:mt-8">
               <button
                 onClick={cancelAddExperience}
