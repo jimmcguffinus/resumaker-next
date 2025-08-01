@@ -704,9 +704,9 @@ const ResumeGenerator = () => {
                     ? 'bg-gray-400 text-gray-600 cursor-not-allowed' 
                     : 'bg-purple-600 text-white hover:bg-purple-700'
                 }`}
-                title="Test AI Career Co-Pilot connection"
+                title="Enhance your resume with AI"
               >
-                {isLoading ? 'Testing...' : 'Hablo!'}
+                {isLoading ? 'Enhancing...' : 'AI Enhance'}
               </button>
                               {isClient && (
                                 <ErrorBoundary fallback={
