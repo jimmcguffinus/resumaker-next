@@ -110,6 +110,7 @@ const ResumeGenerator = () => {
   const [editingExperienceIndex, setEditingExperienceIndex] = useState<number | null>(null);
   const [editingEducationIndex, setEditingEducationIndex] = useState<number | null>(null);
   const [isEditingSkills, setIsEditingSkills] = useState(false);
+  const [isEditingExtras, setIsEditingExtras] = useState(false);
   const [newExperience, setNewExperience] = useState<Workplace>({
     name: '',
     link: '',
@@ -128,6 +129,7 @@ const ResumeGenerator = () => {
     year: '',
     degree: ''
   });
+  const [newExtras, setNewExtras] = useState<string>('');
 
   useEffect(() => {
     // Mark as client-side after mounting
@@ -246,6 +248,7 @@ const ResumeGenerator = () => {
     setEditingExperienceIndex(null);
     setEditingEducationIndex(null);
     setIsEditingSkills(false);
+    setIsEditingExtras(false);
     setNewExperience({
       name: '',
       link: '',
@@ -264,6 +267,7 @@ const ResumeGenerator = () => {
       year: '',
       degree: ''
     });
+    setNewExtras('');
   };
 
   const removeExperience = (index: number) => {
@@ -1298,13 +1302,27 @@ const ResumeGenerator = () => {
             <div className={`p-4 sm:p-6 rounded-lg border transition-colors ${
               darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
             }`}>
-              <div className="flex items-center space-x-2 mb-4">
-                <Award className="h-5 w-5 text-blue-500" />
-                <h2 className={`text-fluid-lg font-semibold mb-4 ${
-                  darkMode ? 'text-white' : 'text-gray-900'
-                }`}>
-                  🏆 Additional Information
-                </h2>
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center space-x-2">
+                  <Award className="h-5 w-5 text-blue-500" />
+                  <h2 className={`text-fluid-lg font-semibold ${
+                    darkMode ? 'text-white' : 'text-gray-900'
+                  }`}>
+                    🏆 Additional Information
+                  </h2>
+                </div>
+                <button
+                  onClick={() => {
+                    setNewExtras(resumeData.extras.join('\n'));
+                    setIsEditingExtras(true);
+                    setShowAddExperienceModal(true);
+                  }}
+                  className="flex items-center space-x-1 text-blue-500 hover:text-blue-700 transition-colors"
+                  title="AI Edit Additional Information"
+                >
+                  <Pencil className="h-4 w-4" />
+                  <span className="text-fluid-xs">AI Edit</span>
+                </button>
               </div>
               
               <textarea
@@ -1506,6 +1524,7 @@ const ResumeGenerator = () => {
             <div className="flex justify-between items-center mb-4 sm:mb-6">
               <h3 className="text-fluid-xl sm:text-fluid-2xl lg:text-fluid-3xl font-bold text-black">
                 {isEditingSkills ? 'Edit Skills' : 
+                 isEditingExtras ? 'Edit Additional Information' :
                  editingEducationIndex !== null ? 'Edit Education' : 
                  editingExperienceIndex !== null ? 'Edit Experience' : 'Add New Experience'}
               </h3>
@@ -1600,8 +1619,42 @@ const ResumeGenerator = () => {
               </div>
             )}
 
+            {/* Extras Editing */}
+            {isEditingExtras && (
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-fluid-lg sm:text-fluid-xl font-bold mb-2 sm:mb-3 text-black">Additional Information</label>
+                  <textarea
+                    value={newExtras}
+                    onChange={(e) => setNewExtras(e.target.value)}
+                    rows={6}
+                    className="w-full p-3 sm:p-4 text-fluid-base sm:text-fluid-lg rounded-lg border-2 border-gray-300 transition-colors focus:ring-4 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-500"
+                    placeholder="Awards, certifications, projects, or other achievements..."
+                  />
+                </div>
+                <div className="flex justify-end space-x-3">
+                  <button
+                    onClick={cancelAddExperience}
+                    className="px-4 py-2 text-fluid-base bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={() => {
+                      updateResumeData('extras', newExtras.split('\n').filter(Boolean));
+                      setIsEditingExtras(false);
+                      setShowAddExperienceModal(false);
+                    }}
+                    className="px-4 py-2 text-fluid-base bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                  >
+                    Save Additional Information
+                  </button>
+                </div>
+              </div>
+            )}
+
             {/* Experience Editing */}
-            {editingExperienceIndex === null && editingEducationIndex === null && !isEditingSkills && (
+            {editingExperienceIndex === null && editingEducationIndex === null && !isEditingSkills && !isEditingExtras && (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
                 <div>
                   <label className="block text-fluid-lg sm:text-fluid-xl font-bold mb-2 sm:mb-3 text-black">Company Name</label>
