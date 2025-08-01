@@ -105,6 +105,7 @@ const ResumeGenerator = () => {
   const [resumeData, setResumeData] = useState<Resume>(defaultResume);
   const [isClient, setIsClient] = useState(false);
   const [selectedPersona, setSelectedPersona] = useState('default');
+  const [personas, setPersonas] = useState<Record<string, any>>({});
   const [showAddExperienceModal, setShowAddExperienceModal] = useState(false);
   const [editingExperienceIndex, setEditingExperienceIndex] = useState<number | null>(null);
   const [newExperience, setNewExperience] = useState<Workplace>({
@@ -150,6 +151,18 @@ const ResumeGenerator = () => {
     console.log('Experience count:', resumeData.experience?.length || 0);
     console.log('Education count:', resumeData.education?.length || 0);
   }, [resumeData]);
+
+  // Load personas from the API
+  useEffect(() => {
+    fetch('/api/personas')
+      .then(res => res.json())
+      .then(data => {
+        setPersonas(data.personas);
+      })
+      .catch(error => {
+        console.error('Error loading personas:', error);
+      });
+  }, []);
 
   const updateResumeData = (path: string, value: any) => {
     setResumeData(prev => {
@@ -1509,16 +1522,15 @@ const ResumeGenerator = () => {
                   onChange={(e) => setSelectedPersona(e.target.value)}
                   className="w-full p-3 sm:p-4 text-fluid-base sm:text-fluid-lg rounded-lg border-2 border-gray-300 transition-colors focus:ring-4 focus:ring-blue-500 focus:border-blue-500"
                 >
-                  <option value="default" className="text-fluid-base sm:text-fluid-lg">Default</option>
-                  <option value="senior-developer" className="text-fluid-base sm:text-fluid-lg">Senior Developer</option>
-                  <option value="junior-developer" className="text-fluid-base sm:text-fluid-lg">Junior Developer</option>
-                  <option value="data-scientist" className="text-fluid-base sm:text-fluid-lg">Data Scientist</option>
-                  <option value="product-manager" className="text-fluid-base sm:text-fluid-lg">Product Manager</option>
-                  <option value="designer" className="text-fluid-base sm:text-fluid-lg">Designer</option>
-                  <option value="devops-engineer" className="text-fluid-base sm:text-fluid-lg">DevOps Engineer</option>
-                  <option value="full-stack" className="text-fluid-base sm:text-fluid-lg">Full Stack Developer</option>
-                  <option value="frontend" className="text-fluid-base sm:text-fluid-lg">Frontend Developer</option>
-                  <option value="backend" className="text-fluid-base sm:text-fluid-lg">Backend Developer</option>
+                  {Object.keys(personas).map((personaKey) => (
+                    <option 
+                      key={personaKey} 
+                      value={personaKey}
+                      className="text-fluid-base sm:text-fluid-lg"
+                    >
+                      {personas[personaKey]?.name || personaKey}
+                    </option>
+                  ))}
                 </select>
               </div>
               <div>
