@@ -158,3 +158,16 @@ body {
 .text-fluid-3xl {
   font-size: clamp(2rem, 6vw, 3rem);
 }
+
+/* ===== BUBBA VISION FIX FOR INPUTS AND TEXTAREAS ===== */
+input, textarea, select {
+  color: #000000 !important; /* Real black text */
+  background-color: #FFFFFF !important; /* White background */
+  font-size: 16px !important; /* Big enough for Bubba's one good eye */
+  border: 2px solid #000000 !important; /* Clear boundary */
+}
+
+input::placeholder, textarea::placeholder {
+  color: #555555 !important; /* Medium dark gray placeholder text */
+  opacity: 1 !important; /* Full opacity, no faint ghost text */
+}
