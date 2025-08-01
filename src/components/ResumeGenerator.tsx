@@ -75,6 +75,7 @@ interface Resume {
   education: EducationRecord[];
   skills: string[];
   extras: string[];
+  coverLetter?: string;
 }
 
 // Default resume data structure
@@ -130,6 +131,7 @@ const ResumeGenerator = () => {
     degree: ''
   });
   const [newExtras, setNewExtras] = useState<string>('');
+  const [isEditingCoverLetter, setIsEditingCoverLetter] = useState(false);
 
   // Job posting modal state
   const [showJobPostingModal, setShowJobPostingModal] = useState(false);
@@ -868,6 +870,7 @@ const ResumeGenerator = () => {
       education,
       skills: Array.from(allSkills),
       extras,
+      coverLetter: jsonData.coverLetter || '',
     };
   };
 
@@ -1401,6 +1404,46 @@ const ResumeGenerator = () => {
                 }`}
               />
             </div>
+
+            {/* Cover Letter Section */}
+            <div className={`p-4 sm:p-6 rounded-lg border transition-colors mb-6 ${
+              darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
+            }`}>
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center space-x-2">
+                  <FileText className="h-5 w-5 text-green-500" />
+                  <h2 className={`text-fluid-lg font-semibold ${
+                    darkMode ? 'text-white' : 'text-gray-900'
+                  }`}>
+                    📝 Cover Letter
+                  </h2>
+                </div>
+                <button
+                  onClick={() => {
+                    setNewExtras(resumeData.coverLetter || '');
+                    setIsEditingCoverLetter(true);
+                    setShowAddExperienceModal(true);
+                  }}
+                  className="flex items-center space-x-1 text-green-500 hover:text-green-700 transition-colors"
+                  title="AI Edit Cover Letter"
+                >
+                  <Pencil className="h-4 w-4" />
+                  <span className="text-fluid-xs">AI Edit</span>
+                </button>
+              </div>
+              
+              <textarea
+                value={resumeData.coverLetter || ''}
+                onChange={(e) => updateResumeData('coverLetter', e.target.value)}
+                rows={8}
+                placeholder="Your cover letter will be generated automatically when you use the Job Match feature..."
+                className={`w-full p-2 sm:p-3 text-fluid-sm rounded border transition-colors focus:ring-2 focus:ring-green-500 focus:border-transparent ${
+                  darkMode 
+                    ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' 
+                    : 'bg-white border-gray-300 text-gray-900'
+                }`}
+              />
+            </div>
           </div>
 
           {/* Preview Section */}
@@ -1589,6 +1632,7 @@ const ResumeGenerator = () => {
               <h3 className="text-fluid-xl sm:text-fluid-2xl lg:text-fluid-3xl font-bold text-black">
                 {isEditingSkills ? 'Edit Skills' : 
                  isEditingExtras ? 'Edit Additional Information' :
+                 isEditingCoverLetter ? 'Edit Cover Letter' :
                  editingEducationIndex !== null ? 'Edit Education' : 
                  editingExperienceIndex !== null ? 'Edit Experience' : 'Add New Experience'}
               </h3>
@@ -1717,8 +1761,42 @@ const ResumeGenerator = () => {
               </div>
             )}
 
+            {/* Cover Letter Editing */}
+            {isEditingCoverLetter && (
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-fluid-lg sm:text-fluid-xl font-bold mb-2 sm:mb-3 text-black">Cover Letter</label>
+                  <textarea
+                    value={newExtras}
+                    onChange={(e) => setNewExtras(e.target.value)}
+                    rows={12}
+                    className="w-full p-3 sm:p-4 text-fluid-base sm:text-fluid-lg rounded-lg border-2 border-gray-300 transition-colors focus:ring-4 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-500"
+                    placeholder="Your cover letter will be generated automatically when you use the Job Match feature..."
+                  />
+                </div>
+                <div className="flex justify-end space-x-3">
+                  <button
+                    onClick={cancelAddExperience}
+                    className="px-4 py-2 text-fluid-base bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={() => {
+                      updateResumeData('coverLetter', newExtras);
+                      setIsEditingCoverLetter(false);
+                      setShowAddExperienceModal(false);
+                    }}
+                    className="px-4 py-2 text-fluid-base bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+                  >
+                    Save Cover Letter
+                  </button>
+                </div>
+              </div>
+            )}
+
             {/* Experience Editing */}
-            {editingExperienceIndex === null && editingEducationIndex === null && !isEditingSkills && !isEditingExtras && (
+            {editingExperienceIndex === null && editingEducationIndex === null && !isEditingSkills && !isEditingExtras && !isEditingCoverLetter && (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
                 <div>
                   <label className="block text-fluid-lg sm:text-fluid-xl font-bold mb-2 sm:mb-3 text-black">Company Name</label>
@@ -1865,6 +1943,7 @@ const ResumeGenerator = () => {
                   <li>• Tailors your resume to highlight matching skills and achievements</li>
                   <li>• Updates all sections to better align with the job requirements</li>
                   <li>• Automatically imports the optimized resume into all form fields</li>
+                  <li>• Generates a compelling cover letter that connects your experience to the job</li>
                 </ul>
               </div>
             </div>

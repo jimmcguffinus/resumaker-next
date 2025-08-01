@@ -103,8 +103,9 @@ export async function POST(request: Request) {
     4. Rewrite experience descriptions to align with job requirements
     5. Update skills to prioritize job-relevant ones
     6. Adjust the overall tone and focus to match the job
+    7. Generate a compelling cover letter that connects the candidate's experience to the job requirements
 
-    IMPORTANT: You must return ONLY a valid JSON object that follows this exact Scala format schema (the format the importJsonData function expects):
+    IMPORTANT: You must return ONLY a valid JSON object that follows this exact JSON format schema (the format the importJsonData function expects):
 
     {
       "header": {
@@ -171,7 +172,8 @@ export async function POST(request: Request) {
             ]
           }
         ]
-      }
+      },
+      "coverLetter": "string"
     }
 
     Return ONLY the raw JSON object following this exact structure. No explanations, no markdown, no formatting.
@@ -215,7 +217,7 @@ export async function POST(request: Request) {
     3. Improving the overall presentation
     4. Maintaining the ${persona} personality in your enhancements
 
-    IMPORTANT: You must return ONLY a valid JSON object that follows this exact Scala format schema (the format the importJsonData function expects):
+    IMPORTANT: You must return ONLY a valid JSON object that follows this exact JSON format schema (the format the importJsonData function expects):
 
     {
       "header": {
@@ -282,7 +284,8 @@ export async function POST(request: Request) {
             ]
           }
         ]
-      }
+      },
+      "coverLetter": "string"
     }
 
     Return ONLY the raw JSON object following this exact structure. No explanations, no markdown, no formatting.
