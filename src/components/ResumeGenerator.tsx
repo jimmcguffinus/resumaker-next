@@ -575,9 +575,13 @@ const ResumeGenerator = () => {
         throw new Error(data.error || 'An unknown error occurred.');
       }
       
+      console.log('AI Response for experience enhancement:', data);
+      
       // Update just this experience with enhanced content
-      if (data.enhancedResume?.experience?.[0]) {
-        const enhancedExperience = data.enhancedResume.experience[0];
+      if (data.enhancedResume) {
+        // For single experience enhancement, the AI returns just the experience object
+        const enhancedExperience = data.enhancedResume;
+        console.log('Enhanced experience:', enhancedExperience);
         setResumeData(prev => ({
           ...prev,
           experience: prev.experience.map((exp, index) => 
@@ -585,6 +589,9 @@ const ResumeGenerator = () => {
           )
         }));
         setAiResponse(`✅ Experience ${experienceIndex + 1} enhanced with ${selectedPersona} personality!`);
+      } else {
+        console.log('No enhanced data in response:', data);
+        setAiResponse(`❌ No enhanced data received from AI`);
       }
 
     } catch (error) {
