@@ -707,22 +707,22 @@ const ResumeGenerator = () => {
   };
 
   return (
-    <div className={`min-h-screen transition-colors duration-300 ${darkMode ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
+    <div className={`min-h-screen w-full transition-colors duration-300 ${darkMode ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
       {/* Header */}
-      <header className={`border-b transition-colors ${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center justify-between">
+      <header className={`border-b transition-colors w-full ${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
+        <div className="container-fluid py-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="flex items-center space-x-3">
-              <FileText className={`h-8 w-8 ${darkMode ? 'text-blue-400' : 'text-blue-600'}`} />
-              <h1 className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+              <FileText className={`h-6 w-6 sm:h-8 sm:w-8 ${darkMode ? 'text-blue-400' : 'text-blue-600'}`} />
+              <h1 className={`text-fluid-xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                 Resume Generator
               </h1>
             </div>
-            <div className="flex items-center space-x-4">
+            <div className="flex flex-wrap items-center gap-2 sm:gap-4 w-full sm:w-auto">
               <select 
                 value={activeTemplate}
                 onChange={(e) => setActiveTemplate(e.target.value)}
-                className={`px-3 py-2 rounded-md border transition-colors ${
+                className={`px-2 sm:px-3 py-1 sm:py-2 text-fluid-xs sm:text-fluid-sm rounded-md border transition-colors ${
                   darkMode 
                     ? 'bg-gray-700 border-gray-600 text-white' 
                     : 'bg-white border-gray-300 text-gray-900'
@@ -759,20 +759,20 @@ const ResumeGenerator = () => {
                   };
                   input.click();
                 }}
-                className="px-4 py-2 text-sm font-medium text-purple-600 hover:text-purple-700 transition-colors"
+                className="px-2 sm:px-4 py-1 sm:py-2 text-fluid-xs sm:text-fluid-sm font-medium text-purple-600 hover:text-purple-700 transition-colors"
                 title="Import JSON data from original CLI format"
               >
                 Import JSON
               </button>
               <button
                 onClick={exportToJSON}
-                className="px-4 py-2 text-sm font-medium text-green-600 hover:text-green-700 transition-colors"
+                className="px-2 sm:px-4 py-1 sm:py-2 text-fluid-xs sm:text-fluid-sm font-medium text-green-600 hover:text-green-700 transition-colors"
               >
                 Export JSON
               </button>
               <button
                 onClick={exportToMarkdown}
-                className="px-4 py-2 text-sm font-medium text-yellow-600 hover:text-yellow-700 transition-colors"
+                className="px-2 sm:px-4 py-1 sm:py-2 text-fluid-xs sm:text-fluid-sm font-medium text-yellow-600 hover:text-yellow-700 transition-colors"
               >
                 Export Markdown
               </button>
@@ -781,7 +781,7 @@ const ResumeGenerator = () => {
                   debugCurrentData();
                   alert('Check console for current data');
                 }}
-                className="px-4 py-2 text-sm font-medium text-orange-600 hover:text-orange-700 transition-colors"
+                className="px-2 sm:px-4 py-1 sm:py-2 text-fluid-xs sm:text-fluid-sm font-medium text-orange-600 hover:text-orange-700 transition-colors"
                 title="Debug: Show current data in console"
               >
                 Debug Data
@@ -796,7 +796,7 @@ const ResumeGenerator = () => {
               <button
                 onClick={handleHabloClick}
                 disabled={isLoading}
-                className={`px-4 py-2 text-base font-semibold transition-colors ${
+                className={`px-2 sm:px-4 py-1 sm:py-2 text-fluid-sm sm:text-fluid-base font-semibold transition-colors ${
                   isLoading 
                     ? 'bg-gray-400 text-gray-600 cursor-not-allowed' 
                     : 'bg-purple-600 text-white hover:bg-purple-700'
@@ -820,7 +820,7 @@ const ResumeGenerator = () => {
                   darkMode ? 'bg-gray-700 text-yellow-400' : 'bg-gray-200 text-gray-600'
                 }`}
               >
-                {darkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+                {darkMode ? <Sun className="h-4 w-4 sm:h-5 sm:w-5" /> : <Moon className="h-4 w-4 sm:h-5 sm:w-5" />}
               </button>
             </div>
           </div>
@@ -829,7 +829,7 @@ const ResumeGenerator = () => {
 
       {/* AI Response Display */}
       {aiResponse && (
-        <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 ${
+        <div className={`container-fluid py-4 ${
           darkMode ? 'bg-gray-800' : 'bg-blue-50'
         }`}>
           <div className={`p-4 rounded-lg border ${
@@ -839,35 +839,35 @@ const ResumeGenerator = () => {
           }`}>
             <div className="flex items-center space-x-2 mb-2">
               <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-              <span className="text-sm font-semibold text-green-600 dark:text-green-400">Career Co-Pilot Response:</span>
+              <span className="text-fluid-sm font-semibold text-green-600 dark:text-green-400">Career Co-Pilot Response:</span>
             </div>
-            <p className="text-sm leading-relaxed text-gray-700 dark:text-gray-200">{aiResponse}</p>
+            <p className="text-fluid-sm leading-relaxed text-gray-700 dark:text-gray-200">{aiResponse}</p>
           </div>
         </div>
       )}
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="container-fluid py-8">
+        <div className="grid-fluid">
           {/* Form Section */}
-          <div className={`space-y-6 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+          <div className={`space-y-4 sm:space-y-6 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
             <div className={`p-6 rounded-lg border transition-colors ${
               darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
             }`}>
               <div className="flex items-center space-x-2 mb-4">
-                <User className="h-6 w-6 text-blue-600 dark:text-blue-400" />
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Personal Information</h2>
+                <User className="h-5 w-5 sm:h-6 sm:w-6 text-blue-600 dark:text-blue-400" />
+                <h2 className="text-fluid-lg font-bold text-gray-900 dark:text-white">Personal Information</h2>
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 <div>
-                  <label className={`block text-sm font-semibold mb-2 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+                  <label className={`block text-fluid-sm font-semibold mb-2 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
                     Full Name
                   </label>
                   <input
                     value={resumeData.header.name}
                     onChange={(e) => updateResumeData('header.name', e.target.value)}
-                    className={`w-full p-3 text-sm rounded-md border transition-colors focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                    className={`w-full p-2 sm:p-3 text-fluid-sm rounded-md border transition-colors focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
                       darkMode 
                         ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' 
                         : 'bg-white border-gray-300 text-gray-900'
@@ -960,33 +960,33 @@ const ResumeGenerator = () => {
             </div>
 
             {/* Experience Section */}
-            <div className={`p-6 rounded-lg border transition-colors ${
+            <div className={`p-4 sm:p-6 rounded-lg border transition-colors ${
               darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
             }`}>
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 gap-3">
                 <div className="flex items-center space-x-2">
                   <Briefcase className="h-5 w-5 text-blue-500" />
-                  <h2 className="text-xl font-semibold">Experience</h2>
+                  <h2 className="text-fluid-lg font-semibold">Experience</h2>
                 </div>
                 <button
                   onClick={addExperience}
-                  className="flex items-center space-x-1 px-3 py-2 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+                  className="flex items-center space-x-1 px-3 py-2 text-fluid-sm bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
                 >
                   <Plus className="h-4 w-4" />
                   <span>Add Experience</span>
                 </button>
               </div>
               
-              <div className="space-y-4">
+              <div className="space-y-3 sm:space-y-4">
                 {resumeData.experience.map((exp, index) => (
-                  <div key={index} className={`p-4 border rounded-lg ${darkMode ? 'border-gray-600' : 'border-gray-200'}`}>
-                    <div className="flex justify-between items-start mb-4">
-                      <h3 className="font-medium">Experience {index + 1}</h3>
+                  <div key={index} className={`p-3 sm:p-4 border rounded-lg ${darkMode ? 'border-gray-600' : 'border-gray-200'}`}>
+                    <div className="flex flex-col sm:flex-row justify-between items-start mb-3 sm:mb-4 gap-2">
+                      <h3 className="font-medium text-fluid-sm">Experience {index + 1}</h3>
                       <div className="flex items-center space-x-2">
                         <button
                           onClick={() => enhanceExperience(index)}
                           disabled={isLoading}
-                          className={`flex items-center space-x-1 px-2 py-1 text-xs rounded transition-colors ${
+                          className={`flex items-center space-x-1 px-2 py-1 text-fluid-xs rounded transition-colors ${
                             isLoading 
                               ? 'bg-gray-400 text-gray-600 cursor-not-allowed' 
                               : 'bg-green-600 text-white hover:bg-green-700'
@@ -1015,12 +1015,12 @@ const ResumeGenerator = () => {
                       </div>
                     </div>
                     
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 mb-3 sm:mb-4">
                       <input
                         value={exp.name}
                         onChange={(e) => updateResumeData(`experience[${index}].name`, e.target.value)}
                         placeholder="Company Name"
-                        className={`p-2 rounded border transition-colors focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                        className={`p-2 rounded border transition-colors focus:ring-2 focus:ring-blue-500 focus:border-transparent text-fluid-sm ${
                           darkMode 
                             ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' 
                             : 'bg-white border-gray-300 text-gray-900'
@@ -1031,7 +1031,7 @@ const ResumeGenerator = () => {
                         value={exp.tenure}
                         onChange={(e) => updateResumeData(`experience[${index}].tenure`, e.target.value)}
                         placeholder="2020 - Present"
-                        className={`p-2 rounded border transition-colors focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                        className={`p-2 rounded border transition-colors focus:ring-2 focus:ring-blue-500 focus:border-transparent text-fluid-sm ${
                           darkMode 
                             ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' 
                             : 'bg-white border-gray-300 text-gray-900'
@@ -1078,28 +1078,28 @@ const ResumeGenerator = () => {
             </div>
 
             {/* Education Section */}
-            <div className={`p-6 rounded-lg border transition-colors ${
+            <div className={`p-4 sm:p-6 rounded-lg border transition-colors ${
               darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
             }`}>
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 gap-3">
                 <div className="flex items-center space-x-2">
                   <GraduationCap className="h-5 w-5 text-blue-500" />
-                  <h2 className="text-xl font-semibold">Education</h2>
+                  <h2 className="text-fluid-lg font-semibold">Education</h2>
                 </div>
                 <button
                   onClick={addEducation}
-                  className="flex items-center space-x-1 px-3 py-2 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+                  className="flex items-center space-x-1 px-3 py-2 text-fluid-sm bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
                 >
                   <Plus className="h-4 w-4" />
                   <span>Add Education</span>
                 </button>
               </div>
               
-              <div className="space-y-4">
+              <div className="space-y-3 sm:space-y-4">
                 {resumeData.education.map((edu, index) => (
-                  <div key={index} className={`p-4 border rounded-lg ${darkMode ? 'border-gray-600' : 'border-gray-200'}`}>
-                    <div className="flex justify-between items-start mb-4">
-                      <h3 className="font-medium">Education {index + 1}</h3>
+                  <div key={index} className={`p-3 sm:p-4 border rounded-lg ${darkMode ? 'border-gray-600' : 'border-gray-200'}`}>
+                    <div className="flex flex-col sm:flex-row justify-between items-start mb-3 sm:mb-4 gap-2">
+                      <h3 className="font-medium text-fluid-sm">Education {index + 1}</h3>
                       <button
                         onClick={() => removeEducation(index)}
                         className="text-red-500 hover:text-red-700 transition-colors"
@@ -1108,12 +1108,12 @@ const ResumeGenerator = () => {
                       </button>
                     </div>
                     
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
                       <input
                         value={edu.institution}
                         onChange={(e) => updateResumeData(`education[${index}].institution`, e.target.value)}
                         placeholder="Institution Name"
-                        className={`p-2 rounded border transition-colors focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                        className={`p-2 rounded border transition-colors focus:ring-2 focus:ring-blue-500 focus:border-transparent text-fluid-sm ${
                           darkMode 
                             ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' 
                             : 'bg-white border-gray-300 text-gray-900'
@@ -1124,7 +1124,7 @@ const ResumeGenerator = () => {
                         value={edu.year}
                         onChange={(e) => updateResumeData(`education[${index}].year`, e.target.value)}
                         placeholder="Graduation Year"
-                        className={`p-2 rounded border transition-colors focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                        className={`p-2 rounded border transition-colors focus:ring-2 focus:ring-blue-500 focus:border-transparent text-fluid-sm ${
                           darkMode 
                             ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' 
                             : 'bg-white border-gray-300 text-gray-900'
@@ -1135,7 +1135,7 @@ const ResumeGenerator = () => {
                         value={edu.degree}
                         onChange={(e) => updateResumeData(`education[${index}].degree`, e.target.value)}
                         placeholder="Degree"
-                        className={`p-2 rounded border md:col-span-2 transition-colors focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                        className={`p-2 rounded border sm:col-span-2 transition-colors focus:ring-2 focus:ring-blue-500 focus:border-transparent text-fluid-sm ${
                           darkMode 
                             ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' 
                             : 'bg-white border-gray-300 text-gray-900'
@@ -1148,12 +1148,12 @@ const ResumeGenerator = () => {
             </div>
 
             {/* Skills Section */}
-            <div className={`p-6 rounded-lg border transition-colors ${
+            <div className={`p-4 sm:p-6 rounded-lg border transition-colors ${
               darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
             }`}>
               <div className="flex items-center space-x-2 mb-4">
                 <Code className="h-5 w-5 text-blue-500" />
-                <h2 className={`text-xl font-semibold mb-4 ${
+                <h2 className={`text-fluid-lg font-semibold mb-4 ${
                   darkMode ? 'text-white' : 'text-gray-900'
                 }`}>
                   ⚡ Skills
@@ -1165,7 +1165,7 @@ const ResumeGenerator = () => {
                 onChange={(e) => updateResumeData('skills', e.target.value.split(',').map(s => s.trim()).filter(Boolean))}
                 rows={3}
                 placeholder="JavaScript, TypeScript, React, Node.js, Python..."
-                className={`w-full p-3 rounded border transition-colors focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                className={`w-full p-2 sm:p-3 text-fluid-sm rounded border transition-colors focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
                   darkMode 
                     ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' 
                     : 'bg-white border-gray-300 text-gray-900'
@@ -1174,12 +1174,12 @@ const ResumeGenerator = () => {
             </div>
 
             {/* Extras Section */}
-            <div className={`p-6 rounded-lg border transition-colors ${
+            <div className={`p-4 sm:p-6 rounded-lg border transition-colors ${
               darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
             }`}>
               <div className="flex items-center space-x-2 mb-4">
                 <Award className="h-5 w-5 text-blue-500" />
-                <h2 className={`text-xl font-semibold mb-4 ${
+                <h2 className={`text-fluid-lg font-semibold mb-4 ${
                   darkMode ? 'text-white' : 'text-gray-900'
                 }`}>
                   🏆 Additional Information
@@ -1191,7 +1191,7 @@ const ResumeGenerator = () => {
                 onChange={(e) => updateResumeData('extras', e.target.value.split('\n').filter(Boolean))}
                 rows={4}
                 placeholder="Awards, certifications, projects, or other achievements..."
-                className={`w-full p-3 rounded border transition-colors focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                className={`w-full p-2 sm:p-3 text-fluid-sm rounded border transition-colors focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
                   darkMode 
                     ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' 
                     : 'bg-white border-gray-300 text-gray-900'
@@ -1202,44 +1202,44 @@ const ResumeGenerator = () => {
 
           {/* Preview Section */}
           <div className="lg:sticky lg:top-8 lg:self-start">
-            <div className={`p-6 rounded-lg border transition-colors ${
+            <div className={`p-4 sm:p-6 rounded-lg border transition-colors ${
               darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
             }`}>
               <div className="mb-4">
-                <h2 className={`text-xl font-semibold mb-2 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                <h2 className={`text-fluid-lg font-semibold mb-2 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                   Live Preview
                 </h2>
-                <div className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+                <div className={`text-fluid-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
                   Template: {activeTemplate.charAt(0).toUpperCase() + activeTemplate.slice(1)}
                 </div>
               </div>
               
               {/* Resume Preview */}
-              <div id="resume-preview" className={`bg-white text-gray-900 p-8 rounded-lg shadow-lg min-h-[800px] ${
+              <div id="resume-preview" className={`bg-white text-gray-900 p-4 sm:p-6 lg:p-8 rounded-lg shadow-lg min-h-[600px] sm:min-h-[800px] ${
                 activeTemplate === 'modern' ? 'border-l-4 border-blue-500' :
                 activeTemplate === 'classic' ? 'border border-gray-300' :
                 'shadow-none border border-gray-200'
               }`}>
                 {/* Header */}
-                <div className={`pb-6 mb-6 ${
+                <div className={`pb-4 sm:pb-6 mb-4 sm:mb-6 ${
                   activeTemplate === 'modern' ? 'border-b-2 border-blue-100' :
                   activeTemplate === 'classic' ? 'border-b border-gray-400' :
                   'border-b border-gray-200'
                 }`}>
-                  <h1 className={`text-3xl font-bold mb-3 ${
+                  <h1 className={`text-fluid-2xl sm:text-fluid-3xl font-bold mb-2 sm:mb-3 ${
                     activeTemplate === 'modern' ? 'text-blue-600' :
                     activeTemplate === 'classic' ? 'text-gray-800' :
                     'text-gray-900'
                   }`}>
                     {resumeData.header?.name || 'Your Name'}
                   </h1>
-                  <p className={`text-lg mb-4 italic ${
+                  <p className={`text-fluid-lg mb-3 sm:mb-4 italic ${
                     activeTemplate === 'modern' ? 'text-gray-600' :
                     'text-gray-700'
                   }`}>
                     {resumeData.header?.tagline || 'Your Professional Title'}
                   </p>
-                  <div className="flex flex-wrap gap-6 text-sm text-gray-600">
+                  <div className="flex flex-col sm:flex-row flex-wrap gap-2 sm:gap-4 lg:gap-6 text-fluid-sm text-gray-600">
                     <span className="flex items-center">
                       <span className="mr-1">📧</span>
                       {resumeData.header?.contact?.email}
@@ -1380,50 +1380,50 @@ const ResumeGenerator = () => {
 
       {/* Add Experience Modal */}
       {showAddExperienceModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-75 overflow-y-auto h-full w-full flex items-center justify-center z-50">
-          <div className="relative p-8 bg-white border-2 border-blue-300 rounded-lg shadow-2xl w-full max-w-4xl max-h-full mx-4">
-            <div className="flex justify-between items-center mb-6">
-              <h3 className="text-3xl font-bold text-black">
+        <div className="fixed inset-0 bg-black bg-opacity-75 overflow-y-auto h-full w-full flex items-center justify-center z-50 p-4">
+          <div className="relative p-4 sm:p-6 lg:p-8 bg-white border-2 border-blue-300 rounded-lg shadow-2xl w-full max-w-4xl max-h-full mx-auto">
+            <div className="flex justify-between items-center mb-4 sm:mb-6">
+              <h3 className="text-fluid-xl sm:text-fluid-2xl lg:text-fluid-3xl font-bold text-black">
                 {editingExperienceIndex !== null ? 'Edit Experience' : 'Add New Experience'}
               </h3>
               <button onClick={cancelAddExperience} className="text-gray-700 hover:text-black p-2">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="sm:w-8 sm:h-8"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
               </button>
             </div>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
               <div>
-                <label className="block text-xl font-bold mb-3 text-black">Company Name</label>
+                <label className="block text-fluid-lg sm:text-fluid-xl font-bold mb-2 sm:mb-3 text-black">Company Name</label>
                 <input
                   value={newExperience.name}
                   onChange={(e) => setNewExperience({ ...newExperience, name: e.target.value })}
-                  className="w-full p-4 text-xl rounded-lg border-2 border-gray-300 transition-colors focus:ring-4 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-500"
+                  className="w-full p-3 sm:p-4 text-fluid-base sm:text-fluid-lg rounded-lg border-2 border-gray-300 transition-colors focus:ring-4 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-500"
                   placeholder="Enter company name"
                 />
               </div>
               <div>
-                <label className="block text-xl font-bold mb-3 text-black">Tenure</label>
+                <label className="block text-fluid-lg sm:text-fluid-xl font-bold mb-2 sm:mb-3 text-black">Tenure</label>
                 <input
                   value={newExperience.tenure}
                   onChange={(e) => setNewExperience({ ...newExperience, tenure: e.target.value })}
-                  className="w-full p-4 text-xl rounded-lg border-2 border-gray-300 transition-colors focus:ring-4 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-500"
+                  className="w-full p-3 sm:p-4 text-fluid-base sm:text-fluid-lg rounded-lg border-2 border-gray-300 transition-colors focus:ring-4 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-500"
                   placeholder="2020 - 2023"
                 />
               </div>
               <div>
-                <label className="block text-xl font-bold mb-3 text-black">Job Title</label>
-                <div className="flex gap-2">
+                <label className="block text-fluid-lg sm:text-fluid-xl font-bold mb-2 sm:mb-3 text-black">Job Title</label>
+                <div className="flex flex-col sm:flex-row gap-2">
                   <input
                     value={newExperience.jobs[0]?.title}
                     onChange={(e) => setNewExperience({ ...newExperience, jobs: [{ ...newExperience.jobs[0], title: e.target.value }] })}
-                    className="flex-1 p-4 text-xl rounded-lg border-2 border-gray-300 transition-colors focus:ring-4 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-500"
+                    className="flex-1 p-3 sm:p-4 text-fluid-base sm:text-fluid-lg rounded-lg border-2 border-gray-300 transition-colors focus:ring-4 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-500"
                     placeholder="Software Engineer"
                   />
                   <button
                     onClick={() => {/* TODO: AI generation */}}
-                    className="px-4 py-4 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors flex items-center gap-2 text-lg font-bold"
+                    className="px-3 sm:px-4 py-3 sm:py-4 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors flex items-center justify-center gap-2 text-fluid-base sm:text-fluid-lg font-bold"
                     title="Generate with AI"
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="sm:w-6 sm:h-6">
                       <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
                       <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
                       <line x1="12" x2="12" y1="19" y2="23"/>
@@ -1434,54 +1434,54 @@ const ResumeGenerator = () => {
                 </div>
               </div>
               <div>
-                <label className="block text-xl font-bold mb-3 text-black">Persona</label>
+                <label className="block text-fluid-lg sm:text-fluid-xl font-bold mb-2 sm:mb-3 text-black">Persona</label>
                 <select
                   onChange={(e) => {/* TODO: Handle persona selection */}}
-                  className="w-full p-4 text-xl rounded-lg border-2 border-gray-300 transition-colors focus:ring-4 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full p-3 sm:p-4 text-fluid-base sm:text-fluid-lg rounded-lg border-2 border-gray-300 transition-colors focus:ring-4 focus:ring-blue-500 focus:border-blue-500"
                   defaultValue=""
                 >
-                  <option value="" className="text-lg">Select a persona...</option>
-                  <option value="senior-developer" className="text-lg">Senior Developer</option>
-                  <option value="junior-developer" className="text-lg">Junior Developer</option>
-                  <option value="data-scientist" className="text-lg">Data Scientist</option>
-                  <option value="product-manager" className="text-lg">Product Manager</option>
-                  <option value="designer" className="text-lg">Designer</option>
-                  <option value="devops-engineer" className="text-lg">DevOps Engineer</option>
-                  <option value="full-stack" className="text-lg">Full Stack Developer</option>
-                  <option value="frontend" className="text-lg">Frontend Developer</option>
-                  <option value="backend" className="text-lg">Backend Developer</option>
+                  <option value="" className="text-fluid-base sm:text-fluid-lg">Select a persona...</option>
+                  <option value="senior-developer" className="text-fluid-base sm:text-fluid-lg">Senior Developer</option>
+                  <option value="junior-developer" className="text-fluid-base sm:text-fluid-lg">Junior Developer</option>
+                  <option value="data-scientist" className="text-fluid-base sm:text-fluid-lg">Data Scientist</option>
+                  <option value="product-manager" className="text-fluid-base sm:text-fluid-lg">Product Manager</option>
+                  <option value="designer" className="text-fluid-base sm:text-fluid-lg">Designer</option>
+                  <option value="devops-engineer" className="text-fluid-base sm:text-fluid-lg">DevOps Engineer</option>
+                  <option value="full-stack" className="text-fluid-base sm:text-fluid-lg">Full Stack Developer</option>
+                  <option value="frontend" className="text-fluid-base sm:text-fluid-lg">Frontend Developer</option>
+                  <option value="backend" className="text-fluid-base sm:text-fluid-lg">Backend Developer</option>
                 </select>
               </div>
               <div>
-                <label className="block text-xl font-bold mb-3 text-black">Skills</label>
+                <label className="block text-fluid-lg sm:text-fluid-xl font-bold mb-2 sm:mb-3 text-black">Skills</label>
                 <input
                   value={newExperience.jobs[0]?.skills.join(', ')}
                   onChange={(e) => setNewExperience({ ...newExperience, jobs: [{ ...newExperience.jobs[0], skills: e.target.value.split(',').map(s => s.trim()).filter(Boolean) }] })}
-                  className="w-full p-4 text-xl rounded-lg border-2 border-gray-300 transition-colors focus:ring-4 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-500"
+                  className="w-full p-3 sm:p-4 text-fluid-base sm:text-fluid-lg rounded-lg border-2 border-gray-300 transition-colors focus:ring-4 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-500"
                   placeholder="React, Node.js, AWS..."
                 />
               </div>
               <div className="lg:col-span-2">
-                <label className="block text-xl font-bold mb-3 text-black">Description</label>
+                <label className="block text-fluid-lg sm:text-fluid-xl font-bold mb-2 sm:mb-3 text-black">Description</label>
                 <textarea
                   value={newExperience.jobs[0]?.description}
                   onChange={(e) => setNewExperience({ ...newExperience, jobs: [{ ...newExperience.jobs[0], description: e.target.value }] })}
                   rows={6}
-                  className="w-full p-4 text-xl rounded-lg border-2 border-gray-300 transition-colors focus:ring-4 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-500"
+                  className="w-full p-3 sm:p-4 text-fluid-base sm:text-fluid-lg rounded-lg border-2 border-gray-300 transition-colors focus:ring-4 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-500"
                   placeholder="Describe your role, achievements, and responsibilities..."
                 />
               </div>
             </div>
-            <div className="flex justify-end space-x-4 mt-8">
+            <div className="flex flex-col sm:flex-row justify-end gap-3 sm:gap-4 mt-6 sm:mt-8">
               <button
                 onClick={cancelAddExperience}
-                className="px-6 py-3 text-xl font-bold text-gray-700 border-2 border-gray-300 rounded-lg hover:bg-gray-100 transition-colors"
+                className="px-4 sm:px-6 py-2 sm:py-3 text-fluid-base sm:text-fluid-lg font-bold text-gray-700 border-2 border-gray-300 rounded-lg hover:bg-gray-100 transition-colors"
               >
                 Cancel
               </button>
               <button
                 onClick={saveNewExperience}
-                className="px-6 py-3 text-xl font-bold text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors"
+                className="px-4 sm:px-6 py-2 sm:py-3 text-fluid-base sm:text-fluid-lg font-bold text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors"
               >
                 {editingExperienceIndex !== null ? 'Update Experience' : 'Save Experience'}
               </button>
