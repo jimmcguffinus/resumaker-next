@@ -104,47 +104,74 @@ export async function POST(request: Request) {
     5. Update skills to prioritize job-relevant ones
     6. Adjust the overall tone and focus to match the job
 
-    IMPORTANT: You must return ONLY a valid JSON object that follows this exact schema (the converted format the app uses):
+    IMPORTANT: You must return ONLY a valid JSON object that follows this exact Scala format schema (the format the importJsonData function expects):
 
     {
       "header": {
         "name": "string",
         "tagline": "string",
-        "contact": {
-          "phone": "string",
-          "email": "string"
+        "contactInfo": {
+          "phoneNumber": {
+            "areaCode": "string",
+            "prefix": "string", 
+            "suffix": "string"
+          },
+          "email": {
+            "host": "string",
+            "domain": "string"
+          }
         },
         "location": {
           "city": "string",
-          "state": "string"
+          "state": {
+            "name": "string"
+          }
         }
       },
-      "experience": [
-        {
-          "name": "string",
-          "link": "string",
-          "blurb": "string",
-          "tenure": "string",
-          "jobs": [
-            {
-              "title": "string",
-              "description": "string",
-              "skills": ["string"],
-              "languages": []
+      "experience": {
+        "workplaces": [
+          {
+            "name": "string",
+            "link": "string",
+            "blurb": "string",
+            "tenure": {
+              "start": "ISO date string",
+              "end": "ISO date string"
+            },
+            "jobs": [
+              {
+                "title": "string",
+                "description": "string",
+                "skillsAndTools": ["string"],
+                "langsAndLibs": {}
+              }
+            ]
+          }
+        ]
+      },
+      "education": {
+        "certifcations": [
+          {
+            "instituion": "string",
+            "link": "string",
+            "awarded": "number",
+            "proof": {
+              "areaOfStudy": "string"
             }
-          ]
-        }
-      ],
-      "education": [
-        {
-          "institution": "string",
-          "link": "string",
-          "year": "string",
-          "degree": "string"
-        }
-      ],
-      "skills": ["string"],
-      "extras": ["string"]
+          }
+        ]
+      },
+      "extras": {
+        "elements": [
+          {
+            "contentChunks": [
+              {
+                "text": "string"
+              }
+            ]
+          }
+        ]
+      }
     }
 
     Return ONLY the raw JSON object following this exact structure. No explanations, no markdown, no formatting.
@@ -188,47 +215,74 @@ export async function POST(request: Request) {
     3. Improving the overall presentation
     4. Maintaining the ${persona} personality in your enhancements
 
-    IMPORTANT: You must return ONLY a valid JSON object that follows this exact schema (the converted format the app uses):
+    IMPORTANT: You must return ONLY a valid JSON object that follows this exact Scala format schema (the format the importJsonData function expects):
 
     {
       "header": {
         "name": "string",
         "tagline": "string",
-        "contact": {
-          "phone": "string",
-          "email": "string"
+        "contactInfo": {
+          "phoneNumber": {
+            "areaCode": "string",
+            "prefix": "string", 
+            "suffix": "string"
+          },
+          "email": {
+            "host": "string",
+            "domain": "string"
+          }
         },
         "location": {
           "city": "string",
-          "state": "string"
+          "state": {
+            "name": "string"
+          }
         }
       },
-      "experience": [
-        {
-          "name": "string",
-          "link": "string",
-          "blurb": "string",
-          "tenure": "string",
-          "jobs": [
-            {
-              "title": "string",
-              "description": "string",
-              "skills": ["string"],
-              "languages": []
+      "experience": {
+        "workplaces": [
+          {
+            "name": "string",
+            "link": "string",
+            "blurb": "string",
+            "tenure": {
+              "start": "ISO date string",
+              "end": "ISO date string"
+            },
+            "jobs": [
+              {
+                "title": "string",
+                "description": "string",
+                "skillsAndTools": ["string"],
+                "langsAndLibs": {}
+              }
+            ]
+          }
+        ]
+      },
+      "education": {
+        "certifcations": [
+          {
+            "instituion": "string",
+            "link": "string",
+            "awarded": "number",
+            "proof": {
+              "areaOfStudy": "string"
             }
-          ]
-        }
-      ],
-      "education": [
-        {
-          "institution": "string",
-          "link": "string",
-          "year": "string",
-          "degree": "string"
-        }
-      ],
-      "skills": ["string"],
-      "extras": ["string"]
+          }
+        ]
+      },
+      "extras": {
+        "elements": [
+          {
+            "contentChunks": [
+              {
+                "text": "string"
+              }
+            ]
+          }
+        ]
+      }
     }
 
     Return ONLY the raw JSON object following this exact structure. No explanations, no markdown, no formatting.
