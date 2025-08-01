@@ -499,18 +499,24 @@ const ResumeGenerator = () => {
     console.log('Extras length:', resumeData.extras?.length);
   };
 
-  // Hablo AI function - Force fresh deployment v2 (GET method)
+  // Hablo AI function - Enhanced to send resume data and receive enhanced content
   const handleHabloClick = async () => {
     setIsLoading(true);
     setAiResponse('');
     
     try {
-      // Force fresh deployment - GET request to match API route with persona
+      // Send resume data via POST to get enhanced content
       const url = selectedPersona === 'default' 
         ? '/api/hablo' 
         : `/api/hablo?persona=${selectedPersona}`;
       
-      const response = await fetch(url);
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(resumeData),
+      });
 
       const data = await response.json();
       
@@ -518,7 +524,14 @@ const ResumeGenerator = () => {
         throw new Error(data.error || 'An unknown error occurred.');
       }
       
-      setAiResponse(data.message);
+      // If we got enhanced resume data, update the form
+      if (data.enhancedResume) {
+        setResumeData(data.enhancedResume);
+        setAiResponse(`✅ Resume enhanced with ${selectedPersona} personality! Your content has been updated.`);
+      } else if (data.message) {
+        // Fallback to chat message for GET requests
+        setAiResponse(data.message);
+      }
 
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
