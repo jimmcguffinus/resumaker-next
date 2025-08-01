@@ -94,45 +94,78 @@ export async function POST(request: Request) {
     3. Improving the overall presentation
     4. Maintaining the ${persona} personality in your enhancements
 
-    IMPORTANT: You must return ONLY a valid JSON object with the exact same structure as the input. 
-    The JSON must be properly formatted and parseable. Do not include any explanations, markdown, or text outside the JSON.
-    
-    Example of expected JSON structure:
+    IMPORTANT: You must return ONLY a valid JSON object that follows this exact schema:
+
     {
       "header": {
-        "name": "Enhanced Name",
-        "tagline": "Enhanced Professional Title",
-        "contact": {
-          "phone": "phone number",
-          "email": "email"
+        "name": "string",
+        "tagline": "string",
+        "contactInfo": {
+          "phoneNumber": {
+            "areaCode": number,
+            "prefix": number,
+            "suffix": number
+          },
+          "email": {
+            "host": "string",
+            "domain": "string"
+          }
         },
         "location": {
-          "city": "city",
-          "state": "state"
+          "city": "string",
+          "state": {
+            "name": "string",
+            "abbrev": "string"
+          }
         }
       },
-      "experience": [
-        {
-          "name": "Company Name",
-          "link": "company link",
-          "blurb": "company description",
-          "tenure": "2022 - 2025",
-          "jobs": [
-            {
-              "title": "Enhanced Job Title",
-              "description": "Enhanced job description",
-              "skills": ["skill1", "skill2"],
-              "languages": []
+      "experience": {
+        "workplaces": [
+          {
+            "name": "string",
+            "link": "string",
+            "blurb": "string",
+            "tenure": {
+              "type": "string",
+              "start": "string",
+              "end": "string"
+            },
+            "jobs": [
+              {
+                "title": "string",
+                "description": "string",
+                "skillsAndTools": ["string"],
+                "langsAndLibs": {
+                  "string": ["string"]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "education": {
+        "certifcations": [
+          {
+            "instituion": "string",
+            "link": "string",
+            "awarded": number,
+            "proof": {
+              "type": "string",
+              "areaOfStudy": "string"
             }
-          ]
-        }
-      ],
-      "education": [],
-      "skills": [],
-      "extras": []
+          }
+        ]
+      },
+      "extras": {
+        "elements": [
+          {
+            "contentChunks": ["string"]
+          }
+        ]
+      }
     }
 
-    Return ONLY the JSON object, nothing else.
+    Return ONLY the raw JSON object following this exact structure. No explanations, no markdown, no formatting.
   `;
 
   try {
@@ -158,6 +191,20 @@ export async function POST(request: Request) {
     } catch (parseError) {
       console.error('Failed to parse AI response as JSON:', parseError);
       console.error('AI Response was:', aiResponse);
+      
+      // Try to extract JSON from the response if it's wrapped in markdown or text
+      try {
+        // Look for JSON-like content between curly braces
+        const jsonMatch = aiResponse.match(/\{[\s\S]*\}/);
+        if (jsonMatch) {
+          const extractedJson = JSON.parse(jsonMatch[0]);
+          console.log('Successfully extracted JSON from response');
+          return NextResponse.json({ enhancedResume: extractedJson });
+        }
+      } catch (extractError) {
+        console.error('Failed to extract JSON from response:', extractError);
+      }
+      
       return NextResponse.json({ 
         error: 'AI response was not valid JSON',
         debug: {
