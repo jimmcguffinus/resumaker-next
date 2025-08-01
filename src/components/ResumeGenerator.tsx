@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, lazy, Suspense, Component, ReactNode } from 'react';
-import { Download, Plus, Trash2, Moon, Sun, FileText, User, Briefcase, GraduationCap, Code, Award } from 'lucide-react';
+import { Download, Plus, Trash2, Moon, Sun, FileText, User, Briefcase, GraduationCap, Code, Award, Pencil } from 'lucide-react';
 import { PDFDownloadButton } from './PDFDownloadButton';
 import PersonaSelector from './PersonaSelector';
 
@@ -106,6 +106,7 @@ const ResumeGenerator = () => {
   const [isClient, setIsClient] = useState(false);
   const [selectedPersona, setSelectedPersona] = useState('default');
   const [showAddExperienceModal, setShowAddExperienceModal] = useState(false);
+  const [editingExperienceIndex, setEditingExperienceIndex] = useState<number | null>(null);
   const [newExperience, setNewExperience] = useState<Workplace>({
     name: '',
     link: '',
@@ -186,6 +187,7 @@ const ResumeGenerator = () => {
 
   const addExperience = () => {
     setShowAddExperienceModal(true);
+    setEditingExperienceIndex(null); // Clear editing index for new experience
     setNewExperience({
       name: '',
       link: '',
@@ -201,15 +203,26 @@ const ResumeGenerator = () => {
   };
 
   const saveNewExperience = () => {
-    setResumeData(prev => ({
-      ...prev,
-      experience: [...prev.experience, newExperience]
-    }));
+    if (editingExperienceIndex !== null) {
+      setResumeData(prev => ({
+        ...prev,
+        experience: prev.experience.map((exp, index) => 
+          index === editingExperienceIndex ? newExperience : exp
+        )
+      }));
+      setEditingExperienceIndex(null);
+    } else {
+      setResumeData(prev => ({
+        ...prev,
+        experience: [...prev.experience, newExperience]
+      }));
+    }
     setShowAddExperienceModal(false);
   };
 
   const cancelAddExperience = () => {
     setShowAddExperienceModal(false);
+    setEditingExperienceIndex(null); // Clear editing index on cancel
   };
 
   const removeExperience = (index: number) => {
@@ -983,6 +996,17 @@ const ResumeGenerator = () => {
                           <span>✨ AI</span>
                         </button>
                         <button
+                          onClick={() => {
+                            setEditingExperienceIndex(index);
+                            setNewExperience(exp);
+                            setShowAddExperienceModal(true);
+                          }}
+                          className="text-blue-500 hover:text-blue-700 transition-colors"
+                          title="Edit Experience"
+                        >
+                          <Pencil className="h-4 w-4" />
+                        </button>
+                        <button
                           onClick={() => removeExperience(index)}
                           className="text-red-500 hover:text-red-700 transition-colors"
                         >
@@ -1359,7 +1383,9 @@ const ResumeGenerator = () => {
         <div className="fixed inset-0 bg-black bg-opacity-75 overflow-y-auto h-full w-full flex items-center justify-center z-50">
           <div className="relative p-8 bg-white border-2 border-blue-300 rounded-lg shadow-2xl w-full max-w-4xl max-h-full mx-4">
             <div className="flex justify-between items-center mb-6">
-              <h3 className="text-2xl font-bold text-black">Add New Experience</h3>
+              <h3 className="text-2xl font-bold text-black">
+                {editingExperienceIndex !== null ? 'Edit Experience' : 'Add New Experience'}
+              </h3>
               <button onClick={cancelAddExperience} className="text-gray-700 hover:text-black p-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
               </button>
@@ -1457,7 +1483,7 @@ const ResumeGenerator = () => {
                 onClick={saveNewExperience}
                 className="px-6 py-3 text-lg font-bold text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors"
               >
-                Save Experience
+                {editingExperienceIndex !== null ? 'Update Experience' : 'Save Experience'}
               </button>
             </div>
           </div>
