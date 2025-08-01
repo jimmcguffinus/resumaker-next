@@ -105,6 +105,19 @@ const ResumeGenerator = () => {
   const [resumeData, setResumeData] = useState<Resume>(defaultResume);
   const [isClient, setIsClient] = useState(false);
   const [selectedPersona, setSelectedPersona] = useState('default');
+  const [showAddExperienceModal, setShowAddExperienceModal] = useState(false);
+  const [newExperience, setNewExperience] = useState<Workplace>({
+    name: '',
+    link: '',
+    blurb: '',
+    tenure: '',
+    jobs: [{
+      title: '',
+      description: '',
+      skills: [],
+      languages: []
+    }]
+  });
 
   useEffect(() => {
     // Mark as client-side after mounting
@@ -172,21 +185,31 @@ const ResumeGenerator = () => {
   };
 
   const addExperience = () => {
+    setShowAddExperienceModal(true);
+    setNewExperience({
+      name: '',
+      link: '',
+      blurb: '',
+      tenure: '',
+      jobs: [{
+        title: '',
+        description: '',
+        skills: [],
+        languages: []
+      }]
+    });
+  };
+
+  const saveNewExperience = () => {
     setResumeData(prev => ({
       ...prev,
-      experience: [...prev.experience, {
-        name: '',
-        link: '',
-        blurb: '',
-        tenure: '',
-        jobs: [{
-          title: '',
-          description: '',
-          skills: [],
-          languages: []
-        }]
-      }]
+      experience: [...prev.experience, newExperience]
     }));
+    setShowAddExperienceModal(false);
+  };
+
+  const cancelAddExperience = () => {
+    setShowAddExperienceModal(false);
   };
 
   const removeExperience = (index: number) => {
@@ -1330,6 +1353,78 @@ const ResumeGenerator = () => {
           </div>
         </div>
       </div>
+
+      {/* Add Experience Modal */}
+      {showAddExperienceModal && (
+        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center z-50">
+          <div className="relative p-8 border w-full max-w-md max-h-full">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-xl font-bold">Add New Experience</h3>
+              <button onClick={cancelAddExperience} className="text-gray-500 hover:text-gray-700">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+              </button>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-semibold mb-2">Company Name</label>
+                <input
+                  value={newExperience.name}
+                  onChange={(e) => setNewExperience({ ...newExperience, name: e.target.value })}
+                  className="w-full p-2 rounded border transition-colors focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold mb-2">Tenure</label>
+                <input
+                  value={newExperience.tenure}
+                  onChange={(e) => setNewExperience({ ...newExperience, tenure: e.target.value })}
+                  className="w-full p-2 rounded border transition-colors focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold mb-2">Job Title</label>
+                <input
+                  value={newExperience.jobs[0]?.title}
+                  onChange={(e) => setNewExperience({ ...newExperience, jobs: [{ ...newExperience.jobs[0], title: e.target.value }] })}
+                  className="w-full p-2 rounded border transition-colors focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold mb-2">Description</label>
+                <textarea
+                  value={newExperience.jobs[0]?.description}
+                  onChange={(e) => setNewExperience({ ...newExperience, jobs: [{ ...newExperience.jobs[0], description: e.target.value }] })}
+                  rows={3}
+                  className="w-full p-2 rounded border transition-colors focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold mb-2">Skills</label>
+                <input
+                  value={newExperience.jobs[0]?.skills.join(', ')}
+                  onChange={(e) => setNewExperience({ ...newExperience, jobs: [{ ...newExperience.jobs[0], skills: e.target.value.split(',').map(s => s.trim()).filter(Boolean) }] })}
+                  className="w-full p-2 rounded border transition-colors focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="React, Node.js, AWS..."
+                />
+              </div>
+            </div>
+            <div className="flex justify-end space-x-2 mt-6">
+              <button
+                onClick={cancelAddExperience}
+                className="px-4 py-2 text-sm font-medium text-gray-700 border border-gray-300 rounded-md hover:bg-gray-100 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={saveNewExperience}
+                className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 transition-colors"
+              >
+                Save Experience
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
