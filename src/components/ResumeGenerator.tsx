@@ -542,6 +542,60 @@ const ResumeGenerator = () => {
     }
   };
 
+  // AI Enhancement for individual experience entries
+  const enhanceExperience = async (experienceIndex: number) => {
+    setIsLoading(true);
+    setAiResponse('');
+    
+    try {
+      const experience = resumeData.experience[experienceIndex];
+      if (!experience) {
+        throw new Error('Experience not found');
+      }
+
+      // Send just this experience to AI for enhancement
+      const url = selectedPersona === 'default' 
+        ? '/api/hablo' 
+        : `/api/hablo?persona=${selectedPersona}`;
+      
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          experience: [experience],
+          enhanceType: 'single_experience'
+        }),
+      });
+
+      const data = await response.json();
+      
+      if (!response.ok || data.error) {
+        throw new Error(data.error || 'An unknown error occurred.');
+      }
+      
+      // Update just this experience with enhanced content
+      if (data.enhancedResume?.experience?.[0]) {
+        const enhancedExperience = data.enhancedResume.experience[0];
+        setResumeData(prev => ({
+          ...prev,
+          experience: prev.experience.map((exp, index) => 
+            index === experienceIndex ? enhancedExperience : exp
+          )
+        }));
+        setAiResponse(`✅ Experience ${experienceIndex + 1} enhanced with ${selectedPersona} personality!`);
+      }
+
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
+      setAiResponse(`Error: ${errorMessage}`);
+      console.error('Experience enhancement error:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   // Convert Scala format to Next.js format
   // This function will now correctly parse the detailed JSON from the original CLI tool
   const importJsonData = (jsonData: any): Resume => {
@@ -885,12 +939,26 @@ const ResumeGenerator = () => {
                   <div key={index} className={`p-4 border rounded-lg ${darkMode ? 'border-gray-600' : 'border-gray-200'}`}>
                     <div className="flex justify-between items-start mb-4">
                       <h3 className="font-medium">Experience {index + 1}</h3>
-                      <button
-                        onClick={() => removeExperience(index)}
-                        className="text-red-500 hover:text-red-700 transition-colors"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </button>
+                      <div className="flex items-center space-x-2">
+                        <button
+                          onClick={() => enhanceExperience(index)}
+                          disabled={isLoading}
+                          className={`flex items-center space-x-1 px-2 py-1 text-xs rounded transition-colors ${
+                            isLoading 
+                              ? 'bg-gray-400 text-gray-600 cursor-not-allowed' 
+                              : 'bg-green-600 text-white hover:bg-green-700'
+                          }`}
+                          title="Enhance this experience with AI"
+                        >
+                          <span>✨ AI</span>
+                        </button>
+                        <button
+                          onClick={() => removeExperience(index)}
+                          className="text-red-500 hover:text-red-700 transition-colors"
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </button>
+                      </div>
                     </div>
                     
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">

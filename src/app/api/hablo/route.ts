@@ -83,7 +83,39 @@ export async function POST(request: Request) {
 
   const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
   
-  const prompt = `
+  // Check if this is a single experience enhancement
+  const isSingleExperience = resumeData.enhanceType === 'single_experience';
+  
+  const prompt = isSingleExperience ? `
+    You are 'Career Co-Pilot,' an AI assistant with a ${persona} personality. Your job is to enhance a single work experience entry.
+
+    Current experience data: ${JSON.stringify(resumeData.experience[0], null, 2)}
+
+    Please analyze and improve this single experience entry. Focus on:
+    1. Making the job title more compelling and impactful
+    2. Enhancing the job description to be more achievement-focused
+    3. Improving the skills list to be more relevant and impressive
+    4. Maintaining the ${persona} personality in your enhancements
+
+    IMPORTANT: You must return ONLY a valid JSON object that follows this exact schema (the converted format the app uses):
+
+    {
+      "name": "string",
+      "link": "string", 
+      "blurb": "string",
+      "tenure": "string",
+      "jobs": [
+        {
+          "title": "string",
+          "description": "string", 
+          "skills": ["string"],
+          "languages": []
+        }
+      ]
+    }
+
+    Return ONLY the raw JSON object following this exact structure. No explanations, no markdown, no formatting.
+  ` : `
     You are 'Career Co-Pilot,' an AI assistant with a ${persona} personality. Your job is to enhance a resume.
 
     Current resume data: ${JSON.stringify(resumeData, null, 2)}
