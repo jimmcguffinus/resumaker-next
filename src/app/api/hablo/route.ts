@@ -94,8 +94,45 @@ export async function POST(request: Request) {
     3. Improving the overall presentation
     4. Maintaining the ${persona} personality in your enhancements
 
-    Return ONLY a valid JSON object with the enhanced resume data. The structure should match the input exactly, but with improved content.
-    Do not include any explanations or text outside the JSON.
+    IMPORTANT: You must return ONLY a valid JSON object with the exact same structure as the input. 
+    The JSON must be properly formatted and parseable. Do not include any explanations, markdown, or text outside the JSON.
+    
+    Example of expected JSON structure:
+    {
+      "header": {
+        "name": "Enhanced Name",
+        "tagline": "Enhanced Professional Title",
+        "contact": {
+          "phone": "phone number",
+          "email": "email"
+        },
+        "location": {
+          "city": "city",
+          "state": "state"
+        }
+      },
+      "experience": [
+        {
+          "name": "Company Name",
+          "link": "company link",
+          "blurb": "company description",
+          "tenure": "2022 - 2025",
+          "jobs": [
+            {
+              "title": "Enhanced Job Title",
+              "description": "Enhanced job description",
+              "skills": ["skill1", "skill2"],
+              "languages": []
+            }
+          ]
+        }
+      ],
+      "education": [],
+      "skills": [],
+      "extras": []
+    }
+
+    Return ONLY the JSON object, nothing else.
   `;
 
   try {
@@ -120,7 +157,14 @@ export async function POST(request: Request) {
       return NextResponse.json({ enhancedResume: enhancedResumeData });
     } catch (parseError) {
       console.error('Failed to parse AI response as JSON:', parseError);
-      return NextResponse.json({ error: 'AI response was not valid JSON' }, { status: 500 });
+      console.error('AI Response was:', aiResponse);
+      return NextResponse.json({ 
+        error: 'AI response was not valid JSON',
+        debug: {
+          aiResponse: aiResponse,
+          parseError: parseError instanceof Error ? parseError.message : String(parseError)
+        }
+      }, { status: 500 });
     }
 
   } catch (error) {
