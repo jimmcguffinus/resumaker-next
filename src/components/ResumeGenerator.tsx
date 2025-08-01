@@ -699,7 +699,7 @@ const ResumeGenerator = () => {
               <button
                 onClick={handleHabloClick}
                 disabled={isLoading}
-                className={`px-4 py-2 text-sm font-medium transition-colors ${
+                className={`px-4 py-2 text-base font-semibold transition-colors ${
                   isLoading 
                     ? 'bg-gray-400 text-gray-600 cursor-not-allowed' 
                     : 'bg-purple-600 text-white hover:bg-purple-700'
@@ -742,9 +742,9 @@ const ResumeGenerator = () => {
           }`}>
             <div className="flex items-center space-x-2 mb-2">
               <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-              <span className="text-sm font-medium text-green-600">Career Co-Pilot Response:</span>
+              <span className="text-base font-semibold text-green-700 dark:text-green-400">Career Co-Pilot Response:</span>
             </div>
-            <p className="text-sm leading-relaxed">{aiResponse}</p>
+            <p className="text-base font-medium leading-relaxed text-gray-900 dark:text-white">{aiResponse}</p>
           </div>
         </div>
       )}
@@ -758,19 +758,19 @@ const ResumeGenerator = () => {
               darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
             }`}>
               <div className="flex items-center space-x-2 mb-4">
-                <User className="h-5 w-5 text-blue-500" />
-                <h2 className="text-xl font-semibold">Personal Information</h2>
+                <User className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Personal Information</h2>
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className={`block text-sm font-medium mb-2 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+                  <label className={`block text-base font-semibold mb-2 ${darkMode ? 'text-gray-200' : 'text-gray-800'}`}>
                     Full Name
                   </label>
                   <input
                     value={resumeData.header.name}
                     onChange={(e) => updateResumeData('header.name', e.target.value)}
-                    className={`w-full p-3 rounded-md border transition-colors focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                    className={`w-full p-3 text-base rounded-md border transition-colors focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
                       darkMode 
                         ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' 
                         : 'bg-white border-gray-300 text-gray-900'
@@ -780,13 +780,13 @@ const ResumeGenerator = () => {
                 </div>
                 
                 <div>
-                  <label className={`block text-sm font-medium mb-2 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+                  <label className={`block text-base font-semibold mb-2 ${darkMode ? 'text-gray-200' : 'text-gray-800'}`}>
                     Professional Title
                   </label>
                   <input
                     value={resumeData.header.tagline}
                     onChange={(e) => updateResumeData('header.tagline', e.target.value)}
-                    className={`w-full p-3 rounded-md border transition-colors focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                    className={`w-full p-3 text-base rounded-md border transition-colors focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
                       darkMode 
                         ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' 
                         : 'bg-white border-gray-300 text-gray-900'
@@ -796,7 +796,7 @@ const ResumeGenerator = () => {
                 </div>
                 
                 <div>
-                  <label className={`block text-sm font-medium mb-2 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+                  <label className={`block text-base font-semibold mb-2 ${darkMode ? 'text-gray-200' : 'text-gray-800'}`}>
                     Email
                   </label>
                   <input
@@ -813,7 +813,7 @@ const ResumeGenerator = () => {
                 </div>
                 
                 <div>
-                  <label className={`block text-sm font-medium mb-2 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+                  <label className={`block text-base font-semibold mb-2 ${darkMode ? 'text-gray-200' : 'text-gray-800'}`}>
                     Phone
                   </label>
                   <input
@@ -829,7 +829,7 @@ const ResumeGenerator = () => {
                 </div>
                 
                 <div>
-                  <label className={`block text-sm font-medium mb-2 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+                  <label className={`block text-base font-semibold mb-2 ${darkMode ? 'text-gray-200' : 'text-gray-800'}`}>
                     City
                   </label>
                   <input
@@ -845,7 +845,7 @@ const ResumeGenerator = () => {
                 </div>
                 
                 <div>
-                  <label className={`block text-sm font-medium mb-2 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+                  <label className={`block text-base font-semibold mb-2 ${darkMode ? 'text-gray-200' : 'text-gray-800'}`}>
                     State
                   </label>
                   <input
