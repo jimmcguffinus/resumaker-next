@@ -3,6 +3,7 @@
 import React, { useState, useEffect, lazy, Suspense, Component, ReactNode } from 'react';
 import { Download, Plus, Trash2, Moon, Sun, FileText, User, Briefcase, GraduationCap, Code, Award } from 'lucide-react';
 import { PDFDownloadButton } from './PDFDownloadButton';
+import PersonaSelector from './PersonaSelector';
 
 // Temporarily disable lazy loading to fix page loading issue
 // const PDFDownloadButton = lazy(() => import('./PDFDownloadButton').then(module => ({ default: module.PDFDownloadButton })));
@@ -103,6 +104,7 @@ const ResumeGenerator = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [resumeData, setResumeData] = useState<Resume>(defaultResume);
   const [isClient, setIsClient] = useState(false);
+  const [selectedPersona, setSelectedPersona] = useState('default');
 
   useEffect(() => {
     // Mark as client-side after mounting
@@ -503,8 +505,12 @@ const ResumeGenerator = () => {
     setAiResponse('');
     
     try {
-      // Force fresh deployment - GET request to match API route
-      const response = await fetch('/api/hablo');
+      // Force fresh deployment - GET request to match API route with persona
+      const url = selectedPersona === 'default' 
+        ? '/api/hablo' 
+        : `/api/hablo?persona=${selectedPersona}`;
+      
+      const response = await fetch(url);
 
       const data = await response.json();
       
@@ -670,6 +676,13 @@ const ResumeGenerator = () => {
               >
                 Debug Data
               </button>
+              
+              {/* Persona Selector */}
+              <PersonaSelector 
+                onPersonaChange={setSelectedPersona}
+                currentPersona={selectedPersona}
+              />
+              
               <button
                 onClick={handleHabloClick}
                 disabled={isLoading}
