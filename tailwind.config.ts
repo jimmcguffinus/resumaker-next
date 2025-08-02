@@ -15,5 +15,7 @@ export default <Config>{
     },
   },
 
-  plugins: [],            // add typography/forms later if you like
+  plugins: [
+    require('@tailwindcss/typography'),
+  ],
 } 

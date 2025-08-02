@@ -4,6 +4,7 @@ import React, { useState, useEffect, lazy, Suspense, Component, ReactNode } from
 import { Download, Plus, Trash2, Moon, Sun, FileText, User, Briefcase, GraduationCap, Code, Award, Pencil } from 'lucide-react';
 import { PDFDownloadButton } from './PDFDownloadButton';
 import PersonaSelector from './PersonaSelector';
+import ReactMarkdown from 'react-markdown';
 
 // Temporarily disable lazy loading to fix page loading issue
 // const PDFDownloadButton = lazy(() => import('./PDFDownloadButton').then(module => ({ default: module.PDFDownloadButton })));
@@ -137,6 +138,9 @@ const ResumeGenerator = () => {
   const [showJobPostingModal, setShowJobPostingModal] = useState(false);
   const [jobPostingText, setJobPostingText] = useState('');
   const [isProcessingJobPosting, setIsProcessingJobPosting] = useState(false);
+  
+  // Cover letter modal state
+  const [showCoverLetterModal, setShowCoverLetterModal] = useState(false);
 
   useEffect(() => {
     // Mark as client-side after mounting
@@ -1436,7 +1440,7 @@ const ResumeGenerator = () => {
                 value={resumeData.coverLetter || ''}
                 onChange={(e) => updateResumeData('coverLetter', e.target.value)}
                 rows={8}
-                placeholder="Your cover letter will be generated automatically when you use the Job Match feature..."
+                placeholder="Your cover letter will be generated automatically when you use the Job Match feature... (Supports Markdown formatting)"
                 className={`w-full p-2 sm:p-3 text-fluid-sm rounded border transition-colors focus:ring-2 focus:ring-green-500 focus:border-transparent ${
                   darkMode 
                     ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' 
@@ -1618,6 +1622,19 @@ const ResumeGenerator = () => {
                     </ul>
                   </div>
                 )}
+                
+                {/* Cover Letter Button */}
+                {resumeData.coverLetter && resumeData.coverLetter.trim() && (
+                  <div className="mt-6 pt-4 border-t border-gray-200">
+                    <button
+                      onClick={() => setShowCoverLetterModal(true)}
+                      className="flex items-center space-x-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+                    >
+                      <FileText className="h-4 w-4" />
+                      <span>📝 View Cover Letter</span>
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -1771,7 +1788,7 @@ const ResumeGenerator = () => {
                     onChange={(e) => setNewExtras(e.target.value)}
                     rows={12}
                     className="w-full p-3 sm:p-4 text-fluid-base sm:text-fluid-lg rounded-lg border-2 border-gray-300 transition-colors focus:ring-4 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-500"
-                    placeholder="Your cover letter will be generated automatically when you use the Job Match feature..."
+                    placeholder="Your cover letter will be generated automatically when you use the Job Match feature... (Supports Markdown formatting)"
                   />
                 </div>
                 <div className="flex justify-end space-x-3">
@@ -1968,6 +1985,66 @@ const ResumeGenerator = () => {
                 }`}
               >
                 {isProcessingJobPosting ? 'Analyzing...' : '🎯 Tailor Resume'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Cover Letter Modal */}
+      {showCoverLetterModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-75 overflow-y-auto h-full w-full flex items-center justify-center z-50 p-4">
+          <div className="relative p-4 sm:p-6 lg:p-8 bg-white border-2 border-green-300 rounded-lg shadow-2xl w-full max-w-4xl max-h-full mx-auto">
+            <div className="flex justify-between items-center mb-4 sm:mb-6">
+              <h3 className="text-fluid-xl sm:text-fluid-2xl lg:text-fluid-3xl font-bold text-black">
+                📝 Cover Letter
+              </h3>
+              <button 
+                onClick={() => setShowCoverLetterModal(false)} 
+                className="text-gray-700 hover:text-black p-2"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="sm:w-8 sm:h-8"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+              </button>
+            </div>
+            
+            <div className="space-y-4">
+              <div className="bg-green-50 border-2 border-green-200 rounded-lg p-4 mb-4">
+                <h4 className="text-fluid-lg font-bold text-green-900 mb-2">💡 About this cover letter:</h4>
+                <p className="text-fluid-sm text-green-800">
+                  This cover letter was automatically generated based on your resume and the job posting you analyzed. 
+                  It's designed to connect your experience with the specific job requirements.
+                </p>
+              </div>
+              
+              <div>
+                <label className="block text-fluid-lg sm:text-fluid-xl font-bold mb-2 sm:mb-3 text-black">
+                  Cover Letter Content
+                </label>
+                <div className="bg-gray-50 border-2 border-gray-300 rounded-lg p-4 sm:p-6 max-h-96 overflow-y-auto">
+                  <div className="prose prose-sm prose-gray max-w-none">
+                    <ReactMarkdown>
+                      {resumeData.coverLetter || ''}
+                    </ReactMarkdown>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="flex flex-col sm:flex-row justify-end gap-3 sm:gap-4 mt-6 sm:mt-8">
+              <button
+                onClick={() => setShowCoverLetterModal(false)}
+                className="px-4 sm:px-6 py-2 sm:py-3 text-fluid-base sm:text-fluid-lg font-bold text-gray-700 border-2 border-gray-300 rounded-lg hover:bg-gray-100 transition-colors"
+              >
+                Close
+              </button>
+              <button
+                onClick={() => {
+                  navigator.clipboard.writeText(resumeData.coverLetter || '');
+                  alert('Cover letter copied to clipboard!');
+                }}
+                className="px-4 sm:px-6 py-2 sm:py-3 text-fluid-base sm:text-fluid-lg font-bold text-white bg-green-600 rounded-lg hover:bg-green-700 transition-colors"
+              >
+                📋 Copy to Clipboard
               </button>
             </div>
           </div>

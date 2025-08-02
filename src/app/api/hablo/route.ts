@@ -103,7 +103,7 @@ export async function POST(request: Request) {
     4. Rewrite experience descriptions to align with job requirements
     5. Update skills to prioritize job-relevant ones
     6. Adjust the overall tone and focus to match the job
-    7. Generate a compelling cover letter that connects the candidate's experience to the job requirements
+    7. Generate a compelling cover letter that connects the candidate's experience to the job requirements (format the cover letter in Markdown with proper headers, bullet points, and formatting)
 
     IMPORTANT: You must return ONLY a valid JSON object that follows this exact JSON format schema (the format the importJsonData function expects):
 
@@ -173,7 +173,7 @@ export async function POST(request: Request) {
           }
         ]
       },
-      "coverLetter": "string"
+      "coverLetter": "string (Markdown formatted)"
     }
 
     Return ONLY the raw JSON object following this exact structure. No explanations, no markdown, no formatting.
@@ -285,7 +285,7 @@ export async function POST(request: Request) {
           }
         ]
       },
-      "coverLetter": "string"
+      "coverLetter": "string (Markdown formatted)"
     }
 
     Return ONLY the raw JSON object following this exact structure. No explanations, no markdown, no formatting.
